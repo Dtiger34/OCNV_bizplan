@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Josefin Sans", sans-serif;
+
+  --color-wood: #5C3D1E;
+  --color-cream: #F5EDD6;
+  --color-burgundy: #7B1C2E;
+  --color-gold: #C9973A;
+  --color-lacquer: #3A1A0A;
+  --color-parchment: #FDF6E3;
+  --color-ash: #C9B99A;
+  --color-celadon: #7A9E8E;
+  --color-ink: #2C1A0E;
+
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 1px 3px rgba(92,61,30,0.08);
+  --shadow-medium: 0 2px 8px rgba(92,61,30,0.12);
+  --shadow-large: 0 4px 18px rgba(92,61,30,0.15);
+  --shadow-overlay: 0 8px 36px rgba(44,26,14,0.2);
+  --shadow-gold-glow: 0 2px 14px rgba(201,151,58,0.18);
+
+  /* Animation durations */
+  --duration-fast: 0.25s;
+  --duration-base: 0.5s;
+  --duration-slow: 0.8s;
+}
+
+*,
+*::before,
+*::after {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: "Josefin Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gold-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes width-grow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* ─── Utility animation classes ────────────────────────────────────────────── */
+
+/* Scroll-triggered — add .animate class via JS IntersectionObserver or Framer */
+.animate-fade-up   { animation: fade-up   var(--duration-base) ease-out both; }
+.animate-fade-down { animation: fade-down var(--duration-base) ease-out both; }
+.animate-fade-in   { animation: fade-in   var(--duration-base) ease-out both; }
+.animate-fade-left { animation: fade-left var(--duration-base) ease-out both; }
+.animate-fade-right{ animation: fade-right var(--duration-base) ease-out both; }
+.animate-scale-in  { animation: scale-in  var(--duration-base) ease-out both; }
+.animate-float     { animation: float 3s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+.animate-gold-pulse{ animation: gold-pulse 2.5s ease-in-out infinite; }
+
+/* Stagger delays */
+.delay-0   { animation-delay: 0ms; }
+.delay-75  { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-225 { animation-delay: 225ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Duration overrides */
+.duration-fast { animation-duration: var(--duration-fast); }
+.duration-slow { animation-duration: var(--duration-slow); }
+
+/* ─── Scroll-reveal base state ─────────────────────────────────────────────── */
+/* Elements start invisible; JS adds .in-view to play the animation */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.reveal-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── Shimmer text ─────────────────────────────────────────────────────────── */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-gold) 0%,
+    #f5d78e 45%,
+    var(--color-gold) 55%,
+    #a0722a 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ─── Hover lift ───────────────────────────────────────────────────────────── */
+.hover-lift {
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-large);
+}
+
+/* ─── Gold underline grow on hover ────────────────────────────────────────── */
+.underline-gold {
+  position: relative;
+}
+.underline-gold::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 1.5px;
+  width: 0;
+  background-color: var(--color-gold);
+  transition: width 0.3s ease-out;
+}
+.underline-gold:hover::after {
+  width: 100%;
+}

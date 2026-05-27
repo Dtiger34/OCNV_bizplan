@@ -1,0 +1,148 @@
+import React, { useState } from 'react';
+import { ProfileLayout } from './ProfilePage';
+import { Link } from 'react-router-dom';
+import { Eye, Truck, CheckCircle2, Clock } from 'lucide-react';
+
+interface Order {
+  orderCode: string;
+  date: string;
+  total: number;
+  status: 'pending' | 'shipping' | 'delivered' | 'cancelled';
+  statusText: string;
+  paymentStatus: string;
+}
+
+export default function OrderHistoryPage() {
+  const [orders] = useState<Order[]>([
+    {
+      orderCode: 'DH-483921',
+      date: '25/05/2026',
+      total: 18900000,
+      status: 'shipping',
+      statusText: 'Đang Giao Hàng',
+      paymentStatus: 'Đã thanh toán (VNPay)'
+    },
+    {
+      orderCode: 'DH-102932',
+      date: '10/05/2026',
+      total: 9200000,
+      status: 'delivered',
+      statusText: 'Đã Nhận Hàng',
+      paymentStatus: 'Đã thanh toán (COD)'
+    }
+  ]);
+
+  const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'shipping' | 'delivered'>('all');
+
+  const filteredOrders = orders.filter((o) => {
+    if (activeTab === 'all') return true;
+    return o.status === activeTab;
+  });
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'shipping':
+        return <Truck size={16} className="text-[#C9973A]" />;
+      case 'delivered':
+        return <CheckCircle2 size={16} className="text-[#3A6B4A]" />;
+      case 'pending':
+      default:
+        return <Clock size={16} className="text-[#5C3D1E]" />;
+    }
+  };
+
+  const getStatusBadgeClass = (status: string) => {
+    switch (status) {
+      case 'delivered':
+        return 'border-[#3A6B4A] bg-[rgba(58,107,74,0.1)] text-[#3A6B4A]';
+      case 'shipping':
+        return 'border-[#C9973A] bg-[rgba(201,151,58,0.12)] text-[#7A5A1A]';
+      case 'cancelled':
+        return 'border-[#7B1C2E] bg-[rgba(123,28,46,0.1)] text-[#7B1C2E]';
+      case 'pending':
+      default:
+        return 'border-[#5C3D1E] bg-[#5C3D1E]/5 text-[#5C3D1E]';
+    }
+  };
+
+  return (
+    <ProfileLayout>
+      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
+        <h3 className="text-2xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-3">
+          LỊCH SỬ ĐƠN ĐẶT HÀNG
+        </h3>
+
+        {/* Tab Filters */}
+        <div className="flex border-b border-[#D4B896]/20 gap-4 overflow-x-auto pb-1">
+          {([
+            { id: 'all', name: 'TẤT CẢ' },
+            { id: 'pending', name: 'ĐANG XỬ LÝ' },
+            { id: 'shipping', name: 'ĐANG GIAO' },
+            { id: 'delivered', name: 'ĐÃ NHẬN' }
+          ] as const).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`text-[11px] font-bold tracking-wider uppercase pb-2 transition-all relative shrink-0 ${
+                activeTab === tab.id ? 'text-[#7B1C2E]' : 'text-[#9C8670] hover:text-[#5C3D1E]'
+              }`}
+            >
+              {tab.name}
+              {activeTab === tab.id && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#7B1C2E]" />}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-4">
+          {filteredOrders.length === 0 ? (
+            <p className="text-sm text-[#9C8670] italic text-center py-8">
+              Chưa có đơn đặt hàng nào trong danh mục này.
+            </p>
+          ) : (
+            filteredOrders.map((order) => (
+              <div
+                key={order.orderCode}
+                className="p-4 border border-[#D4B896] rounded-md bg-[#FDF6E3] hover:border-[#C9973A] transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold text-[#2C1A0E]">
+                      {order.orderCode}
+                    </span>
+                    <span className="text-xs text-[#9C8670]">{order.date}</span>
+                  </div>
+                  
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-[#2C1A0E]">
+                    <span className="flex items-center gap-1.5 font-semibold text-[#7B1C2E]">
+                      Tổng tiền: {order.total.toLocaleString('vi-VN')} ₫
+                    </span>
+                    <span className="text-[#9C8670]">|</span>
+                    <span>{order.paymentStatus}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 self-end sm:self-center">
+                  <span
+                    className={`flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase px-2.5 py-0.5 border rounded-sm ${getStatusBadgeClass(
+                      order.status
+                    )}`}
+                  >
+                    {getStatusIcon(order.status)}
+                    {order.statusText}
+                  </span>
+
+                  <Link
+                    to={`/orders/${order.orderCode}`}
+                    className="p-2 border border-[#D4B896] text-[#5C3D1E] hover:bg-[#5C3D1E]/5 rounded-sm"
+                  >
+                    <Eye size={14} />
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </ProfileLayout>
+  );
+}

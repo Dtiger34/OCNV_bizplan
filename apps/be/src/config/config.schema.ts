@@ -1,0 +1,35 @@
+import * as Joi from 'joi';
+
+export const configSchema = Joi.object({
+  NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+  PORT: Joi.number().default(3001),
+  FRONTEND_URL: Joi.string().uri().default('http://localhost:5173'),
+
+  MONGODB_URI: Joi.string().required(),
+
+  JWT_ACCESS_SECRET: Joi.string().min(32).required(),
+  JWT_REFRESH_SECRET: Joi.string().min(32).required(),
+  JWT_ACCESS_EXPIRES_IN: Joi.string().default('15m'),
+  JWT_REFRESH_EXPIRES_IN: Joi.string().default('30d'),
+
+  COOKIE_SECRET: Joi.string().min(32).required(),
+
+  SENDGRID_API_KEY: Joi.string().allow('').optional(),
+  EMAIL_FROM: Joi.string().email().default('noreply@ocnv.vn'),
+  SMTP_HOST: Joi.string().default('smtp.gmail.com'),
+  SMTP_PORT: Joi.number().default(587),
+  SMTP_USER: Joi.string().allow('').optional(),
+  SMTP_PASS: Joi.string().allow('').optional(),
+  FE_URL: Joi.string().uri().default('http://localhost:5173'),
+  APP_URL: Joi.string().uri().default('http://localhost:3001'),
+
+  PAYMENT_TMN_CODE: Joi.string().allow('').optional(),
+  PAYMENT_HASH_SECRET: Joi.string().allow('').optional(),
+  PAYMENT_URL: Joi.string().uri().optional(),
+  PAYMENT_RETURN_URL: Joi.string().uri().optional(),
+
+  SHIPPING_FEE: Joi.number().default(30000),
+
+  STATIC_FILES_PATH: Joi.string().default('./uploads'),
+  STATIC_FILES_URL: Joi.string().uri().default('http://localhost:3001/static'),
+});

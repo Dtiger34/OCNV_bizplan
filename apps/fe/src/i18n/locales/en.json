@@ -1,0 +1,134 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "empty": "No data available",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Clear filters",
+    "viewDetail": "View detail",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "learnMore": "Learn more"
+  },
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "villages": "Villages",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Register",
+    "profile": "Account",
+    "logout": "Logout",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Connecting you with Vietnamese craft village heritage",
+      "ctaExplore": "Explore now",
+      "ctaAr": "View AR"
+    },
+    "featuredProducts": "Featured Products",
+    "villages": "5 Traditional Craft Villages",
+    "arGuide": {
+      "title": "Unique AR Experience",
+      "step1": "Purchase a handcraft model",
+      "step2": "Scan the QR code included",
+      "step3": "See the village come alive through your camera",
+      "viewDemo": "View AR demo"
+    }
+  },
+  "product": {
+    "village": "Village",
+    "stock": "In stock",
+    "outOfStock": "Out of stock",
+    "quantity": "Quantity",
+    "description": "Description",
+    "videoProcess": "Production process",
+    "qrCode": "AR QR Code",
+    "qrDownload": "Download QR",
+    "qrTooltip": "Scan this code with your phone camera to view AR",
+    "viewAr": "View AR",
+    "arDesktopHint": "Use your phone to scan the QR code below for AR",
+    "village_tab": "Village",
+    "related": "Related products",
+    "reviews": "Reviews",
+    "writeReview": "Write a review",
+    "addedToCart": "Added to cart"
+  },
+  "ar": {
+    "start": "Start AR",
+    "requesting": "Requesting camera permission...",
+    "denied": "Camera permission denied",
+    "deniedHint": "Please allow camera access in your browser settings",
+    "initializing": "Initializing AR...",
+    "tracking": "Looking for model...",
+    "found": "Model detected!",
+    "lost": "Please point your camera at the model to continue",
+    "fallback": "AR not supported on this device — View 3D model below",
+    "exit": "Exit AR"
+  },
+  "shop": {
+    "title": "Shop",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortPopular": "Most Popular",
+    "filterVillage": "Village",
+    "filterPrice": "Price range",
+    "noResult": "No products found"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue shopping",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "shippingFee": "Shipping fee",
+    "total": "Total",
+    "remove": "Remove"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shipping": "Shipping information",
+    "payment": "Payment method",
+    "review": "Order review",
+    "cod": "Cash on Delivery (COD)",
+    "bankTransfer": "Bank transfer",
+    "vnpay": "VNPay payment",
+    "placeOrder": "Place order",
+    "success": "Order placed successfully!",
+    "orderCode": "Order code"
+  },
+  "order": {
+    "status": {
+      "pending": "Processing",
+      "packing": "Packing",
+      "shipping": "In transit",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "trackingCode": "Tracking code",
+    "contact": "Contact support"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "forgotPassword": "Forgot password?",
+    "rememberMe": "Remember me",
+    "resetPassword": "Reset password",
+    "sendResetLink": "Send reset link",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  }
+}
