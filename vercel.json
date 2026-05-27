@@ -1,0 +1,12 @@
+{
+  "buildCommand": "cd apps/fe && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "apps/fe/dist",
+  "installCommand": "echo skip",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://YOUR_BACKEND_URL/api/:path*"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
