@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { articles } from '@/features/news/data/articles';
 import HeroBanner from '../components/HeroBanner';
@@ -6,106 +6,46 @@ import CategoryTiles from '../components/CategoryTiles';
 import ProductCard, { Product } from '../components/ProductCard';
 import { useCart } from '@/context/CartContext';
 import { X, Calendar, MapPin, Award, ArrowRight, Star, ShieldCheck, Truck, Clock } from 'lucide-react';
+import { useFeaturedProducts } from '../../products/hooks/useProducts';
+
+const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
+
+function apiToProduct(p: any): Product {
+  const stock: number = p.stock ?? 0;
+  const stockStatus = stock === 0 ? 'out_of_stock' : stock <= 3 ? 'low_stock' : 'in_stock';
+  return {
+    id: p._id,
+    name: p.name?.vi ?? '',
+    price: p.price,
+    image: p.mainImageUrl ?? PLACEHOLDER,
+    category: p.village?.name?.vi ?? '',
+    material: '',
+    origin: p.village?.name?.vi ?? 'OCNV',
+    stockStatus,
+    badgeText: stockStatus === 'out_of_stock' ? 'Hết Hàng' : stockStatus === 'low_stock' ? 'Sắp Hết' : 'Còn Hàng',
+    makerName: '',
+    makerProvince: '',
+    makerStory: '',
+  };
+}
 
 export default function HomePage() {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
-  // Detail Modal State
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const { data: featuredRaw = [] } = useFeaturedProducts();
+  const featuredProducts = featuredRaw.map(apiToProduct);
 
-  // Monitor page scroll progress for a thin progress bar at top
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress((window.scrollY / totalHeight) * 100);
-      }
+      if (totalHeight > 0) setScrollProgress((window.scrollY / totalHeight) * 100);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Mock Products Database
-  const products: Product[] = useMemo(() => [
-    {
-      id: 'tieu-canh-bat-trang',
-      name: 'Mô Hình Làng Gốm Bát Tràng',
-      price: 1250000,
-      image: 'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=800&q=80',
-      category: 'Hộp Làng Gốm',
-      material: 'Mica acrylic, Gỗ MDF, Đất sét',
-      origin: 'Phân xưởng Nghề Xưa Nét Mới',
-      stockStatus: 'in_stock',
-      badgeText: 'Còn Hàng',
-      makerName: 'Hợp tác xã Nghề Xưa Nét Mới x Bát Tràng',
-      makerProvince: 'Hà Nội',
-      makerStory: 'Mô phỏng nghệ nhân làm gốm xoay vuốt đất sét trên bàn xoay thủ công bên lò nung gạch bầu cổ kính.'
-    },
-    {
-      id: 'tieu-canh-van-phuc',
-      name: 'Mô Hình Làng Lụa Vạn Phúc',
-      price: 1450000,
-      originalPrice: 1800000,
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
-      category: 'Hộp Làng Lụa',
-      material: 'Mica acrylic, Gỗ MDF, Tơ tằm',
-      origin: 'Phân xưởng Nghề Xưa Nét Mới',
-      stockStatus: 'low_stock',
-      badgeText: 'Sắp Hết',
-      makerName: 'Hợp tác xã Nghề Xưa Nét Mới x Vạn Phúc',
-      makerProvince: 'Hà Nội',
-      makerStory: 'Kết hợp cấu trúc nhiều lớp chiều sâu tái hiện sinh động khung dệt cửi tơ tằm cổ điển với các sấp lụa là óng ả.'
-    },
-    {
-      id: 'tieu-canh-quang-phu-cau',
-      name: 'Mô Hình Làng Hương Quảng Phú Cầu',
-      price: 1350000,
-      image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=800&q=80',
-      category: 'Hộp Làng Hương',
-      material: 'Mica acrylic, Gỗ MDF, Nhang màu',
-      origin: 'Phân xưởng Nghề Xưa Nét Mới',
-      stockStatus: 'in_stock',
-      badgeText: 'Nổi Bật',
-      makerName: 'Hợp tác xã Nghề Xưa Nét Mới x Làng Hương',
-      makerProvince: 'Hà Nội',
-      makerStory: 'Tái hiện sân phơi hương Quảng Phú Cầu đỏ rực xếp hình đóa hoa rực rỡ dưới nắng vàng vùng quê bắc bộ.'
-    },
-    {
-      id: 'tieu-canh-non-chuong',
-      name: 'Mô Hình Làng Nón Làng Chuông',
-      price: 980000,
-      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=800&q=80',
-      category: 'Hộp Làng Nón',
-      material: 'Mica acrylic, Lá cọ, Khung tre',
-      origin: 'Phân xưởng Nghề Xưa Nét Mới',
-      stockStatus: 'in_stock',
-      badgeText: 'Còn Hàng',
-      makerName: 'Hợp tác xã Nghề Xưa Nét Mới x Làng Chuông',
-      makerProvince: 'Hà Nội',
-      makerStory: 'Ráp lớp gỗ mây tre mỏng mô tả cảnh phơi lá cọ non trắng tinh và bàn tay nghệ nhân khâu từng vành nón Chuông.'
-    },
-    {
-      id: 'tieu-canh-phu-vinh',
-      name: 'Mô Hình Làng Tre Phú Vinh',
-      price: 1100000,
-      image: 'https://images.unsplash.com/photo-1581428982868-e410dd047a90?auto=format&fit=crop&w=800&q=80',
-      category: 'Hộp Làng Tre Đan',
-      material: 'Mica acrylic, Mây tre tự nhiên',
-      origin: 'Phân xưởng Nghề Xưa Nét Mới',
-      stockStatus: 'out_of_stock',
-      badgeText: 'Hết Hàng',
-      makerName: 'Hợp tác xã Nghề Xưa Nét Mới x Phú Vinh',
-      makerProvince: 'Hà Nội',
-      makerStory: 'Tái hiện chân thực công đoạn chuốt tre đan lát rổ rá xuất khẩu tỉ mỉ, mô tả cuộc sống thanh bình làng quê Việt.'
-    }
-  ], []);
-
-  // Featured products (from lists)
-  const featuredProducts = useMemo(() => {
-    return products.filter(p => p.id === 'tieu-canh-van-phuc' || p.id === 'tieu-canh-quang-phu-cau');
-  }, [products]);
 
   const handleSelectCategoryFromTile = (categoryName: string) => {
     navigate(`/shop?category=${encodeURIComponent(categoryName)}`);

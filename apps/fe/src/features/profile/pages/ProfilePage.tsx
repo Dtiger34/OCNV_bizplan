@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { User, MapPin, ClipboardList, Heart, Save } from 'lucide-react';
@@ -21,10 +21,10 @@ export function ProfileLayout({ children }: { children: React.ReactNode }) {
         <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6 reveal-left">
           <div className="flex items-center gap-3 pb-4 border-b border-[#D4B896]/30">
             <div className="w-12 h-12 rounded-full bg-[#5C3D1E] text-[#F5EDD6] text-2xl font-bold flex items-center justify-center border border-[#C9973A]">
-              {user?.name?.[0] || 'V'}
+              {user?.fullName?.[0] || 'V'}
             </div>
             <div>
-              <h4 className="text-lg font-bold text-[#2C1A0E]">{user?.name || 'Khách Hàng'}</h4>
+              <h4 className="text-lg font-bold text-[#2C1A0E]">{user?.fullName || 'Khách Hàng'}</h4>
               <span className="text-[9px] text-[#9C8670] uppercase">{user?.email || 'Chưa đăng nhập'}</span>
             </div>
           </div>
@@ -61,7 +61,7 @@ export function ProfileLayout({ children }: { children: React.ReactNode }) {
 
 export default function ProfilePage() {
   const { user, setUser } = useAuthStore();
-  const [fullName, setFullName] = useState(user?.name || 'Nguyễn Minh Tuấn');
+  const [fullName, setFullName] = useState(user?.fullName ?? 'Nguyễn Minh Tuấn');
   const [phone, setPhone] = useState('0901234567');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -69,7 +69,7 @@ export default function ProfilePage() {
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
     if (user) {
-      setUser({ ...user, name: fullName });
+      setUser({ ...user, fullName });
       alert('Đã cập nhật thông tin tài khoản thành công.');
     }
   };

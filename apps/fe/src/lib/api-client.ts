@@ -5,7 +5,7 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match[2]) : null;
 }
 
-export const apiClient = axios.create({
+const apiClient = axios.create({
   baseURL: '/api/v1',
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
@@ -66,3 +66,6 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export { apiClient };
+export default apiClient;

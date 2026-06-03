@@ -15,7 +15,7 @@ export class AdminHotspotsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a hotspot' })
-  async update(@Param('id') id: string, @Body() body: unknown) {
+  async update(@Param('id') id: string, @Body() body: Record<string, unknown>) {
     return this.adminProductsService.updateHotspot(id, body);
   }
 

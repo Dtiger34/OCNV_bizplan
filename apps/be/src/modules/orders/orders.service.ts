@@ -36,6 +36,7 @@ export class OrdersService {
       productImageUrl?: string;
       quantity: number;
       unitPrice: number;
+      isReviewed: boolean;
     }> = [];
 
     for (const item of dto.items) {
@@ -55,6 +56,7 @@ export class OrdersService {
         productImageUrl: product.images?.[0]?.url,
         quantity: item.quantity,
         unitPrice: product.price,
+        isReviewed: false,
       });
     }
 

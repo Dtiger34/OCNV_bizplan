@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCart } from '@/context/CartContext';
 import { X, Plus, Minus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

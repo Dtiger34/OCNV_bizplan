@@ -1,20 +1,9 @@
 import { useState } from 'react';
-import { Search, CheckCircle2, XCircle, Trash2, Star, ChevronDown } from 'lucide-react';
+import { Search, CheckCircle2, XCircle, Trash2 } from 'lucide-react';
+import { useAdminReviews, useUpdateReviewStatus, useDeleteReview } from '../hooks/useAdminReviews';
+import { AdminReview } from '../../../../types/api';
 
 type ReviewStatus = 'pending' | 'approved' | 'rejected';
-
-interface Review {
-  id: string; user: string; product: string; rating: number;
-  content: string; status: ReviewStatus; date: string;
-}
-
-const MOCK_REVIEWS: Review[] = [
-  { id: 'r1', user: 'Nguyễn Thị Lan',  product: 'Mô Hình Làng Gốm Bát Tràng',       rating: 5, content: 'Hộp tiểu cảnh Bát Tràng chi tiết đến kinh ngạc. Tôi dùng làm đồ dùng dạy học cho học sinh về văn hóa truyền thống.', status: 'approved', date: '25/05/2025' },
-  { id: 'r2', user: 'Trần Minh Quân',  product: 'Mô Hình Làng Lụa Vạn Phúc',        rating: 4, content: 'Mua làm quà tặng đối tác nước ngoài. Ai cũng trầm trồ vì sự tỉ mỉ và câu chuyện văn hóa đằng sau mỗi sản phẩm.', status: 'approved', date: '23/05/2025' },
-  { id: 'r3', user: 'Lê Văn Đức',      product: 'Mô Hình Làng Hương Quảng Phú Cầu', rating: 3, content: 'Sản phẩm đẹp nhưng giao hàng hơi chậm so với kỳ vọng.', status: 'pending', date: '26/05/2025' },
-  { id: 'r4', user: 'Phạm Thu Hương',  product: 'Mô Hình Làng Nón Làng Chuông',     rating: 5, content: 'Trải nghiệm AR khi quét mã thực sự ấn tượng. Hộp quà nhỏ nhưng mang cả một câu chuyện làng nghề sống động.', status: 'pending', date: '27/05/2025' },
-  { id: 'r5', user: 'Hoàng Văn Hùng',  product: 'Mô Hình Làng Gốm Bát Tràng',       rating: 1, content: 'Hàng nhận bị vỡ góc. Rất thất vọng.', status: 'rejected', date: '20/05/2025' },
-];
 
 const STATUS_META: Record<ReviewStatus, { label: string; cls: string }> = {
   pending:  { label: 'Chờ duyệt', cls: 'bg-yellow-100 text-yellow-700' },
@@ -35,25 +24,33 @@ function StarRow({ n }: { n: number }) {
 }
 
 export default function AdminReviewListPage() {
-  const [reviews, setReviews] = useState<Review[]>(MOCK_REVIEWS);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<ReviewStatus | 'all'>('all');
 
-  const filtered = reviews.filter((r) => {
-    const matchStatus = filterStatus === 'all' || r.status === filterStatus;
+  const { data, isLoading } = useAdminReviews({
+    status: filterStatus === 'all' ? undefined : filterStatus,
+    limit: 50,
+  });
+  const updateStatus = useUpdateReviewStatus();
+  const deleteReview = useDeleteReview();
+
+  const items = (data?.items ?? []) as AdminReview[];
+
+  const filtered = items.filter((r) => {
     const q = search.toLowerCase();
-    return matchStatus && (!q || r.user.toLowerCase().includes(q) || r.product.toLowerCase().includes(q) || r.content.toLowerCase().includes(q));
+    if (!q) return true;
+    return (
+      r.user?.fullName?.toLowerCase().includes(q) ||
+      r.product?.name?.vi?.toLowerCase().includes(q) ||
+      r.content?.toLowerCase().includes(q)
+    );
   });
 
-  const setStatus = (id: string, s: ReviewStatus) =>
-    setReviews((p) => p.map((r) => r.id === id ? { ...r, status: s } : r));
-  const remove = (id: string) => setReviews((p) => p.filter((r) => r.id !== id));
-
   const counts = {
-    all: reviews.length,
-    pending: reviews.filter((r) => r.status === 'pending').length,
-    approved: reviews.filter((r) => r.status === 'approved').length,
-    rejected: reviews.filter((r) => r.status === 'rejected').length,
+    all: data?.total ?? 0,
+    pending: items.filter((r) => r.status === 'pending').length,
+    approved: items.filter((r) => r.status === 'approved').length,
+    rejected: items.filter((r) => r.status === 'rejected').length,
   };
 
   return (
@@ -76,16 +73,12 @@ export default function AdminReviewListPage() {
         ))}
       </div>
 
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input type="text" placeholder="Tìm theo tên, sản phẩm, nội dung..." value={search} onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 h-9 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400" />
-        </div>
+      <div className="relative max-w-sm">
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <input type="text" placeholder="Tìm theo tên, sản phẩm, nội dung..." value={search} onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-9 pr-4 h-9 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400" />
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200 text-xs text-gray-500 uppercase tracking-wide">
@@ -98,14 +91,16 @@ export default function AdminReviewListPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
+            {isLoading && <tr><td colSpan={5} className="py-12 text-center text-gray-400 text-sm">Đang tải...</td></tr>}
+            {!isLoading && filtered.length === 0 && <tr><td colSpan={5} className="py-12 text-center text-gray-400 text-sm">Không có đánh giá nào.</td></tr>}
             {filtered.map((r) => (
-              <tr key={r.id} className={`hover:bg-gray-50 ${r.status === 'pending' ? 'bg-yellow-50/30' : ''}`}>
+              <tr key={r._id} className={`hover:bg-gray-50 ${r.status === 'pending' ? 'bg-yellow-50/30' : ''}`}>
                 <td className="px-5 py-3">
-                  <p className="font-semibold text-gray-800">{r.user}</p>
+                  <p className="font-semibold text-gray-800">{r.user?.fullName ?? 'Ẩn danh'}</p>
                   <StarRow n={r.rating} />
-                  <p className="text-xs text-gray-400 mt-0.5">{r.date}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{new Date(r.createdAt).toLocaleDateString('vi-VN')}</p>
                 </td>
-                <td className="px-4 py-3 text-gray-500 hidden md:table-cell text-xs">{r.product}</td>
+                <td className="px-4 py-3 text-gray-500 hidden md:table-cell text-xs">{r.product?.name?.vi ?? '—'}</td>
                 <td className="px-4 py-3 hidden lg:table-cell">
                   <p className="text-gray-600 text-xs line-clamp-2 max-w-xs">{r.content}</p>
                 </td>
@@ -115,16 +110,19 @@ export default function AdminReviewListPage() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-1 justify-end">
                     {r.status !== 'approved' && (
-                      <button onClick={() => setStatus(r.id, 'approved')} className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors cursor-pointer" title="Duyệt">
+                      <button onClick={() => updateStatus.mutate({ id: r._id, status: 'approved' })}
+                        className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors cursor-pointer" title="Duyệt">
                         <CheckCircle2 size={15} />
                       </button>
                     )}
                     {r.status !== 'rejected' && (
-                      <button onClick={() => setStatus(r.id, 'rejected')} className="p-1.5 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors cursor-pointer" title="Từ chối">
+                      <button onClick={() => updateStatus.mutate({ id: r._id, status: 'rejected' })}
+                        className="p-1.5 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors cursor-pointer" title="Từ chối">
                         <XCircle size={15} />
                       </button>
                     )}
-                    <button onClick={() => remove(r.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer" title="Xóa">
+                    <button onClick={() => deleteReview.mutate(r._id)}
+                      className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer" title="Xóa">
                       <Trash2 size={15} />
                     </button>
                   </div>
@@ -133,7 +131,6 @@ export default function AdminReviewListPage() {
             ))}
           </tbody>
         </table>
-        {filtered.length === 0 && <div className="py-12 text-center text-gray-400 text-sm">Không có đánh giá nào.</div>}
       </div>
     </div>
   );

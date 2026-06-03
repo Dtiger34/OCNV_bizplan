@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 interface Category {
@@ -15,12 +14,11 @@ interface CategoryTilesProps {
 
 function CategoryCard({
   cat,
-  idx,
   layoutClass,
   onSelectCategory
 }: {
   cat: Category;
-  idx: number;
+  idx?: number;
   layoutClass: string;
   onSelectCategory?: (categoryName: string) => void;
 }) {

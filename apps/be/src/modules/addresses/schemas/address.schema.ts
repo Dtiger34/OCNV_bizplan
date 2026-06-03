@@ -29,8 +29,8 @@ export class Address {
   @Prop({ default: false })
   isDefault: boolean;
 
-  @Prop({ default: null })
-  deletedAt?: Date | null;
+  @Prop({ type: Date, default: null })
+  deletedAt?: Date;
 
   createdAt: Date;
 }

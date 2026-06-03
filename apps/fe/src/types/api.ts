@@ -81,9 +81,23 @@ export interface Address { _id: string; fullName: string; phone: string; provinc
 export interface StaticContent { key: string; content: BilingualText; updatedAt: string; }
 
 export interface DashboardStats {
-  orders: { total: number; pending: number; delivered: number; cancelled: number };
-  revenue: number;
-  revenueChart: Array<{ date: string; amount: number }>;
-  topProducts: Array<{ _id: string; name: string; sold: number; revenue: number }>;
-  newUsers: number; arViews: number;
+  totalRevenue: number;
+  totalOrders: number;
+  totalUsers: number;
+  totalProducts: number;
+  recentOrders: Array<{
+    _id: string; orderCode: string; status: string; total: number;
+    items: Array<{ productName: string; quantity: number }>;
+    createdAt: string;
+  }>;
+  revenueByPeriod: Array<{ _id: string; revenue: number; orders: number }>;
+}
+
+export interface AdminReview {
+  _id: string;
+  user: { _id: string; fullName: string; avatarUrl: string | null } | null;
+  product: { _id: string; name: BilingualText } | null;
+  rating: number; content: string; imageUrls: string[];
+  videoUrl: string | null; createdAt: string;
+  status: 'pending' | 'approved' | 'rejected';
 }

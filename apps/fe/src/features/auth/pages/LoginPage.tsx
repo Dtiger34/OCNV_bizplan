@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import { useLogin } from '../hooks/useAuth';
 import { Mail, Lock, LogIn } from 'lucide-react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
-  
+  const login = useLogin();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      alert('Vui lòng nhập email và mật khẩu.');
-      return;
-    }
-
-    // Set mock user profile in authStore
-    setUser({
-      id: 'usr-888',
-      name: 'Nguyễn Minh Tuấn',
-      email: email,
-      role: 'customer' // or 'admin'
+    login.mutate({ email, password }, {
+      onSuccess: (user) => {
+        setUser({ _id: user._id, fullName: user.fullName, email: user.email, role: user.role as 'customer' | 'admin', avatarUrl: user.avatarUrl ?? undefined });
+        navigate('/');
+      },
+      onError: () => {
+        alert('Email hoặc mật khẩu không đúng. Vui lòng thử lại.');
+      },
     });
-    
-    navigate('/');
   };
 
   return (
     <div className="container mx-auto px-6 md:px-8 py-16 max-w-md">
       <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-8 space-y-6 shadow-subtle">
-        
+
         <div className="text-center space-y-1">
           <span className="text-[10px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
             ĐĂNG NHẬP HỆ THỐNG
@@ -87,10 +84,11 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full h-12 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            disabled={login.isPending}
+            className="w-full h-12 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <LogIn size={16} />
-            ĐĂNG NHẬP NGAY
+            {login.isPending ? 'ĐANG ĐĂNG NHẬP...' : 'ĐĂNG NHẬP NGAY'}
           </button>
         </form>
 

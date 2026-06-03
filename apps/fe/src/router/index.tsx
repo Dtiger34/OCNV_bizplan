@@ -3,7 +3,6 @@ import { lazy, Suspense } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import AdminLayout from '@/components/layout/AdminLayout';
 import PrivateRoute from '@/components/layout/PrivateRoute';
-import AdminRoute from '@/components/layout/AdminRoute';
 
 // Public pages
 const HomePage = lazy(() => import('@/features/home/pages/HomePage'));

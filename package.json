@@ -6,7 +6,8 @@
     "fe": "pnpm --filter @ocnv/fe",
     "dev": "concurrently --names \"be,fe\" --prefix-colors \"blue,green\" \"pnpm --filter @ocnv/be dev\" \"pnpm --filter @ocnv/fe dev\"",
     "build": "pnpm -r run build",
-    "lint": "pnpm -r run lint"
+    "lint": "pnpm -r run lint",
+    "type-check": "pnpm -r run type-check"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

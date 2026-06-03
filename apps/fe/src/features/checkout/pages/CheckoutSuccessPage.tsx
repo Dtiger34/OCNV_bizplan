@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home } from 'lucide-react';
 

@@ -1,41 +1,63 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, MapPin, Info } from 'lucide-react';
+import { useHotspots, useCreateHotspot, useUpdateHotspot, useDeleteHotspot } from '../hooks/useAdminHotspots';
 
-interface Hotspot { id: string; label: string; description: string; x: number; y: number; }
+interface HotspotUI { _id: string; label: string; description: string; x: number; y: number; }
 
-const INIT: Hotspot[] = [
-  { id: 'h1', label: 'Bàn xoay gốm', description: 'Nghệ nhân dùng bàn xoay tre để tạo hình nồi gốm thủ công.', x: 35, y: 55 },
-  { id: 'h2', label: 'Lò nung gạch bầu', description: 'Lò nung truyền thống hình bầu, duy trì nhiệt độ 1200°C.', x: 70, y: 40 },
-];
+function toUI(h: any): HotspotUI {
+  return {
+    _id: h._id,
+    label: h.title?.vi ?? '',
+    description: h.content?.vi ?? '',
+    x: typeof h.position?.x === 'number' ? (h.position.x * 100) : 50,
+    y: typeof h.position?.y === 'number' ? (h.position.y * 100) : 50,
+  };
+}
 
 export default function AdminHotspotPage() {
-  const { id } = useParams();
-  const [hotspots, setHotspots] = useState<Hotspot[]>(INIT);
+  const { id: productId } = useParams<{ id: string }>();
+  const { data: rawHotspots, isLoading } = useHotspots(productId ?? '');
+  const createHotspot = useCreateHotspot(productId ?? '');
+  const updateHotspot = useUpdateHotspot();
+  const deleteHotspot = useDeleteHotspot();
+
+  const hotspots: HotspotUI[] = (rawHotspots ?? []).map(toUI);
+
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ label: '', description: '' });
 
-  const selectedHotspot = hotspots.find((h) => h.id === selected);
+  const selectedHotspot = hotspots.find((h) => h._id === selected);
 
-  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleImageClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     if (!adding) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const newH: Hotspot = { id: `h${Date.now()}`, label: form.label || 'Hotspot mới', description: form.description, x, y };
-    setHotspots((p) => [...p, newH]);
-    setSelected(newH.id);
+    const x = ((e.clientX - rect.left) / rect.width);
+    const y = ((e.clientY - rect.top) / rect.height);
+    await createHotspot.mutateAsync({
+      slotName: `slot-${Date.now()}`,
+      position: { x, y, z: 0 },
+      normal: { x: 0, y: 1, z: 0 },
+      title: { vi: form.label || 'Hotspot mới', en: form.label || 'New hotspot' },
+      content: { vi: form.description, en: form.description },
+    });
     setAdding(false);
     setForm({ label: '', description: '' });
   };
 
-  const updateSelected = (field: 'label' | 'description', value: string) => {
-    if (!selected) return;
-    setHotspots((p) => p.map((h) => h.id === selected ? { ...h, [field]: value } : h));
+  const updateSelected = async (field: 'label' | 'description', value: string) => {
+    if (!selected || !selectedHotspot) return;
+    const patch = field === 'label'
+      ? { title: { vi: value, en: value } }
+      : { content: { vi: value, en: value } };
+    await updateHotspot.mutateAsync({ id: selected, data: patch });
   };
 
-  const remove = (id: string) => { setHotspots((p) => p.filter((h) => h.id !== id)); setSelected(null); };
+  const handleDelete = async (id: string) => {
+    await deleteHotspot.mutateAsync(id);
+    setSelected(null);
+  };
 
   return (
     <div className="space-y-5">
@@ -45,7 +67,7 @@ export default function AdminHotspotPage() {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Quản lý Hotspot AR</h1>
-          <p className="text-sm text-gray-400">Sản phẩm: {id}</p>
+          <p className="text-sm text-gray-400">Sản phẩm: {productId}</p>
         </div>
       </div>
 
@@ -53,6 +75,8 @@ export default function AdminHotspotPage() {
         <Info size={16} className="shrink-0 mt-0.5" />
         <span>Click vào ảnh để đặt hotspot. Hotspot sẽ hiển thị khi người dùng trải nghiệm AR.</span>
       </div>
+
+      {isLoading && <div className="text-sm text-gray-400">Đang tải hotspot...</div>}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Image canvas */}
@@ -62,16 +86,14 @@ export default function AdminHotspotPage() {
             style={{ aspectRatio: '4/3' }}
             onClick={handleImageClick}
           >
-            <img
-              src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=800&q=80"
-              alt="product"
-              className="w-full h-full object-cover pointer-events-none"
-            />
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-sm">
+              Ảnh sản phẩm
+            </div>
             {hotspots.map((h) => (
               <button
-                key={h.id}
-                onClick={(e) => { e.stopPropagation(); setSelected(h.id); setAdding(false); }}
-                className={`absolute w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 flex items-center justify-center transition-all cursor-pointer ${selected === h.id ? 'bg-blue-600 border-white scale-110 shadow-lg' : 'bg-amber-500 border-white hover:scale-110 shadow-md'}`}
+                key={h._id}
+                onClick={(e) => { e.stopPropagation(); setSelected(h._id); setAdding(false); }}
+                className={`absolute w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 flex items-center justify-center transition-all cursor-pointer ${selected === h._id ? 'bg-blue-600 border-white scale-110 shadow-lg' : 'bg-amber-500 border-white hover:scale-110 shadow-md'}`}
                 style={{ left: `${h.x}%`, top: `${h.y}%` }}
                 title={h.label}
               >
@@ -94,37 +116,34 @@ export default function AdminHotspotPage() {
 
         {/* Sidebar */}
         <div className="space-y-4">
-          {/* Edit selected */}
           {selectedHotspot && (
             <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-gray-800 text-sm">Chỉnh sửa hotspot</h3>
-                <button onClick={() => remove(selectedHotspot.id)} className="text-red-400 hover:text-red-600 cursor-pointer"><Trash2 size={15} /></button>
+                <button onClick={() => handleDelete(selectedHotspot._id)} className="text-red-400 hover:text-red-600 cursor-pointer"><Trash2 size={15} /></button>
               </div>
               <div className="space-y-3">
                 <div>
                   <label className="text-xs font-semibold text-gray-500 uppercase">Nhãn</label>
-                  <input value={selectedHotspot.label} onChange={(e) => updateSelected('label', e.target.value)}
+                  <input defaultValue={selectedHotspot.label} onBlur={(e) => updateSelected('label', e.target.value)}
                     className="mt-1 w-full h-9 px-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400" />
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-gray-500 uppercase">Mô tả</label>
-                  <textarea rows={3} value={selectedHotspot.description} onChange={(e) => updateSelected('description', e.target.value)}
+                  <textarea rows={3} defaultValue={selectedHotspot.description} onBlur={(e) => updateSelected('description', e.target.value)}
                     className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400 resize-none" />
                 </div>
-                <div className="text-xs text-gray-400">Vị trí: ({selectedHotspot.x.toFixed(1)}%, {selectedHotspot.y.toFixed(1)}%)</div>
               </div>
             </div>
           )}
 
-          {/* Hotspot list */}
           <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
             <h3 className="font-semibold text-gray-800 text-sm">Danh sách hotspot ({hotspots.length})</h3>
             {hotspots.length === 0 && <p className="text-sm text-gray-400">Chưa có hotspot nào.</p>}
             {hotspots.map((h) => (
-              <div key={h.id} onClick={() => setSelected(h.id)}
-                className={`flex items-center gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${selected === h.id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'}`}>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${selected === h.id ? 'bg-blue-600' : 'bg-amber-500'}`}>
+              <div key={h._id} onClick={() => setSelected(h._id)}
+                className={`flex items-center gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${selected === h._id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'}`}>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${selected === h._id ? 'bg-blue-600' : 'bg-amber-500'}`}>
                   <MapPin size={11} className="text-white" />
                 </div>
                 <div className="min-w-0">

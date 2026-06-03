@@ -192,7 +192,7 @@ export default function RegulationsPage() {
             <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
               Nghề Xưa Nét Mới
             </span>
-            <h1 className="text-4xl md:text-5xl font-light text-[#2C1A0E]">Quy Định</h1>
+            <h1 className="text-4xl md:text-5xl font-light text-[#2C1A0E]">Chính Sách</h1>
           </div>
           <p className="hidden md:block text-sm text-[#9C8670] max-w-xs text-right leading-relaxed">
             Tổng hợp chính sách, điều khoản và hướng dẫn mua hàng

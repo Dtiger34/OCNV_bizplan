@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "typecheck": "tsc -b",
+    "type-check": "tsc -b",
     "lint": "eslint src",
     "preview": "vite preview"
   },

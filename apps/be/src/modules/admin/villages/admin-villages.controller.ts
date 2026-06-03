@@ -27,19 +27,19 @@ export class AdminVillagesController {
 
   @Patch('villages/:id')
   @ApiOperation({ summary: 'Update a village' })
-  async update(@Param('id') id: string, @Body() body: unknown) {
+  async update(@Param('id') id: string, @Body() body: Record<string, unknown>) {
     return this.adminVillagesService.update(id, body);
   }
 
   @Post('villages/:villageId/stages')
   @ApiOperation({ summary: 'Create a village stage' })
-  async createStage(@Param('villageId') villageId: string, @Body() body: unknown) {
+  async createStage(@Param('villageId') villageId: string, @Body() body: Record<string, unknown>) {
     return this.adminVillagesService.createStage(villageId, body);
   }
 
   @Patch('stages/:id')
   @ApiOperation({ summary: 'Update a village stage' })
-  async updateStage(@Param('id') id: string, @Body() body: unknown) {
+  async updateStage(@Param('id') id: string, @Body() body: Record<string, unknown>) {
     return this.adminVillagesService.updateStage(id, body);
   }
 

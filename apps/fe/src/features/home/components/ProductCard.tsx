@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -25,7 +24,7 @@ interface ProductCardProps {
   onViewDetails?: (product: Product) => void;
 }
 
-export default function ProductCard({ product, isFeatured = false, onViewDetails }: ProductCardProps) {
+export default function ProductCard({ product, onViewDetails }: ProductCardProps) {
   const { addToCart } = useCart();
 
   const getStockBadgeStyle = (status: string) => {

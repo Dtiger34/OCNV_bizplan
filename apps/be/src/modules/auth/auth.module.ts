@@ -20,10 +20,10 @@ import { EmailModule } from '../email/email.module';
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_ACCESS_SECRET', 'secret'),
         signOptions: {
-          expiresIn: config.get<string>('JWT_ACCESS_EXPIRES_IN', '15m'),
-          issuer: config.get<string>('JWT_ISSUER', 'ocnv'),
-          audience: config.get<string>('JWT_AUDIENCE', 'ocnv-client'),
-        },
+          expiresIn: config.get('JWT_ACCESS_EXPIRES_IN', '15m'),
+          issuer: config.get('JWT_ISSUER', 'ocnv'),
+          audience: config.get('JWT_AUDIENCE', 'ocnv-client'),
+        } as any,
       }),
     }),
   ],

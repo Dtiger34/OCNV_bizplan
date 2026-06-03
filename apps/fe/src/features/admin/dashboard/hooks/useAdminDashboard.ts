@@ -2,7 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import apiClient from '../../../../lib/api-client';
 import { DashboardStats } from '../../../../types/api';
 
-export function useAdminStats(period: '7d' | '30d' | '90d' = '30d') {
+export type DashboardPeriod = 'today' | 'week' | 'month' | 'year';
+
+export function useAdminStats(period: DashboardPeriod = 'month') {
   return useQuery<DashboardStats>({
     queryKey: ['admin', 'dashboard', 'stats', period],
     queryFn: async () => {

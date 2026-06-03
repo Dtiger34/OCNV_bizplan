@@ -4,12 +4,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class CartItemDto {
   @IsString()
-  productId: string;
+  productId!: string;
 
   @IsNumber()
   @Min(1)
   @Type(() => Number)
-  quantity: number;
+  quantity!: number;
 }
 
 export class MergeCartDto {
@@ -17,5 +17,5 @@ export class MergeCartDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CartItemDto)
-  items: CartItemDto[];
+  items!: CartItemDto[];
 }

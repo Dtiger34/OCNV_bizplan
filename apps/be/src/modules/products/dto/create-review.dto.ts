@@ -5,19 +5,19 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class CreateReviewDto {
   @ApiProperty()
   @IsString()
-  orderId: string;
+  orderId!: string;
 
   @ApiProperty({ minimum: 1, maximum: 5 })
   @IsNumber()
   @Min(1)
   @Max(5)
   @Type(() => Number)
-  rating: number;
+  rating!: number;
 
   @ApiProperty({ minLength: 10 })
   @IsString()
   @MinLength(10)
-  content: string;
+  content!: string;
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()

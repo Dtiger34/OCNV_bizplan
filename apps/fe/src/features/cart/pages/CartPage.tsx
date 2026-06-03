@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCart } from '@/context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';

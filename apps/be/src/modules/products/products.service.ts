@@ -87,7 +87,7 @@ export class ProductsService {
       productId: new Types.ObjectId(productId),
       userId: new Types.ObjectId(userId),
       rating: dto.rating,
-      comment: dto.comment,
+      content: dto.content,
       status: ReviewStatus.PENDING,
     });
   }

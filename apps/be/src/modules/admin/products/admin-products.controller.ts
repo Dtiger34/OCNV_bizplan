@@ -21,7 +21,7 @@ export class AdminProductsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a product' })
-  async create(@Body() body: unknown) {
+  async create(@Body() body: Record<string, unknown>) {
     return this.adminProductsService.create(body);
   }
 
@@ -33,7 +33,7 @@ export class AdminProductsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a product' })
-  async update(@Param('id') id: string, @Body() body: unknown) {
+  async update(@Param('id') id: string, @Body() body: Record<string, unknown>) {
     return this.adminProductsService.update(id, body);
   }
 
@@ -63,7 +63,7 @@ export class AdminProductsController {
 
   @Post(':productId/hotspots')
   @ApiOperation({ summary: 'Create a hotspot for a product' })
-  async createHotspot(@Param('productId') productId: string, @Body() body: unknown) {
+  async createHotspot(@Param('productId') productId: string, @Body() body: Record<string, unknown>) {
     return this.adminProductsService.createHotspot(productId, body);
   }
 }

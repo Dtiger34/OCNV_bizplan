@@ -1,47 +1,54 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Package, Truck, CheckCircle2, XCircle, Clock, Check } from 'lucide-react';
+import { useAdminOrder, useUpdateOrderStatus } from '../hooks/useAdminOrders';
 
-type OrderStatus = 'pending' | 'paid' | 'shipping' | 'delivered' | 'cancelled';
+type OrderStatus = 'pending' | 'packing' | 'shipping' | 'delivered' | 'cancelled';
 
-const STATUS_FLOW: OrderStatus[] = ['pending', 'paid', 'shipping', 'delivered'];
-const STATUS_META: Record<OrderStatus, { label: string; icon: React.ReactNode; cls: string }> = {
-  pending:   { label: 'Chờ xử lý',    icon: <Clock size={16} />,         cls: 'text-yellow-600 bg-yellow-50 border-yellow-200' },
-  paid:      { label: 'Đã thanh toán', icon: <CheckCircle2 size={16} />,  cls: 'text-blue-600 bg-blue-50 border-blue-200' },
-  shipping:  { label: 'Đang giao',     icon: <Truck size={16} />,         cls: 'text-purple-600 bg-purple-50 border-purple-200' },
-  delivered: { label: 'Đã giao',       icon: <CheckCircle2 size={16} />,  cls: 'text-green-600 bg-green-50 border-green-200' },
-  cancelled: { label: 'Đã huỷ',        icon: <XCircle size={16} />,       cls: 'text-red-600 bg-red-50 border-red-200' },
-};
-
-const MOCK_ORDER = {
-  id: 'OCNV-2025-0041',
-  customer: { name: 'Nguyễn Thị Lan', email: 'lan@gmail.com', phone: '0912 345 678' },
-  address: '42 Tràng Tiền, Q. Hoàn Kiếm, Hà Nội',
-  items: [
-    { id: 'tieu-canh-bat-trang', name: 'Mô Hình Làng Gốm Bát Tràng', price: 1250000, qty: 1, image: 'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=80&q=60' },
-  ],
-  subtotal: 1250000, shipping: 0, total: 1250000,
-  payment: 'VNPay', status: 'shipping' as OrderStatus,
-  trackingCode: 'GHTK123456789',
-  createdAt: '26/05/2025 09:15',
-  note: 'Khách yêu cầu gói quà',
+const STATUS_FLOW: OrderStatus[] = ['pending', 'packing', 'shipping', 'delivered'];
+const STATUS_META: Record<string, { label: string; icon: React.ReactNode; cls: string }> = {
+  pending:   { label: 'Chờ xử lý',    icon: <Clock size={16} />,        cls: 'text-yellow-600 bg-yellow-50 border-yellow-200' },
+  packing:   { label: 'Đóng gói',     icon: <Package size={16} />,      cls: 'text-orange-600 bg-orange-50 border-orange-200' },
+  shipping:  { label: 'Đang giao',    icon: <Truck size={16} />,        cls: 'text-purple-600 bg-purple-50 border-purple-200' },
+  delivered: { label: 'Đã giao',      icon: <CheckCircle2 size={16} />, cls: 'text-green-600 bg-green-50 border-green-200' },
+  cancelled: { label: 'Đã huỷ',       icon: <XCircle size={16} />,      cls: 'text-red-600 bg-red-50 border-red-200' },
 };
 
 export default function AdminOrderDetailPage() {
-  const { id } = useParams();
-  const [order, setOrder] = useState(MOCK_ORDER);
-  const [trackingInput, setTrackingInput] = useState(order.trackingCode);
-  const [noteInput, setNoteInput] = useState(order.note);
+  const { id } = useParams<{ id: string }>();
+  const { data: order, isLoading } = useAdminOrder(id ?? '');
+  const updateStatus = useUpdateOrderStatus();
+
+  const [trackingInput, setTrackingInput] = useState('');
+  const [noteInput, setNoteInput] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | ''>('');
   const [saved, setSaved] = useState(false);
 
-  const setStatus = (s: OrderStatus) => setOrder((p) => ({ ...p, status: s }));
-  const handleSave = () => {
-    setOrder((p) => ({ ...p, trackingCode: trackingInput, note: noteInput }));
+  const currentStatus = (order?.status ?? 'pending') as OrderStatus;
+  const currentIdx = STATUS_FLOW.indexOf(currentStatus);
+
+  const handleSave = async () => {
+    if (!id) return;
+    const status = selectedStatus || currentStatus;
+    await updateStatus.mutateAsync({ id, status, note: noteInput || undefined });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const currentIdx = STATUS_FLOW.indexOf(order.status);
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl space-y-6">
+        <div className="h-8 w-48 bg-gray-100 animate-pulse rounded" />
+        <div className="h-40 bg-gray-100 animate-pulse rounded-xl" />
+      </div>
+    );
+  }
+
+  if (!order) {
+    return <div className="text-gray-400 text-sm">Không tìm thấy đơn hàng.</div>;
+  }
+
+  const addr = order.shippingAddress;
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -51,12 +58,12 @@ export default function AdminOrderDetailPage() {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Chi tiết đơn hàng</h1>
-          <p className="text-sm text-gray-400 font-mono">{id || order.id}</p>
+          <p className="text-sm text-gray-400 font-mono">{order.orderCode}</p>
         </div>
       </div>
 
       {/* Status progress */}
-      {order.status !== 'cancelled' && (
+      {currentStatus !== 'cancelled' && (
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-2">
             {STATUS_FLOW.map((s, i) => (
@@ -82,19 +89,21 @@ export default function AdminOrderDetailPage() {
           {/* Items */}
           <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-4">
             <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide flex items-center gap-2"><Package size={15} /> Sản phẩm đặt mua</h2>
-            {order.items.map((item) => (
-              <div key={item.id} className="flex items-center gap-4 py-3 border-t border-gray-100">
-                <img src={item.image} alt={item.name} className="w-14 h-14 rounded-lg object-cover border border-gray-100" />
+            {order.items.map((item, i) => (
+              <div key={i} className="flex items-center gap-4 py-3 border-t border-gray-100">
+                {item.productImageUrl && (
+                  <img src={item.productImageUrl} alt={item.productName} className="w-14 h-14 rounded-lg object-cover border border-gray-100" />
+                )}
                 <div className="flex-1">
-                  <p className="font-semibold text-gray-800">{item.name}</p>
-                  <p className="text-xs text-gray-400">SL: {item.qty}</p>
+                  <p className="font-semibold text-gray-800">{item.productName}</p>
+                  <p className="text-xs text-gray-400">SL: {item.quantity}</p>
                 </div>
-                <p className="font-bold text-gray-800">{item.price.toLocaleString('vi-VN')}₫</p>
+                <p className="font-bold text-gray-800">{(item.unitPrice * item.quantity).toLocaleString('vi-VN')}₫</p>
               </div>
             ))}
             <div className="border-t border-gray-100 pt-3 space-y-1.5 text-sm">
               <div className="flex justify-between text-gray-500"><span>Tạm tính</span><span>{order.subtotal.toLocaleString('vi-VN')}₫</span></div>
-              <div className="flex justify-between text-gray-500"><span>Vận chuyển</span><span>{order.shipping === 0 ? 'Miễn phí' : `${order.shipping.toLocaleString('vi-VN')}₫`}</span></div>
+              <div className="flex justify-between text-gray-500"><span>Vận chuyển</span><span>{order.shippingFee === 0 ? 'Miễn phí' : `${order.shippingFee.toLocaleString('vi-VN')}₫`}</span></div>
               <div className="flex justify-between font-bold text-gray-800 text-base pt-1 border-t border-gray-100"><span>Tổng cộng</span><span>{order.total.toLocaleString('vi-VN')}₫</span></div>
             </div>
           </div>
@@ -106,8 +115,8 @@ export default function AdminOrderDetailPage() {
               <label className="text-xs font-semibold text-gray-500 uppercase">Trạng thái</label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {(Object.keys(STATUS_META) as OrderStatus[]).map((s) => (
-                  <button key={s} onClick={() => setStatus(s)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${order.status === s ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
+                  <button key={s} onClick={() => setSelectedStatus(s)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${(selectedStatus || currentStatus) === s ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
                     {STATUS_META[s].label}
                   </button>
                 ))}
@@ -116,6 +125,7 @@ export default function AdminOrderDetailPage() {
             <div>
               <label className="text-xs font-semibold text-gray-500 uppercase">Mã vận đơn</label>
               <input value={trackingInput} onChange={(e) => setTrackingInput(e.target.value)}
+                placeholder={order.trackingCode ?? 'Chưa có mã vận đơn'}
                 className="mt-1 w-full h-9 px-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400" />
             </div>
             <div>
@@ -123,8 +133,9 @@ export default function AdminOrderDetailPage() {
               <textarea rows={2} value={noteInput} onChange={(e) => setNoteInput(e.target.value)}
                 className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400 resize-none" />
             </div>
-            <button onClick={handleSave} className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg text-white cursor-pointer transition-colors ${saved ? 'bg-green-600' : 'bg-gray-800 hover:bg-gray-700'}`}>
-              {saved ? <><Check size={14} /> Đã lưu</> : 'Lưu thay đổi'}
+            <button onClick={handleSave} disabled={updateStatus.isPending}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg text-white cursor-pointer transition-colors ${saved ? 'bg-green-600' : 'bg-gray-800 hover:bg-gray-700'}`}>
+              {saved ? <><Check size={14} /> Đã lưu</> : updateStatus.isPending ? 'Đang lưu...' : 'Lưu thay đổi'}
             </button>
           </div>
         </div>
@@ -132,21 +143,23 @@ export default function AdminOrderDetailPage() {
         {/* Right */}
         <div className="space-y-5">
           <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
-            <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Khách hàng</h2>
-            <div className="space-y-1.5 text-sm">
-              <p className="font-semibold text-gray-800">{order.customer.name}</p>
-              <p className="text-gray-500">{order.customer.email}</p>
-              <p className="text-gray-500">{order.customer.phone}</p>
+            <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Địa chỉ giao hàng</h2>
+            <div className="space-y-1 text-sm text-gray-600">
+              <p className="font-semibold text-gray-800">{addr.fullName}</p>
+              <p>{addr.phone}</p>
+              <p>{addr.street}, {addr.ward}, {addr.district}, {addr.province}</p>
             </div>
           </div>
-          <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
-            <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Địa chỉ giao hàng</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">{order.address}</p>
-          </div>
+          {order.customerNote && (
+            <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
+              <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Ghi chú khách hàng</h2>
+              <p className="text-sm text-gray-600">{order.customerNote}</p>
+            </div>
+          )}
           <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
             <h2 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Thanh toán</h2>
-            <p className="text-sm text-gray-600">{order.payment}</p>
-            <p className="text-xs text-gray-400">Đặt lúc {order.createdAt}</p>
+            <p className="text-sm text-gray-600 capitalize">{order.payment.method}</p>
+            <p className="text-xs text-gray-400">Đặt lúc {new Date(order.createdAt).toLocaleString('vi-VN')}</p>
           </div>
         </div>
       </div>

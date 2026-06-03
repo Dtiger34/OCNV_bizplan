@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../../../lib/api-client';
 import { ProductCard, ProductDetail, PaginatedResponse, Review } from '../../../types/api';
 
@@ -58,5 +58,19 @@ export function useProductReviews(id: string, page = 1, limit = 10) {
       return res.data.data;
     },
     enabled: !!id,
+  });
+}
+
+export function useCreateReview(productId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: { rating: number; content: string }) => {
+      const res = await apiClient.post(`/products/${productId}/reviews`, data);
+      return res.data.data;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['products', productId, 'reviews'] });
+      qc.invalidateQueries({ queryKey: ['products', productId] });
+    },
   });
 }

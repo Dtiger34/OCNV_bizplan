@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Trash2, Eye, MessageSquare, Star, ChevronDown, X, Check } from 'lucide-react';
+import { Search, Trash2, Eye, MessageSquare, ChevronDown, X, Check } from 'lucide-react';
 import { useContactStore, ContactStatus, ContactSubmission } from '@/store/contactStore';
 
 const STATUS_LABEL: Record<ContactStatus, string> = {

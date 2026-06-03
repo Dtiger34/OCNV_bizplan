@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, CreditCard, Landmark, Check } from 'lucide-react';
+import { ShieldCheck, CreditCard, Landmark } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();

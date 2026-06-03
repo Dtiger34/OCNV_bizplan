@@ -1,6 +1,5 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { HelpCircle, ShieldAlert, Truck, Mail } from 'lucide-react';
+import { HelpCircle, ShieldAlert, Truck } from 'lucide-react';
 
 export default function StaticContentPage() {
   const { key } = useParams();
@@ -9,7 +8,7 @@ export default function StaticContentPage() {
     switch (key) {
       case 'return-policy':
         return {
-          title: 'Quy Định Đổi Trả',
+          title: 'Chính Sách Đổi Trả',
           icon: <ShieldAlert size={28} className="text-[#7B1C2E]" />,
           html: `
             <div class="space-y-4">
@@ -22,7 +21,7 @@ export default function StaticContentPage() {
         };
       case 'shipping-policy':
         return {
-          title: 'Quy Định Vận Chuyển',
+          title: 'Chính Sách Vận Chuyển',
           icon: <Truck size={28} className="text-[#C9973A]" />,
           html: `
             <div class="space-y-4">

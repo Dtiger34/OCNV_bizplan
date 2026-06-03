@@ -1,12 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { VILLAGES } from '../data/villages';
+import { useVillages } from '../hooks/useVillage';
 import { useLanguageStore } from '@/store/languageStore';
 
 export default function VillagesListPage() {
   const { language: lang } = useLanguageStore();
+  const { data: villages = [], isLoading } = useVillages();
 
   return (
     <div className="pb-20">
@@ -86,70 +86,49 @@ export default function VillagesListPage() {
           </h3>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-5 max-w-[1400px] mx-auto">
-          {VILLAGES.map((village, idx) => (
-            <motion.div
-              key={village.slug}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="w-[220px] shrink-0"
-            >
-              <Link
-                to={`/villages/${village.slug}`}
-                className="group block bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] overflow-hidden shadow-subtle hover:shadow-medium transition-all hover:-translate-y-2 h-full"
+        {isLoading ? (
+          <div className="text-center text-[#9C8670] py-10">Đang tải...</div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-5 max-w-[1400px] mx-auto">
+            {villages.map((village, idx) => (
+              <motion.div
+                key={village.slug}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="w-[220px] shrink-0"
               >
-                {/* Cover image */}
-                <div className="h-[150px] overflow-hidden relative">
-                  <img
-                    src={village.coverImageUrl}
-                    alt={village.name[lang]}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/60 to-transparent" />
-                  {/* Craft badge */}
-                  <span
-                    className="absolute bottom-2 left-3 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-[2px]"
-                    style={{
-                      backgroundColor: `${village.color}30`,
-                      color: village.color,
-                      border: `1px solid ${village.color}50`,
-                    }}
-                  >
-                    {village.craft[lang]}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="p-4 space-y-2">
-                  {/* Accent line */}
-                  <div className="h-[2px] w-6 rounded-full" style={{ backgroundColor: village.color }} />
-
-                  <h2 className="text-sm font-bold text-[#2C1A0E] leading-snug group-hover:text-[#5C3D1E] transition-colors">
-                    {village.name[lang]}
-                  </h2>
-
-                  <p className="text-[10px] text-[#7A5A1A] italic line-clamp-2 leading-relaxed">
-                    "{village.tagline[lang]}"
-                  </p>
-
-                  <div className="flex items-center gap-1 text-[#2C1A0E]/40 text-[10px]">
-                    <MapPin size={9} />
-                    <span className="truncate">{village.location[lang]}</span>
+                <Link
+                  to={`/villages/${village.slug}`}
+                  className="group block bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] overflow-hidden shadow-subtle hover:shadow-medium transition-all hover:-translate-y-2 h-full"
+                >
+                  <div className="h-[150px] overflow-hidden relative">
+                    <img
+                      src={village.coverImageUrl ?? 'https://placehold.co/220x150?text=Village'}
+                      alt={village.name[lang]}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/60 to-transparent" />
                   </div>
 
-                  <div
-                    className="flex items-center gap-1 text-[11px] font-semibold pt-1"
-                    style={{ color: village.color }}
-                  >
-                    {lang === 'vi' ? 'Đọc câu chuyện' : 'Read the story'}
-                    <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-[2px] w-6 rounded-full bg-[#C9973A]" />
+                    <h2 className="text-sm font-bold text-[#2C1A0E] leading-snug group-hover:text-[#5C3D1E] transition-colors">
+                      {village.name[lang]}
+                    </h2>
+                    <p className="text-[10px] text-[#7A5A1A] italic line-clamp-2 leading-relaxed">
+                      "{village.tagline[lang]}"
+                    </p>
+                    <div className="flex items-center gap-1 text-[11px] font-semibold pt-1 text-[#C9973A]">
+                      {lang === 'vi' ? 'Đọc câu chuyện' : 'Read the story'}
+                      <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

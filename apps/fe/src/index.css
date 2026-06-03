@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Josefin Sans", sans-serif;
+  --font-sans: "Calibri", "Calibri Light", sans-serif;
 
   --color-wood: #5C3D1E;
   --color-cream: #F5EDD6;

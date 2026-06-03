@@ -5,14 +5,14 @@ export class RegisterDto {
   @ApiProperty({ example: 'Nguyen Van A' })
   @IsString()
   @MinLength(2)
-  fullName: string;
+  fullName!: string;
 
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({ example: 'Password@123', minLength: 8 })
   @IsString()
   @MinLength(8)
-  password: string;
+  password!: string;
 }

@@ -4,10 +4,10 @@ import { ApiProperty } from '@nestjs/swagger';
 export class ResetPasswordDto {
   @ApiProperty()
   @IsString()
-  token: string;
+  token!: string;
 
   @ApiProperty({ minLength: 8 })
   @IsString()
   @MinLength(8)
-  password: string;
+  password!: string;
 }

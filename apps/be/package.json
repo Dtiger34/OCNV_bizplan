@@ -7,7 +7,8 @@
     "build": "nest build",
     "start": "node dist/main",
     "lint": "eslint \"{src,test}/**/*.ts\"",
-    "seed": "ts-node -r tsconfig-paths/register src/seeds/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register src/seeds/seed.ts",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.23",
@@ -40,6 +41,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.3",
     "@types/multer": "^2.1.0",
+    "@types/nodemailer": "^8.0.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/qrcode": "^1.5.5",
     "@typescript-eslint/eslint-plugin": "^8.32.1",

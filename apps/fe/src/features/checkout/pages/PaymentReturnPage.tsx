@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Home, ShoppingCart } from 'lucide-react';
 

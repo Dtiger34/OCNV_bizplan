@@ -4,27 +4,27 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class CreateAddressDto {
   @ApiProperty()
   @IsString()
-  fullName: string;
+  fullName!: string;
 
   @ApiProperty()
   @IsString()
-  phone: string;
+  phone!: string;
 
   @ApiProperty()
   @IsString()
-  province: string;
+  province!: string;
 
   @ApiProperty()
   @IsString()
-  district: string;
+  district!: string;
 
   @ApiProperty()
   @IsString()
-  ward: string;
+  ward!: string;
 
   @ApiProperty()
   @IsString()
-  street: string;
+  street!: string;
 
   @ApiPropertyOptional()
   @IsOptional()

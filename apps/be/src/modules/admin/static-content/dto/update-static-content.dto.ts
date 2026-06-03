@@ -4,15 +4,15 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class BilingualContentDto {
   @IsString()
-  vi: string;
+  vi!: string;
 
   @IsString()
-  en: string;
+  en!: string;
 }
 
 export class UpdateStaticContentDto {
   @ApiProperty()
   @ValidateNested()
   @Type(() => BilingualContentDto)
-  content: BilingualContentDto;
+  content!: BilingualContentDto;
 }
