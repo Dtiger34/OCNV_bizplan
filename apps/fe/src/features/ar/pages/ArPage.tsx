@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X, Smartphone, ChevronRight } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import '@google/model-viewer';
 import { useProductHotspots, type Hotspot } from '../hooks/useProductHotspots';
 import { useLanguageStore } from '@/store/languageStore';
 
