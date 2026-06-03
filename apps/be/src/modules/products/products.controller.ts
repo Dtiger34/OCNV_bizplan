@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
+import { HotspotsService } from '../hotspots/hotspots.service';
 import { GetProductsQueryDto } from './dto/get-products-query.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { Public } from '../../common/decorators/public.decorator';
@@ -9,7 +10,10 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly hotspotsService: HotspotsService,
+  ) {}
 
   @Public()
   @Get()
@@ -48,6 +52,14 @@ export class ProductsController {
     @Query('limit') limit = 10,
   ) {
     return this.productsService.findReviews(id, +page, +limit);
+  }
+
+  @Public()
+  @Get(':id/hotspots')
+  @ApiOperation({ summary: 'Get AR hotspots for a product' })
+  async findHotspots(@Param('id') id: string) {
+    const data = await this.hotspotsService.findByProduct(id);
+    return { success: true, data };
   }
 
   @ApiBearerAuth()

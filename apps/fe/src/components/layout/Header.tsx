@@ -29,7 +29,7 @@ export default function Header() {
         {/* Logo — bên trái */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/static/images/Logo.png"
+            src="/assets/Logo.png"
             alt="Logo"
             className="h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           />
