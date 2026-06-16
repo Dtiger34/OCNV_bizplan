@@ -64,11 +64,6 @@ export class OrdersService {
     const total = subtotal + SHIPPING_FEE;
     const orderCode = `OCNV-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
 
-    let paymentUrl: string | undefined;
-    if (dto.paymentMethod === PaymentMethod.VNPAY) {
-      paymentUrl = `http://localhost:3000/api/v1/payments/mock-return?orderCode=${orderCode}&amount=${total}&status=success`;
-    }
-
     const order = await this.ordersRepository.create({
       orderCode,
       ...(userId ? { userId: new Types.ObjectId(userId) } : {}),
@@ -98,7 +93,7 @@ export class OrdersService {
     }
 
     const orderObj = (order as any).toObject();
-    return paymentUrl ? { ...orderObj, paymentUrl } : orderObj;
+    return orderObj;
   }
 
   async findByUser(

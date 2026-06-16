@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, CreditCard, Landmark } from 'lucide-react';
+import { ShieldCheck, CreditCard, Landmark, Loader2 } from 'lucide-react';
+import { useCreateOrder } from '@/features/orders/hooks/useCreateOrder';
+import { useLocalCartStore } from '@/features/cart/store/cartStore';
 
 export default function CheckoutPage() {
-  const { cartItems, clearCart } = useCart();
+  const cartStore = useLocalCartStore();
   const navigate = useNavigate();
 
   // Form States
@@ -15,26 +17,84 @@ export default function CheckoutPage() {
   const [ward, setWard] = useState('');
   const [street, setStreet] = useState('');
   const [note, setNote] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank_transfer' | 'online'>('cod');
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank_transfer' | 'payos'>('cod');
+  const [error, setError] = useState('');
 
+  const { mutate: createOrder, isPending } = useCreateOrder();
+
+  const cartItems = cartStore.items;
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !phone || !province || !street) {
-      alert('Vui lòng khai báo đầy đủ họ tên, điện thoại và địa chỉ giao nhận.');
+    setError('');
+
+    // Validation
+    if (!fullName.trim()) {
+      setError('Vui lòng nhập họ tên');
+      return;
+    }
+    if (!phone.trim()) {
+      setError('Vui lòng nhập số điện thoại');
+      return;
+    }
+    if (!province.trim()) {
+      setError('Vui lòng nhập tỉnh/thành phố');
+      return;
+    }
+    if (!street.trim()) {
+      setError('Vui lòng nhập địa chỉ chi tiết');
+      return;
+    }
+    if (cartItems.length === 0) {
+      setError('Giỏ hàng đang trống');
       return;
     }
 
-    const orderCode = 'DH-' + Math.floor(100000 + Math.random() * 900000);
-    clearCart();
+    // Create order
+    createOrder(
+      {
+        shippingAddress: {
+          fullName: fullName.trim(),
+          phone: phone.trim(),
+          province: province.trim(),
+          district: district.trim(),
+          ward: ward.trim(),
+          street: street.trim(),
+        },
+        items: cartItems.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
+        paymentMethod,
+        customerNote: note.trim(),
+      },
+      {
+        onSuccess: (order) => {
+          // Clear cart after successful order creation
+          cartStore.clearCart();
 
-    if (paymentMethod === 'online') {
-      // Simulate redirect to payment gateway return page
-      navigate(`/checkout/payment-return?result=success&orderCode=${orderCode}`);
-    } else {
-      navigate(`/checkout/success?orderCode=${orderCode}`);
-    }
+          // Route based on payment method
+          if (paymentMethod === 'payos') {
+            // Navigate to PayOS checkout page with order data
+            navigate('/checkout/payos', { state: { order } });
+          } else if (paymentMethod === 'bank_transfer') {
+            // Navigate to bank transfer page
+            navigate('/checkout/bank-transfer', { state: { order } });
+          } else {
+            // COD - direct to success
+            navigate(`/checkout/success?orderCode=${order.orderCode}`);
+          }
+        },
+        onError: (err: any) => {
+          setError(
+            err?.response?.data?.message ||
+            err?.message ||
+            'Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.'
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -50,6 +110,13 @@ export default function CheckoutPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Error Message */}
+        {error && (
+          <div className="lg:col-span-8 p-4 bg-[#FDF6E3] border-2 border-[#7B1C2E] rounded-[6px] text-[#7B1C2E] text-sm">
+            ❌ {error}
+          </div>
+        )}
+
         {/* Shipping Form Left */}
         <div className="lg:col-span-8 space-y-6 reveal-left">
           <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-4">
@@ -154,6 +221,7 @@ export default function CheckoutPage() {
                   checked={paymentMethod === 'cod'}
                   onChange={() => setPaymentMethod('cod')}
                   className="w-4 h-4 accent-[#5C3D1E]"
+                  disabled={isPending}
                 />
                 <ShieldCheck size={18} className="text-[#3A6B4A]" />
                 <div>
@@ -169,6 +237,7 @@ export default function CheckoutPage() {
                   checked={paymentMethod === 'bank_transfer'}
                   onChange={() => setPaymentMethod('bank_transfer')}
                   className="w-4 h-4 accent-[#5C3D1E]"
+                  disabled={isPending}
                 />
                 <Landmark size={18} className="text-[#C9973A]" />
                 <div>
@@ -181,14 +250,15 @@ export default function CheckoutPage() {
                 <input
                   type="radio"
                   name="payment"
-                  checked={paymentMethod === 'online'}
-                  onChange={() => setPaymentMethod('online')}
+                  checked={paymentMethod === 'payos'}
+                  onChange={() => setPaymentMethod('payos')}
                   className="w-4 h-4 accent-[#5C3D1E]"
+                  disabled={isPending}
                 />
                 <CreditCard size={18} className="text-[#7B1C2E]" />
                 <div>
-                  <div className="font-bold text-[#2C1A0E]">Thẻ Trực Tuyến (VNPay/ATM)</div>
-                  <div className="text-xs text-[#9C8670]">Thanh toán trực tuyến an toàn</div>
+                  <div className="font-bold text-[#2C1A0E]">PayOS — Thanh toán QR Code</div>
+                  <div className="text-xs text-[#9C8670]">Quét mã QR an toàn - hỗ trợ tất cả ngân hàng</div>
                 </div>
               </label>
             </div>
@@ -202,11 +272,20 @@ export default function CheckoutPage() {
                   <div><strong>Mã số tài khoản:</strong> 1018889999</div>
                   <div><strong>Cú pháp chuyển khoản:</strong> NGHEXUA [HỌ TÊN BẠN]</div>
                 </div>
-                
+
                 {/* Simulated Bank QR Code */}
                 <div className="w-36 h-36 bg-white border border-[#D4B896] mx-auto flex items-center justify-center text-[10px] font-bold uppercase text-gray-700">
                   MÃ QR THANH TOÁN
                 </div>
+              </div>
+            )}
+
+            {/* PayOS Info */}
+            {paymentMethod === 'payos' && (
+              <div className="mt-4 p-4 bg-[#F5EDD6] border border-[#D4B896] rounded-md">
+                <p className="text-xs text-[#2C1A0E]">
+                  💳 Bạn sẽ được chuyển đến trang thanh toán PayOS. Quét mã QR để thanh toán từ bất kỳ ứng dụng ngân hàng nào.
+                </p>
               </div>
             )}
           </div>
@@ -255,9 +334,17 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            className="w-full h-12 bg-[#7B1C2E] hover:bg-[#9B2438] text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center active:scale-[0.97] transition-all cursor-pointer shadow-subtle"
+            disabled={isPending || cartItems.length === 0}
+            className="w-full h-12 bg-[#7B1C2E] hover:bg-[#9B2438] disabled:bg-[#9C8670] disabled:cursor-not-allowed text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all cursor-pointer shadow-subtle"
           >
-            ĐẶT HÀNG NGAY LẬP TỨC
+            {isPending ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                ĐANG TẠO ĐƠN HÀNG...
+              </>
+            ) : (
+              'ĐẶT HÀNG NGAY LẬP TỨC'
+            )}
           </button>
         </div>
       </form>

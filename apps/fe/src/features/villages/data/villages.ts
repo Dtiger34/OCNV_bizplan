@@ -39,8 +39,8 @@ export const VILLAGES: VillageData[] = [
     },
     craft: { vi: 'Gốm sứ', en: 'Ceramics & Porcelain' },
     history: {
-      vi: 'Bát Tràng là làng nghề gốm sứ nổi tiếng bậc nhất Việt Nam, tọa lạc bên bờ sông Hồng, huyện Gia Lâm, Hà Nội. Lịch sử làng khởi đầu từ thế kỷ 14–15 khi các nghệ nhân từ làng Bồ Bát (Ninh Bình) di cư về đây, khai thác mỏ đất sét trắng tinh khiết dọc ven sông. Trải qua hàng thế kỷ, Bát Tràng cung cấp đồ gốm cho cả triều đình lẫn dân gian — từ bát đĩa gia dụng đến các tác phẩm thờ phụng tinh xảo. Kỹ thuật men rạn đặc trưng, men ngọc xanh ngát và hoa văn lam màu chàm là dấu ấn riêng không thể nhầm lẫn của làng gốm ngàn tuổi này.',
-      en: 'Bat Trang is Vietnam\'s most renowned ceramic village, nestled on the banks of the Red River in Gia Lam district, Hanoi. Its history dates to the 14th–15th century when artisans from Bo Bat village migrated here to mine pure white clay along the riverbanks. Over centuries, Bat Trang supplied ceramics to both the royal court and common households. Its signature crackle glaze, jade-green finish, and cobalt-blue floral motifs are unmistakable hallmarks of this thousand-year-old craft village.',
+      vi: 'Làng Gốm Bát Tràng thuộc xã Bát Tràng, nằm bên bờ sông Hồng và cách trung tâm Hà Nội khoảng 15 km. Đây là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam với lịch sử hơn 700 năm hình thành và phát triển. Từ xa xưa, gốm sứ không chỉ là vật dụng phục vụ đời sống hằng ngày mà còn mang giá trị nghệ thuật và văn hóa sâu sắc. Những sản phẩm gốm Bát Tràng thể hiện sự kết hợp hài hòa giữa kỹ thuật thủ công tinh xảo, óc sáng tạo và nét đẹp truyền thống của người Việt. Ngày nay, bên cạnh việc sản xuất và kinh doanh gốm sứ, Bát Tràng còn là điểm du lịch văn hóa nổi tiếng, thu hút đông đảo du khách trong và ngoài nước đến tham quan, trải nghiệm làm gốm và tìm hiểu về nghề thủ công truyền thống Việt Nam.',
+      en: 'Bat Trang Ceramic Village is located in Bat Trang Commune, beside the Red River and approximately 15 km from central Hanoi. It is one of Vietnam\'s most renowned traditional pottery villages with over 700 years of history. Since ancient times, pottery has served not only as everyday utensils but also as objects of artistic and cultural value. Bat Trang ceramics showcase a harmonious blend of exquisite craftsmanship, creativity, and traditional Vietnamese aesthetics. Today, besides pottery production and trade, Bat Trang is a famous cultural tourism destination, attracting many domestic and international visitors who come to experience pottery-making and learn about Vietnam\'s traditional crafts.',
     },
     diaoramaDesc: {
       vi: 'Hộp tiểu cảnh Bát Tràng tái hiện lát cắt 3D không gian xưởng gốm cổ kính: lớp trước là nghệ nhân đang xoay vuốt bàn xoay thủ công, lớp giữa là kệ gốm xếp chồng và lò bầu gạch, lớp nền là tranh làng quê ven sông Hồng. Quét AR để thấy bàn xoay chuyển động và nghe thuyết minh câu chuyện nghệ nhân.',
@@ -68,34 +68,50 @@ export const VILLAGES: VillageData[] = [
     },
     stages: [
       {
-        title: { vi: 'Giai đoạn 1 — Nguyên Liệu', en: 'Stage 1 — Raw Materials' },
+        title: { vi: 'Bước 1 — Chọn và Xử Lý Đất Sét', en: 'Step 1 — Material Selection & Preparation' },
         desc: {
-          vi: 'Đất sét thạch anh trắng được khai thác, ngâm nước và nhào luyện đến khi dẻo mịn hoàn toàn. Tiểu cảnh mô phỏng khu sơ chế đất với các khối đất xếp chồng và máng nước lọc cạnh bờ sông.',
-          en: 'White quartz clay is mined, soaked, and kneaded until perfectly smooth. The diorama shows the clay preparation area with stacked clay blocks and a riverside water filter trough.',
+          vi: 'Đất sét được lựa chọn kỹ lưỡng, loại bỏ tạp chất rồi ngâm, nhào và luyện đất để tạo độ dẻo, giúp sản phẩm dễ tạo hình và hạn chế nứt vỡ khi nung.',
+          en: 'Clay is carefully selected and cleaned of impurities, then soaked, kneaded, and worked to achieve the right plasticity, making it easier to shape and reducing cracking during firing.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 2 — Chế Tác', en: 'Stage 2 — Crafting' },
+        title: { vi: 'Bước 2 — Tạo Hình Sản Phẩm', en: 'Step 2 — Shaping' },
         desc: {
-          vi: 'Trọng tâm của hộp tiểu cảnh: nghệ nhân miniature đang xoay vuốt tạo hình bình gốm trên bàn xoay gỗ thủ công. Quét AR để bàn xoay chuyển động và nghe âm thanh tiếng đất sét ướt.',
-          en: 'The centerpiece of the diorama: a miniature artisan shaping a ceramic vase on a hand-powered wooden wheel. Scan AR to animate the wheel and hear the sound of wet clay being worked.',
+          vi: 'Người thợ sử dụng bàn xoay hoặc khuôn để tạo hình cho sản phẩm như bát, đĩa, bình hoa, tượng hay đồ trang trí theo thiết kế mong muốn.',
+          en: 'Craftspeople use a pottery wheel or molds to shape products such as bowls, plates, vases, figurines, or decorative items according to desired designs.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 3 — Xử Lý', en: 'Stage 3 — Processing' },
+        title: { vi: 'Bước 3 — Phơi và Sửa Mộc', en: 'Step 3 — Drying & Trimming' },
         desc: {
-          vi: 'Gốm được vẽ men và đưa vào lò bầu gạch cổ nung ở 1280–1300°C trong 24 giờ. Mô hình tái hiện lò bầu cắt đôi lộ rõ các tầng gốm bên trong, với hiệu ứng LED mô phỏng lửa đỏ rực.',
-          en: 'Glazed pieces enter a traditional brick kiln at 1280–1300°C for 24 hours. The model shows a cross-sectioned kiln revealing stacked ceramics inside, with LED effects simulating red-hot flames.',
+          vi: 'Sản phẩm sau khi tạo hình được phơi khô tự nhiên. Người thợ tiến hành chỉnh sửa, gọt tỉa và làm nhẵn bề mặt để sản phẩm đạt độ hoàn thiện cao.',
+          en: 'Shaped products are air-dried naturally. Artisans then trim, carve, and smooth the surface to achieve high-quality finish.',
+        },
+        imageUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=600&q=80',
+      },
+      {
+        title: { vi: 'Bước 4 — Trang Trí và Phủ Men', en: 'Step 4 — Decoration & Glazing' },
+        desc: {
+          vi: 'Các nghệ nhân vẽ hoa văn, họa tiết trang trí lên sản phẩm rồi phủ một lớp men phù hợp nhằm tăng tính thẩm mỹ và độ bền cho gốm.',
+          en: 'Artisans paint decorative patterns and designs on products, then apply an appropriate glaze to enhance aesthetics and durability.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 4 — Thành Phẩm', en: 'Stage 4 — Finished Product' },
+        title: { vi: 'Bước 5 — Nung Gốm', en: 'Step 5 — Firing' },
         desc: {
-          vi: 'Điểm nhấn thị giác của hộp: các bình gốm men rạn, bát ngọc lam và đĩa hoa lam được trưng bày trên kệ gỗ phía trước. Màu sắc rực rỡ của gốm nổi bật trên nền trung tính của kiến trúc làng nghề.',
-          en: 'The visual highlight of the box: crackle-glazed vases, jade-green bowls, and cobalt-painted dishes displayed on a wooden shelf in the foreground. Vibrant ceramic colors pop against the neutral village architecture backdrop.',
+          vi: 'Sản phẩm được đưa vào lò nung ở nhiệt độ cao, thường từ 1.000°C đến hơn 1.300°C. Đây là công đoạn quyết định chất lượng, màu sắc và độ bền của sản phẩm.',
+          en: 'Products are placed in a kiln at high temperatures, typically between 1,000°C and over 1,300°C. This stage determines the quality, color, and durability of the final product.',
+        },
+        imageUrl: 'https://images.unsplash.com/photo-1514516345957-556ca7d90a29?auto=format&fit=crop&w=600&q=80',
+      },
+      {
+        title: { vi: 'Bước 6 — Hoàn Thiện và Đóng Gói', en: 'Step 6 — Finishing & Packaging' },
+        desc: {
+          vi: 'Sau khi nung, sản phẩm được kiểm tra chất lượng, phân loại, làm sạch và đóng gói trước khi đưa ra thị trường hoặc xuất khẩu.',
+          en: 'After firing, products are quality-checked, sorted, cleaned, and packaged before being distributed to market or exported.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1514516345957-556ca7d90a29?auto=format&fit=crop&w=600&q=80',
       },
@@ -115,8 +131,8 @@ export const VILLAGES: VillageData[] = [
     },
     craft: { vi: 'Dệt lụa tơ tằm', en: 'Silk Weaving' },
     history: {
-      vi: 'Vạn Phúc — làng lụa nức tiếng Hà Đông — có lịch sử dệt lụa hơn 1.200 năm. Tương truyền nghề dệt được bà Lã Thị Nga truyền dạy từ thế kỷ 9. Lụa Hà Đông từng là thứ vải quý tiến vua, được Nguyên Sa bất tử hóa trong thơ. Điểm đặc biệt là hàng nghìn mẫu hoa văn khác nhau — từ Song Hạc, mây cuộn đến hoa sen — tất cả tạo ra trên khung cửi gỗ không dùng điện.',
-      en: 'Van Phuc — the renowned silk village of Ha Dong — has over 1,200 years of weaving history. Legend holds that Lady La Thi Nga taught the craft in the 9th century. Ha Dong silk was once royal tribute fabric, immortalized in Nguyen Sa\'s poetry. The village is distinguished by thousands of unique woven patterns — Twin Cranes, rolling clouds, lotus flowers — all created on traditional wooden looms without electricity.',
+      vi: 'Làng lụa Vạn Phúc, Hà Đông, Hà Nội từ lâu đã được xem là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam. Dạo bước trong làng, bạn dễ dàng bắt gặp hình ảnh khung cửi đặt ngay trong nhà, tiếng thoi đưa đều đặn vang lên từ sáng sớm, và những tấm lụa nhiều màu sắc phơi dọc theo các con ngõ nhỏ. Lụa Vạn Phúc không chỉ được sử dụng trong nước mà còn từng xuất hiện ở nhiều thị trường quốc tế, trở thành một trong những biểu tượng tiêu biểu của thủ công mỹ nghệ Việt Nam. Theo các tài liệu và truyền thuyết địa phương, nghề dệt lụa ở Vạn Phúc có lịch sử hơn 1.000 năm, gắn với tên tuổi bà A Lã Thị Nương, người được xem là tổ nghề dệt lụa.',
+      en: 'Van Phuc silk village in Ha Dong, Hanoi is considered one of the most important cradles of Vietnam\'s traditional silk-weaving craft. Walking through the village, you easily encounter looms inside homes, the rhythmic sound of shuttles echoing from dawn, and colorful silk fabrics drying along narrow alleys. Van Phuc silk is not only used domestically but has also appeared in many international markets, becoming one of the distinctive symbols of Vietnamese craftsmanship. According to local documents and traditions, the silk-weaving craft at Van Phuc has over 1,000 years of history, associated with Lady La Thi Nuong, considered the founding ancestor of silk weaving.',
     },
     diaoramaDesc: {
       vi: 'Hộp tiểu cảnh Vạn Phúc tái hiện không gian nhà dệt: lớp trước là nghệ nhân ngồi trước khung cửi gỗ lớn, lớp giữa là guồng tơ và bó sợi đủ màu, lớp nền là mái nhà cổ và cây dâu. Quét AR để khung cửi chuyển động và nghe tiếng lạch cạch nhịp nhàng của thoi dệt.',
@@ -144,34 +160,34 @@ export const VILLAGES: VillageData[] = [
     },
     stages: [
       {
-        title: { vi: 'Giai đoạn 1 — Nguyên Liệu', en: 'Stage 1 — Raw Materials' },
+        title: { vi: 'Bước 1 — Nuôi Tằm', en: 'Step 1 — Silkworm Rearing' },
         desc: {
-          vi: 'Tằm được nuôi bằng lá dâu tươi trong 25–30 ngày. Tiểu cảnh tái hiện góc nuôi tằm với khay kén và cây dâu thu nhỏ. Kén được luộc sơ để kéo sợi tơ liên tục mịn như sương mai.',
-          en: 'Silkworms are raised on fresh mulberry leaves for 25–30 days. The diorama shows a silkworm-rearing corner with cocoon trays and miniature mulberry trees. Cocoons are briefly boiled to unravel continuous filaments fine as morning mist.',
+          vi: 'Tằm được nuôi bằng lá dâu tươi. Trong suốt vòng đời ngắn ngủi, tằm ăn liên tục và phát triển nhanh, tạo ra kén tơ. Chất lượng lá dâu và điều kiện nuôi quyết định trực tiếp đến độ mịn và bền của sợi lụa sau này.',
+          en: 'Silkworms are raised on fresh mulberry leaves. Throughout their brief lifespan, they feed continuously and develop rapidly, producing cocoons. The quality of mulberry leaves and rearing conditions directly determine the fineness and durability of the resulting silk thread.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 2 — Chế Tác', en: 'Stage 2 — Crafting' },
+        title: { vi: 'Bước 2 — Ươm Tơ từ Kén Tằm', en: 'Step 2 — Cocoon Processing & Thread Extraction' },
         desc: {
-          vi: 'Trung tâm của hộp: nghệ nhân miniature điều khiển khung cửi gỗ bằng tay và chân đồng thời, đan xen sợi ngang tạo hoa văn. Quét AR để khung cửi chuyển động nhịp nhàng như đang dệt lụa thật.',
-          en: 'The diorama\'s centerpiece: a miniature artisan operating the wooden loom with hands and feet simultaneously, interlacing weft threads to form patterns. Scan AR to see the loom move rhythmically as if weaving real silk.',
+          vi: 'Kén tằm sau khi thu hoạch được xử lý bằng nước nóng để tách sợi tơ. Người thợ sẽ kéo sợi tơ từ kén, gom nhiều sợi nhỏ thành một sợi lớn, làm khô và se sợi. Đây là công đoạn đòi hỏi sự khéo léo để giữ sợi tơ không bị đứt hoặc rối.',
+          en: 'After harvesting, cocoons are treated with hot water to separate the silk fibers. Artisans draw out the thread, combine multiple fine filaments into one strand, then dry and twist it. This step requires skill to prevent the thread from breaking or tangling.',
+        },
+        imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=600&q=80',
+      },
+      {
+        title: { vi: 'Bước 3 — Dệt Lụa trên Khung Cửi', en: 'Step 3 — Silk Weaving on Loom' },
+        desc: {
+          vi: 'Sợi tơ sau khi xử lý được đưa lên khung cửi. Người thợ dàn sợi dọc và sợi ngang, dệt thủ công hoặc bán thủ công, điều chỉnh độ căng để tạo bề mặt vải đều và mịn. Tiếng thoi đưa trên khung cửi chính là "âm thanh đặc trưng" của làng nghề.',
+          en: 'Processed silk threads are placed on the loom. Artisans arrange warp and weft threads, weave by hand or semi-mechanically, and adjust tension for even, smooth fabric. The sound of the shuttle on the loom is the "signature sound" of the craft village.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 3 — Xử Lý', en: 'Stage 3 — Processing' },
+        title: { vi: 'Bước 4 — Nhuộm và Hoàn Thiện', en: 'Step 4 — Dyeing & Finishing' },
         desc: {
-          vi: 'Tơ được nhuộm bằng thực vật tự nhiên: lá chàm cho màu xanh, vỏ lựu cho vàng, rễ cây cho đỏ. Mô hình tái hiện khu nhuộm với các chảo màu và sào phơi sợi tơ đủ màu sắc rực rỡ.',
-          en: 'Threads are dyed with natural botanicals: indigo for blue, pomegranate rind for yellow, roots for red. The model recreates a dyeing corner with color vats and drying racks hung with vibrantly colored silk threads.',
-        },
-        imageUrl: 'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?auto=format&fit=crop&w=600&q=80',
-      },
-      {
-        title: { vi: 'Giai đoạn 4 — Thành Phẩm', en: 'Stage 4 — Finished Product' },
-        desc: {
-          vi: 'Điểm sáng thị giác của hộp: các tấm lụa gấp nhỏ nhiều màu — vàng óng, xanh ngọc, đỏ son — trưng bày phía trước trên kệ gỗ. Hoa văn Song Hạc và hoa sen in nổi rõ nét trên từng tấm lụa miniature.',
-          en: 'The visual highlight: small folded silk pieces in multiple colors — golden yellow, jade green, vermillion — displayed on the foreground shelf. Twin Crane and lotus patterns are embossed clearly on each miniature silk panel.',
+          vi: 'Sau khi dệt xong, vải lụa có thể được nhuộm màu bằng phương pháp truyền thống hoặc hiện đại, giặt và xử lý bề mặt để tạo độ bóng, kiểm tra chất lượng trước khi xuất xưởng. Mỗi tấm lụa đạt chuẩn phải có độ mềm, độ rũ và độ óng tự nhiên đặc trưng của Vạn Phúc.',
+          en: 'After weaving, silk fabric can be dyed using traditional or modern methods, then washed and surface-treated for sheen. Quality is checked before finishing. Each premium silk piece must have the softness, drape, and natural luster characteristic of Van Phuc silk.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1620122830785-a67d5d0a33b5?auto=format&fit=crop&w=600&q=80',
       },
@@ -191,8 +207,8 @@ export const VILLAGES: VillageData[] = [
     },
     craft: { vi: 'Làm hương que', en: 'Incense Making' },
     history: {
-      vi: 'Làng Quảng Phú Cầu, huyện Ứng Hòa, Hà Nội mang vẻ đẹp đặc biệt với những bó hương sặc sỡ phơi đầy sân. Nghề làm hương que thủ công có tuổi đời trên 100 năm. Mỗi buổi sáng sớm, cả làng rực lên sắc đỏ, tím, vàng của hàng vạn bó hương xếp thành hàng thẳng tắp — khung cảnh đã trở thành biểu tượng nhiếp ảnh nổi tiếng thế giới. Toàn bộ quy trình từ se que đến bọc bột đến phơi đều làm bằng tay không máy móc.',
-      en: 'Quang Phu Cau village in Ung Hoa district is famed for its spectacular courtyards filled with vibrant drying incense bundles. The entirely handmade craft spans over 100 years. Each early morning, the village glows red, purple, and yellow with tens of thousands of perfectly arranged incense bundles — a globally iconic photography scene. The entire process from stick rolling to powder coating to sun-drying is done completely by hand.',
+      vi: 'Làng Hương Quảng Phú Cầu (huyện Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng của Việt Nam với lịch sử hơn 100 năm. Từ bao đời nay, hương đã trở thành một phần không thể thiếu trong văn hóa tâm linh dân tộc. Mỗi nén hương được thắp lên là sự kết nối giữa hiện tại và cội nguồn, thể hiện lòng thành kính đối với tổ tiên, thần linh và những giá trị truyền thống tốt đẹp. Tại Quảng Phú Cầu, các công đoạn làm hương như chẻ tăm, nhuộm chân hương, se hương và phơi hương đều được thực hiện một cách tỉ mỉ. Đặc biệt, hình ảnh những bó chân hương đỏ rực được xòe tròn dưới nắng đã trở thành biểu tượng đặc trưng của làng nghề.',
+      en: 'Quang Phu Cau Incense Village (Ung Hoa District, Hanoi) is one of Vietnam\'s most renowned traditional incense-making villages with over 100 years of history. Throughout history, incense has been an indispensable part of Vietnamese spiritual culture. Each lit stick is a connection between present and ancestral roots, expressing devotion to ancestors, spirits, and beautiful traditional values. At Quang Phu Cau, all incense-making steps—from splitting bamboo to dyeing sticks, coating, and drying—are done meticulously by hand. The image of bright red incense bundles spread fan-like in the sun has become the distinctive symbol of this craft village.',
     },
     diaoramaDesc: {
       vi: 'Hộp tiểu cảnh Quảng Phú Cầu tái hiện sân phơi hương lúc bình minh: lớp trước là các bó hương rực màu đỏ-tím-vàng xếp thành nan quạt, lớp giữa là người thợ đang se que và bọc bột, lớp nền là mái ngói rêu phong và bầu trời sớm mai. Bật đèn LED để mô phỏng ánh nắng vàng buổi sáng chiếu xuyên bó hương.',
@@ -220,34 +236,42 @@ export const VILLAGES: VillageData[] = [
     },
     stages: [
       {
-        title: { vi: 'Giai đoạn 1 — Nguyên Liệu', en: 'Stage 1 — Raw Materials' },
+        title: { vi: 'Bước 1 — Chọn và Xử Lý Tre (Vầu)', en: 'Step 1 — Bamboo Selection & Preparation' },
         desc: {
-          vi: 'Tre già được chẻ thành que mỏng đều, phơi khô. Song song đó, bột trầm hương, quế, hồi, đinh hương và thảo dược được cân đo theo bí phương. Tiểu cảnh mô phỏng kho nguyên liệu với que tre xếp bó và các hũ thảo mộc.',
-          en: 'Mature bamboo is split into uniform thin sticks and sun-dried. Simultaneously, agarwood, cinnamon, star anise, clove and medicinal herb powders are measured by secret recipe. The diorama shows a material storage corner with bundled bamboo sticks and herb jars.',
+          vi: 'Nguyên liệu chính để làm tăm hương là tre hoặc vầu già. Sau khi được tuyển chọn kỹ lưỡng, tre được chẻ nhỏ, vót thành những que tăm đều nhau để làm chân hương.',
+          en: 'The primary material for incense sticks is mature bamboo or rattan. After careful selection, bamboo is split into small pieces and shaved into uniform sticks to form the incense base.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1542223189-67a03fa0f0bd?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 2 — Chế Tác', en: 'Stage 2 — Crafting' },
+        title: { vi: 'Bước 2 — Nhuộm Chân Hương', en: 'Step 2 — Stick Dyeing' },
         desc: {
-          vi: 'Trọng tâm mô hình: người thợ miniature đang nhúng que tre vào bột hương ẩm, lăn tay tạo lớp bột đồng đều. Quét AR để xem bàn tay chuyển động thoăn thoắt và nghe tiếng nhịp tay se hương.',
-          en: 'The diorama\'s centerpiece: a miniature worker dipping bamboo sticks into moist incense powder and hand-rolling for an even coat. Scan AR to see the hands move deftly and hear the rhythmic sound of stick rolling.',
+          vi: 'Tăm hương sau khi vót sẽ được nhuộm màu đỏ hoặc hồng rồi đem phơi khô. Đây là công đoạn tạo nên sắc đỏ đặc trưng của làng Hương Quảng Phú Cầu.',
+          en: 'Shaved sticks are dyed red or pink and then sun-dried. This step creates the characteristic red color signature of Quang Phu Cau incense village.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 3 — Xử Lý', en: 'Stage 3 — Processing' },
+        title: { vi: 'Bước 3 — Phơi Khô', en: 'Step 3 — Sun-Drying' },
         desc: {
-          vi: 'Phần que trần được nhuộm màu tươi sáng bằng phẩm thực vật. Sau đó bó hương được mang ra sân phơi 1–2 ngày cho khô hoàn toàn. Mô hình tái hiện khu nhuộm màu nhỏ và sào phơi đầy hương nhiều màu.',
-          en: 'The bare stick end is dyed in vivid colors using vegetable dyes. Bundles are then taken to the drying yard for 1–2 days of complete sun-drying. The model recreates a small dyeing station and drying racks loaded with multicolored incense.',
+          vi: 'Những bó chân hương được xòe tròn như những bông hoa lớn và phơi dưới nắng để màu nhuộm khô hoàn toàn, đồng thời tạo nên khung cảnh đặc sắc của làng nghề.',
+          en: 'Incense stick bundles are spread in circular fan patterns like large flowers and sun-dried until the dye completely sets, creating the distinctive scenic landscape of the craft village.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 4 — Thành Phẩm', en: 'Stage 4 — Finished Product' },
+        title: { vi: 'Bước 4 — Se Hương', en: 'Step 4 — Incense Powder Coating' },
         desc: {
-          vi: 'Điểm nhấn rực rỡ nhất của hộp: hàng chục bó hương đỏ-tím-vàng xếp thành nan quạt toa sáng ở lớp trước. Bật đèn LED để ánh sáng ấm chiếu qua các bó hương tạo hiệu ứng bình minh làng hương nổi tiếng thế giới.',
-          en: 'The most vivid highlight of the box: dozens of red-purple-yellow incense bundles fanned out and glowing in the foreground. Switch on LED to cast warm light through the bundles, recreating the world-famous dawn scene of the incense village.',
+          vi: 'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy móc hỗ trợ để tạo thành nén hương hoàn chỉnh.',
+          en: 'Artisans apply incense powder mixture onto the bamboo sticks using hand methods or with mechanical assistance to create complete incense sticks.',
+        },
+        imageUrl: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=600&q=80',
+      },
+      {
+        title: { vi: 'Bước 5 — Hoàn Thiện và Đóng Gói', en: 'Step 5 — Finishing & Packaging' },
+        desc: {
+          vi: 'Sau khi se hương, sản phẩm tiếp tục được phơi khô, phân loại và đóng gói trước khi đưa ra thị trường.',
+          en: 'After powder coating, products are further sun-dried, sorted by quality, and packaged before distribution to market.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1610993304578-e4cf56a7c61e?auto=format&fit=crop&w=600&q=80',
       },
@@ -267,8 +291,8 @@ export const VILLAGES: VillageData[] = [
     },
     craft: { vi: 'Làm nón lá', en: 'Conical Hat Making' },
     history: {
-      vi: 'Làng Chuông thuộc huyện Thanh Oai, Hà Nội — làng nghề làm nón lá lâu đời nhất miền Bắc với lịch sử hơn 300 năm. Chiếc nón Chuông nổi tiếng nhờ vành đều, lá mỏng, nan tre chẻ nhỏ như sợi chỉ và đường khâu tăm tắp không lộ mũi. Mỗi chiếc nón là sản phẩm của 15–20 công đoạn thủ công tỉ mỉ hoàn toàn bằng tay. Nón Chuông từng được chọn là quà tặng ngoại giao đại diện cho bản sắc Việt Nam.',
-      en: 'Chuong village in Thanh Oai district, Hanoi is the oldest conical hat-making village in northern Vietnam with over 300 years of history. Chuong hats are prized for even brims, thin leaves, bamboo ribs split fine as thread, and invisible stitching. Each hat requires 15–20 entirely hand-done steps. Chuong hats have been chosen as diplomatic gifts representing Vietnamese identity.',
+      vi: 'Làng Chuông (hay làng Chuông nón) nằm ở vùng ven của Phú Xuyên, Hà Nội, là một trong những cái nôi của nghề làm nón lá truyền thống Việt Nam. Từ sân nhà, ngõ nhỏ đến hiên cửa, đâu đâu cũng có hình ảnh những chiếc lá cọ được phơi trắng, những vành tre được uốn tròn, hay tiếng kim khâu nón lách cách đều đặn. Làng Chuông là một "bảo tàng sống" nơi gần như mỗi gia đình đều có ít nhất một người biết làm nón. Ngoài việc sản xuất, làng Chuông còn phát triển du lịch làng nghề, góp phần quảng bá văn hóa Việt Nam và đưa những giá trị truyền thống đến gần hơn với thế hệ trẻ.',
+      en: 'Chuong village, located on the outskirts of Phu Xuyen in Hanoi, is one of the cradles of Vietnam\'s traditional conical hat-making craft. From courtyards, narrow alleys to doorsteps, white palm leaves are dried everywhere, bamboo ribs are curved into rounds, and the steady sound of hat stitching echoes rhythmically. Chuong is a "living museum" where nearly every family has at least one person skilled in hat-making. Besides production, the village develops craft tourism and promotes Vietnamese culture to younger generations.',
     },
     diaoramaDesc: {
       vi: 'Hộp tiểu cảnh Chuông tái hiện góc làm nón dưới mái hiên: lớp trước là nghệ nhân miniature đang khâu nón trên khuôn gỗ, lớp giữa là bó lá nón và nan tre, lớp nền là vườn tre và cánh đồng lúa xanh. Quét AR để thấy kim chỉ chạy qua từng lớp lá và nghe tiếng khâu nhẹ nhàng.',
@@ -296,34 +320,42 @@ export const VILLAGES: VillageData[] = [
     },
     stages: [
       {
-        title: { vi: 'Giai đoạn 1 — Nguyên Liệu', en: 'Stage 1 — Raw Materials' },
+        title: { vi: 'Bước 1 — Chọn và Xử Lý Lá', en: 'Step 1 — Leaf Selection & Processing' },
         desc: {
-          vi: 'Lá nón (lá cọ non) được phơi nắng nhạt màu rồi ủi phẳng. Nan tre vầu chẻ mỏng như sợi chỉ, vót nhẵn tạo 16 vành tròn đồng tâm. Tiểu cảnh tái hiện góc phơi lá và bó nan tre.',
-          en: 'Young palm leaves are sun-bleached and ironed flat. Vau bamboo is split as thin as thread and sanded smooth to create 16 concentric rings. The diorama shows a leaf-drying corner and bundles of bamboo ribs.',
+          vi: 'Nguyên liệu chính là lá cọ. Lá phải được chọn kỹ: không quá già (dễ giòn), không quá non (dễ rách). Sau khi hái, lá được phơi nắng nhẹ để giảm độ ẩm, làm mềm bằng hơi hoặc ủ, và là và ép phẳng để giữ bề mặt trắng mịn. Đây là bước quyết định "độ đẹp nền" của chiếc nón.',
+          en: 'The main material is palm leaves. Leaves must be carefully selected: not too old (brittle) or too young (prone to tearing). After harvesting, leaves are gently sun-dried to reduce moisture, softened by steam or aging, then pressed flat to maintain a white, smooth surface. This step determines the "base beauty" of the hat.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 2 — Chế Tác', en: 'Stage 2 — Crafting' },
+        title: { vi: 'Bước 2 — Chuốt và Tạo Khung Tre', en: 'Step 2 — Bamboo Frame Making' },
         desc: {
-          vi: 'Trọng tâm hộp: nghệ nhân miniature đặt lá lên khuôn nón gỗ hình chóp, xếp nan vành rồi dùng kim chỉ màu trắng khâu từng lớp lá kỹ lưỡng. Quét AR để thấy động tác khâu tỉ mỉ từng mũi một.',
-          en: 'The diorama\'s centerpiece: a miniature artisan layers leaves onto a conical wooden mold, positions the bamboo rings, then stitches each leaf layer with white thread. Scan AR to see the meticulous stitch-by-stitch motion.',
+          vi: 'Tre được chọn phải thẳng, dẻo và già vừa đủ. Người thợ chẻ tre thành nan mảnh, uốn thành các vòng tròn đồng tâm, cố định thành khung nón (thường có nhiều lớp vành). Khung nón chính là "xương sống", quyết định độ cân đối của sản phẩm.',
+          en: 'Bamboo must be straight, flexible, and properly aged. Artisans split it into thin ribs, curve them into concentric rings, and secure them into the hat frame (usually multiple rings). The frame is the "backbone" that determines the hat\'s balance.',
+        },
+        imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=80',
+      },
+      {
+        title: { vi: 'Bước 3 — Xếp Lá Lên Khuôn', en: 'Step 3 — Leaf Layering' },
+        desc: {
+          vi: 'Lá được đặt lên khung theo từng lớp: lớp ngoài phải đều, mịn, không hở; lớp trong giúp tạo độ chắc và che khuyết điểm. Người thợ phải canh từng milimet, vì chỉ cần lệch một chút là nón sẽ mất cân đối.',
+          en: 'Leaves are placed on the frame layer by layer: outer layers must be even, smooth, and without gaps; inner layers provide strength and cover imperfections. Artisans must measure precisely in millimeters, as even slight misalignment can affect the hat\'s balance.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 3 — Xử Lý', en: 'Stage 3 — Processing' },
+        title: { vi: 'Bước 4 — Khâu Nón', en: 'Step 4 — Stitching' },
         desc: {
-          vi: 'Nón hoàn thiện được phủ dầu bóng (dầu thông hoặc dầu trẩu) để chống mưa và tăng độ sáng bóng. Sau đó phơi nắng cho khô. Mô hình tái hiện giá phơi nón dưới nắng với bóng bảo vệ phủ đều.',
-          en: 'Finished hats are coated with varnish (pine or tung oil) for waterproofing and sheen. They are then sun-dried. The model recreates a hat-drying rack under sunlight with an even protective coating.',
+          vi: 'Đây là bước đòi hỏi kỹ năng cao nhất. Người thợ dùng kim dài, chỉ mảnh, khâu từng mũi xuyên qua lá và khung tre: mũi khâu phải đều, thẳng hàng; lực tay phải ổn định để không làm rách lá; khoảng cách mũi khâu quyết định độ bền và tính thẩm mỹ.',
+          en: 'This step requires the highest skill level. Artisans use long needles and thin thread, stitching through leaves and bamboo frame: stitches must be even and aligned, hand pressure steady to avoid tearing leaves, and stitch spacing determines both durability and aesthetics.',
         },
-        imageUrl: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=600&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 4 — Thành Phẩm', en: 'Stage 4 — Finished Product' },
+        title: { vi: 'Bước 5 — Trang Trí và Hoàn Thiện', en: 'Step 5 — Decoration & Finishing' },
         desc: {
-          vi: 'Điểm nhấn thị giác: hàng nón trắng bóng xếp chồng nghiêng nghiêng ở lớp trước, một chiếc được treo lên cao nổi bật trên nền xanh lá. Nhiều chiếc nón có thêu hoa văn đỏ hoặc thêu thơ bên trong vành.',
-          en: 'The visual highlight: rows of gleaming white hats stacked and tilted in the foreground, one suspended prominently against a green backdrop. Several hats feature red embroidery or poetry verses stitched inside the brim.',
+          vi: 'Sau khi khâu xong, nón có thể được phủ dầu để chống thấm nước, trang trí bằng hình ảnh, thơ, hoa văn, và gắn quai nón bằng vải hoặc lụa. Ở làng Chuông, nhiều chiếc nón còn được biến thành sản phẩm nghệ thuật phục vụ du lịch và thời trang.',
+          en: 'After stitching, hats can be oil-coated for water resistance, decorated with images, poetry, or patterns, and fitted with fabric or silk straps. In Chuong village, many hats are transformed into artistic products for tourism and fashion.',
         },
         imageUrl: 'https://images.unsplash.com/photo-1580196969807-cc6de06c05be?auto=format&fit=crop&w=600&q=80',
       },
@@ -333,80 +365,80 @@ export const VILLAGES: VillageData[] = [
     color: '#4A9E6B',
   },
 
-  // ─── 5. PHÚ VINH ─────────────────────────────────────────────────────────
+  // ─── 5. CHÀNG SƠN ────────────────────────────────────────────────────────
   {
-    slug: 'phu-vinh',
-    name: { vi: 'Làng Mây Tre Đan Phú Vinh', en: 'Phu Vinh Bamboo & Rattan Village' },
+    slug: 'chang-son',
+    name: { vi: 'Làng Quạt Chàng Sơn', en: 'Chang Son Fan Village' },
     tagline: {
-      vi: 'Tre già uốn mềm, đan nên cả một trời thủ công',
-      en: 'Aged bamboo bends supple — woven into an entire craft universe',
+      vi: 'Cây quạt gió mát, ghi dấu tâm huyết thủ công',
+      en: 'A fan\'s gentle breeze, imprinted with artisan\'s devotion',
     },
-    craft: { vi: 'Mây tre đan', en: 'Bamboo & Rattan Weaving' },
+    craft: { vi: 'Làm quạt giấy, quạt lụa', en: 'Fan Making' },
     history: {
-      vi: 'Làng Phú Vinh, xã Phú Nghĩa, huyện Chương Mỹ, Hà Nội — làng mây tre đan nổi tiếng nhất Việt Nam với lịch sử hơn 400 năm. Người thợ Phú Vinh nắm giữ hơn 200 mẫu hoa văn đan truyền thống khác nhau. Sản phẩm từ mây, tre, giang của làng được xuất khẩu đến hơn 40 quốc gia. Kỹ thuật đan ba chiều (3D weaving) độc đáo của làng tạo ra các tác phẩm vừa bền chắc vừa có giá trị thẩm mỹ cao như tranh nghệ thuật.',
-      en: 'Phu Vinh village in Chuong My district, Hanoi is Vietnam\'s most famous bamboo and rattan weaving village with over 400 years of history. Phu Vinh artisans hold over 200 traditional weaving patterns. Products made from rattan, bamboo, and reed are exported to more than 40 countries. The village\'s unique 3D weaving technique creates pieces that are both durable and artistically valued like fine art.',
+      vi: 'Làng nghề quạt Chàng Sơn nằm tại xã Chàng Sơn, từ lâu đã được biết đến như một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài. Không chỉ đơn thuần là nơi sản xuất quạt giấy, quạt lụa, nơi đây còn là không gian lưu giữ tinh hoa lao động thủ công, nơi mỗi chiếc quạt mang trong mình dấu ấn của sự tỉ mỉ, khéo léo và bền bỉ qua nhiều thế hệ. Nghề làm quạt ở Chàng Sơn đã có lịch sử từ rất lâu đời, các tư liệu lịch sử ghi nhận nghề đã hình thành và phát triển từ khoảng thế kỷ XVII đến XIX. Ngay từ thế kỷ XIX, quạt Chàng Sơn đã không chỉ là vật dụng làm mát thông thường mà còn là vật phẩm sang trọng, từng được người Pháp mang sang Paris để trưng bày trong các triển lãm quốc tế.',
+      en: 'Chang Son fan village in Chang Son Commune is one of the cradles of traditional handcrafts in the Do region. More than just a paper and silk fan manufacturing center, it is a space preserving the essence of manual labor, where each fan bears the mark of meticulous craftsmanship, skill, and durability across generations. Fan-making in Chang Son has a very long history, documented from approximately the 17th to 19th centuries. Since the 19th century, Chang Son fans were not merely cooling utensils but luxury items, once brought to Paris by the French for display in international exhibitions.',
     },
     diaoramaDesc: {
-      vi: 'Hộp tiểu cảnh Phú Vinh tái hiện xưởng đan thủ công: lớp trước là nghệ nhân miniature đang đan giỏ tre trên khuôn, lớp giữa là kệ sản phẩm đủ loại — giỏ, lồng, đèn mây — và bó giang phơi, lớp nền là rặng tre xanh um. Quét AR để thấy đôi tay đan nhanh thoăn thoắt và nghe tiếng tre nứt giòn.',
-      en: 'The Phu Vinh diorama recreates a handcraft workshop: the foreground shows a miniature artisan weaving a bamboo basket on a mold, the midground features product shelves — baskets, cages, rattan lamps — and drying reed bundles, the backdrop depicts dense green bamboo groves. Scan AR to see nimble hands weaving rapidly and hear the crisp sound of splitting bamboo.',
+      vi: 'Hộp tiểu cảnh Chàng Sơn tái hiện góc làm quạt: lớp trước là nghệ nhân miniature đang dán giấy quạt lên khung nan tre, lớp giữa là kệ sản phẩm trưng bày các chiếc quạt vẽ tranh thủ công, lớp nền là mái nhà cổ và cây dâu. Quét AR để thấy bàn tay dán quạt và nghe tiếng vẻ quạt mở khép.',
+      en: 'The Chang Son diorama recreates a fan-making corner: the foreground shows a miniature artisan applying fan paper to the bamboo frame, the midground displays shelves of finished fans with hand-painted artwork, and the backdrop depicts a traditional roof and mulberry trees. Scan AR to see the hands affixing the paper and hear the gentle sound of fans opening and closing.',
     },
-    coverImageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: 'https://images.unsplash.com/photo-1569778901349-11e8b0d0b90f?auto=format&fit=crop&w=1600&q=80',
     galleryImages: [
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1504198458649-3128b932f49e?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1601662528567-526cd06f6582?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1587467512961-120760940315?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1569778901349-11e8b0d0b90f?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1564507592333-c60657e-5a89?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=800&q=80',
     ],
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     artisan: {
-      name: 'Nghệ nhân Nguyễn Văn Trung',
-      title: { vi: 'Bậc thầy đan 3D Phú Vinh', en: 'Master of 3D Weaving, Phu Vinh' },
+      name: 'Nghệ nhân Đinh Văn Hoàn',
+      title: { vi: 'Bậc thầy vẽ tranh quạt', en: 'Master of Fan Painting' },
       story: {
-        vi: 'Ông Nguyễn Văn Trung là một trong số ít nghệ nhân còn nắm giữ kỹ thuật đan 3D cổ truyền — kỹ thuật tạo khối lồng nhau không cần keo hay đinh. Tác phẩm của ông đã được trưng bày tại bảo tàng ở Pháp, Nhật Bản và Hàn Quốc.',
-        en: 'Nguyen Van Trung is one of the few artisans who still masters the traditional 3D interlocking weave technique — creating nested volumes without glue or nails. His works have been exhibited in museums in France, Japan, and South Korea.',
+        vi: 'Ông Đinh Văn Hoàn dành 45 năm học hỏi và vẽ tranh lên quạt. Ông là một trong những vài người còn gìn giữ kỹ thuật vẽ tranh dân gian lên mặt quạt, kết hợp giữa kỹ năng vẽ nước ngoài và lối vẽ Đông Á cổ xưa. Các tác phẩm quạt của ông được bán trên các thị trường quốc tế.',
+        en: 'Dinh Van Hoan has devoted 45 years to learning and painting on fans. He is one of the few who preserves the technique of traditional folk painting on fan surfaces, combining watercolor skills with ancient East Asian painting styles. His fan artworks are sold in international markets.',
       },
       quote: {
-        vi: 'Tre có thể uốn theo ý mình, nhưng phải hiểu tre trước. Mỗi nan tre có tính cách riêng — thợ giỏi là người biết lắng nghe.',
-        en: 'Bamboo can be bent to your will, but you must understand it first. Each strip has its own character — a skilled artisan knows how to listen.',
+        vi: 'Chiếc quạt là bức tranh tính mệnh — phải che đẹp, vẽ cũng phải đẹp. Đó là nghệ thuật phục vụ sinh hoạt hằng ngày của người Việt.',
+        en: 'A fan is a destinies canvas — it must shelter beautifully, and the painting must be beautiful too. This is art serving the daily life of Vietnamese people.',
       },
     },
     stages: [
       {
-        title: { vi: 'Giai đoạn 1 — Nguyên Liệu', en: 'Stage 1 — Raw Materials' },
+        title: { vi: 'Bước 1 — Chọn và Xử Lý Tre', en: 'Step 1 — Bamboo Selection & Preparation' },
         desc: {
-          vi: 'Tre già 3 tuổi được chặt, phơi nắng khô kiệt rồi ngâm nước vôi chống mối mọt. Giang, mây được bóc vỏ và phơi. Tiểu cảnh mô phỏng khu xử lý tre với cây tre cắt khúc và bể ngâm vôi.',
-          en: 'Three-year-old bamboo is cut, sun-dried completely, then soaked in lime water to prevent insects. Rattan is peeled and dried. The diorama shows a bamboo processing area with sectioned bamboo and a lime soaking tank.',
+          vi: 'Tre được chọn phải già, thẳng và dẻo. Sau đó chẻ thành từng nan nhỏ, vót mỏng và mài nhẵn để không gây xước tay, uốn tạo hình khung quạt theo kích thước chuẩn. Khung quạt là phần quyết định độ bền và độ cân đối của sản phẩm.',
+          en: 'Bamboo must be mature, straight, and flexible. It is then split into thin ribs, shaved smooth and sanded to prevent cuts, and curved into fan frame shapes of standard size. The frame determines the fan\'s durability and balance.',
         },
-        imageUrl: 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?auto=format&fit=crop&w=600&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1569778901349-11e8b0d0b90f?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 2 — Chế Tác', en: 'Stage 2 — Crafting' },
+        title: { vi: 'Bước 2 — Làm Giấy Quạt', en: 'Step 2 — Fan Paper Making' },
         desc: {
-          vi: 'Trọng tâm hộp: nghệ nhân miniature đang dùng ngón tay khéo léo đan từng nan tre qua khuôn giỏ. Kỹ thuật đan ba chiều tạo hình khối phức tạp mà không cần keo. Quét AR để thấy bàn tay đan nhanh thoăn thoắt.',
-          en: 'The diorama\'s centerpiece: a miniature artisan skillfully interlacing bamboo strips through a basket mold. The 3D weaving technique creates complex forms without adhesive. Scan AR to see the hands weave with swift precision.',
+          vi: 'Giấy dùng làm quạt thường là giấy dó hoặc giấy chuyên dụng: giấy được xử lý để có độ dai và nhẹ, có thể được nhuộm màu hoặc in họa tiết, phơi khô tự nhiên để giữ độ bền. Ở một số sản phẩm cao cấp, giấy còn được vẽ tay hoặc in tranh dân gian.',
+          en: 'Fan paper is usually mulberry paper or specialty fan paper: processed for durability and lightness, it can be dyed or patterned, and naturally sun-dried for strength. Premium products feature hand-painted or block-printed traditional folk art.',
         },
-        imageUrl: 'https://images.unsplash.com/photo-1601662528567-526cd06f6582?auto=format&fit=crop&w=600&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1564507592333-c60657e-5a89?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 3 — Xử Lý', en: 'Stage 3 — Processing' },
+        title: { vi: 'Bước 3 — Dán và Định Hình Quạt', en: 'Step 3 — Paper Affixing & Shaping' },
         desc: {
-          vi: 'Sản phẩm đan xong được hun khói lưu huỳnh để diệt khuẩn, tăng màu vàng óng tự nhiên. Sau đó phủ vecni bóng bảo vệ và phơi khô. Mô hình tái hiện buồng hun khói và giá phơi sản phẩm.',
-          en: 'Finished woven pieces are sulfur-fumigated to sterilize and enhance the natural golden hue. They are then varnished and sun-dried. The model recreates a fumigation chamber and product drying rack.',
+          vi: 'Đây là công đoạn đòi hỏi sự khéo léo cao: dán giấy lên khung nan tre, canh chỉnh sao cho hai mặt cân đối, ép và cố định để quạt không bị cong hoặc lệch. Chỉ cần sai lệch nhỏ, quạt có thể bị nhăn hoặc mất dáng.',
+          en: 'This step requires high precision: affixing paper to the bamboo frame, ensuring both sides are balanced, then pressing and securing so the fan does not warp or tilt. Even slight misalignment can cause wrinkles or deformation.',
         },
-        imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80',
       },
       {
-        title: { vi: 'Giai đoạn 4 — Thành Phẩm', en: 'Stage 4 — Finished Product' },
+        title: { vi: 'Bước 4 — Trang Trí và Hoàn Thiện', en: 'Step 4 — Decoration & Finishing' },
         desc: {
-          vi: 'Điểm nhấn thị giác: kệ trưng bày phía trước xếp đầy giỏ mây vàng óng, đèn lồng tre tinh xảo và tranh đan hoa văn truyền thống. Sắc vàng ấm của tre chín nổi bật trên nền xanh rặng tre phía sau.',
-          en: 'The visual highlight: the foreground display shelf is filled with golden rattan baskets, intricate bamboo lanterns, and woven pattern art panels. The warm gold of aged bamboo pops against the green bamboo grove backdrop.',
+          vi: 'Tùy mục đích sử dụng, quạt có thể được vẽ tranh thủ công, viết thư pháp, trang trí họa tiết truyền thống hoặc hiện đại. Sau đó, quạt được kiểm tra độ mở – gập, độ bền và tính thẩm mỹ trước khi đưa ra thị trường.',
+          en: 'Depending on the intended use, fans can be hand-painted, decorated with calligraphy, or adorned with traditional or contemporary patterns. Finally, fans are quality-checked for opening-closing function, durability, and aesthetics before market distribution.',
         },
-        imageUrl: 'https://images.unsplash.com/photo-1587467512961-120760940315?auto=format&fit=crop&w=600&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=600&q=80',
       },
     ],
-    location: { vi: 'Xã Phú Nghĩa, Chương Mỹ, Hà Nội', en: 'Phu Nghia Commune, Chuong My, Hanoi' },
+    location: { vi: 'Xã Chàng Sơn, xứ Đoài', en: 'Chang Son Commune, Do Region' },
     founded: '~TK 17',
-    color: '#7A8C3E',
+    color: '#D4A574',
   },
 ];
 

@@ -21,6 +21,8 @@ const CartPage = lazy(() => import('@/features/cart/pages/CartPage'));
 const CheckoutPage = lazy(() => import('@/features/checkout/pages/CheckoutPage'));
 const PaymentReturnPage = lazy(() => import('@/features/checkout/pages/PaymentReturnPage'));
 const CheckoutSuccessPage = lazy(() => import('@/features/checkout/pages/CheckoutSuccessPage'));
+const PayOSCheckoutPage = lazy(() => import('@/features/checkout/pages/PayOSCheckoutPage'));
+const BankTransferPage = lazy(() => import('@/features/checkout/pages/BankTransferPage'));
 
 // Auth pages
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
@@ -81,6 +83,8 @@ export const router = createBrowserRouter([
         element: <PrivateRoute />,
         children: [
           { path: '/checkout', element: S(CheckoutPage) },
+          { path: '/checkout/payos', element: S(PayOSCheckoutPage) },
+          { path: '/checkout/bank-transfer', element: S(BankTransferPage) },
           { path: '/checkout/success', element: S(CheckoutSuccessPage) },
           { path: '/orders/:id', element: S(OrderDetailPage) },
           { path: '/profile', element: S(ProfilePage) },

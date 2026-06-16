@@ -23,6 +23,14 @@ export const configSchema = Joi.object({
   FE_URL: Joi.string().uri().default('http://localhost:5173'),
   APP_URL: Joi.string().uri().default('http://localhost:3001'),
 
+  // PayOS Payment
+  PAYOS_CLIENT_ID: Joi.string().allow('').optional(),
+  PAYOS_API_KEY: Joi.string().allow('').optional(),
+  PAYOS_CHECKSUM_KEY: Joi.string().allow('').optional(),
+  PAYOS_RETURN_URL: Joi.string().uri().optional(),
+  PAYOS_CANCEL_URL: Joi.string().uri().optional(),
+
+  // Legacy Payment Config
   PAYMENT_TMN_CODE: Joi.string().allow('').optional(),
   PAYMENT_HASH_SECRET: Joi.string().allow('').optional(),
   PAYMENT_URL: Joi.string().uri().optional(),
