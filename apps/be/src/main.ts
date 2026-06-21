@@ -3,6 +3,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
 import * as cookieParser from 'cookie-parser';
+import { join } from 'path';
+import { existsSync } from 'fs';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 
@@ -43,6 +45,16 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
+
+  // Serve FE index.html for all non-API routes (SPA fallback)
+  const feDistIndex = join(process.cwd(), '..', 'fe', 'dist', 'index.html');
+  if (existsSync(feDistIndex)) {
+    const { createReadStream } = await import('fs');
+    const expressApp = app.getHttpAdapter().getInstance();
+    expressApp.get('*', (_req: unknown, res: { sendFile: (path: string) => void }) => {
+      res.sendFile(feDistIndex);
+    });
+  }
 
   await app.listen(port);
 }

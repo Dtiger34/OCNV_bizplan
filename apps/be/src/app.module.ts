@@ -59,6 +59,11 @@ ServeStaticModule.forRootAsync({
           rootPath: join(process.cwd(), config.get<string>('STATIC_FILES_PATH', './uploads')),
           serveRoot: '/static',
         },
+        {
+          rootPath: join(process.cwd(), '..', 'fe', 'dist'),
+          exclude: ['/api*', '/static*'],
+          serveStaticOptions: { index: false },
+        },
       ],
     }),
 
