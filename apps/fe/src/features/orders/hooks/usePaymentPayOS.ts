@@ -28,9 +28,8 @@ interface PaymentStatusResponse {
 export function useCreatePayOSCheckout() {
   return useMutation({
     mutationFn: async (payload: CreateCheckoutPayload): Promise<CheckoutData> => {
-      const res = await apiClient.post<CheckoutData>('/payments/payos/create-checkout', payload);
-      // BE PaymentsService trả về object trực tiếp, không có wrapper data
-      return res.data;
+      const res = await apiClient.post<{ success: boolean; data: CheckoutData }>('/payments/payos/create-checkout', payload);
+      return res.data.data;
     },
   });
 }
