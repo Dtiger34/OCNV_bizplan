@@ -79,7 +79,7 @@ export default function OrderHistoryPage() {
                     Tổng tiền: {order.total.toLocaleString('vi-VN')} ₫
                   </span>
                   <span className="text-[#9C8670]">|</span>
-                  <span>Chuyển khoản ngân hàng — {order.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán'}</span>
+                  <span>Internet Banking / VietQR — {order.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán'}</span>
                 </div>
               </div>
 

@@ -78,7 +78,7 @@ export class PaymentsService {
     const response = await this.payosService.createCheckout({
       orderCode: payosOrderCode,
       amount: Math.floor(order.total), // PayOS yêu cầu số nguyên
-      description: `Thanh toán đơn hàng ${data.orderCode}`,
+      description: `TT ${data.orderCode}`.slice(0, 25),
       buyerName: data.buyerName,
       buyerEmail: data.buyerEmail,
       buyerPhone: data.buyerPhone,

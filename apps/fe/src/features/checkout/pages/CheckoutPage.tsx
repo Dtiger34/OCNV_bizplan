@@ -305,7 +305,7 @@ export default function CheckoutPage() {
             <div className="flex items-center gap-3 p-4 border border-[#C9973A] bg-[#F5EDD6] rounded-[4px]">
               <QrCode size={22} className="text-[#C9973A] flex-shrink-0" />
               <div>
-                <p className="font-bold text-sm text-[#2C1A0E]">Chuyển khoản ngân hàng</p>
+                <p className="font-bold text-sm text-[#2C1A0E]">Internet Banking / VietQR</p>
                 <p className="text-xs text-[#9C8670] mt-0.5">
                   Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam
                 </p>
