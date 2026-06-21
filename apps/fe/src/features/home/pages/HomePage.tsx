@@ -89,20 +89,59 @@ export default function HomePage() {
           <span className="text-[6px] border-t border-[#7B1C2E]/30 mt-0.5 pt-0.5">ẤN KÝ</span>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 md:px-8 max-w-4xl text-center space-y-6">
-          <span className="reveal text-[11px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
-            BẢN SẮC CỦA CHÚNG TÔI
-          </span>
-          <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#2C1A0E] leading-tight">
-            "Sức Sống Mới Cho Di Sản Việt"
-          </h2>
-          <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-          <p className="reveal delay-300 text-base md:text-[19px] text-[#5C3D1E] leading-relaxed italic max-w-3xl mx-auto">
-            "Chúng tôi tin rằng bảo tồn di sản không phải là giữ gìn tro tàn mà là truyền đi ngọn lửa ấm áp. Bằng việc tái hiện tỉ mỉ các quy trình thủ công truyền thống qua những hộp diorama tiểu cảnh 3D kết hợp công nghệ AR, chúng tôi đưa những câu chuyện làng nghề mộc mạc tiếp cận và lan tỏa trong đời sống hiện đại."
-          </p>
-          <div className="reveal delay-400 flex flex-wrap items-center justify-center gap-6 pt-4 text-[10px] text-[#5C3D1E] font-bold tracking-wider uppercase">
-            <span className="flex items-center gap-1.5 hover-lift"><Award size={15} className="text-[#C9973A]" /> MÔ PHỎNG 3D MỸ THUẬT</span>
-            <span className="flex items-center gap-1.5 hover-lift"><MapPin size={15} className="text-[#C9973A]" /> TÍCH HỢP TRẢI NGHIỆM AR</span>
+        <div className="relative z-10 container mx-auto px-6 md:px-8 max-w-5xl space-y-12">
+          {/* Header */}
+          <div className="text-center space-y-4">
+            <span className="reveal text-[11px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
+              BẢN SẮC CỦA CHÚNG TÔI
+            </span>
+            <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#2C1A0E] leading-tight">
+              Sức Sống Mới Cho Di Sản Việt
+            </h2>
+            <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
+            <p className="reveal delay-300 text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto">
+              Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện của những làng nghề Việt Nam đến gần hơn với mọi người.
+            </p>
+          </div>
+
+          {/* 3 pillars */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 reveal delay-300">
+            {[
+              {
+                icon: <Award size={28} className="text-[#C9973A]" />,
+                title: 'Sản phẩm mang câu chuyện',
+                desc: 'Mỗi mô hình tiểu cảnh 3D không chỉ là vật trang trí — đó là cả một câu chuyện về làng nghề, về người nghệ nhân và tâm huyết truyền đời. Bạn sở hữu một tác phẩm, bạn giữ một ký ức văn hóa.',
+              },
+              {
+                icon: <MapPin size={28} className="text-[#C9973A]" />,
+                title: 'Quy trình làng nghề thật',
+                desc: 'Từ bàn tay người thợ gốm Bát Tràng, khung cửi lụa Vạn Phúc đến lò hương Quảng Phú Cầu — chúng tôi ghi lại và tái hiện từng công đoạn thủ công qua mô hình và trải nghiệm AR sống động.',
+              },
+              {
+                icon: <Star size={28} className="text-[#C9973A]" />,
+                title: 'Khám phá văn hóa làng nghề',
+                desc: 'Đi sâu vào lịch sử, con người và tinh thần của 5 làng nghề nổi tiếng Việt Nam. Mỗi trang làng nghề là một hành trình — từ nguồn gốc, quy trình đến nét đặc trưng chỉ nơi đó mới có.',
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-3 hover:border-[#C9973A] transition-colors">
+                <div className="w-12 h-12 rounded-full bg-[#EDE3CE] flex items-center justify-center">
+                  {item.icon}
+                </div>
+                <h3 className="font-bold text-[#2C1A0E] text-base">{item.title}</h3>
+                <p className="text-sm text-[#5C3D1E] leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="text-center reveal delay-400">
+            <Link
+              to="/villages"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#7B1C2E] text-[#F5EDD6] text-sm font-bold tracking-wider uppercase rounded-sm hover:bg-[#9B2438] transition-colors"
+            >
+              Khám phá các làng nghề
+              <ArrowRight size={15} />
+            </Link>
           </div>
         </div>
       </section>
