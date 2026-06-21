@@ -2,7 +2,7 @@ import * as Joi from 'joi';
 
 export const configSchema = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
-  PORT: Joi.number().default(3001),
+  PORT: Joi.number().default(3000),
   FRONTEND_URL: Joi.string().uri().default('http://localhost:5173'),
 
   MONGODB_URI: Joi.string().required(),
@@ -20,24 +20,23 @@ export const configSchema = Joi.object({
   SMTP_PORT: Joi.number().default(587),
   SMTP_USER: Joi.string().allow('').optional(),
   SMTP_PASS: Joi.string().allow('').optional(),
-  FE_URL: Joi.string().uri().default('http://localhost:5173'),
-  APP_URL: Joi.string().uri().default('http://localhost:3001'),
+  APP_URL: Joi.string().uri().default('http://localhost:3000'),
 
   // PayOS Payment
   PAYOS_CLIENT_ID: Joi.string().allow('').optional(),
   PAYOS_API_KEY: Joi.string().allow('').optional(),
   PAYOS_CHECKSUM_KEY: Joi.string().allow('').optional(),
-  PAYOS_RETURN_URL: Joi.string().uri().optional(),
-  PAYOS_CANCEL_URL: Joi.string().uri().optional(),
+  PAYOS_RETURN_URL: Joi.string().uri().allow('').optional(),
+  PAYOS_CANCEL_URL: Joi.string().uri().allow('').optional(),
 
   // Legacy Payment Config
   PAYMENT_TMN_CODE: Joi.string().allow('').optional(),
   PAYMENT_HASH_SECRET: Joi.string().allow('').optional(),
-  PAYMENT_URL: Joi.string().uri().optional(),
-  PAYMENT_RETURN_URL: Joi.string().uri().optional(),
+  PAYMENT_URL: Joi.string().uri().allow('').optional(),
+  PAYMENT_RETURN_URL: Joi.string().uri().allow('').optional(),
 
   SHIPPING_FEE: Joi.number().default(30000),
 
   STATIC_FILES_PATH: Joi.string().default('./uploads'),
-  STATIC_FILES_URL: Joi.string().uri().default('http://localhost:3001/static'),
+  STATIC_FILES_URL: Joi.string().uri().default('http://localhost:3000/static'),
 });

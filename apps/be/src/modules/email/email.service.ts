@@ -25,14 +25,14 @@ export class EmailService {
   }
 
   sendVerificationEmail(email: string, token: string): void {
-    const url = `${this.configService.get('FE_URL', 'http://localhost:5173')}/verify-email?token=${token}`;
+    const url = `${this.configService.get('FRONTEND_URL', 'http://localhost:5173')}/verify-email?token=${token}`;
     this.send(email, 'Xác thực tài khoản OCNV', this.verifyTemplate(url)).catch((err) =>
       this.logger.error({ err }, 'Failed to send verification email'),
     );
   }
 
   sendPasswordResetEmail(email: string, token: string): void {
-    const url = `${this.configService.get('FE_URL', 'http://localhost:5173')}/reset-password?token=${token}`;
+    const url = `${this.configService.get('FRONTEND_URL', 'http://localhost:5173')}/reset-password?token=${token}`;
     this.send(email, 'Đặt lại mật khẩu OCNV', this.resetTemplate(url)).catch((err) =>
       this.logger.error({ err }, 'Failed to send password reset email'),
     );
