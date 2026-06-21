@@ -102,8 +102,24 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10">
 
             {/* Images */}
-            <div className="md:col-span-5 space-y-3">
-              <div className="aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative">
+            <div className="md:col-span-5 flex gap-3">
+              {/* Thumbnail strip bên trái */}
+              {images.length > 1 && (
+                <div className="flex flex-col gap-2 w-16 shrink-0">
+                  {images.map((url: string, i: number) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveImg(i)}
+                      className={`w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9973A]' : 'border-gray-200 hover:border-gray-400'}`}
+                    >
+                      <img src={url} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Ảnh chính */}
+              <div className="flex-1 aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative">
                 <img
                   src={images[activeImg] ?? PLACEHOLDER}
                   alt={product.name[lang]}
@@ -117,19 +133,6 @@ export default function ProductDetailPage() {
                   XEM AR 3D
                 </Link>
               </div>
-              {images.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  {images.map((url: string, i: number) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveImg(i)}
-                      className={`w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9973A]' : 'border-gray-200 hover:border-gray-400'}`}
-                    >
-                      <img src={url} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
             {/* Info */}
@@ -170,11 +173,25 @@ export default function ProductDetailPage() {
               {/* Details */}
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-28 shrink-0">Làng nghề</span>
-                  <span className="text-[#2C1A0E]">{product.village?.name?.[lang] ?? '—'}</span>
+                  <span className="text-gray-400 w-32 shrink-0">Loại sản phẩm</span>
+                  <span className="text-[#2C1A0E]">Mô hình tiểu cảnh làng nghề 3D</span>
+                </div>
+                {product.village?.name?.[lang] && (
+                  <div className="flex gap-2">
+                    <span className="text-gray-400 w-32 shrink-0">Chủ đề làng nghề</span>
+                    <span className="text-[#2C1A0E]">{product.village.name[lang]}</span>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <span className="text-gray-400 w-32 shrink-0">Công nghệ</span>
+                  <span className="text-[#2C1A0E]">Tích hợp AR — quét mã để xem 3D</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-28 shrink-0">Tình trạng</span>
+                  <span className="text-gray-400 w-32 shrink-0">Xuất xứ</span>
+                  <span className="text-[#2C1A0E]">Việt Nam — Nghề Xưa Nét Mới</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-gray-400 w-32 shrink-0">Tình trạng</span>
                   <span className={inStock ? 'text-[#3A6B4A] font-medium' : 'text-[#7B1C2E] font-medium'}>
                     {inStock ? `Còn ${product.stock} sản phẩm` : 'Hết hàng'}
                   </span>
@@ -233,6 +250,23 @@ export default function ProductDetailPage() {
           </h2>
           <div className="text-sm text-gray-700 leading-relaxed space-y-3">
             <p>{product.description[lang]}</p>
+            <p>
+              Đây là mô hình tiểu cảnh 3D tái hiện không gian và quy trình sản xuất của{' '}
+              <strong>{product.village?.name?.[lang] ?? 'làng nghề truyền thống Việt Nam'}</strong>.
+              Mỗi sản phẩm được chế tác thủ công tỉ mỉ, kết hợp công nghệ AR để bạn có thể quét mã và khám phá toàn bộ câu chuyện làng nghề ngay trên điện thoại.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              {[
+                { label: 'Thủ công mỹ nghệ', desc: 'Từng chi tiết được làm thủ công bởi nghệ nhân lành nghề' },
+                { label: 'Tích hợp AR 3D', desc: 'Quét mã để khám phá quy trình sản xuất làng nghề qua AR' },
+                { label: 'Câu chuyện văn hóa', desc: 'Mỗi mô hình mang theo lịch sử và tinh thần của làng nghề' },
+              ].map((item, i) => (
+                <div key={i} className="bg-[#FAFAF5] border border-gray-100 rounded-sm p-3">
+                  <p className="text-xs font-bold text-[#2C1A0E] mb-1">{item.label}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
             {product.processVideoUrl && (
               <div className="aspect-video max-w-2xl bg-black rounded-sm overflow-hidden mt-4">
                 <iframe title="Video chế tác" className="w-full h-full" src={product.processVideoUrl} allowFullScreen />
