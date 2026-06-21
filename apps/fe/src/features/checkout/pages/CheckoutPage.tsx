@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, X, Copy, Check, QrCode } from 'lucide-react';
+import { Loader2, X, Copy, Check, QrCode, Truck } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useCreateOrder } from '@/features/orders/hooks/useCreateOrder';
 import { useCreatePayOSCheckout, usePayOSPaymentStatus } from '@/features/orders/hooks/usePaymentPayOS';
@@ -125,7 +125,7 @@ export default function CheckoutPage() {
   const [ward, setWard] = useState('');
   const [street, setStreet] = useState('');
   const [note, setNote] = useState('');
-  const paymentMethod = 'payos' as const;
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'payos'>('cod');
   const [error, setError] = useState('');
 
   // PayOS modal state
@@ -169,6 +169,11 @@ export default function CheckoutPage() {
       },
       {
         onSuccess: (order) => {
+          if (paymentMethod === 'cod') {
+            clearCart();
+            navigate(`/checkout/success?orderCode=${order.orderCode}`);
+            return;
+          }
           createPayOSCheckout(
             {
               orderCode: order.orderCode,
@@ -296,25 +301,57 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Payment method — fixed: banking via PayOS */}
+          {/* Payment method */}
           <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-3">
             <h3 className="text-xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-2">
               2. Phương Thức Thanh Toán
             </h3>
 
-            <div className="flex items-center gap-3 p-4 border border-[#C9973A] bg-[#F5EDD6] rounded-[4px]">
-              <QrCode size={22} className="text-[#C9973A] flex-shrink-0" />
+            {/* COD */}
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('cod')}
+              className={`w-full flex items-center gap-3 p-4 border rounded-[4px] transition-all text-left ${
+                paymentMethod === 'cod'
+                  ? 'border-[#3A6B4A] bg-[rgba(58,107,74,0.06)]'
+                  : 'border-[#D4B896] bg-transparent hover:border-[#9C8670]'
+              }`}
+            >
+              <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === 'cod' ? 'border-[#3A6B4A]' : 'border-[#D4B896]'}`}>
+                {paymentMethod === 'cod' && <div className="w-2 h-2 rounded-full bg-[#3A6B4A]" />}
+              </div>
+              <Truck size={20} className={paymentMethod === 'cod' ? 'text-[#3A6B4A]' : 'text-[#9C8670]'} />
+              <div>
+                <p className="font-bold text-sm text-[#2C1A0E]">Thanh toán khi nhận hàng (COD)</p>
+                <p className="text-xs text-[#9C8670] mt-0.5">Trả tiền mặt khi shipper giao hàng đến tay bạn</p>
+              </div>
+            </button>
+
+            {/* Internet Banking / VietQR */}
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('payos')}
+              className={`w-full flex items-center gap-3 p-4 border rounded-[4px] transition-all text-left ${
+                paymentMethod === 'payos'
+                  ? 'border-[#C9973A] bg-[#F5EDD6]'
+                  : 'border-[#D4B896] bg-transparent hover:border-[#9C8670]'
+              }`}
+            >
+              <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === 'payos' ? 'border-[#C9973A]' : 'border-[#D4B896]'}`}>
+                {paymentMethod === 'payos' && <div className="w-2 h-2 rounded-full bg-[#C9973A]" />}
+              </div>
+              <QrCode size={20} className={paymentMethod === 'payos' ? 'text-[#C9973A]' : 'text-[#9C8670]'} />
               <div>
                 <p className="font-bold text-sm text-[#2C1A0E]">Internet Banking / VietQR</p>
-                <p className="text-xs text-[#9C8670] mt-0.5">
-                  Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam
-                </p>
+                <p className="text-xs text-[#9C8670] mt-0.5">Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam</p>
               </div>
-            </div>
+            </button>
 
-            <p className="text-xs text-[#9C8670] pl-1">
-              Mã QR sẽ hiển thị ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.
-            </p>
+            {paymentMethod === 'payos' && (
+              <p className="text-xs text-[#9C8670] pl-1">
+                Mã QR sẽ hiển thị ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.
+              </p>
+            )}
           </div>
         </div>
 
@@ -372,8 +409,10 @@ export default function CheckoutPage() {
               <><Loader2 size={16} className="animate-spin" />ĐANG TẠO ĐƠN HÀNG...</>
             ) : isCreatingQR ? (
               <><Loader2 size={16} className="animate-spin" />ĐANG TẠO MÃ QR...</>
+            ) : paymentMethod === 'cod' ? (
+              'ĐẶT HÀNG — THANH TOÁN KHI NHẬN'
             ) : (
-              'ĐẶT HÀNG NGAY LẬP TỨC'
+              'ĐẶT HÀNG & THANH TOÁN QR'
             )}
           </button>
         </div>
