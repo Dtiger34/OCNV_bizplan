@@ -120,6 +120,15 @@ export class PaymentsService {
     try {
       const paymentInfo = await this.payosService.getPaymentInfo(payosOrderCode);
 
+      // Tự động update DB nếu PayOS xác nhận đã thanh toán
+      if (paymentInfo.status === 'PAID' && order.payment.status !== PaymentStatus.PAID) {
+        await this.orderModel.findOneAndUpdate(
+          { orderCode },
+          { $set: { 'payment.status': PaymentStatus.PAID, 'payment.paidAt': new Date() } },
+        ).exec();
+        this.logger.log(`Order ${orderCode} marked as PAID via status polling`);
+      }
+
       return {
         success: true,
         orderCode,
