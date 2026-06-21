@@ -8,7 +8,7 @@ export default function HeroBanner() {
     <section className="relative w-full h-screen min-h-[600px] overflow-hidden -mt-20">
       {/* Background image */}
       <img
-        src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=1920&q=80"
+        src="/image/herobanner.jpg"
         alt="Làng nghề Việt Nam"
         className="absolute inset-0 w-full h-full object-cover"
       />

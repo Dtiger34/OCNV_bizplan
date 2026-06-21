@@ -27,7 +27,7 @@ export default function Header() {
         {/* Logo — bên trái */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
-            src="/assets/Logo.png"
+            src="/assets/logo.jpg"
             alt="Logo"
             className="h-9 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           />
