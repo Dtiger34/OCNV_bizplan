@@ -29,13 +29,7 @@ export const configSchema = Joi.object({
   PAYOS_RETURN_URL: Joi.string().uri().allow('').optional(),
   PAYOS_CANCEL_URL: Joi.string().uri().allow('').optional(),
 
-  // Legacy Payment Config
-  PAYMENT_TMN_CODE: Joi.string().allow('').optional(),
-  PAYMENT_HASH_SECRET: Joi.string().allow('').optional(),
-  PAYMENT_URL: Joi.string().uri().allow('').optional(),
-  PAYMENT_RETURN_URL: Joi.string().uri().allow('').optional(),
-
-  SHIPPING_FEE: Joi.number().default(30000),
+SHIPPING_FEE: Joi.number().default(30000),
 
   STATIC_FILES_PATH: Joi.string().default('./uploads'),
 });
