@@ -6,23 +6,24 @@ export default function HeroBanner() {
   const navigate = useNavigate();
 
   return (
-    <div className="-mt-20">
-      {/* Ảnh hero hiển thị đúng kích thước gốc */}
-      <div className="w-full">
-        <img
-          src={heroBannerImg}
-          alt="Làng nghề Việt Nam"
-          className="w-full h-auto block"
-        />
-      </div>
+    <section className="relative w-full overflow-hidden">
+      <img
+        src={heroBannerImg}
+        alt="Làng nghề Việt Nam"
+        className="w-full h-auto block"
+      />
 
-      {/* Nội dung bên dưới ảnh */}
-      <div className="bg-[#2C1A0E] px-4 md:px-10 lg:px-16 py-10 md:py-14">
+      {/* Overlay gradient bottom-left để chữ đọc được */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+
+      {/* Chữ đè lên ảnh, căn góc dưới trái */}
+      <div className="absolute inset-0 flex flex-col justify-end pb-10 md:pb-16 px-4 md:px-10 lg:px-16">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 md:mb-6 max-w-3xl"
+          className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-3 md:mb-5 max-w-3xl drop-shadow-lg"
         >
           Tinh hoa làng nghề,<br />trải nghiệm thực tế ảo.
         </motion.h1>
@@ -31,7 +32,7 @@ export default function HeroBanner() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="text-white/75 text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-8 max-w-xl"
+          className="text-white/85 text-sm md:text-base leading-relaxed mb-6 md:mb-8 max-w-xl drop-shadow"
         >
           Khám phá tinh hoa Bát Tràng, Vạn Phúc, Quảng Phú Cầu — tái hiện trong mô hình 3D kết hợp công nghệ AR sống động.
         </motion.p>
@@ -60,6 +61,6 @@ export default function HeroBanner() {
           </motion.button>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
