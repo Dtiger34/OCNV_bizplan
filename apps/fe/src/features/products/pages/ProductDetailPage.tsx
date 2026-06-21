@@ -102,28 +102,13 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10">
 
             {/* Images */}
-            <div className="md:col-span-5 flex gap-3">
-              {/* Thumbnail strip bên trái */}
-              {images.length > 1 && (
-                <div className="flex flex-col gap-2 w-16 shrink-0">
-                  {images.map((url: string, i: number) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveImg(i)}
-                      className={`w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9973A]' : 'border-gray-200 hover:border-gray-400'}`}
-                    >
-                      <img src={url} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
+            <div className="md:col-span-5">
               {/* Ảnh chính */}
-              <div className="flex-1 aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative">
+              <div className="aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative">
                 <img
                   src={images[activeImg] ?? PLACEHOLDER}
                   alt={product.name[lang]}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-opacity duration-200"
                 />
                 <Link
                   to={`/ar/${product._id}`}

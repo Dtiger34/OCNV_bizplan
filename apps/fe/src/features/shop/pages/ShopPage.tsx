@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search, SlidersHorizontal, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../products/hooks/useProducts';
@@ -203,8 +203,11 @@ export default function ShopPage() {
                       )}
                     </div>
                     <div className="p-2.5 space-y-1">
-                      <p className="text-[9px] font-bold text-[#7A5A1A] uppercase truncate">{product.village?.name?.vi ?? '—'}</p>
+                      {product.village?.name?.vi && <p className="text-[9px] font-bold text-[#7A5A1A] uppercase truncate">{product.village.name.vi}</p>}
                       <h3 className="text-xs font-semibold text-[#2C1A0E] line-clamp-2 leading-snug">{product.name.vi}</h3>
+                      <div className="flex text-[#C9973A]">
+                        {[1,2,3,4,5].map(s => <Star key={s} size={10} fill="currentColor" />)}
+                      </div>
                       <p className="text-sm font-bold text-[#C9973A]">{product.price.toLocaleString('vi-VN')}₫</p>
                       <button
                         disabled={stockStatus === 'out_of_stock'}

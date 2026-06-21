@@ -28,14 +28,6 @@ export default function HeroBanner() {
           Tinh hoa làng nghề,<br />trải nghiệm thực tế ảo.
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35 }}
-          className="text-white/85 text-sm md:text-base leading-relaxed mb-6 md:mb-8 max-w-xl drop-shadow"
-        >
-          Khám phá tinh hoa Bát Tràng, Vạn Phúc, Quảng Phú Cầu — tái hiện trong mô hình 3D kết hợp công nghệ AR sống động.
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}

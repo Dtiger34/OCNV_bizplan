@@ -25,9 +25,6 @@ export default function Footer() {
           <h4 className="text-2xl font-bold tracking-wider text-[#C9973A] uppercase">
             NGHỀ XƯA NÉT MỚI
           </h4>
-          <p className="text-sm text-[#C9B99A] leading-relaxed max-w-sm">
-            Tái hiện các làng nghề truyền thống Việt Nam dưới dạng hộp mô hình tiểu cảnh diorama thu nhỏ 3D, kết hợp công nghệ AR để mang lại trải nghiệm tương tác trực quan sống động.
-          </p>
           <div className="space-y-2 pt-2 text-[#C9B99A] text-sm">
             <div className="flex items-center gap-2.5">
               <MapPin size={15} className="text-[#C9973A]" />
