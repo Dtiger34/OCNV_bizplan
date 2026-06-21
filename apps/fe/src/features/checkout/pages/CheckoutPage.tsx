@@ -57,13 +57,17 @@ function PayOSModal({
           {/* QR Code */}
           <div className="flex justify-center">
             <div className="p-3 bg-white border border-[#D4B896] rounded-[6px] inline-block">
-              <QRCodeSVG
-                value={qrData}
-                size={200}
-                bgColor="#ffffff"
-                fgColor="#1a0a00"
-                level="M"
-              />
+              {qrData.startsWith('http') ? (
+                <img src={qrData} alt="QR thanh toán" width={200} height={200} />
+              ) : (
+                <QRCodeSVG
+                  value={qrData}
+                  size={200}
+                  bgColor="#ffffff"
+                  fgColor="#1a0a00"
+                  level="M"
+                />
+              )}
             </div>
           </div>
 

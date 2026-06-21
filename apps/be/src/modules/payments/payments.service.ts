@@ -87,6 +87,8 @@ export class PaymentsService {
       cancelUrl,
     });
 
+    this.logger.log(`PayOS response qrCode type: ${typeof response.qrCode}, value: ${String(response.qrCode).substring(0, 80)}`);
+
     // Lưu thông tin thanh toán vào đơn hàng
     await this.orderModel.findOneAndUpdate(
       { orderCode: data.orderCode },
