@@ -6,25 +6,23 @@ export default function HeroBanner() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] overflow-hidden -mt-20">
-      {/* Background image */}
-      <img
-        src={heroBannerImg}
-        alt="Làng nghề Việt Nam"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <div className="-mt-20">
+      {/* Ảnh hero hiển thị đúng kích thước gốc */}
+      <div className="w-full">
+        <img
+          src={heroBannerImg}
+          alt="Làng nghề Việt Nam"
+          className="w-full h-auto block"
+        />
+      </div>
 
-      {/* Dark overlay — heavier bottom-left to make text readable */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
-
-      {/* Content — bottom-left aligned like the design */}
-      <div className="absolute inset-0 flex flex-col justify-end pb-10 md:pb-20 px-4 md:px-10 lg:px-16 max-w-4xl">
+      {/* Nội dung bên dưới ảnh */}
+      <div className="bg-[#2C1A0E] px-4 md:px-10 lg:px-16 py-10 md:py-14">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white font-bold text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 md:mb-6"
+          className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 md:mb-6 max-w-3xl"
         >
           Tinh hoa làng nghề,<br />trải nghiệm thực tế ảo.
         </motion.h1>
@@ -62,11 +60,6 @@ export default function HeroBanner() {
           </motion.button>
         </motion.div>
       </div>
-
-      {/* Bottom-right attribution */}
-      <p className="absolute bottom-6 right-8 text-white/40 text-xs tracking-wide">
-        Nghề Xưa Nét Mới — Làng Nghề Việt Nam
-      </p>
-    </section>
+    </div>
   );
 }
