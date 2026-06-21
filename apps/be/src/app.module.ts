@@ -60,7 +60,7 @@ ServeStaticModule.forRootAsync({
           serveRoot: '/static',
         },
         {
-          rootPath: join(process.cwd(), '..', 'fe', 'dist'),
+          rootPath: join(process.cwd(), 'fe', 'dist'),
           exclude: ['/api*', '/static*'],
           serveStaticOptions: { index: false },
         },

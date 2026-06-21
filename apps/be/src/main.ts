@@ -47,7 +47,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   // Serve FE index.html for all non-API routes (SPA fallback)
-  const feDistIndex = join(process.cwd(), '..', 'fe', 'dist', 'index.html');
+  const feDistIndex = join(process.cwd(), 'fe', 'dist', 'index.html');
   if (existsSync(feDistIndex)) {
     const { createReadStream } = await import('fs');
     const expressApp = app.getHttpAdapter().getInstance();
