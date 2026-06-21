@@ -38,5 +38,4 @@ export const configSchema = Joi.object({
   SHIPPING_FEE: Joi.number().default(30000),
 
   STATIC_FILES_PATH: Joi.string().default('./uploads'),
-  STATIC_FILES_URL: Joi.string().uri().default('http://localhost:3000/static'),
 });
