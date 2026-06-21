@@ -14,7 +14,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersQueryDto } from './dto/get-orders-query.dto';
 import { OrderStatus, PaymentMethod, PaymentStatus } from '../../common/enums';
 
-const SHIPPING_FEE = 30000;
+const SHIPPING_FEE = 0;
 
 @Injectable()
 export class OrdersService {
