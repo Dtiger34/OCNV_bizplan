@@ -38,4 +38,3 @@ export class Village {
 }
 
 export const VillageSchema = SchemaFactory.createForClass(Village);
-VillageSchema.index({ slug: 1 }, { unique: true });
