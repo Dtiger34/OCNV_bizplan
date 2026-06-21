@@ -3,6 +3,7 @@ export interface VillageStage {
   order: number;
   title: string;
   description: string;
+  details?: string[];
 }
 
 export interface VillageStatic {
@@ -14,7 +15,7 @@ export interface VillageStatic {
   coverImageUrl: string;
   heroImageUrl: string;
   galleryImages: string[];
-  color: string; // accent color per village
+  color: string;
   artisanStory?: string;
   artisanQuote?: string;
   stages: VillageStage[];
@@ -29,7 +30,7 @@ export const VILLAGES: VillageStatic[] = [
     shortDescription:
       'Bát Tràng là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam, nằm bên bờ sông Hồng, cách trung tâm Hà Nội khoảng 15 km.',
     fullHistory:
-      'Làng Gốm Bát Tràng thuộc xã Bát Tràng, nằm bên bờ sông Hồng và cách trung tâm Hà Nội khoảng 15 km. Đây là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam với lịch sử hơn 700 năm hình thành và phát triển.\n\nTừ xa xưa, gốm sứ không chỉ là vật dụng phục vụ đời sống hằng ngày mà còn mang giá trị nghệ thuật và văn hóa sâu sắc. Những sản phẩm gốm Bát Tràng thể hiện sự kết hợp hài hòa giữa kỹ thuật thủ công tinh xảo, óc sáng tạo và nét đẹp truyền thống của người Việt.\n\nThế kỷ XV–XVI, nghề gốm phát triển nhờ chính sách khuyến khích giao thương của nhà Mạc. Đến thế kỷ XVI–XVII là giai đoạn hưng thịnh nhất — sản phẩm được xuất khẩu rộng rãi sang nhiều nước. Ngày nay, Bát Tràng là điểm du lịch văn hóa nổi tiếng, thu hút đông đảo du khách trong và ngoài nước.',
+      'Làng Gốm Bát Tràng thuộc xã Bát Tràng, nằm bên bờ sông Hồng và cách trung tâm Hà Nội khoảng 15 km. Đây là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam với lịch sử hơn 700 năm hình thành và phát triển.\n\nTừ xa xưa, gốm sứ không chỉ là vật dụng phục vụ đời sống hằng ngày mà còn mang giá trị nghệ thuật và văn hóa sâu sắc. Những sản phẩm gốm Bát Tràng thể hiện sự kết hợp hài hòa giữa kỹ thuật thủ công tinh xảo, óc sáng tạo và nét đẹp truyền thống của người Việt.\n\nThế kỷ XV–XVI, nghề gốm phát triển nhờ chính sách khuyến khích giao thương của nhà Mạc, sản phẩm bắt đầu mang dấu ấn riêng với tên người chế tác và niên đại sản xuất. Đến thế kỷ XVI–XVII là giai đoạn hưng thịnh nhất — nhờ thuận lợi giao thương, sản phẩm được xuất khẩu rộng rãi sang nhiều nước trong khu vực và thế giới.\n\nNgày nay, Bát Tràng là điểm du lịch văn hóa nổi tiếng, thu hút đông đảo du khách trong và ngoài nước đến tham quan, trải nghiệm làm gốm và tìm hiểu về nghề thủ công truyền thống Việt Nam.',
     coverImageUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=800&q=80',
     heroImageUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1920&q=80',
     galleryImages: [
@@ -47,12 +48,36 @@ export const VILLAGES: VillageStatic[] = [
       { label: 'Nhiệt độ nung', value: '1.000°C – 1.300°C' },
     ],
     stages: [
-      { id: '1', order: 1, title: 'Chọn & xử lý đất sét', description: 'Đất sét được lựa chọn kỹ lưỡng, loại bỏ tạp chất, ngâm, nhào và luyện để tạo độ dẻo, giúp sản phẩm dễ tạo hình và hạn chế nứt vỡ khi nung.' },
-      { id: '2', order: 2, title: 'Tạo hình sản phẩm', description: 'Người thợ sử dụng bàn xoay hoặc khuôn để tạo hình cho sản phẩm như bát, đĩa, bình hoa, tượng hay đồ trang trí theo thiết kế.' },
-      { id: '3', order: 3, title: 'Phơi & sửa mộc', description: 'Sản phẩm sau khi tạo hình được phơi khô tự nhiên. Người thợ chỉnh sửa, gọt tỉa và làm nhẵn bề mặt để đạt độ hoàn thiện cao.' },
-      { id: '4', order: 4, title: 'Trang trí & phủ men', description: 'Nghệ nhân vẽ hoa văn, họa tiết trang trí lên sản phẩm rồi phủ lớp men phù hợp để tăng tính thẩm mỹ và độ bền cho gốm.' },
-      { id: '5', order: 5, title: 'Nung gốm', description: 'Sản phẩm được đưa vào lò nung ở nhiệt độ từ 1.000°C đến hơn 1.300°C — công đoạn quyết định chất lượng, màu sắc và độ bền.' },
-      { id: '6', order: 6, title: 'Hoàn thiện & đóng gói', description: 'Sau khi nung, sản phẩm được kiểm tra chất lượng, phân loại, làm sạch và đóng gói trước khi đưa ra thị trường.' },
+      {
+        id: '1', order: 1,
+        title: 'Chọn và xử lý đất sét',
+        description: 'Đất sét được lựa chọn kỹ lưỡng, loại bỏ tạp chất rồi ngâm, nhào và luyện đất để tạo độ dẻo, giúp sản phẩm dễ tạo hình và hạn chế nứt vỡ khi nung.',
+      },
+      {
+        id: '2', order: 2,
+        title: 'Tạo hình sản phẩm',
+        description: 'Người thợ sử dụng bàn xoay hoặc khuôn để tạo hình cho sản phẩm như bát, đĩa, bình hoa, tượng hay đồ trang trí theo thiết kế mong muốn.',
+      },
+      {
+        id: '3', order: 3,
+        title: 'Phơi và sửa mộc',
+        description: 'Sản phẩm sau khi tạo hình được phơi khô tự nhiên. Người thợ tiến hành chỉnh sửa, gọt tỉa và làm nhẵn bề mặt để sản phẩm đạt độ hoàn thiện cao.',
+      },
+      {
+        id: '4', order: 4,
+        title: 'Trang trí và phủ men',
+        description: 'Các nghệ nhân vẽ hoa văn, họa tiết trang trí lên sản phẩm rồi phủ một lớp men phù hợp nhằm tăng tính thẩm mỹ và độ bền cho gốm.',
+      },
+      {
+        id: '5', order: 5,
+        title: 'Nung gốm',
+        description: 'Sản phẩm được đưa vào lò nung ở nhiệt độ cao, thường từ 1.000°C đến hơn 1.300°C. Đây là công đoạn quyết định chất lượng, màu sắc và độ bền của sản phẩm.',
+      },
+      {
+        id: '6', order: 6,
+        title: 'Hoàn thiện và đóng gói',
+        description: 'Sau khi nung, sản phẩm được kiểm tra chất lượng, phân loại, làm sạch và đóng gói trước khi đưa ra thị trường hoặc xuất khẩu.',
+      },
     ],
   },
   {
@@ -62,7 +87,7 @@ export const VILLAGES: VillageStatic[] = [
     shortDescription:
       'Làng Chuông (Phú Xuyên, Hà Nội) là một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam, nơi gần như mỗi gia đình đều biết làm nón.',
     fullHistory:
-      'Nằm ở vùng ven của Phú Xuyên, Hà Nội, làng Chuông từ lâu đã trở thành một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam. Nếu nhìn từ xa, làng Chuông có vẻ yên bình như bao làng quê khác. Nhưng khi bước vào sâu bên trong, bạn sẽ thấy một "hệ sinh thái nghề thủ công" tồn tại bền bỉ hàng trăm năm.\n\nTheo lời kể của các bậc cao niên trong làng, nghề làm nón đã có mặt từ khoảng thế kỷ thứ 8. Khi đó, vùng đất này còn được gọi là Trang Thì Trung và đã sớm nổi tiếng với nghề thủ công làm nón, phục vụ nhu cầu sử dụng của nhiều tầng lớp trong xã hội.\n\nNhưng theo thời gian, nón lá dần vượt khỏi chức năng "vật dụng lao động" để trở thành một phần của văn hóa Việt. Hình ảnh người phụ nữ đội nón, áo dài đã đi vào thơ ca, hội họa và ký ức nhiều thế hệ.',
+      'Nằm ở vùng ven của Phú Xuyên, Hà Nội, làng Chuông từ lâu đã trở thành một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam. Nếu nhìn từ xa, làng Chuông có vẻ yên bình như bao làng quê khác. Nhưng khi bước vào sâu bên trong, bạn sẽ thấy một "hệ sinh thái nghề thủ công" tồn tại bền bỉ hàng trăm năm — nơi mà gần như mỗi gia đình đều có ít nhất một người biết làm nón.\n\nĐiều đặc biệt là nơi đây không chỉ "làm nón", mà gần như cả làng cùng sống trong nhịp thở của nón. Từ sân nhà, ngõ nhỏ đến hiên cửa, đâu đâu cũng có hình ảnh những chiếc lá cọ được phơi trắng, những vành tre được uốn tròn, hay tiếng kim khâu nón lách cách đều đặn như một bản nhạc rất riêng của làng quê Bắc Bộ.\n\nTheo lời kể của các bậc cao niên trong làng, nghề làm nón đã có mặt từ khoảng thế kỷ thứ 8. Khi đó, vùng đất này còn được gọi là Trang Thì Trung và đã sớm nổi tiếng với nghề thủ công làm nón, phục vụ nhu cầu sử dụng của nhiều tầng lớp trong xã hội.\n\nNhưng theo thời gian, nón lá dần vượt khỏi chức năng "vật dụng lao động" để trở thành một phần của văn hóa Việt. Hình ảnh người phụ nữ đội nón, áo dài đã đi vào thơ ca, hội họa và ký ức nhiều thế hệ.',
     coverImageUrl: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80',
     heroImageUrl: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=1920&q=80',
     galleryImages: [
@@ -80,11 +105,36 @@ export const VILLAGES: VillageStatic[] = [
       { label: 'Đặc trưng', value: 'Nón lá Việt Nam' },
     ],
     stages: [
-      { id: '1', order: 1, title: 'Chọn & xử lý lá', description: 'Lá cọ được chọn kỹ: không quá già, không quá non. Sau khi hái, lá được phơi nắng nhẹ, làm mềm bằng hơi, ép phẳng để giữ bề mặt trắng mịn.' },
-      { id: '2', order: 2, title: 'Chuốt & tạo khung tre', description: 'Tre được chọn thẳng, dẻo và già vừa đủ. Người thợ chẻ thành nan mảnh, uốn thành các vòng tròn đồng tâm, cố định thành khung nón nhiều lớp vành.' },
-      { id: '3', order: 3, title: 'Xếp lá lên khuôn', description: 'Lá được đặt lên khung theo từng lớp: lớp ngoài phải đều, mịn, không hở; lớp trong tạo độ chắc. Người thợ phải canh từng milimet.' },
-      { id: '4', order: 4, title: 'Khâu nón', description: 'Người thợ dùng kim dài, chỉ mảnh, khâu từng mũi xuyên qua lá và khung tre. Mũi khâu phải đều, thẳng hàng, lực tay ổn định.' },
-      { id: '5', order: 5, title: 'Trang trí & hoàn thiện', description: 'Nón được phủ dầu chống thấm, trang trí bằng hoa văn và gắn quai bằng vải hoặc lụa. Nhiều chiếc nón được biến thành sản phẩm nghệ thuật.' },
+      {
+        id: '1', order: 1,
+        title: 'Chọn và xử lý lá',
+        description: 'Nguyên liệu chính là lá cọ. Lá phải được chọn kỹ: không quá già (dễ giòn), không quá non (dễ rách). Đây là bước quyết định "độ đẹp nền" của chiếc nón.',
+        details: ['Phơi nắng nhẹ để giảm độ ẩm', 'Làm mềm bằng hơi hoặc ủ', 'Là và ép phẳng để giữ bề mặt trắng mịn'],
+      },
+      {
+        id: '2', order: 2,
+        title: 'Chuốt và tạo khung tre',
+        description: 'Tre được chọn phải thẳng, dẻo và già vừa đủ. Khung nón chính là "xương sống", quyết định độ cân đối của sản phẩm.',
+        details: ['Chẻ tre thành nan mảnh', 'Uốn thành các vòng tròn đồng tâm', 'Cố định thành khung nón nhiều lớp vành'],
+      },
+      {
+        id: '3', order: 3,
+        title: 'Xếp lá lên khuôn',
+        description: 'Lá được đặt lên khung theo từng lớp. Người thợ phải canh từng milimet — chỉ cần lệch một chút là nón sẽ mất cân đối.',
+        details: ['Lớp ngoài phải đều, mịn, không hở', 'Lớp trong giúp tạo độ chắc và che khuyết điểm'],
+      },
+      {
+        id: '4', order: 4,
+        title: 'Khâu nón',
+        description: 'Đây là bước đòi hỏi kỹ năng cao nhất. Người thợ dùng kim dài, chỉ mảnh, khâu từng mũi xuyên qua lá và khung tre. Một người thợ lành nghề có thể "khâu như máy" nhưng vẫn giữ được sự mềm mại thủ công.',
+        details: ['Mũi khâu phải đều, thẳng hàng', 'Lực tay ổn định để không làm rách lá', 'Khoảng cách mũi khâu quyết định độ bền và thẩm mỹ'],
+      },
+      {
+        id: '5', order: 5,
+        title: 'Trang trí và hoàn thiện',
+        description: 'Ở làng Chuông, nhiều chiếc nón được biến thành sản phẩm nghệ thuật phục vụ du lịch và thời trang.',
+        details: ['Phủ dầu để chống thấm nước', 'Trang trí bằng hình ảnh, thơ, hoa văn', 'Gắn quai nón bằng vải hoặc lụa'],
+      },
     ],
   },
   {
@@ -94,7 +144,7 @@ export const VILLAGES: VillageStatic[] = [
     shortDescription:
       'Làng Hương Quảng Phú Cầu (Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng nhất Việt Nam, nơi những bó hương đỏ rực phơi dưới nắng trở thành biểu tượng đặc trưng.',
     fullHistory:
-      'Làng Hương Quảng Phú Cầu (huyện Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng của Việt Nam với lịch sử hơn 100 năm. Từ bao đời nay, hương đã trở thành một phần không thể thiếu trong văn hóa tâm linh dân tộc.\n\nMỗi nén hương được thắp lên là sự kết nối giữa hiện tại và cội nguồn, thể hiện lòng thành kính đối với tổ tiên, thần linh và những giá trị truyền thống. Chính vì vậy, nghề làm hương không đơn thuần tạo ra một sản phẩm mà còn góp phần gìn giữ bản sắc văn hóa và đời sống tinh thần.\n\nNghề làm hương tại Quảng Phú Cầu xuất hiện từ đầu thế kỷ XX. Đặc biệt, hình ảnh những bó chân hương đỏ rực được xòe tròn dưới nắng đã trở thành biểu tượng đặc trưng của làng nghề và là điểm check-in nổi tiếng.',
+      'Làng Hương Quảng Phú Cầu (huyện Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng của Việt Nam với lịch sử hơn 100 năm. Từ bao đời nay, hương đã trở thành một phần không thể thiếu trong văn hóa tâm linh dân tộc. Mỗi nén hương được thắp lên là sự kết nối giữa hiện tại và cội nguồn, thể hiện lòng thành kính đối với tổ tiên, thần linh và những giá trị truyền thống tốt đẹp.\n\nTại Quảng Phú Cầu, các công đoạn làm hương như chẻ tăm, nhuộm chân hương, se hương và phơi hương đều được thực hiện một cách tỉ mỉ. Đặc biệt, hình ảnh những bó chân hương đỏ rực được xòe tròn dưới nắng đã trở thành biểu tượng đặc trưng của làng nghề.\n\nNghề làm hương tại Quảng Phú Cầu xuất hiện từ đầu thế kỷ XX. Ban đầu người dân chủ yếu làm nông nghiệp và các nghề thủ công từ tre nứa, trước khi phát triển mạnh nghề sản xuất tăm hương. Nhờ nhu cầu sử dụng hương trong đời sống tín ngưỡng ngày càng tăng, nghề làm hương dần trở thành nguồn thu nhập chính của nhiều hộ gia đình.\n\nNgày nay, bên cạnh việc duy trì nghề truyền thống, Quảng Phú Cầu còn phát triển du lịch làng nghề, góp phần quảng bá văn hóa Việt Nam và đưa những giá trị truyền thống đến gần hơn với thế hệ trẻ.',
     coverImageUrl: 'https://images.unsplash.com/photo-1614632537197-38a17061c2bd?auto=format&fit=crop&w=800&q=80',
     heroImageUrl: 'https://images.unsplash.com/photo-1614632537197-38a17061c2bd?auto=format&fit=crop&w=1920&q=80',
     galleryImages: [
@@ -112,11 +162,31 @@ export const VILLAGES: VillageStatic[] = [
       { label: 'Đặc trưng', value: 'Hương đỏ phơi nắng' },
     ],
     stages: [
-      { id: '1', order: 1, title: 'Chọn & xử lý tre', description: 'Nguyên liệu chính là tre hoặc vầu già. Sau khi tuyển chọn kỹ lưỡng, tre được chẻ nhỏ, vót thành những que tăm đều nhau làm chân hương.' },
-      { id: '2', order: 2, title: 'Nhuộm chân hương', description: 'Tăm hương sau khi vót sẽ được nhuộm màu đỏ hoặc hồng rồi đem phơi khô. Đây là công đoạn tạo nên sắc đỏ đặc trưng của làng hương.' },
-      { id: '3', order: 3, title: 'Phơi khô', description: 'Những bó chân hương được xòe tròn như những bông hoa lớn và phơi dưới nắng — tạo nên khung cảnh đặc sắc nổi tiếng của làng nghề.' },
-      { id: '4', order: 4, title: 'Se hương', description: 'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy móc để tạo thành nén hương hoàn chỉnh.' },
-      { id: '5', order: 5, title: 'Hoàn thiện & đóng gói', description: 'Sản phẩm tiếp tục được phơi khô, phân loại theo kích cỡ và hương liệu, rồi đóng gói trước khi đưa ra thị trường.' },
+      {
+        id: '1', order: 1,
+        title: 'Chọn và xử lý tre (vầu)',
+        description: 'Nguyên liệu chính để làm tăm hương là tre hoặc vầu già. Sau khi được tuyển chọn kỹ lưỡng, tre được chẻ nhỏ, vót thành những que tăm đều nhau để làm chân hương.',
+      },
+      {
+        id: '2', order: 2,
+        title: 'Nhuộm chân hương',
+        description: 'Tăm hương sau khi vót sẽ được nhuộm màu đỏ hoặc hồng rồi đem phơi khô. Đây là công đoạn tạo nên sắc đỏ đặc trưng của làng Hương Quảng Phú Cầu.',
+      },
+      {
+        id: '3', order: 3,
+        title: 'Phơi khô',
+        description: 'Những bó chân hương được xòe tròn như những bông hoa lớn và phơi dưới nắng để màu nhuộm khô hoàn toàn, đồng thời tạo nên khung cảnh đặc sắc của làng nghề.',
+      },
+      {
+        id: '4', order: 4,
+        title: 'Se hương',
+        description: 'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy móc hỗ trợ để tạo thành nén hương hoàn chỉnh.',
+      },
+      {
+        id: '5', order: 5,
+        title: 'Hoàn thiện và đóng gói',
+        description: 'Sau khi se hương, sản phẩm tiếp tục được phơi khô, phân loại theo kích cỡ và hương liệu, rồi đóng gói trước khi đưa ra thị trường.',
+      },
     ],
   },
   {
@@ -126,7 +196,7 @@ export const VILLAGES: VillageStatic[] = [
     shortDescription:
       'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam với lịch sử hơn 1.000 năm.',
     fullHistory:
-      'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc từ lâu đã được xem là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam. Điều khiến Vạn Phúc đặc biệt không chỉ nằm ở sản phẩm lụa mềm, nhẹ, có độ óng tự nhiên, mà còn ở "không khí nghề" bao trùm cả làng.\n\nLàng lụa Vạn Phúc xưa kia có tên Vạn Bảo, do kị húy nhà Nguyễn nên đã đổi thành Vạn Phúc. Theo các tài liệu và truyền thuyết địa phương, nghề dệt lụa ở Vạn Phúc có lịch sử hơn 1.000 năm, gắn với tên tuổi bà A Lã Thị Nương — người được xem là tổ nghề dệt lụa.\n\nBà được cho là đã truyền dạy kỹ thuật trồng dâu, nuôi tằm, ươm tơ và dệt lụa cho người dân trong vùng, đặt nền móng cho nghề lụa phát triển bền vững qua nhiều thế hệ. Lụa Vạn Phúc không chỉ được sử dụng trong nước mà còn từng xuất hiện ở nhiều thị trường quốc tế.',
+      'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc từ lâu đã được xem là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam. Điều khiến Vạn Phúc đặc biệt không chỉ nằm ở sản phẩm lụa mềm, nhẹ, có độ óng tự nhiên, mà còn ở "không khí nghề" bao trùm cả làng. Dạo bước trong làng, bạn dễ dàng bắt gặp hình ảnh khung cửi đặt ngay trong nhà, tiếng thoi đưa đều đặn vang lên từ sáng sớm.\n\nLàng lụa Vạn Phúc xưa kia có tên Vạn Bảo, do kị húy nhà Nguyễn nên đã đổi thành Vạn Phúc. Theo các tài liệu và truyền thuyết địa phương, nghề dệt lụa ở Vạn Phúc có lịch sử hơn 1.000 năm, gắn với tên tuổi bà A Lã Thị Nương — người được xem là tổ nghề dệt lụa.\n\nBà được cho là đã truyền dạy kỹ thuật trồng dâu, nuôi tằm, ươm tơ và dệt lụa cho người dân trong vùng, đặt nền móng cho nghề lụa phát triển bền vững qua nhiều thế hệ. Nhờ đó, Vạn Phúc sớm trở thành một trung tâm dệt lụa lớn, cung cấp sản phẩm cho cả khu vực kinh thành Thăng Long xưa.\n\nLụa Vạn Phúc không chỉ được sử dụng trong nước mà còn từng xuất hiện ở nhiều thị trường quốc tế. Hoa văn trên lụa rất đa dạng, trang trí đối xứng, đường nét không rườm rà mà luôn tạo cảm giác phóng thoáng, dứt khoát.',
     coverImageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
     heroImageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80',
     galleryImages: [
@@ -144,10 +214,29 @@ export const VILLAGES: VillageStatic[] = [
       { label: 'Đặc trưng', value: 'Lụa óng mềm mại' },
     ],
     stages: [
-      { id: '1', order: 1, title: 'Nuôi tằm', description: 'Tằm được nuôi bằng lá dâu tươi. Trong suốt vòng đời ngắn ngủi, tằm tạo ra kén tơ. Chất lượng lá dâu quyết định trực tiếp đến độ mịn và bền của sợi lụa.' },
-      { id: '2', order: 2, title: 'Ươm tơ từ kén', description: 'Kén tằm được xử lý bằng nước nóng để tách sợi tơ. Người thợ kéo sợi, gom nhiều sợi nhỏ thành sợi lớn, làm khô và se sợi — đòi hỏi sự khéo léo cao.' },
-      { id: '3', order: 3, title: 'Dệt lụa', description: 'Sợi tơ được đưa lên khung cửi. Người thợ dàn sợi dọc và sợi ngang, dệt thủ công, điều chỉnh độ căng để tạo bề mặt vải đều và mịn.' },
-      { id: '4', order: 4, title: 'Nhuộm & hoàn thiện', description: 'Vải lụa được nhuộm màu bằng phương pháp truyền thống hoặc hiện đại, giặt và xử lý bề mặt để tạo độ bóng, độ mềm và óng tự nhiên.' },
+      {
+        id: '1', order: 1,
+        title: 'Nuôi tằm',
+        description: 'Tằm được nuôi bằng lá dâu tươi. Trong suốt vòng đời ngắn ngủi, tằm ăn liên tục và phát triển nhanh, tạo ra kén tơ. Chất lượng lá dâu và điều kiện nuôi quyết định trực tiếp đến độ mịn và bền của sợi lụa sau này.',
+      },
+      {
+        id: '2', order: 2,
+        title: 'Ươm tơ từ kén tằm',
+        description: 'Kén tằm sau khi thu hoạch được xử lý bằng nước nóng để tách sợi tơ. Đây là công đoạn đòi hỏi sự khéo léo để giữ sợi tơ không bị đứt hoặc rối.',
+        details: ['Kéo sợi tơ từ kén', 'Gom nhiều sợi nhỏ thành một sợi lớn', 'Làm khô và se sợi'],
+      },
+      {
+        id: '3', order: 3,
+        title: 'Dệt lụa trên khung cửi',
+        description: 'Sợi tơ sau khi xử lý được đưa lên khung cửi. Tiếng thoi đưa trên khung cửi chính là "âm thanh đặc trưng" của làng nghề.',
+        details: ['Dàn sợi dọc và sợi ngang', 'Dệt thủ công hoặc bán thủ công', 'Điều chỉnh độ căng để tạo bề mặt vải đều và mịn'],
+      },
+      {
+        id: '4', order: 4,
+        title: 'Nhuộm và hoàn thiện',
+        description: 'Mỗi tấm lụa đạt chuẩn phải có độ mềm, độ rũ và độ óng tự nhiên đặc trưng của Vạn Phúc.',
+        details: ['Nhuộm màu bằng phương pháp truyền thống hoặc hiện đại', 'Giặt và xử lý bề mặt để tạo độ bóng', 'Kiểm tra chất lượng trước khi xuất xưởng'],
+      },
     ],
   },
   {
@@ -157,7 +246,7 @@ export const VILLAGES: VillageStatic[] = [
     shortDescription:
       'Nằm tại xã Chàng Sơn (Thạch Thất, Hà Nội), làng nghề quạt Chàng Sơn là một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài, với lịch sử từ thế kỷ XVII.',
     fullHistory:
-      'Nằm tại xã Chàng Sơn, làng nghề quạt Chàng Sơn từ lâu đã được biết đến như một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài. Không chỉ đơn thuần là nơi sản xuất quạt giấy, quạt lụa, nơi đây còn là không gian lưu giữ tinh hoa lao động thủ công.\n\nNghề làm quạt ở Chàng Sơn (trước đây có tên là Nủa Chàng) đã có lịch sử từ rất lâu đời, các tư liệu lịch sử ghi nhận nghề đã hình thành và phát triển từ khoảng thế kỷ XVII đến XIX.\n\nNgay từ thế kỷ XIX, quạt Chàng Sơn đã không chỉ là vật dụng làm mát thông thường mà còn là vật phẩm sang trọng, nổi tiếng đến mức từng được người Pháp mang sang Paris để trưng bày trong các triển lãm quốc tế.',
+      'Nằm tại xã Chàng Sơn, làng nghề quạt Chàng Sơn từ lâu đã được biết đến như một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài. Không chỉ đơn thuần là nơi sản xuất quạt giấy, quạt lụa, nơi đây còn là không gian lưu giữ tinh hoa lao động thủ công, nơi mỗi chiếc quạt mang trong mình dấu ấn của sự tỉ mỉ, khéo léo và bền bỉ qua nhiều thế hệ.\n\nNghề làm quạt ở Chàng Sơn (trước đây có tên là Nủa Chàng) đã có lịch sử từ rất lâu đời, các tư liệu lịch sử ghi nhận nghề đã hình thành và phát triển từ khoảng thế kỷ XVII đến XIX.\n\nNgay từ thế kỷ XIX, quạt Chàng Sơn đã không chỉ là vật dụng làm mát thông thường mà còn là vật phẩm sang trọng. Nó nổi tiếng đến mức từng được người Pháp mang sang Paris để trưng bày trong các triển lãm quốc tế, khẳng định đẳng cấp của thủ công mỹ nghệ Việt.\n\nThời kỳ bao cấp, làng Chàng Sơn trở thành một "công xưởng" lớn cung cấp quạt giấy cho cả nước theo cơ chế tập trung, giúp nghề quạt được duy trì và phổ biến rộng rãi. Trong nhịp sống hiện đại, Chàng Sơn vẫn giữ được "hơi thở" truyền thống, đồng thời từng bước thích ứng với thị trường.',
     coverImageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?auto=format&fit=crop&w=800&q=80',
     heroImageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?auto=format&fit=crop&w=1920&q=80',
     galleryImages: [
@@ -172,13 +261,33 @@ export const VILLAGES: VillageStatic[] = [
       { label: 'Lịch sử', value: 'Từ thế kỷ XVII' },
       { label: 'Vị trí', value: 'Thạch Thất, Hà Nội' },
       { label: 'Nguyên liệu', value: 'Tre + Giấy dó / Lụa' },
-      { label: 'Đặc trưng', value: 'Triển lãm Paris thế kỷ XIX' },
+      { label: 'Đặc trưng', value: 'Triển lãm Paris TK XIX' },
     ],
     stages: [
-      { id: '1', order: 1, title: 'Chọn & xử lý tre', description: 'Tre được chọn phải già, thẳng và dẻo. Chẻ thành từng nan nhỏ, vót mỏng, mài nhẵn để không gây xước tay, uốn tạo hình khung quạt.' },
-      { id: '2', order: 2, title: 'Làm giấy quạt', description: 'Giấy dó hoặc giấy chuyên dụng được xử lý để có độ dai và nhẹ, có thể nhuộm màu hoặc in họa tiết, phơi khô tự nhiên.' },
-      { id: '3', order: 3, title: 'Dán & định hình', description: 'Dán giấy lên khung nan tre, canh chỉnh sao cho hai mặt cân đối, ép và cố định để quạt không bị cong hoặc lệch.' },
-      { id: '4', order: 4, title: 'Trang trí & hoàn thiện', description: 'Quạt được vẽ tranh thủ công, viết thư pháp hoặc trang trí họa tiết truyền thống. Kiểm tra độ mở–gập và tính thẩm mỹ trước khi ra thị trường.' },
+      {
+        id: '1', order: 1,
+        title: 'Chọn và xử lý tre',
+        description: 'Tre được chọn phải già, thẳng và dẻo. Khung quạt là phần quyết định độ bền và độ cân đối của sản phẩm.',
+        details: ['Chẻ thành từng nan nhỏ', 'Vót mỏng và mài nhẵn để không gây xước tay', 'Uốn tạo hình khung quạt theo kích thước chuẩn'],
+      },
+      {
+        id: '2', order: 2,
+        title: 'Làm giấy quạt',
+        description: 'Giấy dùng làm quạt thường là giấy dó hoặc giấy chuyên dụng. Ở một số sản phẩm cao cấp, giấy còn được vẽ tay hoặc in tranh dân gian.',
+        details: ['Xử lý để có độ dai và nhẹ', 'Có thể nhuộm màu hoặc in họa tiết', 'Phơi khô tự nhiên để giữ độ bền'],
+      },
+      {
+        id: '3', order: 3,
+        title: 'Dán và định hình quạt',
+        description: 'Đây là công đoạn đòi hỏi sự khéo léo cao. Chỉ cần sai lệch nhỏ, quạt có thể bị nhăn hoặc mất dáng.',
+        details: ['Dán giấy lên khung nan tre', 'Canh chỉnh sao cho hai mặt cân đối', 'Ép và cố định để quạt không bị cong hoặc lệch'],
+      },
+      {
+        id: '4', order: 4,
+        title: 'Trang trí và hoàn thiện',
+        description: 'Sau đó quạt được kiểm tra độ mở–gập, độ bền và tính thẩm mỹ trước khi đưa ra thị trường.',
+        details: ['Vẽ tranh thủ công hoặc viết thư pháp', 'Trang trí họa tiết truyền thống hoặc hiện đại', 'Kiểm tra độ mở–gập và độ bền'],
+      },
     ],
   },
 ];

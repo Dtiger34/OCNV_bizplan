@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getVillage } from '../data/villages-static';
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const village = getVillage(slug ?? '');
-  const [activeStage, setActiveStage] = useState<string | null>(null);
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
 
   if (!village) {
@@ -182,50 +181,44 @@ export default function VillagePage() {
             <div className="h-[1px] w-12 bg-[#D4B896] mt-4" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {village.stages.map((stage, i) => {
-              const isActive = activeStage === stage.id;
-              return (
-                <motion.button
-                  key={stage.id}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.07 }}
-                  onClick={() => setActiveStage(isActive ? null : stage.id)}
-                  className="text-left p-5 rounded-[6px] border transition-all duration-300 cursor-pointer"
-                  style={{
-                    backgroundColor: isActive ? village.color + '12' : '#EDE3CE',
-                    borderColor: isActive ? village.color + '70' : '#D4B896',
-                  }}
-                >
-                  <div className="flex items-start gap-3">
-                    <span
-                      className="text-xl font-light flex-shrink-0 leading-none mt-0.5"
-                      style={{ color: village.color }}
-                    >
-                      {String(stage.order).padStart(2, '0')}
-                    </span>
-                    <div>
-                      <p className="text-sm font-medium text-[#2C1A0E] mb-2">{stage.title}</p>
-                      <p
-                        className={`text-xs text-[#7A5230] leading-relaxed transition-all duration-300 overflow-hidden ${
-                          isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
-                        }`}
-                      >
-                        {stage.description}
-                      </p>
-                      <p
-                        className="text-[10px] mt-2 transition-colors duration-200"
-                        style={{ color: isActive ? village.color : '#9C8670' }}
-                      >
-                        {isActive ? 'Thu gọn ↑' : 'Xem thêm ↓'}
-                      </p>
-                    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {village.stages.map((stage, i) => (
+              <motion.div
+                key={stage.id}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="p-5 rounded-[6px] border border-[#D4B896] bg-[#EDE3CE]"
+              >
+                <div className="flex items-start gap-3">
+                  <span
+                    className="text-2xl font-light flex-shrink-0 leading-none mt-0.5 w-8"
+                    style={{ color: village.color }}
+                  >
+                    {String(stage.order).padStart(2, '0')}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-[#2C1A0E] mb-2">{stage.title}</p>
+                    <p className="text-xs text-[#5C3D1E] leading-relaxed mb-3">{stage.description}</p>
+                    {stage.details && stage.details.length > 0 && (
+                      <ul className="space-y-1.5">
+                        {stage.details.map((d, j) => (
+                          <li key={j} className="flex items-start gap-2 text-xs text-[#7A5230]">
+                            <CheckCircle2
+                              size={12}
+                              className="flex-shrink-0 mt-0.5"
+                              style={{ color: village.color }}
+                            />
+                            {d}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                </motion.button>
-              );
-            })}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
