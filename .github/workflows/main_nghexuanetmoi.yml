@@ -35,15 +35,15 @@ jobs:
 
       - name: Prepare deployment package
         run: |
-          mkdir -p deploy
-          # Copy BE dist + node_modules
+          # pnpm deploy tạo flat node_modules đúng chuẩn cho production
+          pnpm deploy --filter @ocnv/be --prod deploy
+
+          # Copy BE dist vào deploy folder
           cp -r apps/be/dist deploy/dist
-          cp apps/be/package.json deploy/package.json
-          # Copy FE dist vào đúng vị trí BE expect: ../fe/dist
+
+          # Copy FE dist vào đúng path BE expect
           mkdir -p deploy/fe/dist
           cp -r apps/fe/dist/. deploy/fe/dist/
-          # Copy node_modules (chỉ production)
-          cp -r node_modules deploy/node_modules
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
