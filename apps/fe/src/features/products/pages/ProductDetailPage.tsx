@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-normal text-[#2C1A0E]">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-normal text-[#2C1A0E]">
               {product.name[lang]}
             </h1>
 

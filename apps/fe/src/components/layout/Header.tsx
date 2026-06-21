@@ -22,16 +22,16 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#3A1A0A]/90 backdrop-blur-xl border-b border-[#C9973A]/20 shadow-lg">
-      <div className="max-w-[1400px] mx-auto px-8 flex items-center h-20">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 flex items-center h-16 md:h-20">
 
         {/* Logo — bên trái */}
-        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+        <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src="/assets/Logo.png"
             alt="Logo"
-            className="h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
+            className="h-9 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           />
-          <span className="text-white font-semibold text-sm tracking-widest uppercase whitespace-nowrap">
+          <span className="hidden sm:block text-white font-semibold text-sm tracking-widest uppercase whitespace-nowrap">
             NGHỀ XƯA NÉT MỚI
           </span>
         </Link>
@@ -117,7 +117,7 @@ export default function Header() {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden border-t border-white/10"
           >
-            <div className="px-8 py-4 flex flex-col gap-3">
+            <div className="px-4 py-4 flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link key={link.path} to={link.path} onClick={() => setMobileOpen(false)}
                   className="text-white/75 hover:text-white text-base">

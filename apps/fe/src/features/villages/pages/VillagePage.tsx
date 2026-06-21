@@ -32,7 +32,7 @@ export default function VillagePage() {
     <div className="space-y-16 pb-16">
       {/* Hero Banner */}
       <section
-        className="relative h-[460px] bg-cover bg-center flex items-end"
+        className="relative h-[280px] md:h-[460px] bg-cover bg-center flex items-end"
         style={{ backgroundImage: `url('${village.coverImageUrl ?? PLACEHOLDER}')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/80 via-[#2C1A0E]/30 to-transparent" />
@@ -45,8 +45,8 @@ export default function VillagePage() {
           {lang === 'vi' ? 'Tất cả làng nghề' : 'All Villages'}
         </Link>
 
-        <div className="relative z-10 w-full px-8 md:px-16 pb-10 space-y-3">
-          <h1 className="text-4xl md:text-5xl font-light text-[#F5EDD6] leading-tight">
+        <div className="relative z-10 w-full px-4 md:px-16 pb-6 md:pb-10 space-y-2 md:space-y-3">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-light text-[#F5EDD6] leading-tight">
             {t(village.name)}
           </h1>
           <p className="text-sm md:text-base text-[#F5EDD6]/80 italic max-w-2xl">
@@ -106,7 +106,7 @@ export default function VillagePage() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
               {sortedStages.map((stage, idx) => (
                 <div
                   key={stage._id}

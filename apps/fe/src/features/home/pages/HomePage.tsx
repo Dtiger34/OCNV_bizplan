@@ -75,15 +75,15 @@ export default function HomePage() {
       {/* 3. Brand Story Section */}
       <section
         id="story-section"
-        className="relative bg-[#3A1A0A]/5 py-24 overflow-hidden border-t border-b border-[#D4B896]/20"
+        className="relative bg-[#3A1A0A]/5 py-12 md:py-24 overflow-hidden border-t border-b border-[#D4B896]/20"
       >
         {/* Calligraphic Watermark */}
-        <div className="absolute inset-0 flex items-center justify-center text-[110px] md:text-[180px] font-bold text-[#C9973A]/5 select-none pointer-events-none uppercase tracking-[0.15em] leading-none">
+        <div className="absolute inset-0 flex items-center justify-center text-[60px] md:text-[110px] lg:text-[180px] font-bold text-[#C9973A]/5 select-none pointer-events-none uppercase tracking-[0.15em] leading-none overflow-hidden">
           DI SẢN
         </div>
 
         {/* Ink seal */}
-        <div className="absolute right-8 md:right-16 top-10 md:top-12 bg-[#7B1C2E]/5 rounded-full border border-[#7B1C2E]/25 w-24 h-24 flex flex-col items-center justify-center text-[8px] font-bold text-[#7B1C2E]/50 uppercase tracking-[0.18em] rotate-12 pointer-events-none select-none animate-spin-slow">
+        <div className="hidden md:flex absolute right-8 md:right-16 top-10 md:top-12 bg-[#7B1C2E]/5 rounded-full border border-[#7B1C2E]/25 w-24 h-24 flex-col items-center justify-center text-[8px] font-bold text-[#7B1C2E]/50 uppercase tracking-[0.18em] rotate-12 pointer-events-none select-none animate-spin-slow">
           <span>NGHỀ XƯA</span>
           <span>NÉT MỚI</span>
           <span className="text-[6px] border-t border-[#7B1C2E]/30 mt-0.5 pt-0.5">ẤN KÝ</span>
@@ -93,7 +93,7 @@ export default function HomePage() {
           <span className="reveal text-[11px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
             BẢN SẮC CỦA CHÚNG TÔI
           </span>
-          <h2 className="reveal delay-150 text-3xl md:text-[40px] font-bold text-[#2C1A0E] leading-tight">
+          <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#2C1A0E] leading-tight">
             "Sức Sống Mới Cho Di Sản Việt"
           </h2>
           <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
@@ -156,7 +156,7 @@ export default function HomePage() {
         </div>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-8 py-6 border-t border-b border-[#D4B896]/30 reveal">
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6 border-t border-b border-[#D4B896]/30 reveal">
           {[
             { icon: <ShieldCheck size={18} className="text-[#C9973A]" />, text: 'Bảo hành 1 năm' },
             { icon: <Truck size={18} className="text-[#C9973A]" />, text: 'Miễn phí vận chuyển từ 800K' },

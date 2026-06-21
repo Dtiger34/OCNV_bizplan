@@ -28,7 +28,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="container mx-auto px-6 md:px-8 py-12 max-w-md">
+    <div className="container mx-auto px-4 md:px-8 py-10 md:py-12 max-w-md">
       <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-8 space-y-6 shadow-subtle">
         
         <div className="text-center space-y-1">

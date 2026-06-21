@@ -51,8 +51,8 @@ async function bootstrap() {
   if (existsSync(feDistIndex)) {
     const expressApp = app.getHttpAdapter().getInstance();
     expressApp.get('/{*path}', (req: { path: string }, res: { sendFile: (path: string) => void }, next: () => void) => {
-      // Let requests with file extensions pass through (assets, fonts, etc.)
       if (/\.\w+$/.test(req.path)) return next();
+      if (req.path.startsWith('/api') || req.path.startsWith('/static')) return next();
       res.sendFile(feDistIndex);
     });
   }

@@ -17,11 +17,11 @@ export default function VillagesListPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#2C1A0E]/80" />
 
-        <div className="relative z-10 max-w-3xl mx-auto px-8 py-24 text-center space-y-5 reveal">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 py-14 md:py-24 text-center space-y-5 reveal">
           <span className="text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase block">
             HÀNH TRÌNH VỀ NGUỒN CỘI
           </span>
-          <h1 className="text-5xl md:text-6xl font-light text-[#F5EDD6] leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-[#F5EDD6] leading-tight">
             {lang === 'vi' ? 'Câu Chuyện Làng Nghề' : 'Village Stories'}
           </h1>
           <p className="text-[#F5EDD6]/70 text-base md:text-lg leading-relaxed">
@@ -33,7 +33,7 @@ export default function VillagesListPage() {
       </section>
 
       {/* ── Project intro ────────────────────────────────────────────────── */}
-      <section className="max-w-4xl mx-auto px-8 py-20">
+      <section className="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           {/* Left — label + heading */}
           <div className="space-y-5 reveal-left">
@@ -70,7 +70,7 @@ export default function VillagesListPage() {
       </section>
 
       {/* ── Divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-8 reveal">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 reveal">
         <div className="h-px bg-[#D4B896]/50" />
       </div>
 
@@ -95,7 +95,7 @@ export default function VillagesListPage() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="w-[220px] shrink-0"
+                className="w-full sm:w-[220px] shrink-0"
               >
                 <Link
                   to={`/villages/${village.slug}`}

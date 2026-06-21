@@ -85,7 +85,7 @@ export default function ShopPage() {
     <div className="container mx-auto px-6 md:px-8 py-10 space-y-10">
       <div className="text-center space-y-2 reveal">
         <span className="text-[11px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">DANH MỤC TRƯNG BÀY</span>
-        <h1 className="text-4xl md:text-[44px] font-normal text-[#2C1A0E]">Diorama Làng Nghề Việt Nam</h1>
+        <h1 className="text-2xl md:text-4xl lg:text-[44px] font-normal text-[#2C1A0E]">Diorama Làng Nghề Việt Nam</h1>
         <div className="flex items-center justify-center gap-3 pt-1">
           <div className="h-[1px] w-12 bg-[#C9973A]/55" />
           <div className="w-1.5 h-1.5 rotate-45 border border-[#C9973A] bg-[#FDF6E3]" />
@@ -106,13 +106,13 @@ export default function ShopPage() {
           className="px-5 h-10 bg-[#5C3D1E] text-[#F5EDD6] text-[11px] font-bold uppercase rounded-sm hover:bg-[#7A5230] transition-colors cursor-pointer shrink-0">
           Tìm kiếm
         </button>
-        <div className="flex gap-2 items-center shrink-0">
-          <span className="text-[10px] font-bold uppercase text-[#5C3D1E]">Giá:</span>
+        <div className="flex gap-2 items-center">
+          <span className="text-[10px] font-bold uppercase text-[#5C3D1E] shrink-0">Giá:</span>
           <input type="number" placeholder="Từ" value={minPrice ?? ''} onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : undefined)}
-            className="w-28 h-10 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+            className="w-20 md:w-28 h-10 px-2 md:px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
           <span className="text-[#5C3D1E]">—</span>
           <input type="number" placeholder="Đến" value={maxPrice ?? ''} onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : undefined)}
-            className="w-28 h-10 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+            className="w-20 md:w-28 h-10 px-2 md:px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
         </div>
       </div>
 
