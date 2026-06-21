@@ -14,24 +14,26 @@ function PayOSModal({
   checkoutUrl,
   total,
   onClose,
+  onPaymentSuccess,
 }: {
   orderCode: string;
   qrData: string;
   checkoutUrl: string;
   total: number;
   onClose: () => void;
+  onPaymentSuccess: () => void;
 }) {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { data: statusData } = usePayOSPaymentStatus(orderCode);
 
-  // Redirect khi thanh toán thành công
   useEffect(() => {
     if (statusData?.paymentStatus === 'PAID') {
+      onPaymentSuccess();
       toast.success('Thanh toán thành công!');
       navigate(`/checkout/success?orderCode=${orderCode}`);
     }
-  }, [statusData?.paymentStatus, navigate, orderCode]);
+  }, [statusData?.paymentStatus, navigate, orderCode, onPaymentSuccess]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(checkoutUrl);
@@ -193,7 +195,6 @@ export default function CheckoutPage() {
             },
             {
               onSuccess: (data) => {
-                clearCart();
                 setPayosModal({
                   orderCode: order.orderCode,
                   qrData: data!.qrCode,
@@ -228,6 +229,7 @@ export default function CheckoutPage() {
           checkoutUrl={payosModal.checkoutUrl}
           total={payosModal.total}
           onClose={() => setPayosModal(null)}
+          onPaymentSuccess={clearCart}
         />
       )}
 
