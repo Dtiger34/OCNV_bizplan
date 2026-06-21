@@ -19,7 +19,7 @@ export class UploadService {
   private readonly baseUrl: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.uploadsRoot = path.join(process.cwd(), configService.get<string>('STATIC_FILES_PATH', './uploads'));
+    this.uploadsRoot = path.join(process.cwd(), './uploads');
     this.baseUrl = configService.get<string>('APP_URL', 'http://localhost:3000');
   }
 

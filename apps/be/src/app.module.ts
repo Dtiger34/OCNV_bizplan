@@ -56,7 +56,7 @@ ServeStaticModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => [
         {
-          rootPath: join(process.cwd(), config.get<string>('STATIC_FILES_PATH', './uploads')),
+          rootPath: join(process.cwd(), './uploads'),
           serveRoot: '/static',
         },
         {

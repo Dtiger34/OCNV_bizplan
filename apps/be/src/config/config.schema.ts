@@ -29,5 +29,4 @@ export const configSchema = Joi.object({
   PAYOS_RETURN_URL: Joi.string().uri().allow('').optional(),
   PAYOS_CANCEL_URL: Joi.string().uri().allow('').optional(),
 
-  STATIC_FILES_PATH: Joi.string().default('./uploads'),
 });
