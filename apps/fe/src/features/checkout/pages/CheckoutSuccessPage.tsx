@@ -71,7 +71,7 @@ export default function CheckoutSuccessPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           {/* Shipping Info */}
           <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-            <h4 className="font-bold text-[#2C1A0E]">📍 Địa chỉ giao nhận</h4>
+            <h4 className="font-bold text-[#2C1A0E]">Địa chỉ giao nhận</h4>
             <p className="text-[#2C1A0E]">
               {order.shippingAddress.fullName}<br />
               {order.shippingAddress.phone}<br />
@@ -82,7 +82,7 @@ export default function CheckoutSuccessPage() {
 
           {/* Payment Info */}
           <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-            <h4 className="font-bold text-[#2C1A0E]">💳 Thông tin thanh toán</h4>
+            <h4 className="font-bold text-[#2C1A0E]">Thông tin thanh toán</h4>
             <p className="text-[#2C1A0E]">
               <strong>Phương thức:</strong> {
                 order.payment.method === 'cod' ? 'Thanh toán khi nhận hàng (COD)' :
@@ -91,9 +91,9 @@ export default function CheckoutSuccessPage() {
               }
               <br />
               <strong>Trạng thái:</strong> {
-                order.payment.status === 'pending' ? '⏳ Chờ thanh toán' :
-                order.payment.status === 'paid' ? '✅ Đã thanh toán' :
-                '❌ Thanh toán thất bại'
+                order.payment.status === 'pending' ? 'Chờ thanh toán' :
+                order.payment.status === 'paid' ? 'Đã thanh toán' :
+                'Thanh toán thất bại'
               }
             </p>
           </div>
@@ -101,7 +101,7 @@ export default function CheckoutSuccessPage() {
 
         {/* Order Items */}
         <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-          <h4 className="font-bold text-[#2C1A0E] mb-2">📦 Sản phẩm đặt hàng</h4>
+          <h4 className="font-bold text-[#2C1A0E] mb-2">Sản phẩm đặt hàng</h4>
           <div className="space-y-2">
             {order.items.map((item, idx) => (
               <div key={idx} className="flex justify-between text-xs text-[#2C1A0E]">
@@ -150,7 +150,7 @@ export default function CheckoutSuccessPage() {
 
         {/* Help */}
         <div className="text-center text-[10px] text-[#9C8670] space-y-1">
-          <p>❓ Cần giúp đỡ?</p>
+          <p>Cần giúp đỡ?</p>
           <a href="mailto:hotro@nghexuanetmoi.vn" className="text-[#C9973A] hover:underline">
             hotro@nghexuanetmoi.vn
           </a>
