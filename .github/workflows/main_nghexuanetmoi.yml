@@ -35,15 +35,18 @@ jobs:
 
       - name: Prepare deployment package
         run: |
-          # pnpm deploy tạo flat node_modules đúng chuẩn cho production
-          pnpm deploy --filter @ocnv/be --prod --legacy deploy
+          mkdir -p deploy
 
-          # Copy BE dist vào deploy folder
+          # Copy BE dist và package.json
           cp -r apps/be/dist deploy/dist
+          cp apps/be/package.json deploy/package.json
 
           # Copy FE dist vào đúng path BE expect
           mkdir -p deploy/fe/dist
           cp -r apps/fe/dist/. deploy/fe/dist/
+
+          # npm install tạo flat node_modules Azure đọc được
+          cd deploy && npm install --omit=dev --no-package-lock
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
