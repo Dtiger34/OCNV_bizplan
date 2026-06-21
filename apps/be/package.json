@@ -21,6 +21,7 @@
     "@nestjs/serve-static": "^5.0.5",
     "@nestjs/swagger": "^11.4.4",
     "@nestjs/throttler": "^6.3.0",
+    "@payos/node": "^2.0.5",
     "axios": "^1.16.1",
     "bcryptjs": "^3.0.3",
     "class-transformer": "^0.5.1",

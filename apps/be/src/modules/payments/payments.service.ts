@@ -93,15 +93,16 @@ export class PaymentsService {
       {
         $set: {
           'payment.transactionId': `payos_${payosOrderCode}`,
-          'payment.responseCode': response.code,
+          'payment.responseCode': response.status,
         },
       },
     ).exec();
 
     return {
-      success: response.code === '00',
-      data: response.data,
-      message: response.desc,
+      success: true,
+      checkoutUrl: response.checkoutUrl,
+      qrCode: response.qrCode,
+      paymentLinkId: response.paymentLinkId,
     };
   }
 
@@ -122,7 +123,7 @@ export class PaymentsService {
         orderCode,
         paymentStatus: paymentInfo.status,
         amount: paymentInfo.amount,
-        transactionDateTime: paymentInfo.transactionDateTime,
+        transactions: paymentInfo.transactions,
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -135,36 +136,27 @@ export class PaymentsService {
   }
 
   async handlePayOSWebhook(body: any): Promise<{ code: string; desc: string }> {
-    const { orderCode, amount, description, transactionDateTime, signature } = body;
+    try {
+      const webhookData = await this.payosService.verifyWebhookData(body);
+      const { orderCode } = webhookData;
 
-    // Xác thực chữ ký webhook
-    const isValid = this.payosService.verifyWebhookSignature(
-      orderCode,
-      amount,
-      description,
-      transactionDateTime,
-      signature,
-    );
-
-    if (!isValid) {
-      this.logger.warn(`Invalid PayOS webhook signature for order ${orderCode}`);
-      return { code: '99', desc: 'Invalid signature' };
-    }
-
-    // Tìm kiếm đơn hàng theo PayOS orderCode
-    const order = await this.orderModel.findOne({
-      'payment.transactionId': `payos_${orderCode}`,
-    }).exec();
-
-    if (order) {
-      await this.orderModel.findByIdAndUpdate(order._id, {
-        $set: { 'payment.status': PaymentStatus.PAID, 'payment.paidAt': new Date() },
+      const order = await this.orderModel.findOne({
+        'payment.transactionId': `payos_${orderCode}`,
       }).exec();
 
-      this.logger.log(`PayOS payment confirmed for order ${order.orderCode}`);
-    }
+      if (order) {
+        await this.orderModel.findByIdAndUpdate(order._id, {
+          $set: { 'payment.status': PaymentStatus.PAID, 'payment.paidAt': new Date() },
+        }).exec();
+        this.logger.log(`PayOS payment confirmed for order ${order.orderCode}`);
+      }
 
-    return { code: '00', desc: 'Success' };
+      return { code: '00', desc: 'Success' };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.warn(`PayOS webhook verification failed: ${message}`);
+      return { code: '99', desc: 'Invalid webhook data' };
+    }
   }
 
   async handlePayOSPaymentSuccess(body: any): Promise<any> {

@@ -26,7 +26,7 @@ export default function VillagePage() {
   }
 
   const t = (field: { vi: string; en: string }) => field[lang];
-  const sortedStages = [...village.stages].sort((a, b) => a.order - b.order);
+  const sortedStages = [...(village.stages ?? [])].sort((a, b) => a.order - b.order);
 
   return (
     <div className="space-y-16 pb-16">
