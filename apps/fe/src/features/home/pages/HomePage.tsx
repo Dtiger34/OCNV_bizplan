@@ -146,35 +146,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Featured Products section */}
-      <section className="container mx-auto px-6 md:px-8 space-y-8">
-        <div className="text-center space-y-4 reveal">
-          <span className="text-[11px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">
-            DECOR TIỂU CẢNH
-          </span>
-          <h2 className="text-3xl md:text-[36px] font-bold text-[#2C1A0E] tracking-wide">
-            Mô Hình Tiểu Cảnh Nổi Bật
-          </h2>
-          <Link
-            to="/villages"
-            className="group inline-flex items-center gap-2 px-5 py-2.5 border border-[#C9973A] rounded-full text-[11px] font-bold tracking-wider text-[#5C3D1E] uppercase hover:bg-[#C9973A] hover:text-[#F5EDD6] transition-all"
-          >
-            Câu chuyện làng nghề
-            <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {featuredProducts.map((p, idx) => (
-            <div key={p.id} className={`reveal ${idx === 0 ? 'reveal-left' : 'reveal-right'}`}>
-              <ProductCard
-                product={p}
-                isFeatured={true}
-                onViewDetails={setSelectedProduct}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* 4. Trust & Credibility Section */}
       <section className="container mx-auto px-6 md:px-8 space-y-12">
