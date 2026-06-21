@@ -79,6 +79,8 @@ export const router = createBrowserRouter([
       { path: '/forgot-password', element: S(ForgotPasswordPage) },
       { path: '/reset-password', element: S(ResetPasswordPage) },
       { path: '/checkout/payment-return', element: S(PaymentReturnPage) },
+      { path: '/payment/success', element: S(PaymentReturnPage) },
+      { path: '/payment/cancel', element: S(PaymentReturnPage) },
       {
         element: <PrivateRoute />,
         children: [

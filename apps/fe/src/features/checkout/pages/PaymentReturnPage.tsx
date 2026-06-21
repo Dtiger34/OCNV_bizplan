@@ -1,14 +1,16 @@
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Home, ShoppingCart } from 'lucide-react';
 
 export default function PaymentReturnPage() {
   const [searchParams] = useSearchParams();
-  const result = searchParams.get('result') || 'success';
-  const orderCode = searchParams.get('orderCode') || 'DH-999999';
+  const location = useLocation();
+  const isCancelPath = location.pathname === '/payment/cancel';
+  const result = isCancelPath ? 'cancel' : (searchParams.get('result') || searchParams.get('status') || 'success');
+  const orderCode = searchParams.get('orderCode') || searchParams.get('code') || '—';
 
   return (
     <div className="container mx-auto px-6 md:px-8 py-16 max-w-md text-center">
-      {result === 'success' ? (
+      {result !== 'cancel' && result !== 'CANCELLED' && result !== 'fail' ? (
         <div className="bg-[#FDF6E3] border-[2px] border-[#C9973A] rounded-[8px] p-8 space-y-6 shadow-gold-glow">
           <CheckCircle2 className="w-16 h-16 text-[#3A6B4A] mx-auto animate-bounce" />
           
