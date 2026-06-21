@@ -168,10 +168,10 @@ export default function VillagePage() {
         </section>
       )}
 
-      {/* Production stages — nền kem trắng */}
+      {/* Production stages — so le ảnh + nội dung */}
       <section className="py-16 px-6 sm:px-10">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-10">
+          <div className="mb-12">
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
               Quy Trình
             </p>
@@ -181,32 +181,53 @@ export default function VillagePage() {
             <div className="h-[1px] w-12 bg-[#D4B896] mt-4" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {village.stages.map((stage, i) => (
-              <motion.div
-                key={stage.id}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="p-5 rounded-[6px] border border-[#D4B896] bg-[#EDE3CE]"
-              >
-                <div className="flex items-start gap-3">
-                  <span
-                    className="text-2xl font-light flex-shrink-0 leading-none mt-0.5 w-8"
-                    style={{ color: village.color }}
-                  >
-                    {String(stage.order).padStart(2, '0')}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-[#2C1A0E] mb-2">{stage.title}</p>
-                    <p className="text-xs text-[#5C3D1E] leading-relaxed mb-3">{stage.description}</p>
+          <div className="space-y-12">
+            {village.stages.map((stage, i) => {
+              const isReverse = i % 2 === 1;
+              return (
+                <motion.div
+                  key={stage.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.55 }}
+                  className={`flex flex-col md:flex-row gap-8 items-center ${isReverse ? 'md:flex-row-reverse' : ''}`}
+                >
+                  {/* Ảnh */}
+                  <div className="w-full md:w-1/2 flex-shrink-0">
+                    <div className="relative overflow-hidden rounded-[8px] aspect-[4/3]">
+                      <img
+                        src={stage.imageUrl}
+                        alt={stage.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Số thứ tự đè lên ảnh */}
+                      <div
+                        className="absolute top-4 left-4 w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-semibold"
+                        style={{ backgroundColor: village.color }}
+                      >
+                        {String(stage.order).padStart(2, '0')}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Nội dung */}
+                  <div className="w-full md:w-1/2 space-y-3">
+                    <p
+                      className="text-[10px] font-bold tracking-[0.2em] uppercase"
+                      style={{ color: village.color }}
+                    >
+                      Bước {stage.order}
+                    </p>
+                    <h3 className="text-xl font-medium text-[#2C1A0E]">{stage.title}</h3>
+                    <div className="h-[1px] w-8 bg-[#D4B896]" />
+                    <p className="text-sm text-[#5C3D1E] leading-relaxed">{stage.description}</p>
                     {stage.details && stage.details.length > 0 && (
-                      <ul className="space-y-1.5">
+                      <ul className="space-y-2 pt-1">
                         {stage.details.map((d, j) => (
-                          <li key={j} className="flex items-start gap-2 text-xs text-[#7A5230]">
+                          <li key={j} className="flex items-start gap-2.5 text-sm text-[#7A5230]">
                             <CheckCircle2
-                              size={12}
+                              size={14}
                               className="flex-shrink-0 mt-0.5"
                               style={{ color: village.color }}
                             />
@@ -216,9 +237,9 @@ export default function VillagePage() {
                       </ul>
                     )}
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
