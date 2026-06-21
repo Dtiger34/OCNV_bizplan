@@ -272,11 +272,11 @@ export default function ProductDetailPage() {
               reviews.map((r: any) => (
                 <div key={r._id} className="flex gap-3 py-4 border-b border-gray-50 last:border-0">
                   <div className="w-9 h-9 rounded-full bg-[#EDE3CE] flex items-center justify-center text-sm font-bold text-[#5C3D1E] shrink-0">
-                    {r.user.fullName?.charAt(0).toUpperCase()}
+                    {(r.user?.fullName ?? 'K').charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#2C1A0E]">{r.user.fullName}</span>
+                      <span className="text-sm font-medium text-[#2C1A0E]">{r.user?.fullName ?? 'Khách hàng'}</span>
                       <span className="text-xs text-gray-400">{new Date(r.createdAt).toLocaleDateString('vi-VN')}</span>
                     </div>
                     <div className="flex text-[#C9973A]">
