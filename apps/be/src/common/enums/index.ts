@@ -20,7 +20,7 @@ export enum OrderStatus {
 export enum PaymentMethod {
   COD = 'cod',
   BANK_TRANSFER = 'bank_transfer',
-  VNPAY = 'vnpay',
+  PAYOS = 'payos',
 }
 
 export enum PaymentStatus {
