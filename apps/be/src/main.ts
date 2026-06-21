@@ -49,7 +49,6 @@ async function bootstrap() {
   // Serve FE index.html for all non-API routes (SPA fallback)
   const feDistIndex = join(process.cwd(), 'fe', 'dist', 'index.html');
   if (existsSync(feDistIndex)) {
-    const { createReadStream } = await import('fs');
     const expressApp = app.getHttpAdapter().getInstance();
     expressApp.get('*', (_req: unknown, res: { sendFile: (path: string) => void }) => {
       res.sendFile(feDistIndex);
