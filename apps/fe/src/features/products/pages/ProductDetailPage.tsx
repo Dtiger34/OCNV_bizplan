@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { Heart, ShoppingCart, Sparkles, Star, ArrowLeft } from 'lucide-react';
 import { useProduct, useProductReviews, useCreateReview } from '../hooks/useProducts';
-import { useLanguageStore } from '@/store/languageStore';
 
 const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
 
@@ -11,7 +10,7 @@ export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const { language: lang } = useLanguageStore();
+  const lang = 'vi' as const;
 
   const [activeTab, setActiveTab] = useState<'info' | 'video' | 'reviews'>('info');
   const [inWishlist, setInWishlist] = useState(false);

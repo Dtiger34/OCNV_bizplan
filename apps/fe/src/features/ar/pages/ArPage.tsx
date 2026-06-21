@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { X, Smartphone, ChevronRight } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useProductHotspots, type Hotspot } from '../hooks/useProductHotspots';
-import { useLanguageStore } from '@/store/languageStore';
-
 // Swap với file .glb thật của từng sản phẩm khi có
 const PLACEHOLDER_MODEL_URL =
   'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
@@ -39,8 +37,7 @@ function toDataNormal(n: Hotspot['normal']) {
 export default function ArPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { language } = useLanguageStore();
-  const lang = language as 'vi' | 'en';
+  const lang = 'vi' as const;
 
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
   const isMobile = window.innerWidth < 1024;

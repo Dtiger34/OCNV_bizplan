@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
-import { useLanguageStore } from '@/store/languageStore';
 import { useCart } from '@/context/CartContext';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useState } from 'react';
@@ -8,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Header() {
   const { user, setUser } = useAuthStore();
-  const { language, setLanguage } = useLanguageStore();
   const { setIsCartOpen, cartItems } = useCart();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -82,12 +80,6 @@ export default function Header() {
               </Link>
             </>
           )}
-          <button
-            onClick={() => setLanguage(language === 'vi' ? 'en' : 'vi')}
-            className="text-white/40 hover:text-white text-xs uppercase tracking-widest transition-colors cursor-pointer"
-          >
-            {language === 'vi' ? 'EN' : 'VI'}
-          </button>
           <div className="w-px h-5 bg-white/20" />
           <button onClick={() => setIsCartOpen(true)} className="relative text-white/70 hover:text-white transition-colors cursor-pointer">
             <ShoppingBag size={18} strokeWidth={1.5} />

@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useVillages } from '../hooks/useVillage';
-import { useLanguageStore } from '@/store/languageStore';
 
 export default function VillagesListPage() {
-  const { language: lang } = useLanguageStore();
+  const lang = 'vi' as const;
   const { data: villages = [], isLoading } = useVillages();
 
   return (

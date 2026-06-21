@@ -9,8 +9,6 @@
 - **Global client state**: Zustand 5.x — chỉ cho state thực sự global (user info, language), không đưa server data vào
 - **Forms**: React Hook Form 7.x + Zod 3.x — schema validation định nghĩa trong `<feature>.schema.ts`
 - **HTTP client**: Axios 1.x — singleton tại `src/lib/api-client.ts`, `withCredentials: true`, interceptor CSRF
-- **i18n**: react-i18next 15.x — không hardcode string UI, lưu language preference vào user profile
-
 ## Project Structure
 
 ```
@@ -28,7 +26,6 @@ src/
   hooks/             # shared custom hooks
   router/
   store/             # global client state (nếu dùng)
-  i18n/              # locale files (nếu dùng i18n)
 ```
 
 - Tổ chức theo feature domain — không theo layer (không có folder `components/` chứa tất cả)
@@ -56,12 +53,6 @@ src/
 - Dùng form library đã chốt trong `tech-stack.md` (React Hook Form, Formik, VeeValidate, ...)
 - Schema validation định nghĩa riêng trong file `<feature>.schema.ts` hoặc tương đương
 - Validation chạy ở client (UX) và BE (security) — không bỏ qua BE validation
-
-## i18n (nếu dự án có đa ngôn ngữ)
-
-- Dùng i18n library đã chốt trong `tech-stack.md`
-- Không hardcode string UI — luôn dùng translation key
-- User language preference lưu vào `localStorage` hoặc user profile
 
 ## UI/UX
 

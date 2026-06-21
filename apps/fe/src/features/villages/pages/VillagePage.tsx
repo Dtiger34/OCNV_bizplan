@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, ChevronLeft } from 'lucide-react';
 import { useVillage } from '../hooks/useVillage';
-import { useLanguageStore } from '@/store/languageStore';
 
 const PLACEHOLDER = 'https://placehold.co/1200x460?text=Village';
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
-  const { language: lang } = useLanguageStore();
+  const lang = 'vi' as const;
   const [activeStage, setActiveStage] = useState(0);
 
   const { data: village, isLoading, isError } = useVillage(slug ?? '');

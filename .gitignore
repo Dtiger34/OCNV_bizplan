@@ -7,3 +7,10 @@ dist/
 coverage/
 apps/be/uploads/*
 !apps/be/uploads/.gitkeep
+
+# Large 3D model files
+*.stl
+*.obj
+*.fbx
+*.glb
+*.gltf
