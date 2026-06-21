@@ -84,7 +84,8 @@ export class PayosService {
       this.logger.log(`PayOS checkout created for order ${data.orderCode}`);
       return response.data;
     } catch (error) {
-      this.logger.error(`PayOS checkout failed: ${error.message}`, error);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`PayOS checkout failed: ${message}`, error);
       throw new BadRequestException('Failed to create PayOS checkout');
     }
   }
@@ -104,7 +105,8 @@ export class PayosService {
 
       return response.data.data;
     } catch (error) {
-      this.logger.error(`Failed to get PayOS payment info: ${error.message}`, error);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Failed to get PayOS payment info: ${message}`, error);
       throw new BadRequestException('Failed to get payment information');
     }
   }
@@ -124,7 +126,8 @@ export class PayosService {
 
       this.logger.log(`PayOS payment cancelled for order ${orderCode}`);
     } catch (error) {
-      this.logger.error(`Failed to cancel PayOS payment: ${error.message}`, error);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Failed to cancel PayOS payment: ${message}`, error);
       throw new BadRequestException('Failed to cancel payment');
     }
   }

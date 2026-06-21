@@ -125,10 +125,11 @@ export class PaymentsService {
         transactionDateTime: paymentInfo.transactionDateTime,
       };
     } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       return {
         success: false,
         orderCode,
-        error: error.message,
+        error: message,
       };
     }
   }
@@ -199,10 +200,11 @@ export class PaymentsService {
         message: 'Order or payment not found',
       };
     } catch (error) {
-      this.logger.error(`PayOS payment success callback error: ${error.message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`PayOS payment success callback error: ${message}`);
       return {
         success: false,
-        error: error.message,
+        error: message,
       };
     }
   }
