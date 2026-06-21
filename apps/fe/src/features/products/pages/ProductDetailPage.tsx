@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { ShoppingCart, Sparkles, Star, ChevronRight, Minus, Plus, Store, Shield, Truck, RotateCcw, MessageSquare } from 'lucide-react';
+import { ShoppingCart, Sparkles, Star, ChevronRight, Minus, Plus, MessageSquare } from 'lucide-react';
 import { useProduct, useProductReviews, useRelatedProducts, useCreateReview } from '../hooks/useProducts';
 import { toast } from 'sonner';
 
@@ -222,20 +222,6 @@ export default function ProductDetailPage() {
                 </button>
               </div>
 
-              {/* Guarantees */}
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-dashed border-gray-100">
-                {[
-                  { icon: <Truck size={14} />, text: 'Miễn phí vận chuyển' },
-                  { icon: <Shield size={14} />, text: 'Hàng chính hãng 100%' },
-                  { icon: <RotateCcw size={14} />, text: 'Đổi trả trong 7 ngày' },
-                  { icon: <Store size={14} />, text: 'Nghề Xưa Nét Mới' },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-gray-500">
-                    <span className="text-[#C9973A]">{item.icon}</span>
-                    {item.text}
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
