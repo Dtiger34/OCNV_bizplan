@@ -50,7 +50,7 @@ async function bootstrap() {
   const feDistIndex = join(process.cwd(), 'fe', 'dist', 'index.html');
   if (existsSync(feDistIndex)) {
     const expressApp = app.getHttpAdapter().getInstance();
-    expressApp.get('*', (_req: unknown, res: { sendFile: (path: string) => void }) => {
+    expressApp.get('/{*path}', (_req: unknown, res: { sendFile: (path: string) => void }) => {
       res.sendFile(feDistIndex);
     });
   }
