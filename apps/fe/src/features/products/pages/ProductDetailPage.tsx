@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { Heart, ShoppingCart, Sparkles, Star, ArrowLeft } from 'lucide-react';
 import { useProduct, useProductReviews, useCreateReview } from '../hooks/useProducts';
+import { toast } from 'sonner';
 
 const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
 
@@ -45,6 +46,7 @@ export default function ProductDetailPage() {
       material: '',
       origin: product.village?.name?.vi ?? '',
     });
+    toast.success('Đã thêm vào giỏ hàng!');
   };
 
   const handleBuyNow = () => {
@@ -56,8 +58,11 @@ export default function ProductDetailPage() {
     e.preventDefault();
     if (!newReview.content.trim()) return;
     createReview.mutate(newReview, {
-      onSuccess: () => setNewReview({ rating: 5, content: '' }),
-      onError: () => alert('Không thể gửi đánh giá. Vui lòng thử lại.'),
+      onSuccess: () => {
+        setNewReview({ rating: 5, content: '' });
+        toast.success('Đánh giá của bạn đã được gửi!');
+      },
+      onError: () => toast.error('Không thể gửi đánh giá. Vui lòng thử lại.'),
     });
   };
 

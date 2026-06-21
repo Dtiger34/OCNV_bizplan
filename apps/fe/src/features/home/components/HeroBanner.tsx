@@ -19,15 +19,6 @@ export default function HeroBanner() {
 
       {/* Content — bottom-left aligned like the design */}
       <div className="absolute inset-0 flex flex-col justify-end pb-10 md:pb-20 px-4 md:px-10 lg:px-16 max-w-4xl">
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-white/70 text-sm tracking-widest uppercase mb-4 font-light"
-        >
-          NGHỀ XƯA NÉT MỚI — OLD CRAFTS NEW VIBES
-        </motion.p>
-
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

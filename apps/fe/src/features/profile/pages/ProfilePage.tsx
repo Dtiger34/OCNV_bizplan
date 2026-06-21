@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { User, MapPin, ClipboardList, Heart, Save } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function ProfileLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -70,7 +71,7 @@ export default function ProfilePage() {
     e.preventDefault();
     if (user) {
       setUser({ ...user, fullName });
-      alert('Đã cập nhật thông tin tài khoản thành công.');
+      toast.success('Đã cập nhật thông tin tài khoản thành công.');
     }
   };
 
@@ -151,11 +152,11 @@ export default function ProfilePage() {
           <button
             onClick={() => {
               if (currentPassword && newPassword) {
-                alert('Mật khẩu đã thay đổi thành công.');
+                toast.success('Mật khẩu đã thay đổi thành công.');
                 setCurrentPassword('');
                 setNewPassword('');
               } else {
-                alert('Vui lòng điền đủ mật khẩu hiện tại và mật khẩu mới.');
+                toast.error('Vui lòng điền đủ mật khẩu hiện tại và mật khẩu mới.');
               }
             }}
             className="px-6 py-2.5 bg-[#7B1C2E] hover:bg-[#9B2438] text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center gap-2 active:scale-95 transition-all cursor-pointer"

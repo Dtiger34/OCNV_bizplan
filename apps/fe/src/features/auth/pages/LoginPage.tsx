@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { useLogin } from '../hooks/useAuth';
 import { Mail, Lock, LogIn } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -17,10 +18,11 @@ export default function LoginPage() {
     login.mutate({ email, password }, {
       onSuccess: (user) => {
         setUser({ _id: user._id, fullName: user.fullName, email: user.email, role: user.role as 'customer' | 'admin', avatarUrl: user.avatarUrl ?? undefined });
+        toast.success('Đăng nhập thành công!');
         navigate('/');
       },
       onError: () => {
-        alert('Email hoặc mật khẩu không đúng. Vui lòng thử lại.');
+        toast.error('Email hoặc mật khẩu không đúng. Vui lòng thử lại.');
       },
     });
   };

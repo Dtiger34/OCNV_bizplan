@@ -39,21 +39,15 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(dto.password, 12);
-    const emailVerifyToken = crypto.randomBytes(32).toString('hex');
-    const emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     await this.usersRepository.create({
       fullName: dto.fullName,
       email: dto.email.toLowerCase().trim(),
       password: passwordHash,
-      status: UserStatus.UNVERIFIED,
-      emailVerifyToken,
-      emailVerifyExpires,
+      status: UserStatus.ACTIVE,
     });
 
-    this.emailService.sendVerificationEmail(dto.email, emailVerifyToken);
-
-    return { message: 'Registration successful. Please check your email to verify your account.' };
+    return { message: 'Đăng ký thành công.' };
   }
 
   async login(dto: LoginDto, res: Response): Promise<Record<string, unknown>> {

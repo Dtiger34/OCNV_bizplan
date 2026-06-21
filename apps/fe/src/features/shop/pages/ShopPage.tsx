@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { X, Search } from 'lucide-react';
+import { toast } from 'sonner';
 import { useProducts } from '../../products/hooks/useProducts';
 import { useCart } from '@/context/CartContext';
 import { ProductCard as ApiProduct } from '@/types/api';
@@ -79,13 +80,13 @@ export default function ShopPage() {
       material: '',
       origin: p.village?.name?.vi ?? 'OCNV',
     });
+    toast.success('Đã thêm vào giỏ hàng!');
   }, [addToCart]);
 
   return (
     <div className="container mx-auto px-6 md:px-8 py-10 space-y-10">
       <div className="text-center space-y-2 reveal">
-        <span className="text-[11px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">DANH MỤC TRƯNG BÀY</span>
-        <h1 className="text-2xl md:text-4xl lg:text-[44px] font-normal text-[#2C1A0E]">Diorama Làng Nghề Việt Nam</h1>
+        <h1 className="text-2xl md:text-4xl lg:text-[44px] font-normal text-[#2C1A0E]">Khám Phá Sản Phẩm</h1>
         <div className="flex items-center justify-center gap-3 pt-1">
           <div className="h-[1px] w-12 bg-[#C9973A]/55" />
           <div className="w-1.5 h-1.5 rotate-45 border border-[#C9973A] bg-[#FDF6E3]" />

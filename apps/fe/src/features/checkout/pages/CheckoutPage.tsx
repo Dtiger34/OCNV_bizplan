@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, CreditCard, Landmark, Loader2 } from 'lucide-react';
 import { useCreateOrder } from '@/features/orders/hooks/useCreateOrder';
 import { useLocalCartStore } from '@/features/cart/store/cartStore';
+import { toast } from 'sonner';
 
 export default function CheckoutPage() {
   const cartStore = useLocalCartStore();
@@ -71,8 +72,8 @@ export default function CheckoutPage() {
       },
       {
         onSuccess: (order) => {
-          // Clear cart after successful order creation
           cartStore.clearCart();
+          toast.success('Đặt hàng thành công!');
 
           // Route based on payment method
           if (paymentMethod === 'payos') {
@@ -87,11 +88,9 @@ export default function CheckoutPage() {
           }
         },
         onError: (err: any) => {
-          setError(
-            err?.response?.data?.message ||
-            err?.message ||
-            'Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.'
-          );
+          const msg = err?.response?.data?.message || err?.message || 'Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.';
+          setError(msg);
+          toast.error(msg);
         },
       }
     );

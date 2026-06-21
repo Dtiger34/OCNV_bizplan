@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Check } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function ResetPasswordPage() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function ResetPasswordPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!password || password !== confirmPassword) {
-      alert('Mật khẩu nhập lại chưa trùng khớp.');
+      toast.error('Mật khẩu nhập lại chưa trùng khớp.');
       return;
     }
     

@@ -1,176 +1,191 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Award, ChevronLeft } from 'lucide-react';
-import { useVillage } from '../hooks/useVillage';
-
-const PLACEHOLDER = 'https://placehold.co/1200x460?text=Village';
+import { ChevronLeft, MapPin, Clock, Layers } from 'lucide-react';
+import { getVillage } from '../data/villages-static';
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
-  const lang = 'vi' as const;
   const [activeStage, setActiveStage] = useState(0);
 
-  const { data: village, isLoading, isError } = useVillage(slug ?? '');
+  const village = getVillage(slug ?? '');
 
-  if (isLoading) {
-    return <div className="flex min-h-[60vh] items-center justify-center text-[#9C8670]">Đang tải...</div>;
-  }
-
-  if (isError || !village) {
+  if (!village) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <p className="text-2xl text-[#2C1A0E]">Không tìm thấy làng nghề</p>
-        <Link to="/villages" className="text-[#C9973A] underline text-sm">← Quay lại danh sách</Link>
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6">
+        <p className="text-2xl font-light text-[#2C1A0E]">Không tìm thấy làng nghề</p>
+        <Link to="/villages" className="text-[#C9973A] underline text-sm hover:text-[#5C3D1E] transition-colors">
+          ← Quay lại danh sách
+        </Link>
       </div>
     );
   }
 
-  const t = (field: { vi: string; en: string }) => field[lang];
-  const sortedStages = [...(village.stages ?? [])].sort((a, b) => a.order - b.order);
+  const firstLetter = village.fullHistory.charAt(0);
+  const restHistory = village.fullHistory.slice(1);
 
   return (
-    <div className="space-y-16 pb-16">
-      {/* Hero Banner */}
-      <section
-        className="relative h-[280px] md:h-[460px] bg-cover bg-center flex items-end"
-        style={{ backgroundImage: `url('${village.coverImageUrl ?? PLACEHOLDER}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/80 via-[#2C1A0E]/30 to-transparent" />
+    <div className="bg-[#FDF6E3] min-h-screen">
 
+      {/* ── Breadcrumb ───────────────────────────────────────────────────── */}
+      <div className="fixed top-20 left-4 z-40">
         <Link
           to="/villages"
-          className="absolute top-6 left-6 z-10 flex items-center gap-1.5 text-[#F5EDD6]/80 text-xs tracking-wide hover:text-[#C9973A] transition-colors"
+          className="inline-flex items-center gap-1.5 text-[#F5EDD6]/80 text-xs tracking-wide hover:text-[#C9973A] transition-colors bg-[#2C1A0E]/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10"
         >
-          <ChevronLeft size={14} />
-          {lang === 'vi' ? 'Tất cả làng nghề' : 'All Villages'}
+          <ChevronLeft size={13} />
+          Tất cả làng nghề
         </Link>
+      </div>
 
-        <div className="relative z-10 w-full px-4 md:px-16 pb-6 md:pb-10 space-y-2 md:space-y-3">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-light text-[#F5EDD6] leading-tight">
-            {t(village.name)}
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section
+        className="relative min-h-[75vh] md:min-h-screen bg-cover bg-center flex items-end"
+        style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E] via-[#2C1A0E]/50 to-transparent" />
+
+        <div className="relative z-10 w-full px-6 md:px-16 lg:px-24 pb-14 md:pb-20 space-y-4 max-w-4xl">
+          <span className="inline-block text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase border border-[#C9973A]/50 px-3 py-1 rounded-sm">
+            Làng Nghề Truyền Thống
+          </span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#F5EDD6] leading-tight">
+            {village.name}
           </h1>
-          <p className="text-sm md:text-base text-[#F5EDD6]/80 italic max-w-2xl">
-            "{t(village.tagline)}"
+          <p className="text-[#F5EDD6]/70 italic text-sm md:text-base max-w-xl">
+            "{village.tagline}"
           </p>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C9973A] opacity-70" />
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C9973A]" />
       </section>
 
-      {/* History + Video */}
-      <section className="container mx-auto px-6 md:px-8 max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="space-y-4 reveal-left">
-          <span className="text-[10px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">
-            {lang === 'vi' ? 'Lịch sử' : 'History'}
-          </span>
-          <h2 className="text-2xl md:text-3xl font-medium text-[#2C1A0E]">
-            {lang === 'vi' ? 'Ngàn năm dựng nghề' : 'A Thousand Years of Craft'}
-          </h2>
-          <p className="text-sm text-[#2C1A0E] leading-relaxed">
-            {t(village.fullHistory)}
-          </p>
-        </div>
-
-        <div className="space-y-6 reveal-right">
-          {village.introVideoUrl && (
-            <div className="aspect-video bg-black border border-[#D4B896] rounded-[6px] overflow-hidden shadow-medium">
-              <iframe
-                title={`Video ${t(village.name)}`}
-                className="w-full h-full"
-                src={village.introVideoUrl}
-                allowFullScreen
-              />
-            </div>
-          )}
-          <div className="bg-[#FDF6E3] border border-[#D4B896]/60 rounded-[6px] p-4 space-y-2">
-            <span className="text-[10px] font-bold tracking-[0.14em] text-[#C9973A] uppercase block">
-              {lang === 'vi' ? 'Giới thiệu' : 'Introduction'}
-            </span>
-            <p className="text-xs text-[#2C1A0E] leading-relaxed">
-              {t(village.shortDescription)}
-            </p>
+      {/* ── Stats bar ────────────────────────────────────────────────────── */}
+      <section className="bg-[#2C1A0E]">
+        <div className="max-w-5xl mx-auto px-6 md:px-8 py-5">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-0 md:divide-x divide-[#C9973A]/30">
+            {village.facts.map((fact, i) => (
+              <div key={i} className="md:px-8 text-center">
+                <p className="text-[9px] tracking-[0.18em] text-[#C9973A]/60 uppercase mb-0.5">{fact.label}</p>
+                <p className="text-xs text-[#F5EDD6]/80 font-medium">{fact.value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Production Stages */}
-      {sortedStages.length > 0 && (
-        <section className="bg-[#FDF6E3] border-y border-[#D4B896]/40 py-12">
-          <div className="container mx-auto px-6 md:px-8 max-w-5xl space-y-8">
-            <div className="text-center space-y-2 reveal">
-              <span className="text-[10px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">
-                {lang === 'vi' ? 'Quy trình chế tác' : 'Craft Process'}
-              </span>
-              <h3 className="text-2xl md:text-3xl text-[#2C1A0E]">
-                {lang === 'vi' ? 'Các bước tạo nên kiệt tác' : 'Steps to a Masterpiece'}
-              </h3>
-            </div>
+      {/* ── History + Pull-quote ─────────────────────────────────────────── */}
+      <section className="max-w-5xl mx-auto px-6 md:px-8 py-14 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {sortedStages.map((stage, idx) => (
-                <div
-                  key={stage._id}
-                  onClick={() => setActiveStage(idx)}
-                  className={`p-4 border rounded-[6px] transition-all cursor-pointer ${
-                    activeStage === idx
-                      ? 'bg-[#5C3D1E] border-[#5C3D1E] text-[#F5EDD6] shadow-medium scale-105'
-                      : 'bg-[#FDF6E3] border-[#D4B896] text-[#2C1A0E] hover:border-[#C9973A]'
-                  }`}
-                >
-                  <span className="text-[10px] font-bold tracking-wider block mb-1 opacity-70">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <h4 className="text-xs font-bold tracking-wide mb-2">{t(stage.title)}</h4>
-                  <p className="text-xs leading-relaxed opacity-90">{t(stage.description)}</p>
-                </div>
+          {/* Left — history with drop-cap */}
+          <div className="space-y-5">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
+              Lịch Sử
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-[#2C1A0E] leading-snug">
+              Ngàn năm dựng nghề
+            </h2>
+            <div className="text-sm text-[#2C1A0E]/85 leading-relaxed">
+              <span className="float-left text-6xl leading-none font-serif text-[#C9973A] mr-2 mt-1 select-none">
+                {firstLetter}
+              </span>
+              {restHistory.split('\n\n').map((para, i) => (
+                <p key={i} className={i > 0 ? 'mt-4 clear-none' : ''}>
+                  {para}
+                </p>
               ))}
             </div>
-
-            {sortedStages[activeStage]?.imageUrls?.[0] && (
-              <div className="max-w-md mx-auto aspect-video overflow-hidden rounded-[6px] border border-[#D4B896]/60 shadow-medium">
-                <img
-                  src={sortedStages[activeStage].imageUrls[0]}
-                  alt={t(sortedStages[activeStage].title)}
-                  className="w-full h-full object-cover transition-all duration-500"
-                />
-              </div>
-            )}
           </div>
-        </section>
-      )}
 
-      {/* Artisan Spotlight */}
-      {(village.artisanStory || village.artisanQuote) && (
-        <section className="container mx-auto px-6 md:px-8 max-w-4xl bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 shadow-subtle reveal">
-          {village.artisanImageUrl ? (
-            <img
-              src={village.artisanImageUrl}
-              alt="Nghệ nhân"
-              className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-2 border-[#C9973A] shrink-0"
-            />
-          ) : (
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#5C3D1E] text-[#F5EDD6] text-4xl font-bold flex items-center justify-center shrink-0 border-2 border-[#C9973A]">
-              N
+          {/* Right — pull-quote + short desc */}
+          <div className="space-y-6">
+            <div className="border-l-4 border-[#C9973A] pl-5 py-2">
+              <p className="text-sm italic text-[#5C3D1E] leading-relaxed">
+                "{village.shortDescription}"
+              </p>
             </div>
-          )}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Award size={18} className="text-[#C9973A]" />
-              <span className="text-[11px] font-bold tracking-wider text-[#5C3D1E] uppercase">
-                {lang === 'vi' ? 'Nghệ nhân tiêu biểu' : 'Featured Artisan'}
-              </span>
-            </div>
-            {village.artisanStory && (
-              <p className="text-sm text-[#2C1A0E] leading-relaxed">{t(village.artisanStory)}</p>
-            )}
+
+            {/* Artisan quote if available */}
             {village.artisanQuote && (
-              <div className="border-l-4 border-[#C9973A] pl-4 py-1 italic text-sm text-[#7A5A1A]">
-                "{t(village.artisanQuote)}"
+              <div className="bg-[#2C1A0E] rounded-lg p-6 space-y-3">
+                <p className="text-base italic text-[#F5EDD6]/85 leading-relaxed">
+                  "{village.artisanQuote}"
+                </p>
+                <div className="h-px w-8 bg-[#C9973A]" />
+                <p className="text-[10px] tracking-widest text-[#C9973A]/70 uppercase">Nghệ nhân làng {village.name}</p>
               </div>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* ── Production Stages ────────────────────────────────────────────── */}
+      <section className="bg-[#F5EDD6] border-y border-[#D4B896]/50 py-14">
+        <div className="max-w-5xl mx-auto px-6 md:px-8 space-y-10">
+          <div className="text-center space-y-3">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
+              Nghệ thuật chế tác
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-[#2C1A0E]">
+              Quy Trình Chế Tác
+            </h2>
+            <div className="h-px w-12 bg-[#D4B896] mx-auto" />
+          </div>
+
+          {/* Steps grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {village.stages.map((stage, idx) => (
+              <button
+                key={stage.id}
+                type="button"
+                onClick={() => setActiveStage(idx)}
+                className={`text-left p-5 border rounded-lg transition-all duration-200 cursor-pointer ${
+                  activeStage === idx
+                    ? 'bg-[#3A1A0A] border-[#3A1A0A] text-[#F5EDD6] shadow-lg scale-[1.02]'
+                    : 'bg-[#FDF6E3] border-[#D4B896] text-[#2C1A0E] hover:border-[#C9973A]'
+                }`}
+              >
+                <span className={`text-[10px] font-bold tracking-widest block mb-2 ${activeStage === idx ? 'text-[#C9973A]' : 'text-[#C9973A]/60'}`}>
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <h4 className="text-sm font-bold mb-2 leading-snug">{stage.title}</h4>
+                <p className={`text-xs leading-relaxed ${activeStage === idx ? 'text-[#F5EDD6]/80' : 'text-[#5C3D1E]/70'}`}>
+                  {stage.description}
+                </p>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Artisan Spotlight ────────────────────────────────────────────── */}
+      {village.artisanStory && (
+        <section className="bg-[#2C1A0E] py-14 md:py-20">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 text-center space-y-6">
+            <span className="text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase block">
+              Người Giữ Lửa
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-[#F5EDD6]">
+              Nghệ Nhân Tiêu Biểu
+            </h2>
+            <div className="h-px w-12 bg-[#C9973A] mx-auto" />
+            <p className="text-sm text-[#F5EDD6]/65 leading-relaxed max-w-2xl mx-auto">
+              {village.artisanStory}
+            </p>
+          </div>
         </section>
       )}
+
+      {/* ── Back CTA ─────────────────────────────────────────────────────── */}
+      <section className="py-14 text-center">
+        <Link
+          to="/villages"
+          className="inline-flex items-center gap-2 px-8 py-3 border border-[#C9973A] text-[#5C3D1E] rounded-full text-sm font-semibold hover:bg-[#C9973A] hover:text-[#F5EDD6] transition-all"
+        >
+          <ChevronLeft size={14} />
+          Xem tất cả làng nghề
+        </Link>
+      </section>
     </div>
   );
 }

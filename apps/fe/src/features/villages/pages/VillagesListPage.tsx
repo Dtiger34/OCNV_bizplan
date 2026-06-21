@@ -1,134 +1,131 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useVillages } from '../hooks/useVillage';
+import { VILLAGES } from '../data/villages-static';
 
 export default function VillagesListPage() {
-  const lang = 'vi' as const;
-  const { data: villages = [], isLoading } = useVillages();
-
   return (
-    <div className="pb-20">
+    <div className="bg-[#FDF6E3] min-h-screen">
+
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative bg-[#2C1A0E] overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-[#2C1A0E]">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-15"
+          className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#2C1A0E]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2C1A0E]/30 via-transparent to-[#2C1A0E]/80" />
 
-        <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 py-14 md:py-24 text-center space-y-5 reveal">
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase block">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 py-20 text-center space-y-5">
+          <span className="text-[10px] font-bold tracking-[0.3em] text-[#C9973A] uppercase block">
             HÀNH TRÌNH VỀ NGUỒN CỘI
           </span>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-[#F5EDD6] leading-tight">
-            {lang === 'vi' ? 'Câu Chuyện Làng Nghề' : 'Village Stories'}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#F5EDD6] leading-tight">
+            Câu Chuyện Làng Nghề
           </h1>
-          <p className="text-[#F5EDD6]/70 text-base md:text-lg leading-relaxed">
-            {lang === 'vi'
-              ? 'Mỗi làng nghề là một trang lịch sử sống — nơi đôi bàn tay tài hoa của những người thợ thủ công đã gìn giữ và truyền nối tinh hoa văn hóa Việt qua hàng trăm năm.'
-              : 'Each craft village is a living page of history — where the skilled hands of artisans have preserved and passed down the essence of Vietnamese culture for hundreds of years.'}
+          <div className="h-px w-16 bg-[#C9973A] mx-auto" />
+          <p className="text-[#F5EDD6]/70 text-base md:text-lg leading-relaxed italic">
+            Mỗi làng nghề là một trang lịch sử sống — nơi đôi bàn tay tài hoa gìn giữ tinh hoa văn hóa Việt qua hàng trăm năm.
           </p>
         </div>
       </section>
 
-      {/* ── Project intro ────────────────────────────────────────────────── */}
-      <section className="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-          {/* Left — label + heading */}
-          <div className="space-y-5 reveal-left">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
-              {lang === 'vi' ? 'Về dự án' : 'About the Project'}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-light text-[#2C1A0E] leading-snug">
-              {lang === 'vi'
-                ? <>Chúng tôi đang cố gắng<br /><span className="font-semibold">giữ lại những gì</span><br />sắp bị lãng quên</>
-                : <>We are trying to<br /><span className="font-semibold">hold on to what</span><br />is about to be forgotten</>}
-            </h2>
-            <div className="h-px w-12 bg-[#C9973A]" />
-            <p className="text-sm text-[#5C3D1E]/80 leading-relaxed">
-              {lang === 'vi'
-                ? 'Việt Nam có hàng nghìn làng nghề truyền thống, nhưng rất nhiều trong số đó đang dần mai một theo thời gian. Thế hệ trẻ ngày càng xa lạ với tiếng thoi dệt, mùi đất nung hay khói hương bảng lảng sân làng.'
-                : 'Vietnam has thousands of traditional craft villages, but many are slowly fading with time. Younger generations are growing increasingly distant from the sound of the loom, the smell of fired clay, or the drifting incense smoke in a village courtyard.'}
-            </p>
-          </div>
+      {/* ── Editorial intro ──────────────────────────────────────────────── */}
+      <section className="bg-[#2C1A0E]">
+        <div className="max-w-5xl mx-auto px-6 md:px-8 py-14 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+            <div className="space-y-5">
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase block">
+                Về Dự Án
+              </span>
+              <h2 className="text-2xl md:text-3xl font-light text-[#F5EDD6] leading-snug">
+                Chúng tôi đang cố gắng{' '}
+                <span className="text-[#C9973A]">giữ lại những gì</span>{' '}
+                sắp bị lãng quên
+              </h2>
+              <p className="text-sm text-[#F5EDD6]/60 leading-relaxed">
+                Việt Nam có hàng nghìn làng nghề truyền thống, nhưng rất nhiều trong số đó đang dần mai một theo thời gian. Thế hệ trẻ ngày càng xa lạ với tiếng thoi dệt, mùi đất nung hay khói hương bảng lảng sân làng.
+              </p>
+              <p className="text-sm text-[#F5EDD6]/60 leading-relaxed">
+                Đây là trách nhiệm chung của tất cả chúng ta — gìn giữ di sản nghề thủ công không chỉ là bảo tồn văn hóa mà còn là bảo vệ bản sắc dân tộc qua hàng trăm năm lịch sử.
+              </p>
+            </div>
 
-          {/* Right — body text */}
-          <div className="space-y-4 text-sm text-[#5C3D1E]/80 leading-relaxed reveal-right">
-            <p>
-              {lang === 'vi'
-                ? 'Nghề Xưa Nét Mới ra đời từ câu hỏi: làm thế nào để kể lại những câu chuyện ấy theo cách mà người trẻ hôm nay muốn lắng nghe? Câu trả lời là một hộp tiểu cảnh nhỏ — tái hiện không gian làng nghề trong lòng bàn tay, kết hợp với công nghệ AR và âm thanh để câu chuyện không chỉ được nhìn mà còn được trải nghiệm.'
-                : 'Old Crafts New Vibes was born from a question: how do we retell those stories in a way today\'s young people actually want to hear? The answer is a small diorama box — recreating the village space in the palm of your hand, combined with AR technology and audio so the story is not just seen but experienced.'}
-            </p>
-            <p>
-              {lang === 'vi'
-                ? 'Mỗi câu chuyện dưới đây là một làng nghề thật, một nghệ nhân thật, một kỹ thuật hàng trăm năm tuổi đang được chúng tôi tái hiện — để không ai phải nói: "Tôi chưa bao giờ biết điều đó từng tồn tại."'
-                : 'Each story below is a real village, a real artisan, a real technique hundreds of years old that we are recreating — so no one ever has to say: "I never knew that existed."'}
-            </p>
+            <div className="space-y-4 text-sm text-[#F5EDD6]/60 leading-relaxed">
+              <p>
+                Nghề Xưa Nét Mới ra đời từ câu hỏi: làm thế nào để kể lại những câu chuyện ấy theo cách mà người trẻ hôm nay muốn lắng nghe? Câu trả lời là một hộp tiểu cảnh nhỏ — tái hiện không gian làng nghề trong lòng bàn tay, kết hợp với công nghệ AR.
+              </p>
+              <p>
+                Mỗi câu chuyện dưới đây là một làng nghề thật, một nghệ nhân thật, một kỹ thuật hàng trăm năm tuổi đang được chúng tôi tái hiện — để không ai phải nói: "Tôi chưa bao giờ biết điều đó từng tồn tại."
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── Divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-4 md:px-8 reveal">
-        <div className="h-px bg-[#D4B896]/50" />
-      </div>
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#C9973A] to-transparent" />
 
-      {/* ── Village cards — centered 5-in-a-row ─────────────────────────── */}
-      <section className="py-16 px-6">
-        <div className="text-center space-y-2 mb-10 reveal">
-          <span className="text-[10px] font-bold tracking-[0.18em] text-[#7A5A1A] uppercase">
-            {lang === 'vi' ? 'Năm câu chuyện, một Việt Nam' : 'Five Stories, One Vietnam'}
-          </span>
-          <h3 className="text-2xl md:text-3xl text-[#2C1A0E]">
-            {lang === 'vi' ? 'Chọn làng nghề để bắt đầu' : 'Choose a village to begin'}
-          </h3>
-        </div>
+      {/* ── Village cards ────────────────────────────────────────────────── */}
+      <section className="py-14 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center space-y-3 mb-10">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
+              Năm câu chuyện, một Việt Nam
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-[#2C1A0E]">
+              Chọn Làng Nghề Của Bạn
+            </h2>
+            <div className="h-px w-12 bg-[#D4B896] mx-auto" />
+          </div>
 
-        {isLoading ? (
-          <div className="text-center text-[#9C8670] py-10">Đang tải...</div>
-        ) : (
-          <div className="flex flex-wrap justify-center gap-5 max-w-[1400px] mx-auto">
-            {villages.map((village, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {VILLAGES.map((village, idx) => (
               <motion.div
                 key={village.slug}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="w-full sm:w-[220px] shrink-0"
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: 'easeOut' }}
               >
                 <Link
                   to={`/villages/${village.slug}`}
-                  className="group block bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] overflow-hidden shadow-subtle hover:shadow-medium transition-all hover:-translate-y-2 h-full"
+                  className="group block bg-[#FDF6E3] border border-[#D4B896] rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-[#C9973A] transition-all duration-300 h-full"
                 >
-                  <div className="h-[150px] overflow-hidden relative">
+                  {/* Image */}
+                  <div className="relative h-[220px] overflow-hidden">
                     <img
-                      src={village.coverImageUrl ?? 'https://placehold.co/220x150?text=Village'}
-                      alt={village.name[lang]}
+                      src={village.coverImageUrl}
+                      alt={village.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/75 via-[#2C1A0E]/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+                      <h3 className="text-base font-semibold text-[#F5EDD6] leading-snug drop-shadow">
+                        {village.name}
+                      </h3>
+                    </div>
                   </div>
 
-                  <div className="p-4 space-y-2">
-                    <div className="h-[2px] w-6 rounded-full bg-[#C9973A]" />
-                    <h2 className="text-sm font-bold text-[#2C1A0E] leading-snug group-hover:text-[#5C3D1E] transition-colors">
-                      {village.name[lang]}
-                    </h2>
-                    <p className="text-[10px] text-[#7A5A1A] italic line-clamp-2 leading-relaxed">
-                      "{village.tagline[lang]}"
+                  {/* Body */}
+                  <div className="p-5 space-y-3">
+                    <p className="text-[11px] text-[#7B1C2E] italic leading-relaxed">
+                      "{village.tagline}"
                     </p>
-                    <div className="flex items-center gap-1 text-[11px] font-semibold pt-1 text-[#C9973A]">
-                      {lang === 'vi' ? 'Đọc câu chuyện' : 'Read the story'}
-                      <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                    <p className="text-xs text-[#5C3D1E]/80 leading-relaxed line-clamp-3">
+                      {village.shortDescription}
+                    </p>
+                    <div className="flex items-center gap-1 pt-1 text-[11px] font-semibold text-[#C9973A] group-hover:gap-2 transition-all">
+                      Khám phá <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
                 </Link>
               </motion.div>
             ))}
           </div>
-        )}
+        </div>
       </section>
+
+      {/* ── Bottom padding ───────────────────────────────────────────────── */}
+      <div className="pb-16" />
     </div>
   );
 }
