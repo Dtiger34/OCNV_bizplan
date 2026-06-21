@@ -1,12 +1,12 @@
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home, Loader2 } from 'lucide-react';
-import { useOrder } from '@/features/orders/hooks/useOrders';
+import { useOrderByCode } from '@/features/orders/hooks/useOrders';
 
 export default function CheckoutSuccessPage() {
   const [searchParams] = useSearchParams();
   const orderCode = searchParams.get('orderCode');
 
-  const { data: order, isLoading, error } = useOrder(orderCode || '');
+  const { data: order, isLoading, error } = useOrderByCode(orderCode || '');
 
   if (!orderCode) {
     return (
