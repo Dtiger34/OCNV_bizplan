@@ -46,11 +46,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
-  // Serve FE index.html for all non-API routes (SPA fallback)
+  // Serve FE index.html for all non-API, non-static routes (SPA fallback)
   const feDistIndex = join(process.cwd(), 'fe', 'dist', 'index.html');
   if (existsSync(feDistIndex)) {
     const expressApp = app.getHttpAdapter().getInstance();
-    expressApp.get('/{*path}', (_req: unknown, res: { sendFile: (path: string) => void }) => {
+    expressApp.get('/{*path}', (req: { path: string }, res: { sendFile: (path: string) => void }, next: () => void) => {
+      // Let requests with file extensions pass through (assets, fonts, etc.)
+      if (/\.\w+$/.test(req.path)) return next();
       res.sendFile(feDistIndex);
     });
   }
