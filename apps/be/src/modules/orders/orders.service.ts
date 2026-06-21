@@ -106,6 +106,16 @@ export class OrdersService {
     return { items: data, total, page, limit };
   }
 
+  async findByOrderCode(userId: string, orderCode: string): Promise<unknown> {
+    const order = await this.ordersRepository.findByOrderCode(orderCode);
+    if (!order) throw new NotFoundException({ error: 'NOT_FOUND', message: 'Đơn hàng không tồn tại.' });
+    const o = order as any;
+    if (o.userId && String(o.userId) !== userId) {
+      throw new ForbiddenException({ error: 'FORBIDDEN', message: 'Không có quyền xem đơn hàng này.' });
+    }
+    return order;
+  }
+
   async findById(userId: string, id: string): Promise<unknown> {
     const order = await this.ordersRepository.findById(id);
     if (!order) {

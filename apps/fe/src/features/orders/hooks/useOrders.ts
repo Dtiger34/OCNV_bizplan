@@ -16,14 +16,14 @@ export function useOrders(query: OrdersQuery = {}) {
   });
 }
 
-export function useOrder(id: string) {
+export function useOrder(orderCode: string) {
   return useQuery<OrderDetail>({
-    queryKey: ['orders', id],
+    queryKey: ['orders', orderCode],
     queryFn: async () => {
-      const res = await apiClient.get(`/orders/${id}`);
+      const res = await apiClient.get(`/orders/by-code/${orderCode}`);
       return res.data.data;
     },
-    enabled: !!id,
+    enabled: !!orderCode,
   });
 }
 

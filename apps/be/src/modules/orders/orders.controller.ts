@@ -23,6 +23,12 @@ export class OrdersController {
     return this.ordersService.findByUser(user.userId, query);
   }
 
+  @Get('by-code/:orderCode')
+  @ApiOperation({ summary: 'Get order by orderCode' })
+  async findByOrderCode(@CurrentUser() user: { userId: string }, @Param('orderCode') orderCode: string) {
+    return this.ordersService.findByOrderCode(user.userId, orderCode);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get order detail' })
   async findById(@CurrentUser() user: { userId: string }, @Param('id') id: string) {
