@@ -14,7 +14,7 @@ export interface CreateOrderPayload {
     productId: string;
     quantity: number;
   }>;
-  paymentMethod: 'cod' | 'bank_transfer' | 'payos';
+  paymentMethod: 'payos';
   customerNote?: string;
 }
 

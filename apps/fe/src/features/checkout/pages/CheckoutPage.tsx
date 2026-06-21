@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, CreditCard, Landmark, Loader2, X, Copy, Check } from 'lucide-react';
+import { Loader2, X, Copy, Check, QrCode } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useCreateOrder } from '@/features/orders/hooks/useCreateOrder';
 import { useCreatePayOSCheckout, usePayOSPaymentStatus } from '@/features/orders/hooks/usePaymentPayOS';
@@ -125,7 +125,7 @@ export default function CheckoutPage() {
   const [ward, setWard] = useState('');
   const [street, setStreet] = useState('');
   const [note, setNote] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank_transfer' | 'payos'>('cod');
+  const paymentMethod = 'payos' as const;
   const [error, setError] = useState('');
 
   // PayOS modal state
@@ -169,47 +169,36 @@ export default function CheckoutPage() {
       },
       {
         onSuccess: (order) => {
-          if (paymentMethod === 'payos') {
-            // Tạo QR ngay trên trang, không navigate đi đâu
-            createPayOSCheckout(
-              {
-                orderCode: order.orderCode,
-                buyerName: order.shippingAddress.fullName,
-                buyerEmail: '',
-                buyerPhone: order.shippingAddress.phone,
-                buyerAddress: [
-                  order.shippingAddress.street,
-                  order.shippingAddress.ward,
-                  order.shippingAddress.district,
-                  order.shippingAddress.province,
-                ].filter(Boolean).join(', '),
+          createPayOSCheckout(
+            {
+              orderCode: order.orderCode,
+              buyerName: order.shippingAddress.fullName,
+              buyerEmail: '',
+              buyerPhone: order.shippingAddress.phone,
+              buyerAddress: [
+                order.shippingAddress.street,
+                order.shippingAddress.ward,
+                order.shippingAddress.district,
+                order.shippingAddress.province,
+              ].filter(Boolean).join(', '),
+            },
+            {
+              onSuccess: (data) => {
+                clearCart();
+                setPayosModal({
+                  orderCode: order.orderCode,
+                  qrData: data!.qrCode,
+                  checkoutUrl: data!.checkoutUrl,
+                  total: order.total,
+                });
               },
-              {
-                onSuccess: (data) => {
-                  clearCart();
-                  setPayosModal({
-                    orderCode: order.orderCode,
-                    qrData: data!.qrCode,
-                    checkoutUrl: data!.checkoutUrl,
-                    total: order.total,
-                  });
-                },
-                onError: (err: any) => {
-                  const msg = err?.response?.data?.message || 'Không thể tạo QR thanh toán. Vui lòng thử lại.';
-                  setError(msg);
-                  toast.error(msg);
-                },
-              }
-            );
-          } else if (paymentMethod === 'bank_transfer') {
-            clearCart();
-            toast.success('Đặt hàng thành công!');
-            navigate('/checkout/bank-transfer', { state: { order } });
-          } else {
-            clearCart();
-            toast.success('Đặt hàng thành công!');
-            navigate(`/checkout/success?orderCode=${order.orderCode}`);
-          }
+              onError: (err: any) => {
+                const msg = err?.response?.data?.message || 'Không thể tạo QR thanh toán. Vui lòng thử lại.';
+                setError(msg);
+                toast.error(msg);
+              },
+            }
+          );
         },
         onError: (err: any) => {
           const msg = err?.response?.data?.message || err?.message || 'Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.';
@@ -307,69 +296,25 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Payment method */}
-          <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-4">
+          {/* Payment method — fixed: banking via PayOS */}
+          <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-3">
             <h3 className="text-xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-2">
               2. Phương Thức Thanh Toán
             </h3>
 
-            <div className="space-y-3 text-sm">
-              {[
-                {
-                  value: 'cod' as const,
-                  icon: <ShieldCheck size={18} className="text-[#3A6B4A]" />,
-                  title: 'COD — Thanh toán khi nhận hàng',
-                  desc: 'Bạn thanh toán trực tiếp cho nhân viên giao hàng khi nhận được sản phẩm',
-                },
-                {
-                  value: 'bank_transfer' as const,
-                  icon: <Landmark size={18} className="text-[#C9973A]" />,
-                  title: 'Chuyển Khoản Ngân Hàng',
-                  desc: 'Chuyển khoản trực tiếp qua ngân hàng hoặc ví điện tử',
-                },
-                {
-                  value: 'payos' as const,
-                  icon: <CreditCard size={18} className="text-[#7B1C2E]" />,
-                  title: 'PayOS — Thanh toán QR Code',
-                  desc: 'Quét mã QR trực tiếp trên trang — hỗ trợ tất cả ngân hàng',
-                },
-              ].map((opt) => (
-                <label
-                  key={opt.value}
-                  className={`flex items-center gap-3 p-3 border rounded-[4px] cursor-pointer transition-colors ${
-                    paymentMethod === opt.value
-                      ? 'border-[#C9973A] bg-[#F5EDD6]'
-                      : 'border-[#D4B896] hover:bg-[#F5EDD6]/50'
-                  }`}
-                >
-                  <input type="radio" name="payment" checked={paymentMethod === opt.value}
-                    onChange={() => setPaymentMethod(opt.value)}
-                    className="w-4 h-4 accent-[#5C3D1E]" disabled={isPending} />
-                  {opt.icon}
-                  <div>
-                    <div className="font-bold text-[#2C1A0E]">{opt.title}</div>
-                    <div className="text-xs text-[#9C8670]">{opt.desc}</div>
-                  </div>
-                </label>
-              ))}
+            <div className="flex items-center gap-3 p-4 border border-[#C9973A] bg-[#F5EDD6] rounded-[4px]">
+              <QrCode size={22} className="text-[#C9973A] flex-shrink-0" />
+              <div>
+                <p className="font-bold text-sm text-[#2C1A0E]">Chuyển khoản ngân hàng</p>
+                <p className="text-xs text-[#9C8670] mt-0.5">
+                  Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam
+                </p>
+              </div>
             </div>
 
-            {/* Bank transfer info */}
-            {paymentMethod === 'bank_transfer' && (
-              <div className="mt-2 p-4 bg-[#F5EDD6] border border-[#D4B896] rounded-md text-xs text-[#2C1A0E] space-y-1">
-                <div><strong>Chủ tài khoản:</strong> BAN DO MY NGHE DAI VIET</div>
-                <div><strong>Ngân hàng:</strong> Vietcombank — Chi nhánh Hà Nội</div>
-                <div><strong>Số tài khoản:</strong> 1018889999</div>
-                <div><strong>Nội dung CK:</strong> NGHEXUA [HỌ TÊN BẠN]</div>
-              </div>
-            )}
-
-            {/* PayOS note */}
-            {paymentMethod === 'payos' && (
-              <div className="mt-2 p-3 bg-[#F5EDD6] border border-[#D4B896] rounded-md text-xs text-[#5C3D1E]">
-                💳 Mã QR sẽ hiện ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.
-              </div>
-            )}
+            <p className="text-xs text-[#9C8670] pl-1">
+              Mã QR sẽ hiển thị ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.
+            </p>
           </div>
         </div>
 
