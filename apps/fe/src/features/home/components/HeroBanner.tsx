@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import heroBannerImg from '@/assets/herobanner.jpg';
 
 export default function HeroBanner() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function HeroBanner() {
     <section className="relative w-full h-screen min-h-[600px] overflow-hidden -mt-20">
       {/* Background image */}
       <img
-        src="/image/herobanner.jpg"
+        src={heroBannerImg}
         alt="Làng nghề Việt Nam"
         className="absolute inset-0 w-full h-full object-cover"
       />

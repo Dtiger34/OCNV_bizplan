@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
-import { X, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../products/hooks/useProducts';
 import { useCart } from '@/context/CartContext';
 import { ProductCard as ApiProduct } from '@/types/api';
@@ -13,52 +14,13 @@ function getStockStatus(stock: number): 'in_stock' | 'low_stock' | 'out_of_stock
   return 'in_stock';
 }
 
-function ProductModal({ product, onClose, onAddToCart }: {
-  product: ApiProduct;
-  onClose: () => void;
-  onAddToCart: (p: ApiProduct) => void;
-}) {
-  const stockStatus = getStockStatus(product.stock);
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-[#2C1A0E]/60" onClick={onClose} />
-      <div className="relative bg-[#FDF6E3] border-[2px] border-[#C9973A] rounded-[8px] max-w-3xl w-full max-h-[90vh] overflow-y-auto z-10 shadow-xl flex flex-col md:flex-row p-6 gap-6">
-        <button onClick={onClose} className="absolute top-4 right-4 text-[#5C3D1E] hover:text-[#7B1C2E] p-1">
-          <X size={22} />
-        </button>
-        <div className="w-full md:w-1/2 space-y-4">
-          <img src={product.mainImageUrl ?? PLACEHOLDER} alt={product.name.vi}
-            className="w-full aspect-[4/3] object-cover border border-[#D4B896] rounded-[6px]" />
-          <div className="bg-[#F5EDD6] border border-[#D4B896] p-4 rounded-[6px] text-xs">
-            <span className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase block mb-1">ĐẶC TÍNH</span>
-            <div><strong>Làng nghề:</strong> {product.village?.name?.vi ?? '—'}</div>
-            <div><strong>Tình trạng:</strong> {stockStatus === 'out_of_stock' ? 'Hết hàng' : stockStatus === 'low_stock' ? 'Sắp hết' : 'Còn hàng'}</div>
-          </div>
-        </div>
-        <div className="w-full md:w-1/2 flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <span className="text-[10px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">{product.village?.name?.vi ?? '—'}</span>
-            <h3 className="text-2xl font-semibold text-[#2C1A0E]">{product.name.vi}</h3>
-            <div className="text-xl font-bold text-[#7B1C2E]">{product.price.toLocaleString('vi-VN')} ₫</div>
-          </div>
-          <button disabled={stockStatus === 'out_of_stock'}
-            onClick={() => { onAddToCart(product); onClose(); }}
-            className="w-full h-10 bg-[#5C3D1E] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-[4px] hover:bg-[#7A5230] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            {stockStatus === 'out_of_stock' ? 'HẾT HÀNG' : 'THÊM VÀO GIỎ HÀNG'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function ShopPage() {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
   const [minPrice, setMinPrice] = useState<number | undefined>();
   const [maxPrice, setMaxPrice] = useState<number | undefined>();
-  const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
 
   const { data, isLoading } = useProducts({
     search: search || undefined,
@@ -139,7 +101,7 @@ export default function ShopPage() {
               return (
                 <div key={product._id}
                   className="border border-[#D4B896] rounded-[6px] bg-[#FDF6E3] overflow-hidden hover:border-[#C9973A] transition-all group cursor-pointer"
-                  onClick={() => setSelectedProduct(product)}>
+                  onClick={() => navigate(`/products/${product._id}`)}>
                   <div className="aspect-[4/3] overflow-hidden relative">
                     <img src={product.mainImageUrl ?? PLACEHOLDER} alt={product.name.vi}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -170,13 +132,6 @@ export default function ShopPage() {
         )}
       </div>
 
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={handleAddToCart}
-        />
-      )}
     </div>
   );
 }
