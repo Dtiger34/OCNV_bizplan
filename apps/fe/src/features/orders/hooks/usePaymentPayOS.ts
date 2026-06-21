@@ -9,71 +9,43 @@ interface CreateCheckoutPayload {
   buyerAddress: string;
 }
 
-interface CheckoutResponse {
-  success: boolean;
-  data?: {
-    checkoutUrl: string;
-    qrCode: string;
-  };
-  message: string;
+// BE trả về trực tiếp (không wrap data): { success, checkoutUrl, qrCode, paymentLinkId }
+interface CheckoutData {
+  checkoutUrl: string;
+  qrCode: string;
+  paymentLinkId?: string;
 }
 
+// BE trả về: { success, data: { success, orderCode, paymentStatus, ... } }
 interface PaymentStatusResponse {
   success: boolean;
   orderCode: string;
   paymentStatus?: string;
   amount?: number;
-  transactionDateTime?: string;
   error?: string;
 }
 
-/**
- * Hook để tạo PayOS checkout link
- */
 export function useCreatePayOSCheckout() {
   return useMutation({
-    mutationFn: async (payload: CreateCheckoutPayload) => {
-      const res = await apiClient.post<CheckoutResponse>('/payments/payos/create-checkout', payload);
-      return res.data.data;
+    mutationFn: async (payload: CreateCheckoutPayload): Promise<CheckoutData> => {
+      const res = await apiClient.post<CheckoutData>('/payments/payos/create-checkout', payload);
+      // BE PaymentsService trả về object trực tiếp, không có wrapper data
+      return res.data;
     },
   });
 }
 
-/**
- * Hook để lấy trạng thái thanh toán PayOS
- */
 export function usePayOSPaymentStatus(orderCode: string | null) {
   return useQuery<PaymentStatusResponse>({
     queryKey: ['payos-status', orderCode],
     queryFn: async () => {
-      const res = await apiClient.get<{data: PaymentStatusResponse}>(`/payments/payos/${orderCode}`);
+      const res = await apiClient.get<{ data: PaymentStatusResponse }>(`/payments/payos/${orderCode}`);
       return res.data.data;
     },
     enabled: !!orderCode,
-    refetchInterval: (data) => {
-      // Dừng polling nếu thanh toán đã hoàn tất
-      if (data?.paymentStatus === 'PAID') {
-        return false;
-      }
-      // Polling mỗi 3 giây
+    refetchInterval: (query) => {
+      if (query.state.data?.paymentStatus === 'PAID') return false;
       return 3000;
     },
-  });
-}
-
-/**
- * Hook để xử lý callback từ PayOS
- * Gọi khi user được chuyển hướng về từ PayOS (success hoặc cancel)
- */
-export function useHandlePayOSCallback(orderCode: string) {
-  return useQuery({
-    queryKey: ['payos-callback', orderCode],
-    queryFn: async () => {
-      // Kiểm tra trạng thái thanh toán
-      const res = await apiClient.get<PaymentStatusResponse>(`/payments/payos/${orderCode}`);
-      return res.data.data;
-    },
-    enabled: !!orderCode,
-    retry: 3,
   });
 }

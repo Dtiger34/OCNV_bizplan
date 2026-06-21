@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Body, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Headers } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { PaymentsService } from './payments.service';
 import { PayosService } from './payos.service';
@@ -42,7 +42,7 @@ export class PaymentsController {
 
   @Get('payos/:orderCode')
   @ApiOperation({ summary: 'Get PayOS payment status' })
-  async getPayOSPaymentStatus(@Query('orderCode') orderCode: string) {
+  async getPayOSPaymentStatus(@Param('orderCode') orderCode: string) {
     return this.paymentsService.getPayOSPaymentStatus(orderCode);
   }
 
