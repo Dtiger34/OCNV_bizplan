@@ -1,191 +1,265 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, MapPin, Clock, Layers } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getVillage } from '../data/villages-static';
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
-  const [activeStage, setActiveStage] = useState(0);
-
   const village = getVillage(slug ?? '');
+  const [activeStage, setActiveStage] = useState<string | null>(null);
+  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
 
   if (!village) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6">
-        <p className="text-2xl font-light text-[#2C1A0E]">Không tìm thấy làng nghề</p>
-        <Link to="/villages" className="text-[#C9973A] underline text-sm hover:text-[#5C3D1E] transition-colors">
+      <div className="min-h-screen bg-[#2C1A0E] flex flex-col items-center justify-center gap-6 px-4">
+        <p className="text-[#BEA882] text-lg">Không tìm thấy làng nghề này.</p>
+        <Link to="/villages" className="text-sm text-[#C9973A] underline underline-offset-4">
           ← Quay lại danh sách
         </Link>
       </div>
     );
   }
 
-  const firstLetter = village.fullHistory.charAt(0);
-  const restHistory = village.fullHistory.slice(1);
+  const historyParagraphs = village.fullHistory.split('\n\n').filter(Boolean);
 
   return (
-    <div className="bg-[#FDF6E3] min-h-screen">
-
-      {/* ── Breadcrumb ───────────────────────────────────────────────────── */}
-      <div className="fixed top-20 left-4 z-40">
-        <Link
-          to="/villages"
-          className="inline-flex items-center gap-1.5 text-[#F5EDD6]/80 text-xs tracking-wide hover:text-[#C9973A] transition-colors bg-[#2C1A0E]/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10"
-        >
-          <ChevronLeft size={13} />
-          Tất cả làng nghề
-        </Link>
-      </div>
-
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section
-        className="relative min-h-[75vh] md:min-h-screen bg-cover bg-center flex items-end"
-        style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
+    <div className="bg-[#2C1A0E] min-h-screen">
+      {/* Fixed breadcrumb */}
+      <Link
+        to="/villages"
+        className="fixed top-20 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#D4B896] hover:text-white backdrop-blur-md bg-[#1A0F07]/70 border border-[#3D2B1A]/80 transition-all hover:border-[#C9973A]/50"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E] via-[#2C1A0E]/50 to-transparent" />
+        <ChevronLeft size={13} />
+        Làng Nghề
+      </Link>
 
-        <div className="relative z-10 w-full px-6 md:px-16 lg:px-24 pb-14 md:pb-20 space-y-4 max-w-4xl">
-          <span className="inline-block text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase border border-[#C9973A]/50 px-3 py-1 rounded-sm">
+      {/* Hero */}
+      <section className="relative min-h-[85vh] flex items-end overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
+        />
+        {/* Multi-layer gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E] via-[#2C1A0E]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2C1A0E]/50 to-transparent" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="relative z-10 px-4 sm:px-8 lg:px-16 pb-16 max-w-4xl"
+        >
+          <p
+            className="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3"
+            style={{ color: village.color }}
+          >
             Làng Nghề Truyền Thống
-          </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#F5EDD6] leading-tight">
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-4">
             {village.name}
           </h1>
-          <p className="text-[#F5EDD6]/70 italic text-sm md:text-base max-w-xl">
-            "{village.tagline}"
-          </p>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C9973A]" />
+          <p className="text-base sm:text-lg italic text-[#D4B896] mb-6">{village.tagline}</p>
+          <div className="h-[1px] w-16" style={{ backgroundColor: village.color + '80' }} />
+        </motion.div>
       </section>
 
-      {/* ── Stats bar ────────────────────────────────────────────────────── */}
-      <section className="bg-[#2C1A0E]">
-        <div className="max-w-5xl mx-auto px-6 md:px-8 py-5">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-0 md:divide-x divide-[#C9973A]/30">
-            {village.facts.map((fact, i) => (
-              <div key={i} className="md:px-8 text-center">
-                <p className="text-[9px] tracking-[0.18em] text-[#C9973A]/60 uppercase mb-0.5">{fact.label}</p>
-                <p className="text-xs text-[#F5EDD6]/80 font-medium">{fact.value}</p>
-              </div>
+      {/* Facts bar */}
+      <section className="bg-[#1A0F07] border-y border-[#3D2B1A]">
+        <div className="max-w-5xl mx-auto px-4 py-5 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+          {village.facts.map((fact) => (
+            <div key={fact.label}>
+              <p className="text-sm sm:text-base font-medium text-white mb-0.5">{fact.value}</p>
+              <p className="text-[10px] tracking-widest text-[#8C7B68] uppercase">{fact.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* History */}
+      <section className="py-16 px-4 sm:px-8">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-[10px] tracking-[0.25em] uppercase mb-3" style={{ color: village.color }}>
+              Lịch Sử
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-light text-white mb-8 leading-snug">
+              Hành Trình <span className="italic text-[#D4B896]">Hàng Thế Kỷ</span>
+            </h2>
+          </motion.div>
+
+          <div className="space-y-5">
+            {historyParagraphs.map((para, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="text-[#BEA882] leading-relaxed text-sm sm:text-base"
+              >
+                {i === 0 ? (
+                  <>
+                    <span
+                      className="float-left text-5xl leading-none mr-2 mt-1 font-light"
+                      style={{ color: village.color }}
+                    >
+                      {para[0]}
+                    </span>
+                    {para.slice(1)}
+                  </>
+                ) : (
+                  para
+                )}
+              </motion.p>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── History + Pull-quote ─────────────────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-6 md:px-8 py-14 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
-
-          {/* Left — history with drop-cap */}
-          <div className="space-y-5">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
-              Lịch Sử
-            </span>
-            <h2 className="text-2xl md:text-3xl font-light text-[#2C1A0E] leading-snug">
-              Ngàn năm dựng nghề
-            </h2>
-            <div className="text-sm text-[#2C1A0E]/85 leading-relaxed">
-              <span className="float-left text-6xl leading-none font-serif text-[#C9973A] mr-2 mt-1 select-none">
-                {firstLetter}
-              </span>
-              {restHistory.split('\n\n').map((para, i) => (
-                <p key={i} className={i > 0 ? 'mt-4 clear-none' : ''}>
-                  {para}
-                </p>
+      {/* Gallery */}
+      {village.galleryImages.length > 0 && (
+        <section className="pb-16 px-4 sm:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-3 gap-3">
+              {village.galleryImages.map((img, i) => (
+                <motion.button
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  onClick={() => setLightboxImg(img)}
+                  className="relative overflow-hidden rounded-md aspect-video sm:aspect-square group cursor-pointer"
+                >
+                  <img
+                    src={img}
+                    alt={`${village.name} ${i + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-[#2C1A0E]/0 group-hover:bg-[#2C1A0E]/30 transition-all duration-300" />
+                </motion.button>
               ))}
             </div>
-          </div>
-
-          {/* Right — pull-quote + short desc */}
-          <div className="space-y-6">
-            <div className="border-l-4 border-[#C9973A] pl-5 py-2">
-              <p className="text-sm italic text-[#5C3D1E] leading-relaxed">
-                "{village.shortDescription}"
-              </p>
-            </div>
-
-            {/* Artisan quote if available */}
-            {village.artisanQuote && (
-              <div className="bg-[#2C1A0E] rounded-lg p-6 space-y-3">
-                <p className="text-base italic text-[#F5EDD6]/85 leading-relaxed">
-                  "{village.artisanQuote}"
-                </p>
-                <div className="h-px w-8 bg-[#C9973A]" />
-                <p className="text-[10px] tracking-widest text-[#C9973A]/70 uppercase">Nghệ nhân làng {village.name}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Production Stages ────────────────────────────────────────────── */}
-      <section className="bg-[#F5EDD6] border-y border-[#D4B896]/50 py-14">
-        <div className="max-w-5xl mx-auto px-6 md:px-8 space-y-10">
-          <div className="text-center space-y-3">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase block">
-              Nghệ thuật chế tác
-            </span>
-            <h2 className="text-2xl md:text-3xl font-light text-[#2C1A0E]">
-              Quy Trình Chế Tác
-            </h2>
-            <div className="h-px w-12 bg-[#D4B896] mx-auto" />
-          </div>
-
-          {/* Steps grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {village.stages.map((stage, idx) => (
-              <button
-                key={stage.id}
-                type="button"
-                onClick={() => setActiveStage(idx)}
-                className={`text-left p-5 border rounded-lg transition-all duration-200 cursor-pointer ${
-                  activeStage === idx
-                    ? 'bg-[#3A1A0A] border-[#3A1A0A] text-[#F5EDD6] shadow-lg scale-[1.02]'
-                    : 'bg-[#FDF6E3] border-[#D4B896] text-[#2C1A0E] hover:border-[#C9973A]'
-                }`}
-              >
-                <span className={`text-[10px] font-bold tracking-widest block mb-2 ${activeStage === idx ? 'text-[#C9973A]' : 'text-[#C9973A]/60'}`}>
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <h4 className="text-sm font-bold mb-2 leading-snug">{stage.title}</h4>
-                <p className={`text-xs leading-relaxed ${activeStage === idx ? 'text-[#F5EDD6]/80' : 'text-[#5C3D1E]/70'}`}>
-                  {stage.description}
-                </p>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Artisan Spotlight ────────────────────────────────────────────── */}
-      {village.artisanStory && (
-        <section className="bg-[#2C1A0E] py-14 md:py-20">
-          <div className="max-w-4xl mx-auto px-6 md:px-8 text-center space-y-6">
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#C9973A] uppercase block">
-              Người Giữ Lửa
-            </span>
-            <h2 className="text-2xl md:text-3xl font-light text-[#F5EDD6]">
-              Nghệ Nhân Tiêu Biểu
-            </h2>
-            <div className="h-px w-12 bg-[#C9973A] mx-auto" />
-            <p className="text-sm text-[#F5EDD6]/65 leading-relaxed max-w-2xl mx-auto">
-              {village.artisanStory}
-            </p>
           </div>
         </section>
       )}
 
-      {/* ── Back CTA ─────────────────────────────────────────────────────── */}
-      <section className="py-14 text-center">
+      {/* Artisan quote */}
+      {village.artisanQuote && (
+        <section className="py-16 px-4 bg-[#1A0F07] border-y border-[#3D2B1A]">
+          <div className="max-w-2xl mx-auto text-center">
+            <Quote size={28} className="mx-auto mb-5 opacity-40" style={{ color: village.color }} />
+            <blockquote className="text-lg sm:text-xl text-white font-light italic leading-relaxed mb-6">
+              "{village.artisanQuote}"
+            </blockquote>
+            {village.artisanStory && (
+              <p className="text-xs text-[#8C7B68] leading-relaxed max-w-lg mx-auto">{village.artisanStory}</p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Production stages */}
+      <section className="py-16 px-4 sm:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-10">
+            <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
+              Quy Trình
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-light text-white leading-snug">
+              Từ Nguyên Liệu <span className="italic text-[#D4B896]">Đến Tinh Hoa</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {village.stages.map((stage, i) => {
+              const isActive = activeStage === stage.id;
+              return (
+                <motion.button
+                  key={stage.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.07 }}
+                  onClick={() => setActiveStage(isActive ? null : stage.id)}
+                  className="text-left p-5 rounded-lg border transition-all duration-300 cursor-pointer"
+                  style={{
+                    backgroundColor: isActive ? village.color + '18' : '#1A0F07',
+                    borderColor: isActive ? village.color + '60' : '#3D2B1A',
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <span
+                      className="text-xl font-light flex-shrink-0 leading-none mt-0.5"
+                      style={{ color: village.color }}
+                    >
+                      {String(stage.order).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium text-white mb-2">{stage.title}</p>
+                      <p
+                        className={`text-xs text-[#8C7B68] leading-relaxed transition-all duration-300 overflow-hidden ${
+                          isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        {stage.description}
+                      </p>
+                      <p
+                        className={`text-[10px] mt-2 transition-colors duration-200`}
+                        style={{ color: isActive ? village.color : '#6B5C4E' }}
+                      >
+                        {isActive ? 'Thu gọn ↑' : 'Xem thêm ↓'}
+                      </p>
+                    </div>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-14 px-4 border-t border-[#3D2B1A] text-center">
+        <p className="text-[10px] tracking-[0.25em] text-[#8C7B68] uppercase mb-3">Khám Phá Thêm</p>
+        <h2 className="text-2xl font-light text-white mb-6">
+          Tìm Hiểu Các Làng Nghề <span className="italic text-[#D4B896]">Khác</span>
+        </h2>
         <Link
           to="/villages"
-          className="inline-flex items-center gap-2 px-8 py-3 border border-[#C9973A] text-[#5C3D1E] rounded-full text-sm font-semibold hover:bg-[#C9973A] hover:text-[#F5EDD6] transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 border text-sm text-[#D4B896] hover:text-white hover:bg-[#C9973A]/10 rounded-sm transition-all duration-200"
+          style={{ borderColor: village.color + '60' }}
         >
-          <ChevronLeft size={14} />
-          Xem tất cả làng nghề
+          Xem Tất Cả Làng Nghề
+          <ArrowRight size={14} />
         </Link>
       </section>
+
+      {/* Lightbox */}
+      {lightboxImg && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setLightboxImg(null)}
+        >
+          <img
+            src={lightboxImg}
+            alt="Gallery"
+            className="max-w-full max-h-[90vh] rounded-md object-contain shadow-2xl"
+          />
+          <button
+            className="absolute top-4 right-4 text-white/60 hover:text-white text-2xl leading-none"
+            onClick={() => setLightboxImg(null)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }
