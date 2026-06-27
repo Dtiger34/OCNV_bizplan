@@ -4,175 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>AR · Làng Nón Chuông</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #000; overflow: hidden; font-family: sans-serif; }
-
-    #overlay {
-      position: fixed; inset: 0; z-index: 999;
-      background: #2C1A0E;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 20px;
-      color: #F5EDD6; text-align: center; padding: 24px;
-    }
-    #overlay.hidden { display: none; }
-
-    .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid #5C3D1E;
-      border-top-color: #C9973A;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #loading-text { font-size: 13px; color: #9C8670; letter-spacing: 0.1em; }
+    body { background: #1a0a00; overflow: hidden; font-family: sans-serif; height: 100dvh; display: flex; flex-direction: column; }
 
     #header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 16px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
     }
-    #header-title { color: #fff; font-size: 14px; }
-    #header-sub { color: #C9973A; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; }
+    #header-sub { color: #C9973A; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; }
+    #header-title { color: #fff; font-size: 14px; font-weight: 500; margin-top: 2px; }
     #btn-back {
       width: 36px; height: 36px; border-radius: 50%;
       background: rgba(0,0,0,0.5); border: none; color: #fff;
-      font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
     }
 
-    #status {
-      position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
-      z-index: 100; padding: 4px 16px; border-radius: 99px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      background: rgba(0,0,0,0.6); color: #C9973A;
-      transition: all 0.3s;
+    model-viewer {
+      width: 100%; flex: 1;
+      --poster-color: #1a0a00;
+    }
+
+    /* Nút AR tuỳ chỉnh */
+    #ar-button {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #C9973A;
+      color: #2C1A0E;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(201,151,58,0.4);
       white-space: nowrap;
     }
-    #status.found { background: rgba(34,197,94,0.8); color: #fff; }
+    #ar-button[hidden] { display: none; }
+    #ar-button svg { width: 18px; height: 18px; }
 
     #guide {
-      position: fixed; bottom: 20px; left: 16px; right: 16px; z-index: 100;
-      background: rgba(44,26,14,0.95); border: 1px solid rgba(201,151,58,0.5);
+      position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 50;
+      background: rgba(44,26,14,0.92); border: 1px solid rgba(201,151,58,0.4);
       border-radius: 12px; padding: 14px;
     }
-    #guide-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    #guide-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     #guide-title { color: #F5EDD6; font-size: 12px; font-weight: 600; }
-    #btn-close-guide { background: none; border: none; color: #9C8670; font-size: 16px; cursor: pointer; }
-    #guide-body { display: flex; gap: 12px; align-items: flex-start; }
-    #guide-img { width: 64px; height: 48px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(201,151,58,0.4); flex-shrink: 0; }
-    #guide-text { color: #C9B99A; font-size: 11px; line-height: 1.6; }
+    #btn-close { background: none; border: none; color: #9C8670; font-size: 18px; cursor: pointer; line-height: 1; }
+    #guide-steps { color: #C9B99A; font-size: 11px; line-height: 1.8; }
 
-    a-scene { display: block; width: 100vw; height: 100vh; }
+    #no-ar {
+      display: none;
+      position: fixed; bottom: 16px; left: 16px; right: 16px;
+      background: rgba(44,26,14,0.92); border: 1px solid rgba(201,151,58,0.3);
+      border-radius: 12px; padding: 14px; text-align: center;
+      color: #9C8670; font-size: 12px; line-height: 1.6;
+    }
   </style>
 </head>
 <body>
 
-<!-- Loading overlay -->
-<div id="overlay">
-  <div class="spinner"></div>
-  <div id="loading-text">Đang khởi động AR...</div>
-</div>
-
-<!-- Header -->
 <div id="header">
   <div>
-    <div id="header-sub">AR · Image Tracking</div>
+    <div id="header-sub">AR · Quick Look</div>
     <div id="header-title">Làng Nón Chuông</div>
   </div>
-  <button id="btn-back" onclick="history.back()">✕</button>
+  <a id="btn-back" href="javascript:history.back()">✕</a>
 </div>
 
-<!-- Marker status -->
-<div id="status">Hướng vào diorama</div>
+<model-viewer
+  id="viewer"
+  src="/models/lang-non.glb"
+  alt="Mô hình 3D Làng Nón Chuông"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  camera-controls
+  auto-rotate
+  auto-rotate-delay="1000"
+  shadow-intensity="1"
+  environment-image="neutral"
+  ar-button-style="none"
+>
+  <!-- Nút AR tuỳ chỉnh -->
+  <button id="ar-button" slot="ar-button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 3H3v2M19 3h2v2M5 21H3v-2M19 21h2v-2"/>
+      <path d="M12 8l4 2v4l-4 2-4-2v-4l4-2z"/>
+    </svg>
+    Xem AR trong không gian thực
+  </button>
+</model-viewer>
 
-<!-- Guide -->
 <div id="guide">
   <div id="guide-header">
-    <span id="guide-title">ℹ Cách dùng AR</span>
-    <button id="btn-close-guide" onclick="document.getElementById('guide').style.display='none'">✕</button>
+    <span id="guide-title">Cách xem AR</span>
+    <button id="btn-close" onclick="document.getElementById('guide').style.display='none'">✕</button>
   </div>
-  <div id="guide-body">
-    <img id="guide-img" src="/models/lang-non-target.jpg" alt="target" />
-    <div id="guide-text">
-      Hướng camera vào mô hình diorama trông giống ảnh bên trái.<br/>
-      Mô hình 3D sẽ tự hiện ra khi nhận diện được.
-    </div>
+  <div id="guide-steps">
+    1. Xoay mô hình bằng cách vuốt màn hình<br/>
+    2. Nhấn nút <strong style="color:#C9973A">Xem AR trong không gian thực</strong><br/>
+    3. Hướng camera vào sàn hoặc bàn, mô hình sẽ đặt xuống đó
   </div>
 </div>
 
-<!-- AR.js + A-Frame -->
-<script>
-  // Hiện lỗi lên overlay nếu script CDN fail load
-  function showError(msg) {
-    document.getElementById('loading-text').textContent = msg;
-    document.getElementById('loading-text').style.color = '#f87171';
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js"
-  onerror="showError('Lỗi: Không load được A-Frame. Kiểm tra kết nối mạng.')"></script>
-<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.5/aframe/build/aframe-ar-nft.js"
-  onerror="showError('Lỗi: Không load được AR.js.')"></script>
+<div id="no-ar">
+  Trình duyệt này chưa hỗ trợ AR.<br/>
+  Vui lòng dùng <strong>Safari trên iPhone</strong> hoặc <strong>Chrome trên Android</strong>.
+</div>
 
 <script>
-  window.addEventListener('load', function () {
-    if (typeof AFRAME === 'undefined') {
-      showError('A-Frame chưa load được. Thử reload trang.');
-      return;
+  var viewer = document.getElementById('viewer');
+
+  viewer.addEventListener('ar-status', function(e) {
+    if (e.detail.status === 'not-presenting') {
+      document.getElementById('guide').style.display = '';
     }
-    // Tạo scene sau khi A-Frame + AR.js đã load
-    var scene = document.createElement('a-scene');
-    scene.setAttribute('embedded', '');
-    scene.setAttribute('arjs', 'sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;');
-    scene.setAttribute('renderer', 'logarithmicDepthBuffer: true; precision: medium;');
-    scene.setAttribute('vr-mode-ui', 'enabled: false');
-    scene.setAttribute('loading-screen', 'enabled: false');
+  });
 
-    // NFT marker
-    var nft = document.createElement('a-nft');
-    nft.setAttribute('type', 'nft');
-    nft.setAttribute('url', '/models/markers/lang-non');
-    nft.setAttribute('smooth', 'true');
-    nft.setAttribute('smoothCount', '10');
-    nft.setAttribute('smoothTolerance', '0.01');
-    nft.setAttribute('smoothThreshold', '5');
-
-    // 3D model
-    var entity = document.createElement('a-entity');
-    entity.setAttribute('gltf-model', '/models/lang-non.glb');
-    entity.setAttribute('scale', '0.005 0.005 0.005');
-    entity.setAttribute('rotation', '-90 0 0');
-    entity.setAttribute('position', '0 0 0');
-
-    nft.appendChild(entity);
-    scene.appendChild(nft);
-
-    // Camera
-    var cam = document.createElement('a-camera');
-    scene.appendChild(cam);
-
-    document.body.appendChild(scene);
-
-    // Ẩn overlay sau 4s dù scene có loaded hay không
-    scene.addEventListener('loaded', function () {
-      document.getElementById('overlay').classList.add('hidden');
-    });
-    setTimeout(function () {
-      document.getElementById('overlay').classList.add('hidden');
-    }, 4000);
-
-    // Marker found/lost
-    nft.addEventListener('markerFound', function () {
-      var s = document.getElementById('status');
-      s.textContent = '✓ Đã nhận diện';
-      s.classList.add('found');
-    });
-    nft.addEventListener('markerLost', function () {
-      var s = document.getElementById('status');
-      s.textContent = 'Hướng vào diorama';
-      s.classList.remove('found');
-    });
+  // Kiểm tra AR support
+  viewer.addEventListener('load', function() {
+    if (!viewer.canActivateAR) {
+      document.getElementById('ar-button').hidden = true;
+      document.getElementById('no-ar').style.display = 'block';
+      document.getElementById('guide').style.display = 'none';
+    }
   });
 </script>
 
