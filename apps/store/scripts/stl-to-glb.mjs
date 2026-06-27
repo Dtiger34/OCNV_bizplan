@@ -1,94 +1,105 @@
 /**
- * Convert STL binary → GLB, giảm triangle count mạnh cho web AR.
- * Decimation: giữ lại 1/ratio triangles bằng cách bỏ qua triangle liền kề trùng normal.
+ * Convert STL binary → GLB với spatial decimation.
+ * Chia không gian 3D thành grid cells, mỗi cell chỉ giữ 1 triangle đại diện
+ * → mesh liền lạc, không bị rách.
  *
- * Usage: node scripts/stl-to-glb.mjs <input.stl> <output.glb> [ratio=50]
- * ratio=50 → giữ 1/50 ≈ 2% số triangles
+ * Usage: node stl-to-glb.mjs <input.stl> <output.glb> [gridSize=64]
+ * gridSize=64 → chia 64x64x64 cells
  */
 
 import fs from 'fs';
 import path from 'path';
 
-const [,, inputPath, outputPath, ratioArg] = process.argv;
-
+const [,, inputPath, outputPath, gridArg] = process.argv;
 if (!inputPath || !outputPath) {
-  console.error('Usage: node stl-to-glb.mjs <input.stl> <output.glb> [decimation_ratio=50]');
+  console.error('Usage: node stl-to-glb.mjs <input.stl> <output.glb> [gridSize=64]');
   process.exit(1);
 }
-
-const RATIO = parseInt(ratioArg ?? '50', 10);
+const GRID = parseInt(gridArg ?? '64', 10);
 
 // ── 1. Parse STL binary ──────────────────────────────────────────────────────
 console.log('Reading STL...');
 const stlBuf = fs.readFileSync(inputPath);
 const totalTriangles = stlBuf.readUInt32LE(80);
-console.log(`  Total triangles: ${totalTriangles.toLocaleString()}`);
-console.log(`  File size: ${(stlBuf.length / 1024 / 1024).toFixed(1)} MB`);
-console.log(`  Decimation ratio: 1/${RATIO} → keep ~${Math.round(totalTriangles/RATIO).toLocaleString()} triangles`);
-
-// ── 2. Decimate: giữ mọi RATIO-th triangle ──────────────────────────────────
-const TRIANGLE_SIZE = 50; // 12 normal + 36 vertices + 2 attr
+const TRIANGLE_SIZE = 50;
 const dataStart = 84;
+console.log(`  Triangles: ${totalTriangles.toLocaleString()}, File: ${(stlBuf.length/1024/1024).toFixed(1)}MB`);
 
-const keptTriangles = [];
-for (let i = 0; i < totalTriangles; i += RATIO) {
-  const offset = dataStart + i * TRIANGLE_SIZE;
-  if (offset + TRIANGLE_SIZE > stlBuf.length) break;
-  keptTriangles.push(i);
+// ── 2. First pass: tính AABB toàn model ────────────────────────────────────
+let minX=Infinity,minY=Infinity,minZ=Infinity;
+let maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity;
+
+for (let i = 0; i < totalTriangles; i++) {
+  const base = dataStart + i * TRIANGLE_SIZE + 12;
+  for (let v = 0; v < 3; v++) {
+    const x = stlBuf.readFloatLE(base + v*12);
+    const y = stlBuf.readFloatLE(base + v*12 + 4);
+    const z = stlBuf.readFloatLE(base + v*12 + 8);
+    if (x<minX)minX=x; if (x>maxX)maxX=x;
+    if (y<minY)minY=y; if (y>maxY)maxY=y;
+    if (z<minZ)minZ=z; if (z>maxZ)maxZ=z;
+  }
 }
-console.log(`  Kept: ${keptTriangles.length.toLocaleString()} triangles`);
+const rangeX = maxX-minX, rangeY = maxY-minY, rangeZ = maxZ-minZ;
+console.log(`  AABB: ${rangeX.toFixed(1)} x ${rangeY.toFixed(1)} x ${rangeZ.toFixed(1)}`);
 
-// ── 3. Build vertex + index arrays ──────────────────────────────────────────
-// Mỗi triangle → 3 unique vertices (không weld để giữ flat shading)
+// ── 3. Spatial decimation: mỗi grid cell giữ 1 triangle (centroid đại diện) ─
+const cellMap = new Map(); // key → triangle index
+
+for (let i = 0; i < totalTriangles; i++) {
+  const base = dataStart + i * TRIANGLE_SIZE + 12;
+  // Tính centroid của triangle
+  let cx=0, cy=0, cz=0;
+  for (let v = 0; v < 3; v++) {
+    cx += stlBuf.readFloatLE(base + v*12);
+    cy += stlBuf.readFloatLE(base + v*12 + 4);
+    cz += stlBuf.readFloatLE(base + v*12 + 8);
+  }
+  cx /= 3; cy /= 3; cz /= 3;
+
+  // Map centroid → grid cell
+  const gx = Math.min(GRID-1, Math.floor((cx-minX)/rangeX * GRID));
+  const gy = Math.min(GRID-1, Math.floor((cy-minY)/rangeY * GRID));
+  const gz = Math.min(GRID-1, Math.floor((cz-minZ)/rangeZ * GRID));
+  const key = gx * GRID * GRID + gy * GRID + gz;
+
+  if (!cellMap.has(key)) cellMap.set(key, i);
+}
+
+const keptTriangles = Array.from(cellMap.values());
+console.log(`  Grid: ${GRID}^3 = ${(GRID**3).toLocaleString()} cells`);
+console.log(`  Kept: ${keptTriangles.length.toLocaleString()} triangles (${(keptTriangles.length/totalTriangles*100).toFixed(1)}%)`);
+
+// ── 4. Build vertex + index arrays ──────────────────────────────────────────
 const vertexCount = keptTriangles.length * 3;
 const positions = new Float32Array(vertexCount * 3);
 const indices = new Uint32Array(keptTriangles.length * 3);
 
+const cx2 = (minX+maxX)/2, cy2 = (minY+maxY)/2, cz2 = (minZ+maxZ)/2;
+const scale = 1 / Math.max(rangeX, rangeY, rangeZ);
+
 let vIdx = 0;
 keptTriangles.forEach((triIdx, i) => {
-  const base = dataStart + triIdx * TRIANGLE_SIZE + 12; // skip normal
+  const base = dataStart + triIdx * TRIANGLE_SIZE + 12;
   for (let v = 0; v < 3; v++) {
-    const vBase = base + v * 12;
-    positions[vIdx * 3]     = stlBuf.readFloatLE(vBase);
-    positions[vIdx * 3 + 1] = stlBuf.readFloatLE(vBase + 4);
-    positions[vIdx * 3 + 2] = stlBuf.readFloatLE(vBase + 8);
-    indices[i * 3 + v] = vIdx;
+    const x = stlBuf.readFloatLE(base + v*12);
+    const y = stlBuf.readFloatLE(base + v*12 + 4);
+    const z = stlBuf.readFloatLE(base + v*12 + 8);
+    positions[vIdx*3]   = (x - cx2) * scale;
+    positions[vIdx*3+1] = (y - cy2) * scale;
+    positions[vIdx*3+2] = (z - cz2) * scale;
+    indices[i*3+v] = vIdx;
     vIdx++;
   }
 });
 
-// ── 4. Compute AABB để center model ─────────────────────────────────────────
-let minX = Infinity, minY = Infinity, minZ = Infinity;
-let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
-for (let i = 0; i < positions.length; i += 3) {
-  if (positions[i]   < minX) minX = positions[i];
-  if (positions[i]   > maxX) maxX = positions[i];
-  if (positions[i+1] < minY) minY = positions[i+1];
-  if (positions[i+1] > maxY) maxY = positions[i+1];
-  if (positions[i+2] < minZ) minZ = positions[i+2];
-  if (positions[i+2] > maxZ) maxZ = positions[i+2];
-}
-const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2, cz = (minZ + maxZ) / 2;
-const scale = 1 / Math.max(maxX - minX, maxY - minY, maxZ - minZ);
-// Center + normalize to unit cube
-for (let i = 0; i < positions.length; i += 3) {
-  positions[i]   = (positions[i]   - cx) * scale;
-  positions[i+1] = (positions[i+1] - cy) * scale;
-  positions[i+2] = (positions[i+2] - cz) * scale;
-}
-
-// ── 5. Build GLB binary ──────────────────────────────────────────────────────
-const posBuffer   = Buffer.from(positions.buffer);
-const idxBuffer   = Buffer.from(indices.buffer);
-
-// Pad buffers to 4-byte boundary
-const pad = (len) => Math.ceil(len / 4) * 4;
+// ── 5. Build GLB ─────────────────────────────────────────────────────────────
+const posBuffer = Buffer.from(positions.buffer);
+const idxBuffer = Buffer.from(indices.buffer);
+const pad = (n) => Math.ceil(n/4)*4;
 const posPadded = pad(posBuffer.length);
 const idxPadded = pad(idxBuffer.length);
-const binaryChunkLen = posPadded + idxPadded;
-
-const posByteOffset = 0;
-const idxByteOffset = posPadded;
+const binaryLen = posPadded + idxPadded;
 
 const json = {
   asset: { version: '2.0', generator: 'stl-to-glb.mjs' },
@@ -97,76 +108,48 @@ const json = {
   nodes: [{ mesh: 0 }],
   meshes: [{
     name: path.basename(inputPath, '.stl'),
-    primitives: [{
-      attributes: { POSITION: 0 },
-      indices: 1,
-      mode: 4, // TRIANGLES
-    }],
+    primitives: [{ attributes: { POSITION: 0 }, indices: 1, mode: 4 }],
   }],
   accessors: [
     {
-      // POSITION
-      bufferView: 0,
-      componentType: 5126, // FLOAT
-      count: vertexCount,
-      type: 'VEC3',
-      min: [
-        parseFloat((minX - cx) * scale).toFixed(6) * 1,
-        parseFloat((minY - cy) * scale).toFixed(6) * 1,
-        parseFloat((minZ - cz) * scale).toFixed(6) * 1,
-      ],
-      max: [
-        parseFloat((maxX - cx) * scale).toFixed(6) * 1,
-        parseFloat((maxY - cy) * scale).toFixed(6) * 1,
-        parseFloat((maxZ - cz) * scale).toFixed(6) * 1,
-      ],
+      bufferView: 0, componentType: 5126, count: vertexCount, type: 'VEC3',
+      min: [-0.5,-0.5,-0.5], max: [0.5,0.5,0.5],
     },
     {
-      // INDICES
-      bufferView: 1,
-      componentType: 5125, // UNSIGNED_INT
-      count: keptTriangles.length * 3,
-      type: 'SCALAR',
+      bufferView: 1, componentType: 5125, count: keptTriangles.length*3, type: 'SCALAR',
     },
   ],
   bufferViews: [
-    { buffer: 0, byteOffset: posByteOffset, byteLength: posBuffer.length, target: 34962 }, // ARRAY_BUFFER
-    { buffer: 0, byteOffset: idxByteOffset, byteLength: idxBuffer.length, target: 34963 }, // ELEMENT_ARRAY_BUFFER
+    { buffer: 0, byteOffset: 0, byteLength: posBuffer.length, target: 34962 },
+    { buffer: 0, byteOffset: posPadded, byteLength: idxBuffer.length, target: 34963 },
   ],
-  buffers: [{ byteLength: binaryChunkLen }],
+  buffers: [{ byteLength: binaryLen }],
 };
 
 const jsonStr = JSON.stringify(json);
 const jsonBuf = Buffer.from(jsonStr, 'utf8');
 const jsonPadded = pad(jsonBuf.length);
-const jsonChunk = Buffer.alloc(jsonPadded, 0x20); // pad with spaces
+const jsonChunk = Buffer.alloc(jsonPadded, 0x20);
 jsonBuf.copy(jsonChunk);
 
-const binaryChunk = Buffer.alloc(binaryChunkLen, 0);
-posBuffer.copy(binaryChunk, posByteOffset);
-idxBuffer.copy(binaryChunk, idxByteOffset);
+const binaryChunk = Buffer.alloc(binaryLen, 0);
+posBuffer.copy(binaryChunk, 0);
+idxBuffer.copy(binaryChunk, posPadded);
 
-// GLB header + chunks
-const totalLen = 12 + 8 + jsonPadded + 8 + binaryChunkLen;
+const totalLen = 12 + 8 + jsonPadded + 8 + binaryLen;
 const out = Buffer.alloc(totalLen);
-let offset = 0;
-
-// Header
-out.writeUInt32LE(0x46546C67, offset); offset += 4; // magic 'glTF'
-out.writeUInt32LE(2, offset); offset += 4;          // version
-out.writeUInt32LE(totalLen, offset); offset += 4;   // total length
-
-// JSON chunk
-out.writeUInt32LE(jsonPadded, offset); offset += 4;
-out.writeUInt32LE(0x4E4F534A, offset); offset += 4; // 'JSON'
-jsonChunk.copy(out, offset); offset += jsonPadded;
-
-// Binary chunk
-out.writeUInt32LE(binaryChunkLen, offset); offset += 4;
-out.writeUInt32LE(0x004E4942, offset); offset += 4; // 'BIN\0'
-binaryChunk.copy(out, offset);
+let off = 0;
+out.writeUInt32LE(0x46546C67, off); off+=4;
+out.writeUInt32LE(2, off); off+=4;
+out.writeUInt32LE(totalLen, off); off+=4;
+out.writeUInt32LE(jsonPadded, off); off+=4;
+out.writeUInt32LE(0x4E4F534A, off); off+=4;
+jsonChunk.copy(out, off); off+=jsonPadded;
+out.writeUInt32LE(binaryLen, off); off+=4;
+out.writeUInt32LE(0x004E4942, off); off+=4;
+binaryChunk.copy(out, off);
 
 fs.writeFileSync(outputPath, out);
 console.log(`\nOutput: ${outputPath}`);
-console.log(`  Size: ${(out.length / 1024 / 1024).toFixed(2)} MB`);
+console.log(`  Size: ${(out.length/1024/1024).toFixed(2)} MB`);
 console.log('Done!');
