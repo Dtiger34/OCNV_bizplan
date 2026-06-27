@@ -8,9 +8,11 @@ coverage/
 apps/be/uploads/*
 !apps/be/uploads/.gitkeep
 
-# Large 3D model files
+# Large 3D model files — raw source, excluded from repo
 *.stl
 *.obj
 *.fbx
-*.glb
 *.gltf
+# GLB optimized for web — included if under public/models/
+*.glb
+!apps/fe/public/models/*.glb
