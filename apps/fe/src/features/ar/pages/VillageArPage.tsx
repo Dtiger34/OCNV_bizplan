@@ -1,63 +1,117 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { X, Smartphone, ScanLine, Info } from 'lucide-react';
+import { X, Smartphone, ScanLine, Info, Loader2 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { VILLAGES } from '@/features/villages/data/villages-static';
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'model-viewer': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & {
-          src?: string;
-          alt?: string;
-          ar?: boolean | string;
-          'ar-modes'?: string;
-          'camera-controls'?: boolean | string;
-          'auto-rotate'?: boolean | string;
-          'shadow-intensity'?: string;
-          'environment-image'?: string;
-          style?: React.CSSProperties;
-          poster?: string;
-        },
-        HTMLElement
-      >;
-    }
-  }
-}
-
-// Map slug → GLB model + target image
-const VILLAGE_AR: Record<string, { model: string; target: string; label: string }> = {
+// Map slug → assets
+const VILLAGE_AR: Record<string, { model: string; marker: string; label: string; target: string }> = {
   'lang-non': {
     model: '/models/lang-non.glb',
+    // marker = path prefix, AR.js sẽ tự append .fset/.fset3/.iset
+    marker: '/models/markers/lang-non',
     target: '/models/lang-non-target.jpg',
     label: 'Làng Nón Chuông',
   },
 };
 
+// AR.js + A-Frame được load qua CDN script trong index.html
+// Khai báo để TypeScript không báo lỗi
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'a-scene': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+        embedded?: boolean | string;
+        arjs?: string;
+        renderer?: string;
+        'vr-mode-ui'?: string;
+        'loading-screen'?: string;
+      }, HTMLElement>;
+      'a-nft': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+        type?: string;
+        url?: string;
+        smooth?: string;
+        smoothCount?: string;
+        smoothTolerance?: string;
+        smoothThreshold?: string;
+      }, HTMLElement>;
+      'a-entity': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+        'gltf-model'?: string;
+        scale?: string;
+        rotation?: string;
+        position?: string;
+        animation?: string;
+      }, HTMLElement>;
+      'a-camera': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
+
 export default function VillageArPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [scriptsLoaded, setScriptsLoaded] = useState(false);
   const [showGuide, setShowGuide] = useState(true);
+  const [markerFound, setMarkerFound] = useState(false);
+  const sceneRef = useRef<HTMLElement>(null);
 
   const village = VILLAGES.find((v) => v.slug === slug);
   const arAssets = VILLAGE_AR[slug ?? ''];
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
-  const isMobile = window.innerWidth < 1024;
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+  // Load AR.js + A-Frame scripts động — chỉ khi vào trang AR
+  useEffect(() => {
+    const existing = document.getElementById('aframe-script');
+    if (existing) { setScriptsLoaded(true); return; }
+
+    const aframe = document.createElement('script');
+    aframe.id = 'aframe-script';
+    aframe.src = 'https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js';
+    aframe.onload = () => {
+      const arjs = document.createElement('script');
+      arjs.id = 'arjs-script';
+      arjs.src = 'https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.5/aframe/build/aframe-ar-nft.js';
+      arjs.onload = () => setScriptsLoaded(true);
+      document.head.appendChild(arjs);
+    };
+    document.head.appendChild(aframe);
+
+    return () => {
+      // Không remove script — tránh reload khi navigate back
+    };
+  }, []);
+
+  // Lắng nghe event marker found/lost từ A-Frame
+  useEffect(() => {
+    if (!scriptsLoaded) return;
+    const scene = sceneRef.current;
+    if (!scene) return;
+
+    const onFound = () => setMarkerFound(true);
+    const onLost = () => setMarkerFound(false);
+
+    scene.addEventListener('markerFound', onFound);
+    scene.addEventListener('markerLost', onLost);
+    return () => {
+      scene.removeEventListener('markerFound', onFound);
+      scene.removeEventListener('markerLost', onLost);
+    };
+  }, [scriptsLoaded]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  // Slug không có model → fallback
+  // Slug không có model
   if (!arAssets) {
     return (
       <div className="min-h-screen bg-[#2C1A0E] flex flex-col items-center justify-center p-8 text-center gap-6">
         <ScanLine className="w-14 h-14 text-[#C9973A]" />
         <h1 className="text-2xl font-light text-white">AR chưa khả dụng</h1>
         <p className="text-sm text-[#9C8670] max-w-xs">
-          Mô hình 3D AR cho làng nghề này đang được chuẩn bị. Hiện chỉ có Làng Nón Chuông.
+          Mô hình 3D AR cho làng nghề này đang được chuẩn bị.
         </p>
         <Link
           to={`/villages/${slug}`}
@@ -78,13 +132,16 @@ export default function VillageArPage() {
           <p className="text-[10px] tracking-[0.3em] text-[#C9973A] uppercase">AR Trải Nghiệm</p>
           <h1 className="text-3xl font-light">{arAssets.label}</h1>
           <p className="text-sm text-[#9C8670] max-w-sm mx-auto leading-relaxed">
-            Quét mã QR bằng điện thoại để xem mô hình 3D diorama ngay trong không gian của bạn.
+            Quét mã QR bằng điện thoại, sau đó hướng camera vào mô hình diorama để xem mô hình 3D hiện ra.
           </p>
         </div>
         <div className="p-4 bg-white rounded-xl">
           <QRCodeSVG value={arUrl} size={200} />
         </div>
-        <p className="text-[10px] text-[#5C3D1E] tracking-widest">{arUrl}</p>
+        <div className="border border-[#5C3D1E] rounded-xl p-4 max-w-xs text-left space-y-2">
+          <p className="text-[10px] tracking-widest text-[#C9973A] uppercase mb-2">Ảnh cần quét</p>
+          <img src={arAssets.target} alt="target" className="w-full rounded-lg" />
+        </div>
         <button
           onClick={() => navigate(`/villages/${slug}`)}
           className="px-6 py-2.5 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm cursor-pointer transition-colors"
@@ -95,86 +152,109 @@ export default function VillageArPage() {
     );
   }
 
-  // Mobile → AR viewer
+  // Mobile → AR.js scene
   return (
-    <div className="relative w-screen h-screen bg-black overflow-hidden">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 to-transparent">
-        <div>
-          <p className="text-[9px] tracking-[0.25em] text-[#C9973A] uppercase">AR · Mô Hình 3D</p>
-          <p className="text-white text-sm font-medium leading-tight">{arAssets.label}</p>
+    <div className="relative w-screen h-screen overflow-hidden">
+      {/* Header overlay */}
+      <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+        <div className="pointer-events-auto">
+          <p className="text-[9px] tracking-[0.25em] text-[#C9973A] uppercase">AR · Image Tracking</p>
+          <p className="text-white text-sm font-medium">{arAssets.label}</p>
         </div>
         <button
           onClick={() => navigate(`/villages/${slug}`)}
-          className="w-9 h-9 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white"
+          className="pointer-events-auto w-9 h-9 bg-black/50 rounded-full flex items-center justify-center text-white"
         >
           <X size={18} />
         </button>
       </div>
 
-      {/* model-viewer */}
-      <model-viewer
-        src={arAssets.model}
-        alt={`Mô hình 3D ${arAssets.label}`}
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        camera-controls
-        auto-rotate
-        shadow-intensity="1"
-        style={{ width: '100%', height: '100%', background: '#1a0a00' }}
-      />
+      {/* Loading A-Frame */}
+      {!scriptsLoaded && (
+        <div className="absolute inset-0 z-40 bg-[#2C1A0E] flex flex-col items-center justify-center gap-4">
+          <Loader2 className="w-10 h-10 text-[#C9973A] animate-spin" />
+          <p className="text-[#9C8670] text-sm">Đang khởi động AR...</p>
+        </div>
+      )}
 
-      {/* Hướng dẫn quét */}
-      {showGuide && (
-        <div className="absolute bottom-20 left-4 right-4 z-20 bg-[#2C1A0E]/95 border border-[#C9973A]/60 rounded-xl p-4 space-y-3">
+      {/* A-Frame AR scene */}
+      {scriptsLoaded && (
+        // @ts-ignore — a-scene là custom element của A-Frame
+        <a-scene
+          ref={sceneRef}
+          embedded
+          arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+          renderer="logarithmicDepthBuffer: true; precision: medium;"
+          vr-mode-ui="enabled: false"
+          loading-screen="enabled: false"
+          style={{ width: '100vw', height: '100vh' }}
+        >
+          {/* NFT marker — nhận diện ảnh target */}
+          {/* @ts-ignore */}
+          <a-nft
+            type="nft"
+            url={arAssets.marker}
+            smooth="true"
+            smoothCount="10"
+            smoothTolerance="0.01"
+            smoothThreshold="5"
+          >
+            {/* Model 3D hiện đè lên marker */}
+            {/* @ts-ignore */}
+            <a-entity
+              gltf-model={arAssets.model}
+              scale="0.005 0.005 0.005"
+              rotation="-90 0 0"
+              position="0 0 0"
+              animation="property: rotation; to: -90 360 0; loop: true; dur: 8000; easing: linear"
+            />
+          </a-nft>
+
+          {/* @ts-ignore */}
+          <a-camera />
+        </a-scene>
+      )}
+
+      {/* Marker status indicator */}
+      {scriptsLoaded && (
+        <div className={`absolute top-16 left-1/2 -translate-x-1/2 z-30 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all ${
+          markerFound
+            ? 'bg-green-500/80 text-white'
+            : 'bg-black/60 text-[#C9973A]'
+        }`}>
+          {markerFound ? '✓ Đã nhận diện' : 'Hướng vào diorama'}
+        </div>
+      )}
+
+      {/* Hướng dẫn */}
+      {showGuide && scriptsLoaded && (
+        <div className="absolute bottom-6 left-4 right-4 z-30 bg-[#2C1A0E]/95 border border-[#C9973A]/60 rounded-xl p-4 space-y-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-2">
-              <Info size={14} className="text-[#C9973A] shrink-0 mt-0.5" />
-              <p className="text-[#F5EDD6] text-xs font-semibold">Cách xem AR</p>
+              <Info size={14} className="text-[#C9973A] shrink-0" />
+              <p className="text-[#F5EDD6] text-xs font-semibold">Cách dùng AR Image</p>
             </div>
-            <button
-              onClick={() => setShowGuide(false)}
-              className="text-[#9C8670] hover:text-[#F5EDD6]"
-            >
+            <button onClick={() => setShowGuide(false)} className="text-[#9C8670]">
               <X size={14} />
             </button>
           </div>
-
           <div className="flex items-start gap-3">
             <img
               src={arAssets.target}
               alt="target"
-              className="w-16 h-16 object-cover rounded-lg border border-[#C9973A]/40 shrink-0"
+              className="w-16 h-12 object-cover rounded-lg border border-[#C9973A]/40 shrink-0"
             />
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               <p className="text-[#C9B99A] text-[11px] leading-relaxed">
-                1. Nhấn nút <span className="text-[#C9973A] font-semibold">AR</span> phía dưới màn hình
+                Hướng camera vào mô hình diorama trông giống ảnh bên trái
               </p>
               <p className="text-[#C9B99A] text-[11px] leading-relaxed">
-                2. Hướng camera vào mô hình diorama trông như ảnh bên trái
-              </p>
-              <p className="text-[#C9B99A] text-[11px] leading-relaxed">
-                3. Mô hình 3D sẽ hiện ngay lên bề mặt phẳng phía trước
+                Mô hình 3D sẽ tự động hiện ra khi nhận diện được
               </p>
             </div>
           </div>
         </div>
       )}
-
-      {/* Bottom bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pb-5 pt-8 flex flex-col items-center gap-2 bg-gradient-to-t from-black/70 to-transparent">
-        {!showGuide && (
-          <button
-            onClick={() => setShowGuide(true)}
-            className="flex items-center gap-1.5 text-[10px] text-[#C9B99A] hover:text-[#F5EDD6] mb-1"
-          >
-            <Info size={11} /> Xem hướng dẫn
-          </button>
-        )}
-        <p className="text-[10px] text-[#9C8670] tracking-wide text-center px-6">
-          Xoay mô hình bằng cách vuốt · Nhấn nút AR để đặt vào không gian thực
-        </p>
-      </div>
     </div>
   );
 }
