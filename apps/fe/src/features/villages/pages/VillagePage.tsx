@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getVillage } from '../data/villages-static';
 
@@ -250,13 +250,24 @@ export default function VillagePage() {
         <h2 className="text-2xl font-light text-white mb-6">
           Tìm Hiểu Các Làng Nghề <span className="italic text-[#D4B896]">Khác</span>
         </h2>
-        <Link
-          to="/villages"
-          className="inline-flex items-center gap-2 px-6 py-3 border border-[#C9973A]/50 text-sm text-[#D4B896] hover:text-white hover:bg-[#C9973A]/10 rounded-sm transition-all duration-200"
-        >
-          Xem Tất Cả Làng Nghề
-          <ArrowRight size={14} />
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            to="/villages"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-[#C9973A]/50 text-sm text-[#D4B896] hover:text-white hover:bg-[#C9973A]/10 rounded-sm transition-all duration-200"
+          >
+            Xem Tất Cả Làng Nghề
+            <ArrowRight size={14} />
+          </Link>
+          {slug === 'lang-non' && (
+            <Link
+              to={`/villages/${slug}/ar`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"
+            >
+              <ScanLine size={16} />
+              Xem Mô Hình 3D · AR
+            </Link>
+          )}
+        </div>
       </section>
 
       {/* Lightbox */}
