@@ -103,11 +103,24 @@
 </div>
 
 <!-- AR.js + A-Frame -->
-<script src="https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.5/aframe/build/aframe-ar-nft.js"></script>
+<script>
+  // Hiện lỗi lên overlay nếu script CDN fail load
+  function showError(msg) {
+    document.getElementById('loading-text').textContent = msg;
+    document.getElementById('loading-text').style.color = '#f87171';
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js"
+  onerror="showError('Lỗi: Không load được A-Frame. Kiểm tra kết nối mạng.')"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.5/aframe/build/aframe-ar-nft.js"
+  onerror="showError('Lỗi: Không load được AR.js.')"></script>
 
 <script>
   window.addEventListener('load', function () {
+    if (typeof AFRAME === 'undefined') {
+      showError('A-Frame chưa load được. Thử reload trang.');
+      return;
+    }
     // Tạo scene sau khi A-Frame + AR.js đã load
     var scene = document.createElement('a-scene');
     scene.setAttribute('embedded', '');
@@ -141,10 +154,13 @@
 
     document.body.appendChild(scene);
 
-    // Ẩn overlay khi scene ready
+    // Ẩn overlay sau 4s dù scene có loaded hay không
     scene.addEventListener('loaded', function () {
       document.getElementById('overlay').classList.add('hidden');
     });
+    setTimeout(function () {
+      document.getElementById('overlay').classList.add('hidden');
+    }, 4000);
 
     // Marker found/lost
     nft.addEventListener('markerFound', function () {
