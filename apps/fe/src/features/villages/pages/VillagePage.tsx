@@ -258,7 +258,7 @@ export default function VillagePage() {
             Xem Tất Cả Làng Nghề
             <ArrowRight size={14} />
           </Link>
-          {slug === 'lang-non' && (
+          {slug === 'non-chuong' && (
             <Link
               to={`/villages/${slug}/ar`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"

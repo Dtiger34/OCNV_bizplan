@@ -6,9 +6,8 @@ import { VILLAGES } from '@/features/villages/data/villages-static';
 
 // Map slug → assets
 const VILLAGE_AR: Record<string, { model: string; marker: string; label: string; target: string }> = {
-  'lang-non': {
+  'non-chuong': {
     model: '/models/lang-non.glb',
-    // marker = path prefix, AR.js sẽ tự append .fset/.fset3/.iset
     marker: '/models/markers/lang-non',
     target: '/models/lang-non-target.jpg',
     label: 'Làng Nón Chuông',
