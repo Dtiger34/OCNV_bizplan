@@ -8,52 +8,47 @@ import { ProductCard as ApiProduct } from '@/types/api';
 
 const PLACEHOLDER = 'https://placehold.co/400x400?text=OCNV';
 
+const PRICE_RANGES = [
+  { label: 'Tất cả', min: undefined as number | undefined, max: undefined as number | undefined },
+  { label: 'Dưới 100.000₫', min: undefined, max: 100000 },
+  { label: '100.000 – 300.000₫', min: 100000, max: 300000 },
+  { label: '300.000 – 500.000₫', min: 300000, max: 500000 },
+  { label: 'Trên 500.000₫', min: 500000, max: undefined },
+];
+
+const CATEGORIES = ['Tất cả', 'Mô hình', 'Thẻ flashcard', 'Tranh ghép'];
+
 function getStockStatus(stock: number): 'in_stock' | 'low_stock' | 'out_of_stock' {
   if (stock === 0) return 'out_of_stock';
   if (stock <= 3) return 'low_stock';
   return 'in_stock';
 }
 
-export default function ShopPage() {
-  const { addToCart } = useCart();
-  const navigate = useNavigate();
+interface SidebarProps {
+  searchInput: string;
+  onSearchInputChange: (v: string) => void;
+  onSearch: () => void;
+  minInput: string;
+  maxInput: string;
+  onMinInputChange: (v: string) => void;
+  onMaxInputChange: (v: string) => void;
+  onPriceFilter: () => void;
+  onReset: () => void;
+  minPrice: number | undefined;
+  maxPrice: number | undefined;
+  onPriceRangeSelect: (min: number | undefined, max: number | undefined) => void;
+  activeCategory: string;
+  onCategorySelect: (cat: string) => void;
+}
 
-  const [searchInput, setSearchInput] = useState('');
-  const [search, setSearch] = useState('');
-  const [minPrice, setMinPrice] = useState<number | undefined>();
-  const [maxPrice, setMaxPrice] = useState<number | undefined>();
-  const [minInput, setMinInput] = useState('');
-  const [maxInput, setMaxInput] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const { data, isLoading } = useProducts({ search: search || undefined, minPrice, maxPrice, limit: 50 });
-  const products = data?.items ?? [];
-
-  const handleSearch = () => setSearch(searchInput);
-  const handlePriceFilter = () => {
-    setMinPrice(minInput ? Number(minInput) : undefined);
-    setMaxPrice(maxInput ? Number(maxInput) : undefined);
-  };
-  const handleReset = () => {
-    setSearchInput(''); setSearch('');
-    setMinInput(''); setMaxInput('');
-    setMinPrice(undefined); setMaxPrice(undefined);
-  };
-
-  const PRICE_RANGES = [
-    { label: 'Tất cả', min: undefined, max: undefined },
-    { label: 'Dưới 100.000₫', min: undefined, max: 100000 },
-    { label: '100.000 – 300.000₫', min: 100000, max: 300000 },
-    { label: '300.000 – 500.000₫', min: 300000, max: 500000 },
-    { label: 'Trên 500.000₫', min: 500000, max: undefined },
-  ];
-
-  const handleAddToCart = useCallback((p: ApiProduct) => {
-    addToCart({ id: p._id, name: p.name.vi, price: p.price, image: p.mainImageUrl ?? PLACEHOLDER, material: '', origin: p.village?.name?.vi ?? 'OCNV' });
-    toast.success('Đã thêm vào giỏ hàng!');
-  }, [addToCart]);
-
-  const Sidebar = () => (
+function ShopSidebar({
+  searchInput, onSearchInputChange, onSearch,
+  minInput, maxInput, onMinInputChange, onMaxInputChange,
+  onPriceFilter, onReset,
+  minPrice, maxPrice, onPriceRangeSelect,
+  activeCategory, onCategorySelect,
+}: SidebarProps) {
+  return (
     <div className="space-y-6">
       {/* Search */}
       <div>
@@ -64,15 +59,37 @@ export default function ShopPage() {
             type="text"
             placeholder="Tên sản phẩm..."
             value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            onChange={(e) => onSearchInputChange(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && onSearch()}
             className="w-full pl-8 pr-3 h-9 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
         </div>
-        <button onClick={handleSearch}
+        <button onClick={onSearch}
           className="mt-2 w-full h-9 bg-[#5C3D1E] text-[#F5EDD6] text-xs font-bold uppercase rounded-sm hover:bg-[#7A5230] transition-colors cursor-pointer">
           Tìm kiếm
         </button>
+      </div>
+
+      <div className="h-[1px] bg-[#D4B896]/40" />
+
+      {/* Category */}
+      <div>
+        <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Danh mục</h3>
+        <div className="space-y-1.5">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => onCategorySelect(cat)}
+              className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
+                activeCategory === cat
+                  ? 'bg-[#5C3D1E] text-[#F5EDD6] font-semibold'
+                  : 'text-[#5C3D1E] hover:bg-[#EDE3CE]'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="h-[1px] bg-[#D4B896]/40" />
@@ -86,8 +103,10 @@ export default function ShopPage() {
             return (
               <button
                 key={range.label}
-                onClick={() => { setMinPrice(range.min); setMaxPrice(range.max); setMinInput(range.min?.toString() ?? ''); setMaxInput(range.max?.toString() ?? ''); }}
-                className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${active ? 'bg-[#5C3D1E] text-[#F5EDD6] font-semibold' : 'text-[#5C3D1E] hover:bg-[#EDE3CE]'}`}
+                onClick={() => onPriceRangeSelect(range.min, range.max)}
+                className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
+                  active ? 'bg-[#5C3D1E] text-[#F5EDD6] font-semibold' : 'text-[#5C3D1E] hover:bg-[#EDE3CE]'
+                }`}
               >
                 {range.label}
               </button>
@@ -103,22 +122,24 @@ export default function ShopPage() {
         <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Nhập khoảng giá</h3>
         <div className="flex gap-2 items-center">
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             placeholder="Từ"
             value={minInput}
-            onChange={(e) => setMinInput(e.target.value)}
+            onChange={(e) => onMinInputChange(e.target.value.replace(/\D/g, ''))}
             className="w-full h-9 px-2 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
           <span className="text-[#9C8670] shrink-0">–</span>
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             placeholder="Đến"
             value={maxInput}
-            onChange={(e) => setMaxInput(e.target.value)}
+            onChange={(e) => onMaxInputChange(e.target.value.replace(/\D/g, ''))}
             className="w-full h-9 px-2 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
         </div>
-        <button onClick={handlePriceFilter}
+        <button onClick={onPriceFilter}
           className="mt-2 w-full h-9 border border-[#5C3D1E] text-[#5C3D1E] text-xs font-bold uppercase rounded-sm hover:bg-[#5C3D1E] hover:text-[#F5EDD6] transition-colors cursor-pointer">
           Áp dụng
         </button>
@@ -126,12 +147,63 @@ export default function ShopPage() {
 
       <div className="h-[1px] bg-[#D4B896]/40" />
 
-      <button onClick={handleReset}
+      <button onClick={onReset}
         className="w-full h-9 text-xs text-[#9C8670] hover:text-[#7B1C2E] transition-colors cursor-pointer">
         Xoá bộ lọc
       </button>
     </div>
   );
+}
+
+export default function ShopPage() {
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const [searchInput, setSearchInput] = useState('');
+  const [search, setSearch] = useState('');
+  const [minPrice, setMinPrice] = useState<number | undefined>();
+  const [maxPrice, setMaxPrice] = useState<number | undefined>();
+  const [minInput, setMinInput] = useState('');
+  const [maxInput, setMaxInput] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('Tất cả');
+
+  const { data, isLoading } = useProducts({ search: search || undefined, minPrice, maxPrice, limit: 50 });
+  const allProducts = data?.items ?? [];
+
+  const products = activeCategory === 'Tất cả'
+    ? allProducts
+    : allProducts.filter((p) => {
+        const name = p.name?.vi?.toLowerCase() ?? '';
+        const cat = activeCategory.toLowerCase();
+        return name.includes(cat);
+      });
+
+  const handleSearch = () => setSearch(searchInput);
+
+  const handlePriceFilter = () => {
+    setMinPrice(minInput ? Number(minInput) : undefined);
+    setMaxPrice(maxInput ? Number(maxInput) : undefined);
+  };
+
+  const handlePriceRangeSelect = (min: number | undefined, max: number | undefined) => {
+    setMinPrice(min);
+    setMaxPrice(max);
+    setMinInput(min?.toString() ?? '');
+    setMaxInput(max?.toString() ?? '');
+  };
+
+  const handleReset = () => {
+    setSearchInput(''); setSearch('');
+    setMinInput(''); setMaxInput('');
+    setMinPrice(undefined); setMaxPrice(undefined);
+    setActiveCategory('Tất cả');
+  };
+
+  const handleAddToCart = useCallback((p: ApiProduct) => {
+    addToCart({ id: p._id, name: p.name.vi, price: p.price, image: p.mainImageUrl ?? PLACEHOLDER, material: '', origin: p.village?.name?.vi ?? 'OCNV' });
+    toast.success('Đã thêm vào giỏ hàng!');
+  }, [addToCart]);
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-8">
@@ -151,7 +223,22 @@ export default function ShopPage() {
             <h2 className="hidden md:block text-sm font-bold text-[#2C1A0E] mb-4 pb-2 border-b border-[#D4B896]/40">
               Tìm kiếm & Lọc
             </h2>
-            <Sidebar />
+            <ShopSidebar
+              searchInput={searchInput}
+              onSearchInputChange={setSearchInput}
+              onSearch={handleSearch}
+              minInput={minInput}
+              maxInput={maxInput}
+              onMinInputChange={setMinInput}
+              onMaxInputChange={setMaxInput}
+              onPriceFilter={handlePriceFilter}
+              onReset={handleReset}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onPriceRangeSelect={handlePriceRangeSelect}
+              activeCategory={activeCategory}
+              onCategorySelect={setActiveCategory}
+            />
           </div>
         </aside>
 

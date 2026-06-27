@@ -19,8 +19,7 @@ export const articles: Article[] = [
     title: 'Bát Tràng: 700 năm hồn đất nung trên đôi bàn tay nghệ nhân',
     excerpt:
       'Làng gốm Bát Tràng không chỉ là nơi sản xuất gốm sứ — đó là nơi ký ức của cả một dòng tộc được in lên từng mảnh đất sét.',
-    image:
-      'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=1200&q=80',
+    image: '/image/lang-gom.jpg',
     content: {
       lead: 'Nằm bên bờ sông Hồng, cách trung tâm Hà Nội chừng 15 km về phía đông nam, làng gốm Bát Tràng đã tồn tại và phát triển suốt hơn 700 năm. Nơi đây không chỉ là làng nghề — đó là bảo tàng sống nơi mỗi lò nung, mỗi vòng bàn xoay đều chứa đựng câu chuyện của nhiều thế hệ nghệ nhân.',
       sections: [
@@ -46,8 +45,7 @@ export const articles: Article[] = [
     title: 'AR và di sản: Khi công nghệ thổi hồn vào tiểu cảnh 3D',
     excerpt:
       'Ứng dụng AR cho phép người dùng nhìn thấy nghệ nhân đang làm việc ngay trên mô hình thu nhỏ trong lòng bàn tay.',
-    image:
-      'https://images.unsplash.com/photo-1581428982868-e410dd047a90?auto=format&fit=crop&w=1200&q=80',
+    image: '/image/anh-cau-chuyen-lang-nghe.jpg',
     content: {
       lead: 'Augmented Reality (AR) — công nghệ thực tế tăng cường — đang mở ra một chương mới cho việc bảo tồn và lan tỏa di sản văn hóa. Tại Nghề Xưa Nét Mới, chúng tôi tin rằng một hộp tiểu cảnh không chỉ là vật trang trí — đó là cánh cổng dẫn vào một thế giới khác.',
       sections: [
@@ -73,8 +71,7 @@ export const articles: Article[] = [
     title: 'Vạn Phúc: Sống lại nghề dệt lụa qua từng ô kính diorama',
     excerpt:
       'Mỗi hộp tiểu cảnh Vạn Phúc là một lát cắt của làng nghề dệt lụa nghìn năm — nơi đường tơ óng ả hòa quyện với ký ức thời gian.',
-    image:
-      'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80',
+    image: '/image/lang-lua.jpg',
     content: {
       lead: 'Làng lụa Vạn Phúc, Hà Đông đã dệt nên lịch sử hơn một nghìn năm. Những sấp lụa óng ả từng khoác lên mình vua chúa triều Nguyễn nay được tái hiện trong từng ô kính diorama thu nhỏ — nơi thời gian dường như đứng lại.',
       sections: [

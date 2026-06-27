@@ -5,7 +5,7 @@ import HeroBanner from '../components/HeroBanner';
 import CategoryTiles from '../components/CategoryTiles';
 import ProductCard, { Product } from '../components/ProductCard';
 import { useCart } from '@/context/CartContext';
-import { X, Calendar, MapPin, Award, ArrowRight, Star, ShieldCheck, Truck, Clock } from 'lucide-react';
+import { X, Calendar, MapPin, Award, ArrowRight, Star, ShieldCheck, Truck } from 'lucide-react';
 import { useFeaturedProducts } from '../../products/hooks/useProducts';
 
 const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
@@ -82,11 +82,9 @@ export default function HomePage() {
           DI SẢN
         </div>
 
-        {/* Ink seal */}
-        <div className="hidden md:flex absolute right-8 md:right-16 top-10 md:top-12 bg-[#7B1C2E]/5 rounded-full border border-[#7B1C2E]/25 w-24 h-24 flex-col items-center justify-center text-[8px] font-bold text-[#7B1C2E]/50 uppercase tracking-[0.18em] rotate-12 pointer-events-none select-none animate-spin-slow">
-          <span>NGHỀ XƯA</span>
-          <span>NÉT MỚI</span>
-          <span className="text-[6px] border-t border-[#7B1C2E]/30 mt-0.5 pt-0.5">ẤN KÝ</span>
+        {/* Logo seal */}
+        <div className="hidden md:flex absolute right-8 md:right-16 top-10 md:top-12 w-24 h-24 rounded-full overflow-hidden border border-[#7B1C2E]/25 rotate-12 pointer-events-none select-none">
+          <img src="/image/logo_new.jpg" alt="Logo Nghề Xưa Nét Mới" className="w-full h-full object-cover" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 md:px-8 max-w-5xl space-y-12">
@@ -153,7 +151,7 @@ export default function HomePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
           {[
             { value: '5+', label: 'Làng nghề được tái hiện', icon: <MapPin size={20} className="text-[#C9973A]" /> },
-            { value: '1.200+', label: 'Đơn hàng thành công', icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
+            { value: '1 năm', label: 'Bảo hành sản phẩm', icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
             { value: '98%', label: 'Khách hàng hài lòng', icon: <Star size={20} className="text-[#C9973A]" /> },
             { value: '2-5 ngày', label: 'Giao hàng toàn quốc', icon: <Truck size={20} className="text-[#C9973A]" /> },
           ].map((stat) => (
@@ -165,28 +163,12 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6 border-t border-b border-[#D4B896]/30 reveal">
-          {[
-            { icon: <ShieldCheck size={18} className="text-[#C9973A]" />, text: 'Bảo hành 1 năm' },
-            { icon: <Truck size={18} className="text-[#C9973A]" />, text: 'Miễn phí vận chuyển từ 800K' },
-            { icon: <Clock size={18} className="text-[#C9973A]" />, text: 'Đặt làm theo yêu cầu 3-5 tuần' },
-            { icon: <Award size={18} className="text-[#C9973A]" />, text: 'Nghệ nhân thủ công xác nhận' },
-          ].map((b) => (
-            <div key={b.text} className="flex items-center gap-2 text-[12px] font-semibold text-[#5C3D1E] tracking-wide">
-              {b.icon}
-              {b.text}
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* Ornamental Divider */}
+      {/* Logo Divider */}
       <div className="container mx-auto px-6 md:px-8 py-4 flex items-center justify-center gap-4 reveal">
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#C9973A]/40" />
-        <svg className="w-8 h-8 text-[#C9973A]" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C9.5 5 9.5 8 12 11c2.5-3 2.5-6 0-9z M6 7c-2 2-2 4.5 0 6.5 2-2 2-4.5 0-6.5z M18 7c2 2 2 4.5 0 6.5-2-2-2-4.5 0-6.5z M3 14c-1.5 1.5-1.5 3.5 0 5 1.5-1.5 1.5-3.5 0-5z M21 14c1.5 1.5 1.5 3.5 0 5-1.5-1.5-1.5-3.5 0-5z M12 13c-3.5 1-4.5 4-4.5 7h9c0-3-1-6-4.5-7z" />
-        </svg>
+        <img src="/image/logo_new.jpg" alt="Nghề Xưa Nét Mới" className="w-10 h-10 rounded-full object-cover border border-[#C9973A]/40" />
         <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#C9973A]/40" />
       </div>
 

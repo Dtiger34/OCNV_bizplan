@@ -279,14 +279,14 @@ export default function CheckoutPage() {
                   className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Quận / Huyện</label>
-                <input type="text" placeholder="Ba Đình" value={district}
+                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Quận / Huyện *</label>
+                <input type="text" required placeholder="Ba Đình" value={district}
                   onChange={(e) => setDistrict(e.target.value)}
                   className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Phường / Xã</label>
-                <input type="text" placeholder="Quán Thánh" value={ward}
+                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Phường / Xã *</label>
+                <input type="text" required placeholder="Quán Thánh" value={ward}
                   onChange={(e) => setWard(e.target.value)}
                   className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>

@@ -14,7 +14,7 @@ export default function VillagesListPage() {
         <div
           className="absolute inset-0 bg-cover bg-center scale-105"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=1920&q=80')`,
+            backgroundImage: `url('/image/anh-cau-chuyen-lang-nghe.jpg')`,
             filter: 'brightness(0.3)',
           }}
         />

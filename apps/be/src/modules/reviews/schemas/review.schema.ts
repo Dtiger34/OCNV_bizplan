@@ -6,14 +6,17 @@ export type ReviewDocument = Review & Document;
 
 @Schema({ timestamps: true, collection: 'reviews' })
 export class Review {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true, index: true })
-  userId: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: 'User', index: true })
+  userId?: Types.ObjectId;
+
+  @Prop()
+  guestName?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Product', required: true, index: true })
   productId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Order', required: true })
-  orderId: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: 'Order' })
+  orderId?: Types.ObjectId;
 
   @Prop({ required: true, min: 1, max: 5 })
   rating: number;
@@ -32,4 +35,4 @@ export class Review {
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);
-ReviewSchema.index({ userId: 1, productId: 1, orderId: 1 }, { unique: true });
+ReviewSchema.index({ userId: 1, productId: 1 }, { unique: true, sparse: true });

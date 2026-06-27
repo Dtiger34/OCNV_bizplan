@@ -3,9 +3,15 @@ import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateReviewDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  orderId!: string;
+  orderId?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  guestName?: string;
 
   @ApiProperty({ minimum: 1, maximum: 5 })
   @IsNumber()
@@ -14,9 +20,9 @@ export class CreateReviewDto {
   @Type(() => Number)
   rating!: number;
 
-  @ApiProperty({ minLength: 10 })
+  @ApiProperty({ minLength: 1 })
   @IsString()
-  @MinLength(10)
+  @MinLength(1)
   content!: string;
 
   @ApiPropertyOptional({ type: [String] })

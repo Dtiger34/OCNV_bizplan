@@ -28,11 +28,11 @@ export default function Footer() {
           <div className="space-y-2 pt-2 text-[#C9B99A] text-sm">
             <div className="flex items-center gap-2.5">
               <MapPin size={15} className="text-[#C9973A]" />
-              <span>Phân xưởng Nghề Xưa Nét Mới, Tràng Tiền, Hoàn Kiếm, Hà Nội</span>
+              <span>Khu Ngoại Giao Đoàn, Xuân Đỉnh, Từ Liêm, Hà Nội, Việt Nam</span>
             </div>
             <div className="flex items-center gap-2.5">
               <Phone size={15} className="text-[#C9973A]" />
-              <span>+84 1900 8888</span>
+              <span>+84 865 963 234</span>
             </div>
           </div>
         </div>
@@ -65,8 +65,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/villages/phu-vinh" className="hover:text-[#C9973A] transition-colors block">
-                  Làng tre Phú Vinh
+                <a href="/villages/chang-son" className="hover:text-[#C9973A] transition-colors block">
+                  Làng Quạt Chàng Sơn
                 </a>
               </li>
             </ul>
@@ -87,12 +87,7 @@ export default function Footer() {
                   Bảo Hành Mô Hình (1 Năm)
                 </a>
               </li>
-              <li>
-                <a href="/pages/che-tac" className="hover:text-[#C9973A] transition-colors block">
-                  Đặt Làm Theo Yêu Cầu
-                </a>
-              </li>
-              <li>
+<li>
                 <a href="/pages/faq" className="hover:text-[#C9973A] transition-colors block">
                   Hỏi Đáp Điển Lệ
                 </a>
@@ -151,7 +146,7 @@ export default function Footer() {
         {/* Social Icons (Thin line symbols) */}
         <div className="flex gap-4">
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/NgheXuaNetMoi"
             target="_blank"
             rel="noreferrer"
             className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#F5EDD6] hover:border-[#C9973A]/40 transition-colors"
@@ -161,15 +156,13 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="https://instagram.com"
+            href="https://www.tiktok.com/@nghexuanetmoi"
             target="_blank"
             rel="noreferrer"
             className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#F5EDD6] hover:border-[#C9973A]/40 transition-colors"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/>
             </svg>
           </a>
         </div>

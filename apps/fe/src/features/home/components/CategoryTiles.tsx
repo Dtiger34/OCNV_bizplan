@@ -6,6 +6,7 @@ interface Category {
   count: string;
   image: string;
   description: string;
+  imageFit?: 'cover' | 'contain';
 }
 
 interface CategoryTilesProps {
@@ -22,6 +23,7 @@ function CategoryCard({
   layoutClass: string;
   onSelectCategory?: (categoryName: string) => void;
 }) {
+  const fit = cat.imageFit ?? 'cover';
   return (
     <motion.div
       onClick={() => onSelectCategory?.(cat.name)}
@@ -29,13 +31,11 @@ function CategoryCard({
       transition={{ duration: 0.25, ease: 'easeOut' }}
       className={`group relative overflow-hidden rounded-[4px] border border-[#D4B896]/60 hover:border-[#C9973A] cursor-pointer shadow-sm ${layoutClass}`}
     >
-      {/* Background Image: Dimmed initially, brightens on hover */}
+      {/* Background Image */}
       <motion.div
-        className="absolute inset-0 bg-cover bg-center filter brightness-[0.75] group-hover:brightness-[0.95]"
-        style={{ 
-          backgroundImage: `url('${cat.image}')`,
-        }}
-        whileHover={{ scale: 1.05 }}
+        className={`absolute inset-0 filter brightness-[0.75] group-hover:brightness-[0.95] ${fit === 'contain' ? 'bg-[#1a0a04] bg-contain bg-center bg-no-repeat' : 'bg-cover bg-center'}`}
+        style={{ backgroundImage: `url('${cat.image}')` }}
+        whileHover={{ scale: fit === 'cover' ? 1.05 : 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       />
       
@@ -44,10 +44,6 @@ function CategoryCard({
 
       {/* Content overlay */}
       <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-3 pointer-events-none select-none">
-        <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
-          {cat.count}
-        </span>
-        
         <h3 className="text-3xl font-bold text-[#F5EDD6] leading-tight group-hover:text-white transition-colors uppercase tracking-wider">
           {cat.name}
         </h3>
@@ -69,40 +65,53 @@ export default function CategoryTiles({ onSelectCategory }: CategoryTilesProps) 
   const categories: Category[] = [
     {
       id: 'hop-lang-gom',
-      name: 'Hộp Làng Gốm',
+      name: 'Làng Gốm',
       count: '12 Mô Hình',
-      image: 'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80',
+      image: '/image/lang-gom.jpg',
       description: 'Mô phỏng chân thực nghệ nhân xoay gốm trên bàn xoay thủ công và lò nung gạch cổ Bát Tràng.'
     },
     {
       id: 'hop-lang-lua',
-      name: 'Hộp Làng Lụa',
+      name: 'Làng Lụa',
       count: '8 Mô Hình',
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
+      image: '/image/lang-lua.jpg',
       description: 'Lớp dệt cửi tơ tằm óng ả và các sấp lụa Vạn Phúc rực rỡ sắc màu được mô phỏng sinh động.'
     },
     {
       id: 'hop-lang-non',
-      name: 'Hộp Làng Nón',
+      name: 'Làng Nón',
       count: '6 Mô Hình',
-      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=600&q=80',
+      image: '/image/lang-non.webp',
       description: 'Tái hiện không gian phơi lá cọ non trắng muốt và quá trình nghệ nhân khâu nón Chuông tỉ mỉ.'
     },
     {
       id: 'hop-lang-huong',
-      name: 'Hộp Làng Hương',
+      name: 'Làng Hương',
       count: '9 Mô Hình',
-      image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=600&q=80',
-      description: 'Tái hiện sân phơi hương Quảng Phú Cầu đỏ rực rỡ tựa như những đóa hoa khổng lồ nở rộ.'
+      image: '/image/lang-huong.webp',
+      description: 'Tái hiện sân phơi hương Quảng Phú Cầu đỏ rực rỡ tựa như những đóa hoa khổng lồ nở rộ.',
+    },
+    {
+      id: 'hop-lang-quat',
+      name: 'Làng Quạt',
+      count: '5 Mô Hình',
+      image: '/image/lang-quat.jpg',
+      description: 'Tái hiện nghề làm quạt truyền thống Chàng Sơn — nơi từng nan tre, từng nét vẽ đều chứa đựng tâm huyết nghệ nhân.'
     }
   ];
 
-  // Staggered layout configurations
+  // Layout fit với tỉ lệ ảnh thực tế:
+  // Gốm 800x532 (3:2 ngang) — rộng 2 col, cao vừa
+  // Lụa 1080x1440 (3:4 dọc) — 1 col, cao hơn
+  // Nón 1200x809 (3:2 ngang) — 1 col, cao vừa
+  // Hương 660x440 (3:2 ngang) — 2 col, cao vừa
+  // Quạt 642x482 (4:3 ngang) — full 3 col, cao vừa
   const layoutStyles = [
-    "col-span-1 md:col-span-2 h-[420px] md:h-[480px]",
-    "col-span-1 h-[360px] md:h-[400px] md:translate-y-8",
-    "col-span-1 h-[360px] md:h-[400px] md:-translate-y-4",
-    "col-span-1 md:col-span-2 h-[320px] md:h-[360px] md:translate-y-4"
+    "col-span-1 md:col-span-2 h-[340px] md:h-[380px]",
+    "col-span-1 h-[340px] md:h-[380px]",
+    "col-span-1 h-[280px] md:h-[300px]",
+    "col-span-1 md:col-span-2 h-[280px] md:h-[300px]",
+    "col-span-1 md:col-span-3 h-[260px] md:h-[280px]"
   ];
 
   return (

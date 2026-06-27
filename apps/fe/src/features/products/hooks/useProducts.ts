@@ -64,7 +64,7 @@ export function useProductReviews(id: string, page = 1, limit = 10) {
 export function useCreateReview(productId: string) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (data: { rating: number; content: string }) => {
+    mutationFn: async (data: { rating: number; content: string; guestName?: string }) => {
       const res = await apiClient.post(`/products/${productId}/reviews`, data);
       return res.data.data;
     },

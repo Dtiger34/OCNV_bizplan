@@ -1,19 +1,17 @@
-import { Injectable, NotFoundException, ConflictException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ProductsRepository } from './products.repository';
 import { Review, ReviewDocument } from '../reviews/schemas/review.schema';
-import { Order, OrderDocument } from '../orders/schemas/order.schema';
 import { GetProductsQueryDto } from './dto/get-products-query.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
-import { ReviewStatus, OrderStatus } from '../../common/enums';
+import { ReviewStatus } from '../../common/enums';
 
 @Injectable()
 export class ProductsService {
   constructor(
     private readonly productsRepository: ProductsRepository,
     @InjectModel(Review.name) private readonly reviewModel: Model<ReviewDocument>,
-    @InjectModel(Order.name) private readonly orderModel: Model<OrderDocument>,
   ) {}
 
   async findAll(query: GetProductsQueryDto): Promise<unknown> {
@@ -55,40 +53,21 @@ export class ProductsService {
     return { items: data, total, page, limit };
   }
 
-  async createReview(productId: string, userId: string, dto: CreateReviewDto): Promise<unknown> {
+  async createReview(productId: string, userId: string | undefined, dto: CreateReviewDto): Promise<unknown> {
     const product = await this.productsRepository.findById(productId);
     if (!product) {
       throw new NotFoundException({ error: 'NOT_FOUND', message: 'Sản phẩm không tồn tại.' });
     }
 
-    const purchasedOrder = await this.orderModel.findOne({
-      userId: new Types.ObjectId(userId),
-      status: OrderStatus.DELIVERED,
-      'items.productId': new Types.ObjectId(productId),
-    }).exec();
-
-    if (!purchasedOrder) {
-      throw new ForbiddenException({
-        error: 'FORBIDDEN',
-        message: 'Bạn cần mua sản phẩm này trước khi đánh giá.',
-      });
-    }
-
-    const existingReview = await this.reviewModel.findOne({
+    const review = await this.reviewModel.create({
       productId: new Types.ObjectId(productId),
-      userId: new Types.ObjectId(userId),
-    }).exec();
-
-    if (existingReview) {
-      throw new ConflictException({ error: 'CONFLICT', message: 'Bạn đã đánh giá sản phẩm này rồi.' });
-    }
-
-    return this.reviewModel.create({
-      productId: new Types.ObjectId(productId),
-      userId: new Types.ObjectId(userId),
+      ...(userId ? { userId: new Types.ObjectId(userId) } : {}),
+      guestName: dto.guestName,
       rating: dto.rating,
       content: dto.content,
-      status: ReviewStatus.PENDING,
+      status: ReviewStatus.APPROVED,
     });
+
+    return { success: true, data: review };
   }
 }

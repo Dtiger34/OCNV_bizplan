@@ -62,14 +62,13 @@ export class ProductsController {
     return { success: true, data };
   }
 
-  @ApiBearerAuth()
+  @Public()
   @Post(':id/reviews')
-  @ApiOperation({ summary: 'Create a review for a product' })
+  @ApiOperation({ summary: 'Create a review for a product (guest or user)' })
   async createReview(
     @Param('id') id: string,
-    @CurrentUser() user: { userId: string },
     @Body() dto: CreateReviewDto,
   ) {
-    return this.productsService.createReview(id, user.userId, dto);
+    return this.productsService.createReview(id, undefined, dto);
   }
 }
