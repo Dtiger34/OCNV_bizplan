@@ -259,13 +259,13 @@ export default function VillagePage() {
             <ArrowRight size={14} />
           </Link>
           {slug === 'non-chuong' && (
-            <Link
-              to={`/villages/${slug}/ar`}
+            <a
+              href="/ar-non-chuong.html"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"
             >
               <ScanLine size={16} />
               Xem Mô Hình 3D · AR
-            </Link>
+            </a>
           )}
         </div>
       </section>
