@@ -102,7 +102,7 @@
 <div id="loading-bar"><div id="loading-bar-fill"></div></div>
 <div id="loading-overlay">
   <div class="spin"></div>
-  <span>Đang tải mô hình 3D...</span>
+  <span id="load-text">Đang tải mô hình 3D... (22MB)</span>
 </div>
 
 <div id="header">
@@ -117,6 +117,7 @@
   id="viewer"
   src="/models/lang-non.glb"
   alt="Mô hình 3D Làng Nón Chuông"
+  poster="/models/lang-non-target.jpg"
   ar
   ar-modes="webxr scene-viewer quick-look"
   camera-controls
@@ -126,6 +127,7 @@
   environment-image="neutral"
   ar-button-style="none"
   loading="eager"
+  reveal="auto"
 >
   <!-- Nút AR tuỳ chỉnh -->
   <button id="ar-button" slot="ar-button">
@@ -183,6 +185,7 @@
   viewer.addEventListener('progress', function(e) {
     var pct = Math.round(e.detail.totalProgress * 100);
     fill.style.width = pct + '%';
+    document.getElementById('load-text').textContent = 'Đang tải mô hình 3D... ' + pct + '%';
   });
 
   // Ẩn overlay khi load xong
