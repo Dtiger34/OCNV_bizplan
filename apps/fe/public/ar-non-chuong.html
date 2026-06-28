@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>AR · Làng Nón Chuông</title>
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #1a0a00; overflow: hidden; font-family: sans-serif; height: 100dvh; display: flex; flex-direction: column; }
@@ -72,9 +72,38 @@
       border-radius: 12px; padding: 14px; text-align: center;
       color: #9C8670; font-size: 12px; line-height: 1.6;
     }
+
+    #loading-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 3px; background: #5C3D1E;
+    }
+    #loading-bar-fill {
+      height: 100%; background: #C9973A;
+      width: 0%; transition: width 0.3s ease;
+    }
+    #loading-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      background: #1a0a00;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      color: #9C8670; font-size: 12px; letter-spacing: 0.1em;
+    }
+    #loading-overlay.hidden { display: none; }
+    .spin {
+      width: 32px; height: 32px;
+      border: 2px solid #5C3D1E; border-top-color: #C9973A;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+
+<div id="loading-bar"><div id="loading-bar-fill"></div></div>
+<div id="loading-overlay">
+  <div class="spin"></div>
+  <span>Đang tải mô hình 3D...</span>
+</div>
 
 <div id="header">
   <div>
@@ -96,6 +125,7 @@
   shadow-intensity="1"
   environment-image="neutral"
   ar-button-style="none"
+  loading="eager"
 >
   <!-- Nút AR tuỳ chỉnh -->
   <button id="ar-button" slot="ar-button">
@@ -126,19 +156,34 @@
 
 <script>
   var viewer = document.getElementById('viewer');
+  var overlay = document.getElementById('loading-overlay');
+  var fill = document.getElementById('loading-bar-fill');
 
-  viewer.addEventListener('ar-status', function(e) {
-    if (e.detail.status === 'not-presenting') {
-      document.getElementById('guide').style.display = '';
-    }
+  // Progress bar
+  viewer.addEventListener('progress', function(e) {
+    var pct = Math.round(e.detail.totalProgress * 100);
+    fill.style.width = pct + '%';
   });
 
-  // Kiểm tra AR support
+  // Ẩn overlay khi load xong
   viewer.addEventListener('load', function() {
+    overlay.classList.add('hidden');
+    fill.style.width = '100%';
+
+    // Kiểm tra AR support
     if (!viewer.canActivateAR) {
       document.getElementById('ar-button').hidden = true;
       document.getElementById('no-ar').style.display = 'block';
       document.getElementById('guide').style.display = 'none';
+    }
+  });
+
+  // Fallback: ẩn overlay sau 30s nếu load quá chậm
+  setTimeout(function() { overlay.classList.add('hidden'); }, 30000);
+
+  viewer.addEventListener('ar-status', function(e) {
+    if (e.detail.status === 'not-presenting') {
+      document.getElementById('guide').style.display = '';
     }
   });
 </script>
