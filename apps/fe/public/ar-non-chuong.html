@@ -159,6 +159,26 @@
   var overlay = document.getElementById('loading-overlay');
   var fill = document.getElementById('loading-bar-fill');
 
+  // Detect Chrome trên iOS — không support AR
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  var isChromeiOS = isIOS && !isSafari;
+
+  if (isChromeiOS) {
+    // Hiện banner yêu cầu dùng Safari
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:60px;left:16px;right:16px;z-index:300;background:#2C1A0E;border:1px solid #C9973A;border-radius:12px;padding:16px;text-align:center;color:#F5EDD6;font-size:13px;line-height:1.6;';
+    banner.innerHTML = '<div style="font-size:24px;margin-bottom:8px">⚠️</div>'
+      + '<strong>AR không khả dụng trên Chrome iOS</strong><br/>'
+      + '<span style="color:#9C8670;font-size:11px">Vui lòng mở trang này bằng <strong style="color:#C9973A">Safari</strong> để dùng AR</span><br/><br/>'
+      + '<button onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href);this.textContent=\'Đã copy!\'" '
+      + 'style="background:#C9973A;color:#2C1A0E;border:none;padding:8px 20px;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer">'
+      + 'Copy link để mở Safari</button>';
+    document.body.appendChild(banner);
+    // Vẫn cho xem model 3D, chỉ ẩn nút AR
+    viewer.removeAttribute('ar');
+  }
+
   // Progress bar
   viewer.addEventListener('progress', function(e) {
     var pct = Math.round(e.detail.totalProgress * 100);
@@ -170,15 +190,17 @@
     overlay.classList.add('hidden');
     fill.style.width = '100%';
 
-    // Kiểm tra AR support
-    if (!viewer.canActivateAR) {
+    if (!isChromeiOS && !viewer.canActivateAR) {
       document.getElementById('ar-button').hidden = true;
       document.getElementById('no-ar').style.display = 'block';
       document.getElementById('guide').style.display = 'none';
     }
+    if (isChromeiOS) {
+      document.getElementById('ar-button').hidden = true;
+      document.getElementById('guide').style.display = 'none';
+    }
   });
 
-  // Fallback: ẩn overlay sau 30s nếu load quá chậm
   setTimeout(function() { overlay.classList.add('hidden'); }, 30000);
 
   viewer.addEventListener('ar-status', function(e) {
