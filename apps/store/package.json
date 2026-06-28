@@ -12,6 +12,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@gltf-transform/core": "^4.4.0",
-    "@gltf-transform/functions": "^4.4.0"
+    "@gltf-transform/functions": "^4.4.0",
+    "meshoptimizer": "^1.1.1"
   }
 }
