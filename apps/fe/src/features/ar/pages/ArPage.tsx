@@ -77,27 +77,28 @@ export default function ArPage() {
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden">
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-transparent pointer-events-none">
         <span className="text-[11px] font-bold tracking-widest text-[#C9973A] uppercase">
           AR · Mô Hình 3D
         </span>
         <button
           onClick={handleClose}
-          className="w-9 h-9 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white"
+          className="pointer-events-auto w-9 h-9 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white"
         >
           <X size={18} />
         </button>
       </div>
 
-      {/* model-viewer */}
+      {/* model-viewer — fills screen, camera-controls handles pinch/rotate */}
       <model-viewer
         src={PLACEHOLDER_MODEL_URL}
         alt="Mô hình sản phẩm 3D"
         ar
-        ar-modes="webxr scene-viewer quick-look"
+        ar-modes="scene-viewer webxr quick-look"
+        ar-placement="floor"
+        ar-scale="fixed"
         camera-controls
-        auto-rotate
-        style={{ width: '100%', height: '100%', background: '#1a0a00' }}
+        style={{ width: '100%', height: '100%', backgroundColor: '#111' }}
       >
         {hotspots.map((hotspot) => (
           <button
@@ -117,11 +118,35 @@ export default function ArPage() {
             }}
           />
         ))}
+
+        {/* Custom AR button — slot="ar-button" được model-viewer đặt đúng vị trí, không bị overlay che */}
+        <button
+          slot="ar-button"
+          style={{
+            position: 'absolute',
+            bottom: '80px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '12px 28px',
+            background: '#C9973A',
+            color: '#2C1A0E',
+            fontWeight: 700,
+            fontSize: '12px',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Xem AR trong phòng
+        </button>
       </model-viewer>
 
       {/* Hotspot info bubble */}
       {activeHotspot && (
-        <div className="absolute bottom-24 left-4 right-4 z-20 bg-[#3A1A0A]/95 border border-[#C9973A] rounded-xl p-4 space-y-2 shadow-2xl">
+        <div className="absolute bottom-24 left-4 right-4 z-20 bg-[#3A1A0A]/95 border border-[#C9973A] rounded-xl p-4 space-y-2 shadow-2xl pointer-events-auto">
           <div className="flex items-start justify-between gap-3">
             <h3 className="text-[#F5EDD6] font-semibold text-sm leading-snug">
               {activeHotspot.title[lang]}
@@ -168,21 +193,18 @@ export default function ArPage() {
         </div>
       )}
 
-      {/* Bottom bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pb-6 pt-10 flex flex-col items-center gap-2 bg-gradient-to-t from-black/70 to-transparent">
+      {/* Bottom bar — chỉ giữ nút quay lại, không che vùng AR button */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 pb-4 flex flex-col items-center gap-2 pointer-events-none">
         {hotspots.length > 0 && !activeHotspot && (
-          <p className="text-[11px] text-[#C9B99A] tracking-wide flex items-center gap-1">
+          <p className="text-[11px] text-[#C9B99A] tracking-wide flex items-center gap-1 drop-shadow">
             <ChevronRight size={12} /> Chạm vào các điểm vàng để xem thông tin
           </p>
         )}
-        <p className="text-[11px] text-[#C9B99A] tracking-wide text-center px-6">
-          Nhấn nút AR phía dưới để đặt mô hình vào không gian thực tế
-        </p>
         <button
           onClick={handleClose}
-          className="px-6 py-2.5 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm"
+          className="pointer-events-auto px-5 py-2 bg-black/50 text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm border border-white/20"
         >
-          Xem Chi Tiết Sản Phẩm
+          Quay Lại
         </button>
       </div>
     </div>

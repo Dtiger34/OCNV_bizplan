@@ -203,9 +203,9 @@ export default function VillageArPage() {
             <a-entity
               gltf-model={arAssets.model}
               scale="0.005 0.005 0.005"
-              rotation="-90 0 0"
+              rotation="-90 180 0"
               position="0 0 0"
-              animation="property: rotation; to: -90 360 0; loop: true; dur: 8000; easing: linear"
+              animation="property: rotation; to: -90 540 0; loop: true; dur: 8000; easing: linear"
             />
           </a-nft>
 
