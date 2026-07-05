@@ -5,4 +5,5 @@ allowBuilds:
   '@nestjs/core': true
   '@scarf/scarf': false
   esbuild: true
-  msgpackr-extract: set this to true or false
+  msgpackr-extract: true
+  sharp: true
