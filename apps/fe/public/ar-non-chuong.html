@@ -165,9 +165,10 @@
   var fill = document.getElementById('loading-bar-fill');
 
   // Detect Chrome trên iOS — không support AR
+  // Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA
   var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  var isChromeiOS = isIOS && !isSafari;
+  var isNonSafariBrowserOnIOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
+  var isChromeiOS = isIOS && isNonSafariBrowserOnIOS;
 
   if (isChromeiOS) {
     // Hiện banner yêu cầu dùng Safari
