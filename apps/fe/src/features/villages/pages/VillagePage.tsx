@@ -4,6 +4,14 @@ import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine } from 'lucide-r
 import { motion } from 'framer-motion';
 import { getVillage } from '../data/villages-static';
 
+// Slug các làng nghề đã có mô hình 3D cho AR (khớp với VILLAGE_AR trong VillageArPage.tsx)
+const VILLAGES_WITH_AR = new Set([
+  'non-chuong',
+  'huong-quang-phu-cau',
+  'lua-van-phuc',
+  'quat-chang-son',
+]);
+
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const village = getVillage(slug ?? '');
@@ -258,14 +266,14 @@ export default function VillagePage() {
             Xem Tất Cả Làng Nghề
             <ArrowRight size={14} />
           </Link>
-          {slug === 'non-chuong' && (
-            <a
-              href="/ar-non-chuong.html"
+          {VILLAGES_WITH_AR.has(slug ?? '') && (
+            <Link
+              to={`/villages/${slug}/ar`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"
             >
               <ScanLine size={16} />
               Xem Mô Hình 3D · AR
-            </a>
+            </Link>
           )}
         </div>
       </section>
