@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getVillage } from '../data/villages-static';
-
-// Slug các làng nghề đã có mô hình 3D cho AR (khớp với VILLAGE_AR trong VillageArPage.tsx)
-const VILLAGES_WITH_AR = new Set([
-  'non-chuong',
-  'huong-quang-phu-cau',
-  'lua-van-phuc',
-  'quat-chang-son',
-]);
+import { VILLAGE_AR_MODELS } from '@/features/ar/data/village-ar-models';
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const village = getVillage(slug ?? '');
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const arModel = VILLAGE_AR_MODELS[slug ?? ''];
+
+  // Tải trước model 3D ngay khi vào trang làng nghề — để lúc bấm "Xem AR" thì
+  // trình duyệt đã có sẵn file trong cache, không phải đợi tải lại từ đầu
+  useEffect(() => {
+    if (!arModel) return;
+    fetch(arModel.model, { credentials: 'same-origin' }).catch(() => {
+      // Prefetch thất bại không sao — AR page sẽ tự tải lại khi cần
+    });
+  }, [arModel]);
 
   if (!village) {
     return (
@@ -266,7 +269,7 @@ export default function VillagePage() {
             Xem Tất Cả Làng Nghề
             <ArrowRight size={14} />
           </Link>
-          {VILLAGES_WITH_AR.has(slug ?? '') && (
+          {arModel && (
             <Link
               to={`/villages/${slug}/ar`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"

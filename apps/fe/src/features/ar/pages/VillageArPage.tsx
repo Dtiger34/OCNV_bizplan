@@ -2,32 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { X, Smartphone, ScanLine, Loader2, AlertTriangle } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { VILLAGE_AR_MODELS } from '../data/village-ar-models';
 
 // Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA —
 // AR (Quick Look/WebXR) trên iOS chỉ chạy được trong Safari thật
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 const isNonSafariOniOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
 const isChromeIOS = isIOS && isNonSafariOniOS;
-
-// Map slug → mô hình 3D — AR đặt mô hình trực tiếp trong phòng (model-viewer), không cần marker/ảnh diorama
-const VILLAGE_AR: Record<string, { model: string; label: string }> = {
-  'non-chuong': {
-    model: '/models/lang-non.glb',
-    label: 'Làng Nón Chuông',
-  },
-  'huong-quang-phu-cau': {
-    model: '/models/lang-huong.glb',
-    label: 'Làng Hương Quảng Phú Cầu',
-  },
-  'lua-van-phuc': {
-    model: '/models/lang-lua.glb',
-    label: 'Làng Lụa Vạn Phúc',
-  },
-  'quat-chang-son': {
-    model: '/models/lang-quat.glb',
-    label: 'Làng Quạt Chàng Sơn',
-  },
-};
 
 // Khai báo để TypeScript không báo lỗi với custom element của model-viewer
 declare global {
@@ -58,7 +39,7 @@ export default function VillageArPage() {
   const [arUnsupported, setArUnsupported] = useState(false);
   const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean; activateAR?: () => Promise<void> }>(null);
 
-  const arAssets = VILLAGE_AR[slug ?? ''];
+  const arAssets = VILLAGE_AR_MODELS[slug ?? ''];
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
