@@ -53,15 +53,9 @@ export default function VillageArPage() {
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-  // Load model-viewer script động — chỉ khi vào trang AR
+  // model-viewer đã được load global trong index.html — chỉ cần đợi custom element đăng ký xong
   useEffect(() => {
-    if (document.getElementById('model-viewer-script')) { setScriptsLoaded(true); return; }
-    const script = document.createElement('script');
-    script.id = 'model-viewer-script';
-    script.type = 'module';
-    script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
-    script.onload = () => setScriptsLoaded(true);
-    document.head.appendChild(script);
+    customElements.whenDefined('model-viewer').then(() => setScriptsLoaded(true));
   }, []);
 
   useEffect(() => {
