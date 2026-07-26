@@ -1,7 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { X, Smartphone, ScanLine, Loader2 } from 'lucide-react';
+import { X, Smartphone, ScanLine, Loader2, AlertTriangle } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+
+// Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA —
+// AR (Quick Look/WebXR) trên iOS chỉ chạy được trong Safari thật
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+const isNonSafariOniOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
+const isChromeIOS = isIOS && isNonSafariOniOS;
 
 // Map slug → mô hình 3D — AR đặt mô hình trực tiếp trong phòng (model-viewer), không cần marker/ảnh diorama
 const VILLAGE_AR: Record<string, { model: string; label: string }> = {
@@ -37,6 +43,7 @@ declare global {
           'ar-scale'?: string;
           'camera-controls'?: boolean;
           'auto-rotate'?: boolean;
+          'touch-action'?: string;
         },
         HTMLElement
       >;
@@ -48,6 +55,8 @@ export default function VillageArPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
+  const [arUnsupported, setArUnsupported] = useState(false);
+  const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean }>(null);
 
   const arAssets = VILLAGE_AR[slug ?? ''];
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
@@ -57,6 +66,18 @@ export default function VillageArPage() {
   useEffect(() => {
     customElements.whenDefined('model-viewer').then(() => setScriptsLoaded(true));
   }, []);
+
+  // Sau khi model load xong, kiểm tra thiết bị/trình duyệt có thực sự kích hoạt được AR không
+  // (thiếu ARCore/WebXR/Quick Look) — nếu không thì báo rõ cho người dùng thay vì im lặng
+  useEffect(() => {
+    if (!scriptsLoaded || isChromeIOS) return;
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    const onLoad = () => setArUnsupported(!viewer.canActivateAR);
+    viewer.addEventListener('load', onLoad);
+    return () => viewer.removeEventListener('load', onLoad);
+  }, [scriptsLoaded]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -133,16 +154,39 @@ export default function VillageArPage() {
       {scriptsLoaded && (
         // @ts-ignore — model-viewer là custom element
         <model-viewer
+          ref={viewerRef}
           src={arAssets.model}
           alt={arAssets.label}
-          ar
-          ar-modes="scene-viewer webxr quick-look"
+          ar={!isChromeIOS}
+          ar-modes="webxr scene-viewer quick-look"
           ar-placement="floor"
           ar-scale="auto"
           camera-controls
           auto-rotate
+          touch-action="none"
           style={{ width: '100%', height: '100%', backgroundColor: '#111' }}
         />
+      )}
+
+      {/* Chrome trên iOS không hỗ trợ AR (chỉ Safari mới chạy được Quick Look/WebXR) */}
+      {scriptsLoaded && isChromeIOS && (
+        <div className="absolute top-16 left-4 right-4 z-30 bg-[#2C1A0E]/95 border border-[#C9973A] rounded-xl p-4 text-center space-y-2">
+          <AlertTriangle className="w-6 h-6 text-[#C9973A] mx-auto" />
+          <p className="text-[#F5EDD6] text-sm font-semibold">AR không khả dụng trên Chrome iOS</p>
+          <p className="text-[#9C8670] text-xs">
+            Vui lòng mở trang này bằng <span className="text-[#C9973A] font-medium">Safari</span> để dùng AR
+          </p>
+        </div>
+      )}
+
+      {/* Thiết bị/trình duyệt không hỗ trợ AR thật (thiếu ARCore/WebXR/Quick Look) */}
+      {scriptsLoaded && !isChromeIOS && arUnsupported && (
+        <div className="absolute bottom-6 left-4 right-4 z-30 bg-[#2C1A0E]/95 border border-[#C9973A]/60 rounded-xl p-4 text-center">
+          <p className="text-[#C9B99A] text-xs leading-relaxed">
+            Trình duyệt này chưa hỗ trợ AR. Vui lòng dùng <span className="text-[#C9973A]">Safari trên iPhone</span> hoặc{' '}
+            <span className="text-[#C9973A]">Chrome trên Android</span>.
+          </p>
+        </div>
       )}
     </div>
   );
