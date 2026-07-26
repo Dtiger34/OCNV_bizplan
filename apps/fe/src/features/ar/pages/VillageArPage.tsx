@@ -56,7 +56,7 @@ export default function VillageArPage() {
   const navigate = useNavigate();
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
   const [arUnsupported, setArUnsupported] = useState(false);
-  const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean }>(null);
+  const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean; activateAR?: () => Promise<void> }>(null);
 
   const arAssets = VILLAGE_AR[slug ?? ''];
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
@@ -68,13 +68,24 @@ export default function VillageArPage() {
   }, []);
 
   // Sau khi model load xong, kiểm tra thiết bị/trình duyệt có thực sự kích hoạt được AR không
-  // (thiếu ARCore/WebXR/Quick Look) — nếu không thì báo rõ cho người dùng thay vì im lặng
+  // (thiếu ARCore/WebXR/Quick Look) — nếu không thì báo rõ cho người dùng thay vì im lặng.
+  // Nếu có, tự bật camera AR ngay — không bắt người dùng bấm thêm nút.
+  // Lưu ý: trình duyệt có thể chặn nếu "user activation" từ lúc quét QR/mở link đã hết hạn
+  // trước khi model tải xong — khi đó nút AR mặc định của model-viewer vẫn còn để bấm tay.
   useEffect(() => {
     if (!scriptsLoaded || isChromeIOS) return;
     const viewer = viewerRef.current;
     if (!viewer) return;
 
-    const onLoad = () => setArUnsupported(!viewer.canActivateAR);
+    const onLoad = () => {
+      const supported = !!viewer.canActivateAR;
+      setArUnsupported(!supported);
+      if (supported) {
+        viewer.activateAR?.().catch(() => {
+          // Trình duyệt chặn auto-activate (mất user activation) — người dùng tự bấm nút AR
+        });
+      }
+    };
     viewer.addEventListener('load', onLoad);
     return () => viewer.removeEventListener('load', onLoad);
   }, [scriptsLoaded]);
