@@ -40,15 +40,25 @@ def Preliminary_Action "SpinAction"
     float duration = 1.0
 ```
 
-Da xac nhan chac chan: cau truc `Behavior -> rel triggers/actions`, `Trigger` voi
-`token info:id = "TapGesture"` + `rel affectedObjects`, va quy uoc dat ten action
-theo kieu `"<Ten>Action"`.
+Da xac nhan chac chan (tu 2 nguon doc lap):
+- Cau truc `Behavior -> rel triggers/actions`, `Trigger` voi `token info:id = "TapGesture"` +
+  `rel affectedObjects` — tu bai reverse-engineer elkraneo.com (dump that tu Reality Composer Pro).
+- **Ten class va format `info:id` chinh xac** — tu chinh file dinh nghia schema goc cua Apple
+  (copyright Apple Inc. 2020), tim thay trong repo mau WWDC chinh thuc
+  `github.com/XRealityZone/apple-wwdc-ar-demo`, file
+  `SchemaDefinitionsForThirdPartyDCCs/UsdInteractive/schema.usda`. File nay dinh nghia ro
+  `Preliminary_Behavior`/`Preliminary_Trigger`/`Preliminary_Action` giong het cau truc da dung,
+  va **vi du gia tri `info:id` cho Action la tu thuan nhu `"Impulse"`, `"Group"` — KHONG co hau
+  to `"Action"`**. Dieu nay mau thuan voi vi du `"SpinAction"` cua elkraneo (co the la quy uoc
+  rieng cua Reality Composer PRO/RealityKit, khac voi Preliminary_Action co dien cho Quick Look).
 
-**Chua xac nhan duoc** (suy luan theo quy uoc, khong co vi du that): ten `info:id` chinh xac
-cho hanh dong "hien vat the" — script dang dung `"ShowAction"`. Neu sai, hau qua chi la
-marker khong tap len duoc (model van xem binh thuong, khong crash, khong mat du lieu) — sua
-lai o `show_action.CreateAttribute("info:id", ...)` trong `build_interactive_usdz.py` roi
-build lai la duoc, khong can lam lai tu dau.
+**Van chua xac nhan 100%** (suy luan tu quy uoc "Impulse"/"Group"): ten `info:id` chinh xac cho
+hanh dong "hien vat the" trong he Preliminary_Action co dien — script dang dung `"Show"` (truoc
+day thu `"ShowAction"` va khong hoat dong, khop voi du doan la sai quy uoc). Neu `"Show"` van
+sai, hau qua chi la marker khong tap len duoc (model van xem binh thuong, khong crash, khong
+mat du lieu) — sua lai o `show_action.CreateAttribute("info:id", ...)` trong
+`build_interactive_usdz.py` roi build lai la duoc, khong can lam lai tu dau. Cac bien the khac
+co the thu neu `"Show"` cung khong an: `"Visible"`, `"SetVisibility"`, `"Unhide"`.
 
 ## Quy trinh 2 buoc
 
@@ -86,6 +96,6 @@ sua ca hai.
 
 `village-ar-models.ts` da san sang tro `usdz` toi `/models/lang-gom.usdz` cho `bat-trang`.
 Mo trang tren Safari iOS, vao AR that (Quick Look), tap vao marker vang — neu panel info
-khong hien len, kha nang cao la `info:id = "ShowAction"` sai ten thuc su Apple dung; luc do
-can thu cac bien the khac (`"Show"`, `"VisibilityAction"`, `"ToggleVisibilityAction"`...)
-hoac quay lai phuong an web-preview da co san (khong can sua gi them, da hoat dong).
+khong hien len, thu doi `info:id` sang cac bien the khac (`"Visible"`, `"SetVisibility"`,
+`"Unhide"`) trong `build_interactive_usdz.py` roi build lai, hoac quay lai phuong an
+web-preview da co san (khong can sua gi them, da hoat dong).

@@ -185,7 +185,9 @@ def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str,
     trigger.CreateRelationship("affectedObjects").SetTargets([Sdf.Path(marker_path)])
 
     show_action = stage.DefinePrim(show_path, "Preliminary_Action")
-    show_action.CreateAttribute("info:id", Sdf.ValueTypeNames.Token).Set("ShowAction")
+    # Apple's own schema doc (Preliminary_Action.info:id, xem README.md) cho vi du la tu
+    # thuan "Impulse"/"Group" — KHONG co hau to "Action" — nen dung "Show" thay vi "ShowAction".
+    show_action.CreateAttribute("info:id", Sdf.ValueTypeNames.Token).Set("Show")
     show_action.CreateRelationship("affectedObjects").SetTargets([Sdf.Path(panel_path)])
 
 
