@@ -3,12 +3,17 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { X, Smartphone, ScanLine, Loader2, AlertTriangle } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { VILLAGE_AR_MODELS } from '../data/village-ar-models';
+import { VILLAGE_AR_POINTS } from '../data/village-ar-points';
 
 // Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA —
 // AR (Quick Look/WebXR) trên iOS chỉ chạy được trong Safari thật
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 const isNonSafariOniOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
 const isChromeIOS = isIOS && isNonSafariOniOS;
+// Point cố định overlay chỉ vẽ được khi AR chạy qua WebXR (camera nằm trong chính trang web) —
+// Scene Viewer (Android không hỗ trợ WebXR) và Quick Look (iOS) là app rời của hệ điều hành,
+// trang web bị đẩy ra nền nên không có cách nào chèn UI lên trên
+const isAndroid = /Android/i.test(navigator.userAgent);
 
 // Khai báo để TypeScript không báo lỗi với custom element của model-viewer
 declare global {
@@ -37,9 +42,12 @@ export default function VillageArPage() {
   const navigate = useNavigate();
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
   const [arUnsupported, setArUnsupported] = useState(false);
+  const [isPresentingAr, setIsPresentingAr] = useState(false);
+  const [activePointId, setActivePointId] = useState<string | null>(null);
   const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean; activateAR?: () => Promise<void> }>(null);
 
   const arAssets = VILLAGE_AR_MODELS[slug ?? ''];
+  const arPoints = VILLAGE_AR_POINTS[slug ?? ''] ?? [];
   const arUrl = `${window.location.origin}/villages/${slug}/ar`;
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
@@ -71,6 +79,23 @@ export default function VillageArPage() {
     return () => viewer.removeEventListener('load', onLoad);
   }, [scriptsLoaded]);
 
+  // Theo dõi trạng thái phiên AR — chỉ khi 'session-started' (WebXR, camera chạy ngay trong
+  // trang) thì overlay 2D của mình mới thực sự hiển thị đè lên được. Scene Viewer/Quick Look
+  // mở app rời nên trang web (và overlay) bị đẩy ra nền, sự kiện này sẽ không báo 'session-started'.
+  useEffect(() => {
+    if (!scriptsLoaded) return;
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    const onArStatus = (e: Event) => {
+      const status = (e as CustomEvent<{ status: string }>).detail?.status;
+      setIsPresentingAr(status === 'session-started');
+      if (status !== 'session-started') setActivePointId(null);
+    };
+    viewer.addEventListener('ar-status', onArStatus);
+    return () => viewer.removeEventListener('ar-status', onArStatus);
+  }, [scriptsLoaded]);
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -87,7 +112,7 @@ export default function VillageArPage() {
         </p>
         <Link
           to={`/villages/${slug}`}
-          className="px-6 py-2.5 bg-[#C9973A] text-[#2C1A0E] text-xs font-bold tracking-widest uppercase rounded"
+          className="px-6 py-2.5 bg-gold text-ink text-xs font-bold tracking-widest uppercase rounded"
         >
           Quay Lại
         </Link>
@@ -179,6 +204,51 @@ export default function VillageArPage() {
             <span className="text-[#C9973A]">Chrome trên Android</span>.
           </p>
         </div>
+      )}
+
+      {/* Point cố định + bong bóng chat — chỉ vẽ được khi camera AR chạy qua WebXR
+          (Android), vì đó là lúc trang web vẫn hiển thị dưới lớp camera. Scene Viewer/Quick Look
+          mở app rời của hệ điều hành nên không có cách nào chèn overlay lên trên. */}
+      {isAndroid && isPresentingAr && arPoints.length > 0 && (
+        <>
+          {arPoints.map((point) => (
+            <button
+              key={point.id}
+              onClick={() => setActivePointId((cur) => (cur === point.id ? null : point.id))}
+              className="absolute z-40 w-8 h-8 -ml-4 -mt-4 rounded-full bg-gold border-2 border-white shadow-lg flex items-center justify-center animate-pulse"
+              style={{ left: `${point.x}%`, top: `${point.y}%` }}
+              aria-label={point.title}
+            >
+              <span className="w-2 h-2 rounded-full bg-white" />
+            </button>
+          ))}
+
+          {arPoints.map((point) =>
+            activePointId === point.id ? (
+              <div
+                key={`bubble-${point.id}`}
+                className="absolute z-50 w-64 max-w-[80vw] bg-white rounded-xl shadow-2xl p-4"
+                style={{
+                  left: `${point.x}%`,
+                  top: `${point.y}%`,
+                  transform: `translate(-50%, ${point.y > 50 ? 'calc(-100% - 1rem)' : '1rem'})`,
+                }}
+              >
+                <div className="flex items-start justify-between gap-2 mb-1.5">
+                  <p className="text-sm font-semibold text-ink">{point.title}</p>
+                  <button
+                    onClick={() => setActivePointId(null)}
+                    className="text-[#9C8670] hover:text-ink shrink-0"
+                    aria-label="Đóng"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                <p className="text-xs text-wood leading-relaxed">{point.description}</p>
+              </div>
+            ) : null
+          )}
+        </>
       )}
     </div>
   );
