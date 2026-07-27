@@ -107,11 +107,23 @@ def convert_webp_textures(stage: Usd.Stage, extract_dir: str) -> None:
                     break
 
 
-def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str) -> None:
+def yup_to_zup(v: dict) -> dict:
+    """Toa do trong village-ar-points.ts duoc calibrate bang model-viewer (glTF, Y-up) —
+    nhung Blender xuat USD theo quy uoc Z-up, nen phai doi truc truoc khi dat hotspot,
+    khong thi marker se lech sang vi tri khac (thuong bi chon vao trong long model)."""
+    return {"x": v["x"], "y": -v["z"], "z": v["y"]}
+
+
+def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str, up_axis: str) -> None:
     pid = point["id"]
     prim_id = pid.replace("-", "_")  # ten prim USD khong duoc chua dau "-"
-    pos = point["position"]
-    normal = point.get("normal", {"x": 0, "y": 1, "z": 0})
+    pos_in = point["position"]
+    normal_in = point.get("normal", {"x": 0, "y": 1, "z": 0})
+    if up_axis == UsdGeom.Tokens.z:
+        pos = yup_to_zup(pos_in)
+        normal = yup_to_zup(normal_in)
+    else:
+        pos, normal = pos_in, normal_in
 
     group_path = f"{scope_path}/Hotspot_{prim_id}"
     marker_path = f"{group_path}/Marker"
@@ -193,10 +205,11 @@ def build(usdz_in: str, points_path: str, usdz_out: str) -> None:
     default_prim = stage.GetDefaultPrim()
     root_path = str(default_prim.GetPath()) if default_prim else "/Root"
 
+    up_axis = UsdGeom.GetStageUpAxis(stage)
     hotspots_scope = f"{root_path}/ARHotspots"
     UsdGeom.Scope.Define(stage, hotspots_scope)
     for point in points:
-        add_hotspot(stage, hotspots_scope, point, extract_dir)
+        add_hotspot(stage, hotspots_scope, point, extract_dir, up_axis)
 
     stage.GetRootLayer().Save()
 
