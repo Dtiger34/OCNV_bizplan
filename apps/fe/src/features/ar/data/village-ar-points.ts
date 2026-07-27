@@ -1,9 +1,16 @@
-// Điểm chú thích cố định hiển thị đè lên màn hình khi đang ở trong AR thật (WebXR, chỉ Android) —
-// không neo theo vị trí 3D của model, chỉ là nút UI 2D tại toạ độ phần trăm màn hình (x/y: 0-100)
+// Điểm chú thích cho model AR. Có 2 cách neo, dùng ở 2 chỗ khác nhau:
+// - x/y: toạ độ % màn hình, chỉ dùng cho overlay đè lên khi đang ở trong AR thật qua WebXR (chỉ Android —
+//   Quick Look/Scene Viewer mở app rời nên trang web bị đẩy ra nền, không overlay được).
+// - position/normal: toạ độ 3D neo lên bề mặt model (mét, theo hệ trục gốc của file .glb), dùng cho
+//   model-viewer hotspot slot khi xem inline (trước khi vào AR) — cách duy nhất có point-tap-info trên iOS,
+//   vì Quick Look không cho vẽ đè DOM lên trên. Lấy toạ độ bằng cách log point/normal khi click lên model
+//   ở chế độ xem thường (xem hướng dẫn calibrate trong VillageArPage.tsx).
 export interface ArPoint {
   id: string;
-  x: number; // % chiều ngang màn hình
-  y: number; // % chiều dọc màn hình
+  x: number; // % chiều ngang màn hình (overlay Android in-AR)
+  y: number; // % chiều dọc màn hình (overlay Android in-AR)
+  position?: { x: number; y: number; z: number }; // mét, neo 3D trên model (hotspot slot)
+  normal?: { x: number; y: number; z: number };
   title: string;
   description: string;
 }
@@ -14,6 +21,8 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
       id: 'ban-xoay',
       x: 50,
       y: 62,
+      position: { x: 0, y: 0.4, z: 0.3 },
+      normal: { x: 0, y: 1, z: 0 },
       title: 'Bàn Xoay Gốm',
       description:
         'Người thợ dùng lực chân đạp bàn xoay, hai tay vuốt đất sét để tạo hình sản phẩm — kỹ thuật đòi hỏi sự khéo léo và cảm nhận tinh tế về độ dày, độ cân đối của thành gốm.',
@@ -22,6 +31,8 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
       id: 'lo-nung',
       x: 22,
       y: 40,
+      position: { x: -0.5, y: 0.6, z: -0.2 },
+      normal: { x: -1, y: 0, z: 0 },
       title: 'Lò Nung Bầu',
       description:
         'Lò nung truyền thống của Bát Tràng đạt nhiệt độ 1.000°C–1.300°C, quyết định màu men và độ bền của sản phẩm. Đây là công đoạn khó kiểm soát nhất trong toàn bộ quy trình.',
@@ -30,6 +41,8 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
       id: 'hoa-van',
       x: 78,
       y: 45,
+      position: { x: 0.5, y: 0.5, z: -0.1 },
+      normal: { x: 1, y: 0, z: 0 },
       title: 'Hoa Văn & Men Gốm',
       description:
         'Các nghệ nhân vẽ tay hoa văn truyền thống rồi phủ men — mỗi lớp men tạo ra sắc độ và độ bóng riêng, là dấu ấn nhận diện của gốm Bát Tràng qua từng thời kỳ.',

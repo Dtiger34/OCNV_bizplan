@@ -22,6 +22,7 @@ declare global {
       'model-viewer': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           src?: string;
+          'ios-src'?: string;
           alt?: string;
           ar?: boolean;
           'ar-modes'?: string;
@@ -58,7 +59,10 @@ export default function VillageArPage() {
 
   // Sau khi model load xong, kiểm tra thiết bị/trình duyệt có thực sự kích hoạt được AR không
   // (thiếu ARCore/WebXR/Quick Look) — nếu không thì báo rõ cho người dùng thay vì im lặng.
-  // Nếu có, tự bật camera AR ngay — không bắt người dùng bấm thêm nút.
+  // Trên Android tự bật camera AR ngay (WebXR overlay đè lên được nên không cần xem trước).
+  // Trên iOS thì KHÔNG tự bật — Quick Look mở app rời, đẩy trang web ra nền nên mất khả năng
+  // hiện point-tap-info; để người dùng xem model + chạm point trước ở chế độ inline, rồi tự bấm
+  // nút AR khi muốn đặt mô hình vào không gian thực (nút mặc định của model-viewer vẫn hiện).
   // Lưu ý: trình duyệt có thể chặn nếu "user activation" từ lúc quét QR/mở link đã hết hạn
   // trước khi model tải xong — khi đó nút AR mặc định của model-viewer vẫn còn để bấm tay.
   useEffect(() => {
@@ -69,7 +73,7 @@ export default function VillageArPage() {
     const onLoad = () => {
       const supported = !!viewer.canActivateAR;
       setArUnsupported(!supported);
-      if (supported) {
+      if (supported && isAndroid) {
         viewer.activateAR?.().catch(() => {
           // Trình duyệt chặn auto-activate (mất user activation) — người dùng tự bấm nút AR
         });
@@ -173,6 +177,7 @@ export default function VillageArPage() {
         <model-viewer
           ref={viewerRef}
           src={arAssets.model}
+          ios-src={arAssets.usdz}
           alt={arAssets.label}
           ar={!isChromeIOS}
           ar-modes="webxr scene-viewer quick-look"
@@ -182,7 +187,63 @@ export default function VillageArPage() {
           auto-rotate
           touch-action="none"
           style={{ width: '100%', height: '100%', backgroundColor: '#111' }}
-        />
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
+            // Dev helper để lấy toạ độ 3D calibrate point: bấm giữ Alt lên model rồi xem console.
+            if (!import.meta.env.DEV || !e.altKey) return;
+            const viewer = e.currentTarget as HTMLElement & {
+              positionAndNormalFromPoint?: (x: number, y: number) => { position: { x: number; y: number; z: number }; normal: { x: number; y: number; z: number } } | null;
+            };
+            const rect = viewer.getBoundingClientRect();
+            const hit = viewer.positionAndNormalFromPoint?.(e.clientX - rect.left, e.clientY - rect.top);
+            if (hit) console.log('[AR calibrate] position:', hit.position, 'normal:', hit.normal);
+          }}
+        >
+          {!isPresentingAr && arPoints.map((point) =>
+            point.position && point.normal ? (
+              <button
+                key={`hotspot-${point.id}`}
+                slot={`hotspot-${point.id}`}
+                data-position={`${point.position.x}m ${point.position.y}m ${point.position.z}m`}
+                data-normal={`${point.normal.x} ${point.normal.y} ${point.normal.z}`}
+                onClick={(evt) => {
+                  evt.stopPropagation();
+                  setActivePointId((cur) => (cur === point.id ? null : point.id));
+                }}
+                aria-label={point.title}
+                style={{
+                  display: 'block',
+                  width: 28,
+                  height: 28,
+                  borderRadius: '50%',
+                  border: '2px solid #F5EDD6',
+                  backgroundColor: '#C9973A',
+                  boxShadow: '0 0 0 4px rgba(201,151,58,0.3)',
+                  cursor: 'pointer',
+                }}
+              />
+            ) : null
+          )}
+        </model-viewer>
+      )}
+
+      {/* Xem trước inline (mọi nền tảng, bao gồm iOS) — chạm point trước khi vào AR thật,
+          vì Quick Look mở app rời nên không overlay được DOM lên trên khi đang trong AR. */}
+      {scriptsLoaded && !isPresentingAr && activePointId && (
+        (() => {
+          const point = arPoints.find((p) => p.id === activePointId);
+          if (!point) return null;
+          return (
+            <div className="absolute bottom-24 left-4 right-4 z-30 bg-[#2C1A0E]/95 border border-[#C9973A] rounded-xl p-4 shadow-2xl">
+              <div className="flex items-start justify-between gap-2 mb-1.5">
+                <p className="text-sm font-semibold text-[#F5EDD6]">{point.title}</p>
+                <button onClick={() => setActivePointId(null)} className="text-[#9C8670] hover:text-white shrink-0" aria-label="Đóng">
+                  <X size={16} />
+                </button>
+              </div>
+              <p className="text-xs text-[#C9B99A] leading-relaxed">{point.description}</p>
+            </div>
+          );
+        })()
       )}
 
       {/* Chrome trên iOS không hỗ trợ AR (chỉ Safari mới chạy được Quick Look/WebXR) */}
