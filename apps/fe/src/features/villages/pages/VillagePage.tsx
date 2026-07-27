@@ -1,30 +1,81 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, AlertTriangle, Smartphone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
 import { VILLAGE_AR_MODELS } from '@/features/ar/data/village-ar-models';
+
+// Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA —
+// AR (Quick Look/WebXR) trên iOS chỉ chạy được trong Safari thật
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+const isNonSafariOniOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
+const isChromeIOS = isIOS && isNonSafariOniOS;
+const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+// Khai báo để TypeScript không báo lỗi với custom element của model-viewer
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'model-viewer': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          src?: string;
+          alt?: string;
+          ar?: boolean;
+          'ar-modes'?: string;
+          'ar-placement'?: string;
+          'ar-scale'?: string;
+          'camera-controls'?: boolean;
+          'auto-rotate'?: boolean;
+          'touch-action'?: string;
+        },
+        HTMLElement
+      >;
+    }
+  }
+}
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const village = getVillage(slug ?? '');
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const [viewerReady, setViewerReady] = useState(false);
+  const [arUnsupported, setArUnsupported] = useState(false);
+  const [showDesktopQr, setShowDesktopQr] = useState(false);
+  const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean; activateAR?: () => Promise<void> }>(null);
   const arModel = VILLAGE_AR_MODELS[slug ?? ''];
 
-  // Tải trước model 3D ngay khi vào trang làng nghề — để lúc bấm "Xem AR" thì
-  // trình duyệt đã có sẵn file trong cache, không phải đợi tải lại từ đầu
   useEffect(() => {
-    if (!arModel) return;
-    fetch(arModel.model, { credentials: 'same-origin' }).catch(() => {
-      // Prefetch thất bại không sao — AR page sẽ tự tải lại khi cần
-    });
-  }, [arModel]);
+    customElements.whenDefined('model-viewer').then(() => setViewerReady(true));
+  }, []);
+
+  useEffect(() => {
+    setArUnsupported(false);
+  }, [slug]);
+
+  // Bấm "Xem AR" ngay trong trang làng nghề — model đã hiển thị & tải sẵn từ trước,
+  // nên activateAR() chạy trong chính user gesture của cú click, không bị trình duyệt chặn
+  // (khác với việc điều hướng sang trang khác rồi mới activate, lúc đó user activation đã hết hạn)
+  const handleViewAr = () => {
+    // Desktop không có camera/ARCore/Quick Look — hiện QR để quét bằng điện thoại
+    if (!isMobile) {
+      setShowDesktopQr(true);
+      return;
+    }
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+    if (!viewer.canActivateAR) {
+      setArUnsupported(true);
+      return;
+    }
+    viewer.activateAR?.().catch(() => setArUnsupported(true));
+  };
 
   if (!village) {
     return (
-      <div className="min-h-screen bg-[#FDF6E3] flex flex-col items-center justify-center gap-6 px-4">
-        <p className="text-[#5C3D1E] text-lg">Không tìm thấy làng nghề này.</p>
-        <Link to="/villages" className="text-sm text-[#C9973A] underline underline-offset-4">
+      <div className="min-h-screen bg-parchment flex flex-col items-center justify-center gap-6 px-4">
+        <p className="text-wood text-lg">Không tìm thấy làng nghề này.</p>
+        <Link to="/villages" className="text-sm text-gold underline underline-offset-4">
           ← Quay lại danh sách
         </Link>
       </div>
@@ -34,11 +85,11 @@ export default function VillagePage() {
   const historyParagraphs = village.fullHistory.split('\n\n').filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-[#FDF6E3]">
+    <div className="min-h-screen bg-parchment">
       {/* Fixed breadcrumb */}
       <Link
         to="/villages"
-        className="fixed top-20 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#5C3D1E] hover:text-[#2C1A0E] backdrop-blur-md bg-[#FDF6E3]/80 border border-[#D4B896] shadow-sm transition-all hover:border-[#C9973A]/60"
+        className="fixed top-20 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-wood hover:text-ink backdrop-blur-md bg-parchment/80 border border-[#D4B896] shadow-sm transition-all hover:border-gold/60"
       >
         <ChevronLeft size={13} />
         Làng Nghề
@@ -50,8 +101,8 @@ export default function VillagePage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E] via-[#2C1A0E]/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2C1A0E]/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-ink/40 to-transparent" />
 
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -69,7 +120,7 @@ export default function VillagePage() {
             {village.name}
           </h1>
           <p className="text-base sm:text-lg italic text-[#D4B896] mb-5">{village.tagline}</p>
-          <div className="h-[1px] w-16" style={{ backgroundColor: village.color + '80' }} />
+          <div className="h-px w-16" style={{ backgroundColor: village.color + '80' }} />
         </motion.div>
       </section>
 
@@ -78,7 +129,7 @@ export default function VillagePage() {
         <div className="max-w-5xl mx-auto px-4 py-5 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           {village.facts.map((fact) => (
             <div key={fact.label}>
-              <p className="text-sm sm:text-base font-medium text-[#2C1A0E] mb-0.5">{fact.value}</p>
+              <p className="text-sm sm:text-base font-medium text-ink mb-0.5">{fact.value}</p>
               <p className="text-[10px] tracking-widest text-[#9C8670] uppercase">{fact.label}</p>
             </div>
           ))}
@@ -98,10 +149,10 @@ export default function VillagePage() {
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
               Lịch Sử
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-[#2C1A0E] leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug">
               Hành Trình <span className="italic text-[#7A5230]">Hàng Thế Kỷ</span>
             </h2>
-            <div className="h-[1px] w-12 bg-[#D4B896] mt-4" />
+            <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </motion.div>
 
           <div className="space-y-5">
@@ -112,7 +163,7 @@ export default function VillagePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="text-[#5C3D1E] leading-relaxed text-sm sm:text-base"
+                className="text-wood leading-relaxed text-sm sm:text-base"
               >
                 {i === 0 ? (
                   <>
@@ -149,14 +200,14 @@ export default function VillagePage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                   onClick={() => setLightboxImg(img)}
-                  className="relative overflow-hidden rounded-[6px] aspect-video sm:aspect-square group cursor-pointer border border-[#D4B896]/60 hover:border-[#C9973A]/50 transition-all"
+                  className="relative overflow-hidden rounded-md aspect-video sm:aspect-square group cursor-pointer border border-[#D4B896]/60 hover:border-gold/50 transition-all"
                 >
                   <img
                     src={img}
                     alt={`${village.name} ${i + 1}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-[#2C1A0E]/0 group-hover:bg-[#2C1A0E]/20 transition-all duration-300" />
+                  <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-all duration-300" />
                 </motion.button>
               ))}
             </div>
@@ -164,9 +215,83 @@ export default function VillagePage() {
         </section>
       )}
 
+      {/* Model 3D — xem trước ngay trên trang, bấm để chuyển thẳng sang AR */}
+      {arModel && (
+        <section className="py-14 px-6 sm:px-10 bg-parchment">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-[#9C8670] mb-2">Mô Hình 3D</p>
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug mb-6">
+              Khám Phá <span className="italic text-[#7A5230]">{village.name}</span> Trong Không Gian 3D
+            </h2>
+
+            <div className="relative rounded-[10px] overflow-hidden border border-[#D4B896]/60 bg-[#111] aspect-square sm:aspect-video">
+              {!viewerReady && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              {viewerReady && (
+                // @ts-ignore — model-viewer là custom element
+                <model-viewer
+                  ref={viewerRef}
+                  src={arModel.model}
+                  alt={arModel.label}
+                  ar={!isChromeIOS}
+                  ar-modes="webxr scene-viewer quick-look"
+                  ar-placement="floor"
+                  ar-scale="auto"
+                  camera-controls
+                  auto-rotate
+                  touch-action="pan-y"
+                  style={{ width: '100%', height: '100%' }}
+                />
+              )}
+            </div>
+
+            {!showDesktopQr && (
+              <button
+                onClick={handleViewAr}
+                disabled={!viewerReady || isChromeIOS}
+                className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-[#B8862A] disabled:opacity-50 disabled:cursor-not-allowed text-ink text-sm font-semibold rounded-sm transition-all duration-200"
+              >
+                <ScanLine size={16} />
+                Xem Trong Không Gian Thực · AR
+              </button>
+            )}
+
+            {showDesktopQr && (
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2 text-sm text-wood">
+                  <Smartphone size={16} className="text-gold" />
+                  Quét mã QR bằng điện thoại để xem AR
+                </div>
+                <div className="p-4 bg-white rounded-xl border border-[#D4B896]/60">
+                  <QRCodeSVG value={`${window.location.origin}/villages/${slug}/ar`} size={180} />
+                </div>
+              </div>
+            )}
+
+            {isChromeIOS && (
+              <div className="mt-4 flex items-start gap-2 text-left max-w-md mx-auto bg-ink/5 border border-gold/40 rounded-lg p-3">
+                <AlertTriangle className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                <p className="text-xs text-wood">
+                  AR không khả dụng trên Chrome iOS. Vui lòng mở trang này bằng{' '}
+                  <span className="text-gold font-medium">Safari</span> để dùng AR.
+                </p>
+              </div>
+            )}
+            {!isChromeIOS && arUnsupported && (
+              <p className="mt-4 text-xs text-[#9C8670] max-w-md mx-auto">
+                Thiết bị/trình duyệt này chưa hỗ trợ AR. Vui lòng dùng Safari trên iPhone hoặc Chrome trên Android.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* Artisan quote — dark band */}
       {village.artisanQuote && (
-        <section className="py-16 px-6 bg-[#2C1A0E]">
+        <section className="py-16 px-6 bg-ink">
           <div className="max-w-2xl mx-auto text-center">
             <Quote size={26} className="mx-auto mb-5 opacity-40" style={{ color: village.color }} />
             <blockquote className="text-lg sm:text-xl text-white font-light italic leading-relaxed mb-5">
@@ -186,10 +311,10 @@ export default function VillagePage() {
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
               Quy Trình
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-[#2C1A0E] leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug">
               Từ Nguyên Liệu <span className="italic text-[#7A5230]">Đến Tinh Hoa</span>
             </h2>
-            <div className="h-[1px] w-12 bg-[#D4B896] mt-4" />
+            <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </div>
 
           <div className="space-y-12">
@@ -205,8 +330,8 @@ export default function VillagePage() {
                   className={`flex flex-col md:flex-row gap-8 items-center ${isReverse ? 'md:flex-row-reverse' : ''}`}
                 >
                   {/* Ảnh */}
-                  <div className="w-full md:w-1/2 flex-shrink-0">
-                    <div className="relative overflow-hidden rounded-[8px] aspect-[4/3]">
+                  <div className="w-full md:w-1/2 shrink-0">
+                    <div className="relative overflow-hidden rounded-lg aspect-4/3">
                       <img
                         src={stage.imageUrl}
                         alt={stage.title}
@@ -230,16 +355,16 @@ export default function VillagePage() {
                     >
                       Bước {stage.order}
                     </p>
-                    <h3 className="text-xl font-medium text-[#2C1A0E]">{stage.title}</h3>
-                    <div className="h-[1px] w-8 bg-[#D4B896]" />
-                    <p className="text-sm text-[#5C3D1E] leading-relaxed">{stage.description}</p>
+                    <h3 className="text-xl font-medium text-ink">{stage.title}</h3>
+                    <div className="h-px w-8 bg-[#D4B896]" />
+                    <p className="text-sm text-wood leading-relaxed">{stage.description}</p>
                     {stage.details && stage.details.length > 0 && (
                       <ul className="space-y-2 pt-1">
                         {stage.details.map((d, j) => (
                           <li key={j} className="flex items-start gap-2.5 text-sm text-[#7A5230]">
                             <CheckCircle2
                               size={14}
-                              className="flex-shrink-0 mt-0.5"
+                              className="shrink-0 mt-0.5"
                               style={{ color: village.color }}
                             />
                             {d}
@@ -256,7 +381,7 @@ export default function VillagePage() {
       </section>
 
       {/* CTA — dark footer band */}
-      <section className="py-14 px-4 bg-[#2C1A0E] text-center">
+      <section className="py-14 px-4 bg-ink text-center">
         <p className="text-[10px] tracking-[0.25em] text-[#9C8670] uppercase mb-3">Khám Phá Thêm</p>
         <h2 className="text-2xl font-light text-white mb-6">
           Tìm Hiểu Các Làng Nghề <span className="italic text-[#D4B896]">Khác</span>
@@ -264,27 +389,18 @@ export default function VillagePage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             to="/villages"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-[#C9973A]/50 text-sm text-[#D4B896] hover:text-white hover:bg-[#C9973A]/10 rounded-sm transition-all duration-200"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-gold/50 text-sm text-[#D4B896] hover:text-white hover:bg-gold/10 rounded-sm transition-all duration-200"
           >
             Xem Tất Cả Làng Nghề
             <ArrowRight size={14} />
           </Link>
-          {arModel && (
-            <Link
-              to={`/villages/${slug}/ar`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9973A] hover:bg-[#B8862A] text-[#2C1A0E] text-sm font-semibold rounded-sm transition-all duration-200"
-            >
-              <ScanLine size={16} />
-              Xem Mô Hình 3D · AR
-            </Link>
-          )}
         </div>
       </section>
 
       {/* Lightbox */}
       {lightboxImg && (
         <div
-          className="fixed inset-0 z-[100] bg-black/85 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 z-100 bg-black/85 flex items-center justify-center p-4 cursor-pointer"
           onClick={() => setLightboxImg(null)}
         >
           <img

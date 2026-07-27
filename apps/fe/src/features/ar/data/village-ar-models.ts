@@ -1,5 +1,9 @@
 // Map slug → mô hình 3D — AR đặt mô hình trực tiếp trong phòng (model-viewer), không cần marker/ảnh diorama
 export const VILLAGE_AR_MODELS: Record<string, { model: string; label: string }> = {
+  'bat-trang': {
+    model: '/models/lang-gom.glb',
+    label: 'Làng Gốm Bát Tràng',
+  },
   'non-chuong': {
     model: '/models/lang-non.glb',
     label: 'Làng Nón Chuông',
