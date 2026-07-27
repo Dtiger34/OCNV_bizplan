@@ -75,6 +75,38 @@ def make_info_texture(title: str, description: str, out_png: str, size=(1024, 51
     img.save(out_png)
 
 
+def convert_webp_textures(stage: Usd.Stage, extract_dir: str) -> None:
+    """USDZ/Quick Look chi ho tro texture PNG/JPEG, khong ho tro webp — model xuat tu Blender
+    (giu nguyen webp tu glb goc) se bi render mau hong/tim solid (mau bao loi thieu texture)
+    neu khong convert. Convert truc tiep bang PIL roi sua lai moi asset reference trong stage."""
+    renamed: dict[str, str] = {}
+    for root, _, files in os.walk(extract_dir):
+        for fname in files:
+            if not fname.lower().endswith(".webp"):
+                continue
+            webp_path = os.path.join(root, fname)
+            png_name = os.path.splitext(fname)[0] + ".png"
+            Image.open(webp_path).convert("RGBA").save(os.path.join(root, png_name))
+            os.remove(webp_path)
+            renamed[fname] = png_name
+
+    if not renamed:
+        return
+
+    for prim in stage.Traverse():
+        for attr in prim.GetAttributes():
+            if attr.GetTypeName() != Sdf.ValueTypeNames.Asset:
+                continue
+            value = attr.Get()
+            if value is None:
+                continue
+            path_str = value.path
+            for old_name, new_name in renamed.items():
+                if path_str.endswith(old_name):
+                    attr.Set(Sdf.AssetPath(path_str[: -len(old_name)] + new_name))
+                    break
+
+
 def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str) -> None:
     pid = point["id"]
     prim_id = pid.replace("-", "_")  # ten prim USD khong duoc chua dau "-"
@@ -157,6 +189,7 @@ def build(usdz_in: str, points_path: str, usdz_out: str) -> None:
 
     main_layer_path = os.path.join(extract_dir, main_layer_name)
     stage = Usd.Stage.Open(main_layer_path)
+    convert_webp_textures(stage, extract_dir)
     default_prim = stage.GetDefaultPrim()
     root_path = str(default_prim.GetPath()) if default_prim else "/Root"
 

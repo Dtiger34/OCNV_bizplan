@@ -15,6 +15,12 @@ glb_path, usdz_path = argv[0], argv[1]
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=glb_path)
 
+# LUU Y: glb da toi uu bang webp, nhung USDZ/Quick Look CHI ho tro PNG/JPEG — Blender's
+# usd_export khong re-encode webp->png dang tin cay (thu nghiem bi loi "khong tim thay file"),
+# nen giu nguyen webp o buoc nay va convert PNG o buoc sau (build_interactive_usdz.py, dung
+# PIL truc tiep tren file da export — kiem soat duoc hoan toan, khong phu thuoc hanh vi export
+# noi bo cua Blender).
+
 # .glb nen duoc bang Draco (nen mesh), nhung .usdz KHONG ho tro nen mesh — cung so luong
 # vertex, usdz se nang hon nhieu lan vi luu float tho. Decimate truoc khi export de bu lai,
 # neu khong file se qua nang cho AR tren dien thoai (vd model 1.6M vertex -> usdz >100MB).
