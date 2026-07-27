@@ -62,7 +62,17 @@ ServeStaticModule.forRootAsync({
         {
           rootPath: join(process.cwd(), 'fe', 'dist'),
           exclude: ['/api*', '/static*'],
-          serveStaticOptions: { index: false },
+          serveStaticOptions: {
+            index: false,
+            // iOS Quick Look từ chối mở AR nếu .usdz không có đúng Content-Type —
+            // mime-types mặc định của serve-static không biết type này, trả về
+            // application/octet-stream khiến Quick Look âm thầm bounce về trang web.
+            setHeaders: (res, path) => {
+              if (path.endsWith('.usdz')) {
+                res.setHeader('Content-Type', 'model/vnd.usdz+zip');
+              }
+            },
+          },
         },
       ],
     }),
