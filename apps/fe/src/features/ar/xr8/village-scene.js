@@ -4,10 +4,13 @@
 // trong ví dụ chính thức của họ, xem aframe-world-effects-example/tap-place.js).
 //
 // Gesture điều khiển model sau khi đặt:
-// - 1 ngón vuốt dọc (vuốt ngay): nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên)
-// - 1 ngón giữ yên ~300ms rồi kéo: di chuyển vị trí model trên mặt phẳng (raycast xuống ground)
+// - 1 ngón kéo: di chuyển vị trí model trên mặt phẳng (raycast xuống ground)
+// - 2 ngón vuốt song song theo chiều dọc: nghiêng model quanh trục X
 // - 2 ngón xoay tròn quanh nhau: xoay model quanh trục Y (360°)
 // - 2 ngón kéo dãn/thu hẹp (pinch): zoom to/nhỏ
+// 3 gesture 2-ngón dùng chung 1 vùng chạm nên mỗi lần touchmove chỉ chọn MỘT gesture chiếm ưu
+// thế (dịch chuyển dọc lớn nhất -> tilt; xoay góc lớn nhất -> rotate; khoảng cách đổi lớn nhất
+// -> zoom), tránh 3 hiệu ứng cùng áp dụng một lúc gây giật/khó kiểm soát.
 //
 // Khác với model-viewer (Quick Look/Scene Viewer mở app rời), toàn bộ AR session này chạy
 // ngay trong chính trang web — camera feed + model 3D cùng nằm trên 1 <canvas> DOM bình
@@ -21,8 +24,14 @@ import * as THREE from 'three';
 
 const MIN_SCALE = 0.33;
 const MAX_SCALE = 3;
-const TILT_X_FACTOR = 4; // độ nhạy nghiêng trục X (1 ngón vuốt dọc)
+const TILT_X_FACTOR = 4; // độ nhạy nghiêng trục X (2 ngón vuốt song song theo chiều dọc)
 const TILT_LIMIT = Math.PI / 3; // giới hạn nghiêng ±60° để tránh lật ngược model
+// Ngưỡng góc/khoảng cách tối thiểu (đơn vị đã chuẩn hoá theo màn hình, xem getTouchState) để
+// coi là "đang xoay" / "đang zoom" — dưới ngưỡng này rung tay nhỏ khi vuốt tilt không bị hiểu
+// nhầm thành xoay/zoom.
+const ROTATE_ANGLE_THRESHOLD = 0.02;
+const ZOOM_SPREAD_THRESHOLD = 0.003;
+const TILT_POSITION_THRESHOLD = 0.003;
 
 // Toạ độ trung tâm + góc + khoảng cách (spread) giữa các đầu ngón tay đang chạm — dùng scale
 // theo kích thước màn hình để hành vi nhất quán trên mọi thiết bị.
@@ -119,15 +128,15 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
     onModelPlaced?.(model);
   };
 
-  // 1 ngón vuốt dọc (vuốt ngay, không giữ): nghiêng model quanh trục X, giới hạn góc để không
+  // 2 ngón vuốt song song theo chiều dọc: nghiêng model quanh trục X, giới hạn góc để không
   // lật úp model.
-  const handleOneFingerTilt = (dy) => {
+  const handleTwoFingerTilt = (dy) => {
     if (!model) return;
     tiltX = Math.min(Math.max(tiltX + dy * TILT_X_FACTOR, -TILT_LIMIT), TILT_LIMIT);
     model.rotation.x = tiltX;
   };
 
-  // 1 ngón giữ yên rồi kéo: di chuyển model theo mặt phẳng ảo ngang qua điểm đặt ban đầu.
+  // 1 ngón kéo: di chuyển model theo mặt phẳng ảo ngang qua điểm đặt ban đầu.
   const handleDrag = (clientX, clientY, camera) => {
     if (!model || !groundPlane || !raycaster) return;
     const ndcX = (clientX / window.innerWidth) * 2 - 1;
@@ -171,9 +180,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
 
       canvas.addEventListener('touchmove', (e) => e.preventDefault());
 
-      let dragTimer = null;
-      let isDragging = false;
-
       canvas.addEventListener(
         'touchstart',
         (e) => {
@@ -182,13 +188,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
             return;
           }
           prevTouch = getTouchState(e.touches);
-          if (e.touches.length === 1) {
-            // Giữ 300ms không di chuyển thì chuyển sang chế độ kéo-di-chuyển — vuốt ngay (không
-            // giữ) vẫn là nghiêng như bình thường.
-            dragTimer = setTimeout(() => {
-              isDragging = true;
-            }, 300);
-          }
         },
         true
       );
@@ -205,15 +204,29 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
           }
 
           if (current.touchCount === 1) {
-            if (isDragging) {
-              handleDrag(e.touches[0].clientX, e.touches[0].clientY, camera);
-            } else {
-              handleOneFingerTilt(current.position.y - prevTouch.position.y);
-            }
+            handleDrag(e.touches[0].clientX, e.touches[0].clientY, camera);
           } else if (current.touchCount === 2 && current.spread && prevTouch.spread) {
-            handlePinchScale(current.spread - prevTouch.spread, prevTouch.spread);
-            if (current.angle != null && prevTouch.angle != null) {
-              handleTwoFingerRotateY(angleDelta(prevTouch.angle, current.angle));
+            // 3 gesture 2 ngón (tilt/rotate/zoom) dùng chung 1 vùng chạm — mỗi lần touchmove chỉ
+            // chọn MỘT gesture chiếm ưu thế. Mỗi đại lượng có đơn vị khác nhau (radian vs. đơn vị
+            // màn hình chuẩn hoá) nên so sánh theo tỉ lệ so với ngưỡng riêng của nó (bội số của
+            // threshold), không so trực tiếp giá trị tuyệt đối.
+            const angleChange =
+              current.angle != null && prevTouch.angle != null ? angleDelta(prevTouch.angle, current.angle) : 0;
+            const spreadChange = current.spread - prevTouch.spread;
+            const tiltChange = current.position.y - prevTouch.position.y;
+
+            const rotateStrength = Math.abs(angleChange) / ROTATE_ANGLE_THRESHOLD;
+            const zoomStrength = Math.abs(spreadChange) / ZOOM_SPREAD_THRESHOLD;
+            const tiltStrength = Math.abs(tiltChange) / TILT_POSITION_THRESHOLD;
+
+            if (rotateStrength < 1 && zoomStrength < 1 && tiltStrength < 1) {
+              // Chưa vượt ngưỡng nào — rung tay nhỏ, bỏ qua để tránh giật.
+            } else if (rotateStrength >= zoomStrength && rotateStrength >= tiltStrength) {
+              handleTwoFingerRotateY(angleChange);
+            } else if (zoomStrength >= tiltStrength) {
+              handlePinchScale(spreadChange, prevTouch.spread);
+            } else {
+              handleTwoFingerTilt(tiltChange);
             }
           }
 
@@ -225,8 +238,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
       canvas.addEventListener(
         'touchend',
         (e) => {
-          clearTimeout(dragTimer);
-          isDragging = false;
           prevTouch = e.touches.length > 0 ? getTouchState(e.touches) : null;
         },
         true
