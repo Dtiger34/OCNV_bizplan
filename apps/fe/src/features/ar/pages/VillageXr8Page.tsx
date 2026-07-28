@@ -82,24 +82,37 @@ export default function VillageXr8Page() {
       onLog: (line: string) => setDebugLogs((prev) => [...prev.slice(-9), line]),
     });
 
+    let started = false;
     const startXr8 = () => {
+      if (started) return; // tránh gọi XR8.run() 2 lần trên cùng canvas (2 WebGL context
+      // tranh chấp có thể khiến Safari crash tab và tự reload) — có thể bị gọi lại nếu sự kiện
+      // 'xrloaded' fire nhiều lần hoặc effect này chạy lại trước khi cleanup trước đó kịp xong.
       const XR8 = window.XR8;
       const XRExtras = window.XRExtras;
       if (!XR8 || !XRExtras) return;
+      started = true;
 
       setLoading(false);
-      XR8.addCameraPipelineModules([
-        XR8.GlTextureRenderer.pipelineModule(),
-        XR8.Threejs.pipelineModule(),
-        XR8.XrController.pipelineModule(),
-        window.LandingPage?.pipelineModule(),
-        XRExtras.FullWindowCanvas.pipelineModule(),
-        XRExtras.Loading.pipelineModule(),
-        XRExtras.RuntimeError.pipelineModule(),
-        scenePipelineModule,
-      ].filter(Boolean));
+      try {
+        XR8.addCameraPipelineModules([
+          XR8.GlTextureRenderer.pipelineModule(),
+          XR8.Threejs.pipelineModule(),
+          XR8.XrController.pipelineModule(),
+          window.LandingPage?.pipelineModule(),
+          XRExtras.FullWindowCanvas.pipelineModule(),
+          XRExtras.Loading.pipelineModule(),
+          XRExtras.RuntimeError.pipelineModule(),
+          scenePipelineModule,
+        ].filter(Boolean));
 
-      XR8.run({ canvas });
+        XR8.run({ canvas });
+      } catch (err) {
+        // Nếu WebGL context không tạo được (ví dụ do canvas/context bị chiếm bởi phiên trước
+        // chưa giải phóng xong) — báo lỗi rõ ràng thay vì để trình duyệt tự crash/reload tab
+        // trong im lặng.
+        console.error('[VillageAR] Lỗi khởi động XR8:', err);
+        setLoadError(true);
+      }
     };
 
     if (window.XR8) {
@@ -114,10 +127,17 @@ export default function VillageXr8Page() {
 
     return () => {
       window.removeEventListener('xrloaded', startXr8);
-      // Bắt buộc dừng camera khi rời trang — không gọi thì phiên camera của XR8 vẫn chạy nền,
-      // đè lên UI của trang kế tiếp cho tới khi bị GC (không có mốc thời gian rõ ràng).
+      // Bắt buộc dừng camera khi rời trang. XR8.stop() dừng render loop của engine nhưng
+      // KHÔNG tự đảm bảo track camera (getUserMedia) được giải phóng — nếu track vẫn sống,
+      // trình duyệt (đặc biệt Safari) tiếp tục hiển thị đè camera lên các trang sau. Nên tự
+      // tìm và dừng mọi video track đang phát trên canvas srcObject/video ẩn mà XR8 tạo ra.
       window.XR8?.stop();
       window.XR8?.clearCameraPipelineModules();
+      document.querySelectorAll('video').forEach((video) => {
+        const stream = video.srcObject as MediaStream | null;
+        stream?.getTracks().forEach((track) => track.stop());
+        video.srcObject = null;
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [arAssets?.model]);

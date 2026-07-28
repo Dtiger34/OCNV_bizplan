@@ -13,8 +13,10 @@
 // thường, nên React có thể overlay UI tuỳ biến (point, bong bóng info) đè lên bất cứ lúc nào,
 // trên cả iOS lẫn Android.
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+// GLTFLoader/DRACOLoader tải động (không import tĩnh) — riêng DRACOLoader kéo theo phần code
+// giải nén Draco khá nặng, import tĩnh làm chunk trang AR phình gấp ~3 lần (232kB -> 775kB),
+// tăng áp lực tải/parse lần đầu trên Safari mobile. Chỉ cần khi thực sự load model (chạm màn
+// hình đặt xong không cần nữa), nên trì hoãn tới lúc gọi loadModel().
 
 const MIN_SCALE = 0.33;
 const MAX_SCALE = 3;
@@ -59,8 +61,20 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
   let tiltX = 0;
   let prevTouch = null;
 
-  const loadModel = (scene) => {
+  const loadModel = async (scene) => {
     log('Bắt đầu tải model:', modelUrl);
+    let GLTFLoader, DRACOLoader;
+    try {
+      [{ GLTFLoader }, { DRACOLoader }] = await Promise.all([
+        import('three/examples/jsm/loaders/GLTFLoader.js'),
+        import('three/examples/jsm/loaders/DRACOLoader.js'),
+      ]);
+    } catch (err) {
+      log('LỖI tải loader:', err?.message || err);
+      onError?.(err);
+      return;
+    }
+
     // Các file .glb đã nén dùng KHR_draco_mesh_compression (xem lệnh gltf-transform lúc build)
     // — GLTFLoader trơn tải được file (100% download) nhưng không tự giải nén được phần hình
     // học Draco nếu thiếu DRACOLoader, nên load() báo lỗi dù request mạng đã thành công.
