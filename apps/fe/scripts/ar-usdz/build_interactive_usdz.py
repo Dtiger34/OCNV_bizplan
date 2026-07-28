@@ -1,15 +1,13 @@
 """
-Bake tap-to-show-info hotspot behavior vao mot file .usdz nen (baseline), chay hoan toan
-tren Windows bang goi pip `usd-core` — khong can Mac/Reality Composer.
+Bake cac panel thong tin (title + description) LUON HIEN SAN vao mot file .usdz nen
+(baseline), chay hoan toan tren Windows bang goi pip `usd-core` — khong can Mac/Reality
+Composer.
 
-QUAN TRONG - doc README.md cung thu muc truoc khi dung:
-Cau truc prim Preliminary_Behavior/Preliminary_Trigger/Preliminary_Action duoc dung o day
-la reverse-engineer tu Reality Composer Pro (nguon: elkraneo.com), KHONG phai tai lieu
-chinh thuc cua Apple (trang docs goc da bi go). Ten "info:id" cho tap trigger ("TapGesture")
-la da xac nhan; ten "ShowAction" cho hanh dong hien panel la suy luan theo quy uoc dat ten
-(da xac nhan "SpinAction" ton tai voi cung quy uoc) — CAN TEST TREN IPHONE THAT de xac nhan.
-Neu sai, hau qua chi la point khong tap len duoc trong Quick Look — khong anh huong den
-viec xem model binh thuong.
+Ban dau thu lam tap-to-show (Preliminary_Behavior/Trigger/Action, reverse-engineer tu
+Reality Composer Pro) nhung khong xac nhan duoc Quick Look co thuc thi dung schema nay
+khong (test tren iPhone that: marker khong tap duoc). Da bo phan tap-behavior, panel gio
+luon visible ngay khi dat model vao AR — don gian hon, khong phu thuoc vao schema chua
+duoc Apple cong bo chinh thuc.
 
 Input can chuan bi truoc (script nay KHONG tu convert glb->usd):
   --usdz  file .usdz "nen" (chi co hinh khoi + mau, chua co behavior) cua dung model do,
@@ -128,17 +126,34 @@ def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str,
     group_path = f"{scope_path}/Hotspot_{prim_id}"
     marker_path = f"{group_path}/Marker"
     panel_path = f"{group_path}/Panel"
-    behavior_path = f"{group_path}/Behavior"
-    trigger_path = f"{behavior_path}/TapTrigger"
-    show_path = f"{behavior_path}/ShowAction"
 
-    # Marker: qua cau nho danh dau vi tri point tren model
+    # Marker: qua cau nho danh dau vi tri point tren model (chi de trang tri/dinh vi,
+    # khong con tap-interaction — xem ghi chu o Panel ben duoi).
+    # displayColor khong du de RealityKit/Quick Look render dung mau — can UsdPreviewSurface
+    # Material that (giong Panel), neu khong marker co the bi vo hinh/render sai mau.
     marker = UsdGeom.Sphere.Define(stage, marker_path)
-    marker.CreateRadiusAttr(0.025)
+    marker.CreateRadiusAttr(0.05)
     UsdGeom.XformCommonAPI(marker).SetTranslate(Gf.Vec3d(pos["x"], pos["y"], pos["z"]))
     marker.CreateDisplayColorAttr([Gf.Vec3f(*(c / 255 for c in COLOR_GOLD))])
 
-    # Panel: quad phang chua anh info (title + description), an mac dinh
+    marker_material_path = f"{marker_path}/MarkerMaterial"
+    marker_material = UsdShade.Material.Define(stage, marker_material_path)
+    marker_shader = UsdShade.Shader.Define(stage, f"{marker_material_path}/Shader")
+    marker_shader.CreateIdAttr("UsdPreviewSurface")
+    marker_shader.CreateInput("diffuseColor", Sdf.ValueTypeNames.Color3f).Set(
+        Gf.Vec3f(*(c / 255 for c in COLOR_GOLD))
+    )
+    marker_shader.CreateInput("emissiveColor", Sdf.ValueTypeNames.Color3f).Set(
+        Gf.Vec3f(*(c / 255 for c in COLOR_GOLD))
+    )
+    marker_shader.CreateInput("opacity", Sdf.ValueTypeNames.Float).Set(1.0)
+    marker_material.CreateSurfaceOutput().ConnectToSource(marker_shader.ConnectableAPI(), "surface")
+    UsdShade.MaterialBindingAPI(marker).Bind(marker_material)
+
+    # Panel: quad phang chua anh info (title + description), LUON HIEN SAN — khong can tap.
+    # Preliminary_Behavior/Trigger/Action (tap-to-show) da bo vi khong xac nhan duoc Quick Look
+    # co thuc thi dung khong (xem README.md) — thay bang cach don gian, chac chan hoat dong:
+    # panel luon visible ngay khi model duoc dat vao AR.
     png_name = f"info_{pid}.png"
     make_info_texture(point["title"], point["description"], os.path.join(assets_dir, png_name))
 
@@ -156,7 +171,6 @@ def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str,
     UsdGeom.PrimvarsAPI(panel).CreatePrimvar(
         "st", Sdf.ValueTypeNames.TexCoord2fArray, UsdGeom.Tokens.faceVarying
     ).Set([(0, 0), (1, 0), (1, 1), (0, 1)])
-    panel.CreateVisibilityAttr(UsdGeom.Tokens.invisible)
 
     material_path = f"{panel_path}/InfoMaterial"
     material = UsdShade.Material.Define(stage, material_path)
@@ -172,24 +186,6 @@ def add_hotspot(stage: Usd.Stage, scope_path: str, point: dict, assets_dir: str,
     shader.CreateInput("opacity", Sdf.ValueTypeNames.Float).Set(1.0)
     material.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), "surface")
     UsdShade.MaterialBindingAPI(panel).Bind(material)
-
-    # Behavior: tap Marker -> hien Panel. Preliminary_* khong co Python schema generated san
-    # trong usd-core (day la plugin rieng cua Apple) nen author bang generic Usd.Prim — cau truc
-    # rel/token da doi chieu voi vi du that (xem README.md), phan "ShowAction" can test lai.
-    behavior = stage.DefinePrim(behavior_path, "Preliminary_Behavior")
-    behavior.CreateRelationship("triggers").SetTargets([Sdf.Path(trigger_path)])
-    behavior.CreateRelationship("actions").SetTargets([Sdf.Path(show_path)])
-
-    trigger = stage.DefinePrim(trigger_path, "Preliminary_Trigger")
-    trigger.CreateAttribute("info:id", Sdf.ValueTypeNames.Token).Set("TapGesture")
-    trigger.CreateRelationship("affectedObjects").SetTargets([Sdf.Path(marker_path)])
-
-    show_action = stage.DefinePrim(show_path, "Preliminary_Action")
-    # "Show" van chua chac dung — dung "actionId" rieng cho tung point (xem points/*.json,
-    # field tuy chon "actionId") de test nhieu bien the cung luc trong 1 lan build/deploy.
-    action_id = point.get("actionId", "Show")
-    show_action.CreateAttribute("info:id", Sdf.ValueTypeNames.Token).Set(action_id)
-    show_action.CreateRelationship("affectedObjects").SetTargets([Sdf.Path(panel_path)])
 
 
 def build(usdz_in: str, points_path: str, usdz_out: str) -> None:

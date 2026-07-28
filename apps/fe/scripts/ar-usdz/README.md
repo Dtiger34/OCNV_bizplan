@@ -1,85 +1,50 @@
-# Bake tap-to-show-info hotspot vao USDZ (khong can Mac)
+# Bake panel thông tin luôn hiện vào USDZ (không cần Mac)
 
 ## Bối cảnh
 
-Tren iOS, AR that (Quick Look) mo mot app rieng cua he dieu hanh — trang web (va moi DOM
-overlay) bi day ra nen, nen khong the "ve de" point/info-box len tren nhu cach lam tren
-Android (WebXR). Muon point tap-duoc NGAY TRONG luc dang AR tren iOS, hotspot phai duoc
-"bake" (nhung san) vao chinh file `.usdz`, khong the lam bang React/DOM.
+Trên iOS, AR thật (Quick Look) mở một app riêng của hệ điều hành — trang web (và mọi DOM
+overlay) bị đẩy ra nền, nên không thể "vẽ đè" point/info-box lên trên như cách làm trên
+Android (WebXR). Muốn thông tin hiện được ngay trong lúc đang AR trên iOS, nội dung phải
+được "bake" (nhúng sẵn) vào chính file `.usdz`, không thể làm bằng React/DOM.
 
-Cach lam chinh thuc cua Apple la dung **Reality Composer** (macOS/iPadOS, GUI) de gan
-"behavior" (trigger + action) — cong cu nay tu dong sinh dung schema. Repo nay khong co Mac,
-nen dung huong thay the:
+**Lịch sử — đã thử và bỏ**: ban đầu thử bake behavior "tap vào marker → hiện panel" bằng
+schema `Preliminary_Behavior`/`Preliminary_Trigger`/`Preliminary_Action` (reverse-engineer
+từ Reality Composer Pro, tài liệu chính thức của Apple cho phần này đã 404). Test trên
+iPhone thật: **marker không tap được, không có phản hồi gì cả** — không xác nhận được là do
+tên `info:id` sai hay do Quick Look không hỗ trợ chạy schema này khi mở qua Safari/web
+(khác với mở trực tiếp trong app RealityKit native). Không có cách nào debug thêm vì Quick
+Look là app đóng của Apple, không có console/log để quan sát.
 
-- **Kiem tra da lam (khuyen nghi dung ngay)**: `VillageArPage.tsx` da ho tro tap-point-hien-info
-  o buoc xem model inline TRUOC khi vao AR — hoat dong tren moi nen tang, khong can file usdz
-  dac biet nay.
-- **Script trong thu muc nay**: thu bake behavior thang vao usdz de tap duoc TRONG luc dang AR
-  that tren iOS — **can test tren iPhone that de xac nhan hoat dong**, vi khong co Mac/iPhone
-  o moi truong build de tu verify.
+**Giải pháp hiện tại**: bỏ hẳn phần tap-behavior, panel thông tin **luôn hiện sẵn** (visible
+mặc định) ngay khi model được đặt vào AR — không cần tap, không phụ thuộc vào schema chưa
+xác nhận được có hoạt động hay không. Đơn giản hơn và chắc chắn hiện ra (nếu Quick Look
+render đúng mesh/material, đã verify các file mẫu công khai của Apple luôn hiển thị mesh có
+material `UsdPreviewSurface` bình thường).
 
-## Do tin cay cua schema dung trong script
+Đây không phải cách duy nhất có info trên iOS — `VillageArPage.tsx` cũng đã hỗ trợ tap-point
+hiện info ở bước xem model inline TRƯỚC khi vào AR (hoạt động trên mọi nền tảng, dùng React
+`onClick` thật, không phụ thuộc schema USD nào).
 
-`Preliminary_Behavior` / `Preliminary_Trigger` / `Preliminary_Action` la schema rieng cua
-Apple, tai lieu chinh thuc (`developer.apple.com/.../preliminary_trigger`) hien da 404. Cau
-truc dung trong `build_interactive_usdz.py` duoc doi chieu tu bai reverse-engineer cua
-elkraneo.com (dump usda that xuat boi Reality Composer Pro):
+## Quy trình 2 bước
 
-```
-def Preliminary_Behavior "OnTap"
-    rel triggers = [</Root/Entity/OnTap/TapTrigger>]
-    rel actions = [</Root/Entity/OnTap/SpinAction>]
+### Bước 1 — Tạo file usdz "nền" (chỉ hình khối + màu, chưa có panel)
 
-def Preliminary_Trigger "TapTrigger"
-    token info:id = "TapGesture"
-    rel affectedObjects = [</Root/Entity>]
+Cần một công cụ convert glb -> usdz. Không dùng Reality Composer (không có Mac), dùng
+**Blender** (miễn phí, chạy trên Windows, có sẵn USDZ exporter từ bản 4.x):
 
-def Preliminary_Action "SpinAction"
-    token info:id = "SpinAction"
-    float3 axis = (0, 1, 0)
-    float duration = 1.0
-```
-
-Da xac nhan chac chan (tu 2 nguon doc lap):
-- Cau truc `Behavior -> rel triggers/actions`, `Trigger` voi `token info:id = "TapGesture"` +
-  `rel affectedObjects` — tu bai reverse-engineer elkraneo.com (dump that tu Reality Composer Pro).
-- **Ten class va format `info:id` chinh xac** — tu chinh file dinh nghia schema goc cua Apple
-  (copyright Apple Inc. 2020), tim thay trong repo mau WWDC chinh thuc
-  `github.com/XRealityZone/apple-wwdc-ar-demo`, file
-  `SchemaDefinitionsForThirdPartyDCCs/UsdInteractive/schema.usda`. File nay dinh nghia ro
-  `Preliminary_Behavior`/`Preliminary_Trigger`/`Preliminary_Action` giong het cau truc da dung,
-  va **vi du gia tri `info:id` cho Action la tu thuan nhu `"Impulse"`, `"Group"` — KHONG co hau
-  to `"Action"`**. Dieu nay mau thuan voi vi du `"SpinAction"` cua elkraneo (co the la quy uoc
-  rieng cua Reality Composer PRO/RealityKit, khac voi Preliminary_Action co dien cho Quick Look).
-
-**Van chua xac nhan 100%** (suy luan tu quy uoc "Impulse"/"Group"): ten `info:id` chinh xac cho
-hanh dong "hien vat the" trong he Preliminary_Action co dien — script dang dung `"Show"` (truoc
-day thu `"ShowAction"` va khong hoat dong, khop voi du doan la sai quy uoc). Neu `"Show"` van
-sai, hau qua chi la marker khong tap len duoc (model van xem binh thuong, khong crash, khong
-mat du lieu) — sua lai o `show_action.CreateAttribute("info:id", ...)` trong
-`build_interactive_usdz.py` roi build lai la duoc, khong can lam lai tu dau. Cac bien the khac
-co the thu neu `"Show"` cung khong an: `"Visible"`, `"SetVisibility"`, `"Unhide"`.
-
-## Quy trinh 2 buoc
-
-### Buoc 1 — Tao file usdz "nen" (chi hinh khoi + mau, chua co behavior)
-
-Can mot cong cu convert glb -> usdz. Khong dung Reality Composer (khong co Mac), dung
-**Blender** (mien phi, chay tren Windows, co san USDZ exporter tu ban 4.x):
-
-1. Cai Blender: https://www.blender.org/download/
-2. Mo Blender -> File > Import > glTF 2.0 -> chon file trong `apps/fe/public/models/*.glb`
-3. File > Export > Universal Scene Description -> chon dinh dang `.usdz` -> luu vao
+1. Cài Blender: https://www.blender.org/download/
+2. Mở Blender -> File > Import > glTF 2.0 -> chọn file trong `apps/fe/public/models/*.glb`
+3. File > Export > Universal Scene Description -> chọn định dạng `.usdz` -> lưu vào
    `apps/fe/scripts/ar-usdz/baseline/<ten-model>.usdz`
 
-(Co the tu dong hoa buoc nay bang Blender headless `--background --python export_usdz.py`
-neu can lam nhieu model — chua viet vi hien chi co du lieu hotspot cho `bat-trang`.)
+(Có thể tự động hoá bước này bằng Blender headless `--background --python export_usdz.py`
+nếu cần làm nhiều model — chưa viết vì hiện chỉ có dữ liệu hotspot cho `bat-trang`.)
 
-### Buoc 2 — Bake hotspot + behavior, dong goi usdz cuoi
+### Bước 2 — Bake panel thông tin, đóng gói usdz cuối
 
 ```bash
 cd apps/fe/scripts/ar-usdz
-pip install usd-core Pillow    # thuan Python, chay duoc tren Windows
+pip install usd-core Pillow    # thuần Python, chạy được trên Windows
 
 python build_interactive_usdz.py \
   --usdz baseline/lang-gom.usdz \
@@ -87,15 +52,19 @@ python build_interactive_usdz.py \
   --out ../../public/models/lang-gom.usdz
 ```
 
-File `points/bat-trang.json` phai khop voi `position`/`normal`/`title`/`description` trong
-`VILLAGE_AR_POINTS` (`apps/fe/src/features/ar/data/village-ar-points.ts`) — neu sua toa do o
-mot cho (vi du sau khi calibrate bang dev helper Alt+click trong `VillageArPage.tsx`), nho
-sua ca hai.
+File `points/bat-trang.json` phải khớp với `position`/`normal`/`title`/`description` trong
+`VILLAGE_AR_POINTS` (`apps/fe/src/features/ar/data/village-ar-points.ts`) — nếu sửa toạ độ ở
+một chỗ (ví dụ sau khi calibrate bằng dev helper Alt+click trong `VillageArPage.tsx`), nhớ
+sửa cả hai. Trường `actionId` trong file JSON (dùng để test các biến thể tap-behavior trước
+đây) không còn tác dụng, có thể bỏ hoặc giữ lại tuỳ ý — script hiện tại không đọc field này.
 
-### Buoc 3 — Test tren iPhone that
+### Bước 3 — Test trên iPhone thật
 
-`village-ar-models.ts` da san sang tro `usdz` toi `/models/lang-gom.usdz` cho `bat-trang`.
-Mo trang tren Safari iOS, vao AR that (Quick Look), tap vao marker vang — neu panel info
-khong hien len, thu doi `info:id` sang cac bien the khac (`"Visible"`, `"SetVisibility"`,
-`"Unhide"`) trong `build_interactive_usdz.py` roi build lai, hoac quay lai phuong an
-web-preview da co san (khong can sua gi them, da hoat dong).
+`village-ar-models.ts` đã sẵn sàng trỏ `usdz` tới `/models/lang-gom.usdz` cho `bat-trang`.
+Mở trang trên Safari iOS, vào AR thật (Quick Look) — 3 panel thông tin (bàn xoay, lò nung,
+hoa văn) sẽ hiện sẵn ngay tại vị trí đã calibrate trên model, không cần tap gì thêm.
+
+Nếu panel không hiện: kiểm tra lại toạ độ `position`/`normal` trong `points/*.json` có nằm
+trong không gian model không (build lại, dùng dev helper Alt+click trong `VillageArPage.tsx`
+ở chế độ xem inline để lấy toạ độ chính xác), hoặc kiểm tra texture PNG có bị lỗi render
+(dùng `usdcat`/trình xem USD trên Windows để mở thử file `.usdz` trước khi deploy).

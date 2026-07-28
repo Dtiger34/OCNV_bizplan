@@ -1,10 +1,13 @@
 // Điểm chú thích cho model AR. Có 2 cách neo, dùng ở 2 chỗ khác nhau:
 // - x/y: toạ độ % màn hình, chỉ dùng cho overlay đè lên khi đang ở trong AR thật qua WebXR (chỉ Android —
 //   Quick Look/Scene Viewer mở app rời nên trang web bị đẩy ra nền, không overlay được).
-// - position/normal: toạ độ 3D neo lên bề mặt model (mét, theo hệ trục gốc của file .glb), dùng cho
-//   model-viewer hotspot slot khi xem inline (trước khi vào AR) — cách duy nhất có point-tap-info trên iOS,
-//   vì Quick Look không cho vẽ đè DOM lên trên. Lấy toạ độ bằng cách log point/normal khi click lên model
-//   ở chế độ xem thường (xem hướng dẫn calibrate trong VillageArPage.tsx).
+// - position/normal: toạ độ 3D neo lên bề mặt model (mét, theo hệ trục gốc của file .glb) — dùng cho
+//   2 nơi độc lập: (1) model-viewer hotspot slot khi xem inline trước AR (mọi nền tảng), và
+//   (2) panel thông tin bake sẵn LUÔN HIỆN trong file .usdz cho iOS (xem
+//   scripts/ar-usdz/build_interactive_usdz.py — không cần tap, tránh phụ thuộc schema
+//   Preliminary_Behavior chưa xác nhận được Quick Look có hỗ trợ hay không).
+//   Lấy toạ độ bằng cách log point/normal khi click lên model ở chế độ xem thường
+//   (xem hướng dẫn calibrate trong VillageArPage.tsx).
 export interface ArPoint {
   id: string;
   x: number; // % chiều ngang màn hình (overlay Android in-AR)
