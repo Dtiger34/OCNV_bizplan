@@ -31,8 +31,14 @@ declare global {
       RuntimeError: { pipelineModule: () => unknown };
     };
     LandingPage?: { pipelineModule: () => unknown };
+    THREE?: typeof THREE;
   }
 }
+
+// XR8.Threejs.pipelineModule() đọc window.THREE như một biến global (đúng cách sample chính
+// thức của 8th Wall làm trong app.js) — import ES module thôi không đủ, engine binary không
+// nhìn thấy được.
+window.THREE = THREE;
 
 export default function VillageXr8Page() {
   const { slug } = useParams<{ slug: string }>();
