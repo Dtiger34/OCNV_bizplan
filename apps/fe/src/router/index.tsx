@@ -6,6 +6,7 @@ import PrivateRoute from '@/components/layout/PrivateRoute';
 
 // Public pages
 const HomePage = lazy(() => import('@/features/home/pages/HomePage'));
+const AboutPage = lazy(() => import('@/features/about/pages/AboutPage'));
 const ShopPage = lazy(() => import('@/features/shop/pages/ShopPage'));
 const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
 const ArPage = lazy(() => import('@/features/ar/pages/ArPage'));
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: '/', element: S(HomePage) },
+      { path: '/gioi-thieu', element: S(AboutPage) },
       { path: '/shop', element: S(ShopPage) },
       { path: '/products/:id', element: S(ProductDetailPage) },
       { path: '/villages', element: S(VillagesListPage) },

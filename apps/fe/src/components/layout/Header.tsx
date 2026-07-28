@@ -17,6 +17,7 @@ export default function Header() {
     { name: 'Trang chủ', path: '/' },
     { name: 'Sản phẩm', path: '/shop' },
     { name: 'Câu Chuyện', path: '/villages' },
+    { name: 'Về chúng tôi', path: '/gioi-thieu' },
     { name: 'Chính sách', path: '/quy-dinh' },
   ];
 
