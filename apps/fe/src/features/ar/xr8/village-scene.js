@@ -4,7 +4,8 @@
 // trong ví dụ chính thức của họ, xem aframe-world-effects-example/tap-place.js).
 //
 // Gesture điều khiển model sau khi đặt:
-// - 1 ngón vuốt dọc: nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên)
+// - 1 ngón vuốt dọc (vuốt ngay): nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên)
+// - 1 ngón giữ yên ~300ms rồi kéo: di chuyển vị trí model trên mặt phẳng (raycast xuống ground)
 // - 2 ngón xoay tròn quanh nhau: xoay model quanh trục Y (360°)
 // - 2 ngón kéo dãn/thu hẹp (pinch): zoom to/nhỏ
 //
@@ -60,6 +61,8 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
   let scaleFactor = 1;
   let tiltX = 0;
   let prevTouch = null;
+  let raycaster = null;
+  let groundPlane = null; // mặt phẳng ảo ngang qua điểm đặt model, dùng raycast để kéo-di-chuyển
 
   const loadModel = async (scene) => {
     log('Bắt đầu tải model:', modelUrl);
@@ -112,15 +115,29 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
     model.position.set(camera.position.x + forward.x, 0, camera.position.z + forward.z);
     model.visible = true;
     placed = true;
+    groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     onModelPlaced?.(model);
   };
 
-  // 1 ngón vuốt dọc: nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên), giới hạn góc để
-  // không lật úp model.
+  // 1 ngón vuốt dọc (vuốt ngay, không giữ): nghiêng model quanh trục X, giới hạn góc để không
+  // lật úp model.
   const handleOneFingerTilt = (dy) => {
     if (!model) return;
     tiltX = Math.min(Math.max(tiltX + dy * TILT_X_FACTOR, -TILT_LIMIT), TILT_LIMIT);
     model.rotation.x = tiltX;
+  };
+
+  // 1 ngón giữ yên rồi kéo: di chuyển model theo mặt phẳng ảo ngang qua điểm đặt ban đầu.
+  const handleDrag = (clientX, clientY, camera) => {
+    if (!model || !groundPlane || !raycaster) return;
+    const ndcX = (clientX / window.innerWidth) * 2 - 1;
+    const ndcY = -(clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera({ x: ndcX, y: ndcY }, camera);
+    const hit = new THREE.Vector3();
+    if (raycaster.ray.intersectPlane(groundPlane, hit)) {
+      model.position.x = hit.x;
+      model.position.z = hit.z;
+    }
   };
 
   // 2 ngón xoay tròn quanh nhau (góc giữa 2 điểm chạm thay đổi): xoay model quanh trục Y.
@@ -142,6 +159,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
 
     onStart: ({ canvas }) => {
       const { scene, camera } = XR8.Threejs.xrScene();
+      raycaster = new THREE.Raycaster();
 
       const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
       scene.add(light);
@@ -153,6 +171,9 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
 
       canvas.addEventListener('touchmove', (e) => e.preventDefault());
 
+      let dragTimer = null;
+      let isDragging = false;
+
       canvas.addEventListener(
         'touchstart',
         (e) => {
@@ -161,6 +182,13 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
             return;
           }
           prevTouch = getTouchState(e.touches);
+          if (e.touches.length === 1) {
+            // Giữ 300ms không di chuyển thì chuyển sang chế độ kéo-di-chuyển — vuốt ngay (không
+            // giữ) vẫn là nghiêng như bình thường.
+            dragTimer = setTimeout(() => {
+              isDragging = true;
+            }, 300);
+          }
         },
         true
       );
@@ -177,7 +205,11 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
           }
 
           if (current.touchCount === 1) {
-            handleOneFingerTilt(current.position.y - prevTouch.position.y);
+            if (isDragging) {
+              handleDrag(e.touches[0].clientX, e.touches[0].clientY, camera);
+            } else {
+              handleOneFingerTilt(current.position.y - prevTouch.position.y);
+            }
           } else if (current.touchCount === 2 && current.spread && prevTouch.spread) {
             handlePinchScale(current.spread - prevTouch.spread, prevTouch.spread);
             if (current.angle != null && prevTouch.angle != null) {
@@ -193,6 +225,8 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
       canvas.addEventListener(
         'touchend',
         (e) => {
+          clearTimeout(dragTimer);
+          isDragging = false;
           prevTouch = e.touches.length > 0 ? getTouchState(e.touches) : null;
         },
         true
