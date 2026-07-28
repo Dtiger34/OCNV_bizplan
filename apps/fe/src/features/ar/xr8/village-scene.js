@@ -12,6 +12,7 @@
 // trên cả iOS lẫn Android.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 const MIN_SCALE = 0.33;
 const MAX_SCALE = 3;
@@ -52,7 +53,13 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
 
   const loadModel = (scene) => {
     log('Bắt đầu tải model:', modelUrl);
+    // Các file .glb đã nén dùng KHR_draco_mesh_compression (xem lệnh gltf-transform lúc build)
+    // — GLTFLoader trơn tải được file (100% download) nhưng không tự giải nén được phần hình
+    // học Draco nếu thiếu DRACOLoader, nên load() báo lỗi dù request mạng đã thành công.
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
     const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
     loader.load(
       modelUrl,
       (gltf) => {
