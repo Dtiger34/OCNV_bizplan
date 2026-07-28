@@ -1,6 +1,10 @@
-// 8th Wall camera pipeline module: tải model .glb vào scene three.js, đặt xuống sàn khi
-// người dùng chạm màn hình lần đầu (giống UX "chạm để đặt" quen thuộc của Quick Look/Scene
-// Viewer), rồi báo về React qua callback để vẽ point/overlay HTML đè lên canvas.
+// 8th Wall camera pipeline module: tải model .glb vào scene three.js, đặt xuống mặt phẳng
+// tương đối khi người dùng chạm màn hình lần đầu (bản SLAM miễn phí không có plane detection
+// thật kiểu ARCore/ARKit — chỉ world-tracking 6DoF; đây đúng là cách 8th Wall tự đặt "ground"
+// trong ví dụ chính thức của họ, xem aframe-world-effects-example/tap-place.js), rồi cho phép
+// xoay/zoom/di chuyển bằng gesture (logic chuyển thể từ
+// packages/xrextras/src/aframe/components/gestures-components.ts — component gốc viết cho
+// A-Frame, ở đây viết lại thuần three.js/vanilla JS).
 //
 // Khác với model-viewer (Quick Look/Scene Viewer mở app rời), toàn bộ AR session này chạy
 // ngay trong chính trang web — camera feed + model 3D cùng nằm trên 1 <canvas> DOM bình
@@ -9,10 +13,37 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+const MIN_SCALE = 0.33;
+const MAX_SCALE = 3;
+const ROTATE_FACTOR = 6;
+
+// Tính toạ độ trung tâm + khoảng cách trung bình (spread) của các đầu ngón tay đang chạm —
+// dùng scale theo kích thước màn hình để hành vi nhất quán trên mọi thiết bị (xem
+// getTouchState gốc trong gestures-components.ts).
+function getTouchState(touches) {
+  const list = Array.from(touches);
+  const cx = list.reduce((sum, t) => sum + t.clientX, 0) / list.length;
+  const cy = list.reduce((sum, t) => sum + t.clientY, 0) / list.length;
+  const screenScale = 2 / (window.innerWidth + window.innerHeight);
+  const state = { touchCount: list.length, position: { x: cx * screenScale, y: cy * screenScale } };
+  if (list.length >= 2) {
+    const spread = list.reduce(
+      (sum, t) => sum + Math.sqrt((cx - t.clientX) ** 2 + (cy - t.clientY) ** 2),
+      0
+    ) / list.length;
+    state.spread = spread * screenScale;
+  }
+  return state;
+}
+
 export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onError }) {
   let model = null;
   let placed = false;
+  let baseScale = new THREE.Vector3(1, 1, 1);
+  let scaleFactor = 1;
+  let prevTouch = null;
   let raycaster = null;
+  let groundPlane = null; // Plane ảo ngang qua đáy model, dùng để kéo-di-chuyển bằng raycast
 
   const loadModel = (scene) => {
     const loader = new GLTFLoader();
@@ -22,6 +53,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onEr
         model = gltf.scene;
         model.visible = false; // ẩn cho tới khi người dùng chạm để đặt
         scene.add(model);
+        baseScale = model.scale.clone();
       },
       undefined,
       (err) => {
@@ -33,12 +65,38 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onEr
 
   const placeModel = (camera) => {
     if (!model || placed) return;
-    // Đặt model trước camera 1.5m theo hướng nhìn hiện tại, hạ xuống mặt đất giả định y=0
+    // Đặt model trước camera 1.5m theo hướng nhìn hiện tại, hạ xuống mặt phẳng tương đối y=0
+    // (world origin của session — xem ghi chú đầu file về giới hạn SLAM miễn phí).
     const forward = new THREE.Vector3(0, 0, -1.5).applyQuaternion(camera.quaternion);
     model.position.set(camera.position.x + forward.x, 0, camera.position.z + forward.z);
     model.visible = true;
     placed = true;
+    groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     onModelPlaced?.(model);
+  };
+
+  const handleOneFingerRotate = (dx) => {
+    if (!model) return;
+    model.rotation.y += dx * ROTATE_FACTOR;
+  };
+
+  const handlePinchScale = (spreadChange, startSpread) => {
+    if (!model || !startSpread) return;
+    scaleFactor *= 1 + spreadChange / startSpread;
+    scaleFactor = Math.min(Math.max(scaleFactor, MIN_SCALE), MAX_SCALE);
+    model.scale.set(baseScale.x * scaleFactor, baseScale.y * scaleFactor, baseScale.z * scaleFactor);
+  };
+
+  const handleDrag = (clientX, clientY, camera) => {
+    if (!model || !groundPlane || !raycaster) return;
+    const ndcX = (clientX / window.innerWidth) * 2 - 1;
+    const ndcY = -(clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera({ x: ndcX, y: ndcY }, camera);
+    const hit = new THREE.Vector3();
+    if (raycaster.ray.intersectPlane(groundPlane, hit)) {
+      model.position.x = hit.x;
+      model.position.z = hit.z;
+    }
   };
 
   return {
@@ -46,6 +104,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onEr
 
     onStart: ({ canvas }) => {
       const { scene, camera } = XR8.Threejs.xrScene();
+      raycaster = new THREE.Raycaster();
 
       const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
       scene.add(light);
@@ -57,16 +116,60 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onEr
 
       canvas.addEventListener('touchmove', (e) => e.preventDefault());
 
+      let dragTimer = null;
+      let isDragging = false;
+
       canvas.addEventListener(
         'touchstart',
         (e) => {
-          if (e.touches.length !== 1) return;
           if (!placed) {
-            placeModel(camera);
+            if (e.touches.length === 1) placeModel(camera);
             return;
           }
-          // Sau khi đã đặt: chạm lại để đặt lại vị trí (giữ hành vi quen thuộc, tránh kẹt vị
-          // trí đặt nhầm ban đầu).
+          prevTouch = getTouchState(e.touches);
+          if (e.touches.length === 1) {
+            // Giữ 300ms không di chuyển thì bắt đầu kéo (giống holdDragComponent gốc) — tránh
+            // xung đột với thao tác chạm nhanh để mở bong bóng info trên hotspot.
+            dragTimer = setTimeout(() => {
+              isDragging = true;
+            }, 300);
+          }
+        },
+        true
+      );
+
+      canvas.addEventListener(
+        'touchmove',
+        (e) => {
+          if (!placed || !prevTouch) return;
+          const current = getTouchState(e.touches);
+
+          if (current.touchCount !== prevTouch.touchCount) {
+            prevTouch = current;
+            return;
+          }
+
+          if (current.touchCount === 1) {
+            if (isDragging) {
+              handleDrag(e.touches[0].clientX, e.touches[0].clientY, camera);
+            } else {
+              handleOneFingerRotate(current.position.x - prevTouch.position.x);
+            }
+          } else if (current.touchCount === 2 && current.spread && prevTouch.spread) {
+            handlePinchScale(current.spread - prevTouch.spread, prevTouch.spread);
+          }
+
+          prevTouch = current;
+        },
+        true
+      );
+
+      canvas.addEventListener(
+        'touchend',
+        (e) => {
+          clearTimeout(dragTimer);
+          isDragging = false;
+          prevTouch = e.touches.length > 0 ? getTouchState(e.touches) : null;
         },
         true
       );
