@@ -52,7 +52,6 @@ export default function VillageXr8Page() {
   const [loadError, setLoadError] = useState(false);
   const [activePointId, setActivePointId] = useState<string | null>(null);
   const [screenPoints, setScreenPoints] = useState<{ id: string; x: number; y: number }[]>([]);
-  const [debugLogs, setDebugLogs] = useState<string[]>([]);
   const modelRef = useRef<Object3D | null>(null);
   const rafRef = useRef<number>(0);
 
@@ -79,7 +78,6 @@ export default function VillageXr8Page() {
         setPlaced(true);
       },
       onError: () => setLoadError(true),
-      onLog: (line: string) => setDebugLogs((prev) => [...prev.slice(-9), line]),
     });
 
     let started = false;
@@ -280,16 +278,6 @@ export default function VillageXr8Page() {
               </div>
             );
           })}
-
-      {/* Debug log — hiện log ngay trên màn hình để test trực tiếp trên điện thoại không cần
-          cắm dây/DevTools. Xoá khi tính năng đã ổn định. */}
-      {debugLogs.length > 0 && (
-        <div className="absolute top-16 left-2 right-2 z-50 bg-black/80 text-[10px] text-lime-400 font-mono p-2 rounded max-h-32 overflow-y-auto pointer-events-none">
-          {debugLogs.map((line, i) => (
-            <div key={i}>{line}</div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
