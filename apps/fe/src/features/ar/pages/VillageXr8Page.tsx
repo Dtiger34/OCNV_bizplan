@@ -13,7 +13,9 @@ declare global {
   interface Window {
     XR8?: {
       addCameraPipelineModules: (modules: unknown[]) => void;
+      clearCameraPipelineModules: () => void;
       run: (opts: { canvas: HTMLCanvasElement }) => void;
+      stop: () => void;
       Threejs: {
         pipelineModule: () => unknown;
         xrScene: () => { scene: THREE.Scene; camera: PerspectiveCamera; renderer: THREE.WebGLRenderer };
@@ -45,9 +47,12 @@ export default function VillageXr8Page() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
+  const [modelReady, setModelReady] = useState(false);
   const [placed, setPlaced] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [activePointId, setActivePointId] = useState<string | null>(null);
   const [screenPoints, setScreenPoints] = useState<{ id: string; x: number; y: number }[]>([]);
+  const [debugLogs, setDebugLogs] = useState<string[]>([]);
   const modelRef = useRef<Object3D | null>(null);
   const rafRef = useRef<number>(0);
 
@@ -68,11 +73,13 @@ export default function VillageXr8Page() {
 
     const scenePipelineModule = createVillageScenePipelineModule({
       modelUrl: arAssets.model,
+      onModelReady: () => setModelReady(true),
       onModelPlaced: (model: Object3D) => {
         modelRef.current = model;
         setPlaced(true);
       },
-      onError: () => setLoading(false),
+      onError: () => setLoadError(true),
+      onLog: (line: string) => setDebugLogs((prev) => [...prev.slice(-9), line]),
     });
 
     const startXr8 = () => {
@@ -107,6 +114,10 @@ export default function VillageXr8Page() {
 
     return () => {
       window.removeEventListener('xrloaded', startXr8);
+      // Bắt buộc dừng camera khi rời trang — không gọi thì phiên camera của XR8 vẫn chạy nền,
+      // đè lên UI của trang kế tiếp cho tới khi bị GC (không có mốc thời gian rõ ràng).
+      window.XR8?.stop();
+      window.XR8?.clearCameraPipelineModules();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [arAssets?.model]);
@@ -162,7 +173,7 @@ export default function VillageXr8Page() {
     <div className="relative w-screen h-screen overflow-hidden bg-black">
       <canvas ref={canvasRef} id="camerafeed" className="absolute inset-0 w-full h-full" />
 
-      <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-linear-to-b from-black/80 to-transparent pointer-events-none">
         <div className="pointer-events-auto">
           <p className="text-[9px] tracking-[0.25em] text-gold uppercase">AR · Đặt Trong Phòng</p>
           <p className="text-white text-sm font-medium">{arAssets.label}</p>
@@ -182,7 +193,28 @@ export default function VillageXr8Page() {
         </div>
       )}
 
-      {!loading && !placed && (
+      {loadError && (
+        <div className="absolute inset-0 z-40 bg-ink flex flex-col items-center justify-center gap-4 p-8 text-center">
+          <p className="text-white text-sm">Không tải được mô hình 3D. Vui lòng kiểm tra kết nối mạng và thử lại.</p>
+          <button
+            onClick={() => navigate(`/villages/${slug}`)}
+            className="px-6 py-2.5 bg-gold text-ink text-xs font-bold tracking-widest uppercase rounded"
+          >
+            Quay Lại
+          </button>
+        </div>
+      )}
+
+      {!loading && !loadError && !modelReady && (
+        <div className="absolute bottom-10 left-4 right-4 z-30 text-center pointer-events-none">
+          <p className="text-white text-sm bg-black/60 inline-flex items-center gap-2 px-4 py-2 rounded-full">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Đang tải mô hình 3D...
+          </p>
+        </div>
+      )}
+
+      {!loading && !loadError && modelReady && !placed && (
         <div className="absolute bottom-10 left-4 right-4 z-30 text-center pointer-events-none">
           <p className="text-white text-sm bg-black/60 inline-block px-4 py-2 rounded-full">
             Chạm vào màn hình để đặt mô hình
@@ -228,6 +260,16 @@ export default function VillageXr8Page() {
               </div>
             );
           })}
+
+      {/* Debug log — hiện log ngay trên màn hình để test trực tiếp trên điện thoại không cần
+          cắm dây/DevTools. Xoá khi tính năng đã ổn định. */}
+      {debugLogs.length > 0 && (
+        <div className="absolute top-16 left-2 right-2 z-50 bg-black/80 text-[10px] text-lime-400 font-mono p-2 rounded max-h-32 overflow-y-auto pointer-events-none">
+          {debugLogs.map((line, i) => (
+            <div key={i}>{line}</div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

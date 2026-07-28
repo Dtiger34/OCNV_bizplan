@@ -36,7 +36,12 @@ function getTouchState(touches) {
   return state;
 }
 
-export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onError }) {
+export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onModelReady, onError, onLog }) {
+  const log = (...args) => {
+    console.log('[VillageAR]', ...args);
+    onLog?.(args.map(String).join(' '));
+  };
+
   let model = null;
   let placed = false;
   let baseScale = new THREE.Vector3(1, 1, 1);
@@ -46,25 +51,36 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onEr
   let groundPlane = null; // Plane ảo ngang qua đáy model, dùng để kéo-di-chuyển bằng raycast
 
   const loadModel = (scene) => {
+    log('Bắt đầu tải model:', modelUrl);
     const loader = new GLTFLoader();
     loader.load(
       modelUrl,
       (gltf) => {
+        log('Model tải xong');
         model = gltf.scene;
         model.visible = false; // ẩn cho tới khi người dùng chạm để đặt
         scene.add(model);
         baseScale = model.scale.clone();
+        onModelReady?.();
       },
-      undefined,
+      (progress) => {
+        if (progress.total) {
+          log(`Đang tải: ${((progress.loaded / progress.total) * 100).toFixed(0)}%`);
+        }
+      },
       (err) => {
-        console.error('[VillageAR] Lỗi tải model:', err);
+        log('LỖI tải model:', err?.message || err);
         onError?.(err);
       }
     );
   };
 
   const placeModel = (camera) => {
-    if (!model || placed) return;
+    if (!model) {
+      log('Chạm để đặt nhưng model chưa tải xong');
+      return;
+    }
+    if (placed) return;
     // Đặt model trước camera 1.5m theo hướng nhìn hiện tại, hạ xuống mặt phẳng tương đối y=0
     // (world origin của session — xem ghi chú đầu file về giới hạn SLAM miễn phí).
     const forward = new THREE.Vector3(0, 0, -1.5).applyQuaternion(camera.quaternion);
