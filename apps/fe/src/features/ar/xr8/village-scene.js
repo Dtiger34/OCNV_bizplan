@@ -58,6 +58,26 @@ function angleDelta(from, to) {
   return delta;
 }
 
+// Giải phóng geometry/material/texture của model khỏi GPU (VRAM) — three.js không tự động
+// dispose các resource này khi mất tham chiếu JS, JS garbage collector không quản lý được bộ
+// nhớ GPU. Không gọi hàm này khi rời trang AR sẽ khiến mỗi lần vào AR cộng dồn thêm texture/
+// geometry không giải phóng, RAM/VRAM tăng dần cho tới khi tab bị đóng hẳn.
+function disposeModel(model) {
+  model.traverse((obj) => {
+    if (obj.isMesh) {
+      obj.geometry?.dispose();
+      const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+      materials.forEach((mat) => {
+        if (!mat) return;
+        ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'emissiveMap', 'aoMap', 'alphaMap'].forEach((key) => {
+          mat[key]?.dispose();
+        });
+        mat.dispose();
+      });
+    }
+  });
+}
+
 export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onModelReady, onError, onLog }) {
   const log = (...args) => {
     console.log('[VillageAR]', ...args);
@@ -72,8 +92,10 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
   let prevTouch = null;
   let raycaster = null;
   let groundPlane = null; // mặt phẳng ảo ngang qua điểm đặt model, dùng raycast để kéo-di-chuyển
+  let scene = null;
+  let dracoLoaderRef = null; // giữ tham chiếu để dispose worker thread giải mã Draco khi rời trang
 
-  const loadModel = async (scene) => {
+  const loadModel = async (targetScene) => {
     log('Bắt đầu tải model:', modelUrl);
     let GLTFLoader, DRACOLoader;
     try {
@@ -92,6 +114,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
     // học Draco nếu thiếu DRACOLoader, nên load() báo lỗi dù request mạng đã thành công.
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    dracoLoaderRef = dracoLoader;
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
     loader.load(
@@ -100,7 +123,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
         log('Model tải xong');
         model = gltf.scene;
         model.visible = false; // ẩn cho tới khi người dùng chạm để đặt
-        scene.add(model);
+        targetScene.add(model);
         baseScale = model.scale.clone();
         onModelReady?.();
       },
@@ -166,8 +189,23 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
   return {
     name: 'villageScene',
 
+    // Gọi thủ công từ VillagePage/VillageXr8Page khi rời trang AR — XR8 không tự gọi hàm này,
+    // engine chỉ định nghĩa lifecycle hook riêng (onStart/onUpdate/...) không có hook "cleanup"
+    // dùng được cho việc dispose resource three.js tuỳ biến của mình.
+    disposeScene: () => {
+      if (model && scene) {
+        scene.remove(model);
+        disposeModel(model);
+      }
+      model = null;
+      dracoLoaderRef?.dispose();
+      dracoLoaderRef = null;
+    },
+
     onStart: ({ canvas }) => {
-      const { scene, camera } = XR8.Threejs.xrScene();
+      const xrScene = XR8.Threejs.xrScene();
+      scene = xrScene.scene;
+      const camera = xrScene.camera;
       raycaster = new THREE.Raycaster();
 
       const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);

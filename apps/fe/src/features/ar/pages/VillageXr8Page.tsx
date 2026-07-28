@@ -125,6 +125,11 @@ export default function VillageXr8Page() {
 
     return () => {
       window.removeEventListener('xrloaded', startXr8);
+      // Giải phóng geometry/material/texture của model khỏi GPU trước khi dọn camera pipeline —
+      // three.js không tự dispose các resource này khi mất tham chiếu JS (GC của JS không quản
+      // lý bộ nhớ GPU), nên thiếu bước này khiến mỗi lần vào AR cộng dồn thêm VRAM không giải
+      // phóng, chỉ hết khi đóng hẳn tab/F5.
+      scenePipelineModule.disposeScene();
       // Bắt buộc dừng camera khi rời trang. XR8.stop() dừng render loop của engine nhưng
       // KHÔNG tự đảm bảo track camera (getUserMedia) được giải phóng — nếu track vẫn sống,
       // trình duyệt (đặc biệt Safari) tiếp tục hiển thị đè camera lên các trang sau. Nên tự
