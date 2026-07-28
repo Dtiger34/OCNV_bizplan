@@ -17,13 +17,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-  <!-- 8th Wall Engine (open-source binary, miễn phí, không cần API key) — dùng cho WebAR
-       world-tracking chạy ngay trong trang (không mở app rời như Quick Look/Scene Viewer),
-       nhờ vậy chèn được UI/point tuỳ biến ngay trong lúc AR đang chạy, trên cả iOS lẫn Android.
-       Xem apps/fe/src/features/ar/xr8/ -->
-  <script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" async crossorigin="anonymous" data-preload-chunks="slam"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js" crossorigin="anonymous"></script>
+  <!-- 8th Wall Engine KHÔNG load ở đây nữa — landing-page.js tự chèn overlay/hint vào trang
+       ngay khi script chạy, kể cả khi chưa gọi XR8.run(), nên ảnh hưởng mọi trang nếu load
+       global. Giờ tải động chỉ khi vào đúng trang AR, xem apps/fe/src/features/ar/xr8/load-xr8.ts -->
 </head>
 
 <body>

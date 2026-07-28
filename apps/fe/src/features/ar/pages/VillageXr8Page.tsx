@@ -6,6 +6,7 @@ import type { Object3D, PerspectiveCamera } from 'three';
 import { VILLAGE_AR_MODELS } from '../data/village-ar-models';
 import { VILLAGE_AR_POINTS } from '../data/village-ar-points';
 import { createVillageScenePipelineModule } from '../xr8/village-scene';
+import { loadXr8Scripts } from '../xr8/load-xr8';
 
 // Khai báo global cho các script 8th Wall load qua thẻ <script> trong index.html
 declare global {
@@ -92,6 +93,10 @@ export default function VillageXr8Page() {
       startXr8();
     } else {
       window.addEventListener('xrloaded', startXr8);
+      loadXr8Scripts().catch((err) => {
+        console.error('[VillageAR] Lỗi tải 8th Wall:', err);
+        setLoading(false);
+      });
     }
 
     return () => {
