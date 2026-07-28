@@ -1,10 +1,12 @@
 // 8th Wall camera pipeline module: tải model .glb vào scene three.js, đặt xuống mặt phẳng
 // tương đối khi người dùng chạm màn hình lần đầu (bản SLAM miễn phí không có plane detection
 // thật kiểu ARCore/ARKit — chỉ world-tracking 6DoF; đây đúng là cách 8th Wall tự đặt "ground"
-// trong ví dụ chính thức của họ, xem aframe-world-effects-example/tap-place.js), rồi cho phép
-// xoay/zoom/di chuyển bằng gesture (logic chuyển thể từ
-// packages/xrextras/src/aframe/components/gestures-components.ts — component gốc viết cho
-// A-Frame, ở đây viết lại thuần three.js/vanilla JS).
+// trong ví dụ chính thức của họ, xem aframe-world-effects-example/tap-place.js).
+//
+// Gesture điều khiển model sau khi đặt:
+// - 1 ngón vuốt dọc: nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên)
+// - 2 ngón xoay tròn quanh nhau: xoay model quanh trục Y (360°)
+// - 2 ngón kéo dãn/thu hẹp (pinch): zoom to/nhỏ
 //
 // Khác với model-viewer (Quick Look/Scene Viewer mở app rời), toàn bộ AR session này chạy
 // ngay trong chính trang web — camera feed + model 3D cùng nằm trên 1 <canvas> DOM bình
@@ -16,11 +18,11 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 const MIN_SCALE = 0.33;
 const MAX_SCALE = 3;
-const ROTATE_FACTOR = 6;
+const TILT_X_FACTOR = 4; // độ nhạy nghiêng trục X (1 ngón vuốt dọc)
+const TILT_LIMIT = Math.PI / 3; // giới hạn nghiêng ±60° để tránh lật ngược model
 
-// Tính toạ độ trung tâm + khoảng cách trung bình (spread) của các đầu ngón tay đang chạm —
-// dùng scale theo kích thước màn hình để hành vi nhất quán trên mọi thiết bị (xem
-// getTouchState gốc trong gestures-components.ts).
+// Toạ độ trung tâm + góc + khoảng cách (spread) giữa các đầu ngón tay đang chạm — dùng scale
+// theo kích thước màn hình để hành vi nhất quán trên mọi thiết bị.
 function getTouchState(touches) {
   const list = Array.from(touches);
   const cx = list.reduce((sum, t) => sum + t.clientX, 0) / list.length;
@@ -28,13 +30,20 @@ function getTouchState(touches) {
   const screenScale = 2 / (window.innerWidth + window.innerHeight);
   const state = { touchCount: list.length, position: { x: cx * screenScale, y: cy * screenScale } };
   if (list.length >= 2) {
-    const spread = list.reduce(
-      (sum, t) => sum + Math.sqrt((cx - t.clientX) ** 2 + (cy - t.clientY) ** 2),
-      0
-    ) / list.length;
-    state.spread = spread * screenScale;
+    const [a, b] = list;
+    state.spread = Math.sqrt((a.clientX - b.clientX) ** 2 + (a.clientY - b.clientY) ** 2) * screenScale;
+    state.angle = Math.atan2(b.clientY - a.clientY, b.clientX - a.clientX);
   }
   return state;
+}
+
+// Chênh lệch góc ngắn nhất giữa 2 góc (radian), xử lý wrap-around qua ±π — nếu trừ trực tiếp,
+// góc nhảy từ gần π sang gần -π (hoặc ngược lại) sẽ bị tính sai thành một vòng quay lớn.
+function angleDelta(from, to) {
+  let delta = to - from;
+  while (delta > Math.PI) delta -= 2 * Math.PI;
+  while (delta < -Math.PI) delta += 2 * Math.PI;
+  return delta;
 }
 
 export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onModelReady, onError, onLog }) {
@@ -47,9 +56,8 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
   let placed = false;
   let baseScale = new THREE.Vector3(1, 1, 1);
   let scaleFactor = 1;
+  let tiltX = 0;
   let prevTouch = null;
-  let raycaster = null;
-  let groundPlane = null; // Plane ảo ngang qua đáy model, dùng để kéo-di-chuyển bằng raycast
 
   const loadModel = (scene) => {
     log('Bắt đầu tải model:', modelUrl);
@@ -94,15 +102,24 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
     model.position.set(camera.position.x + forward.x, 0, camera.position.z + forward.z);
     model.visible = true;
     placed = true;
-    groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     onModelPlaced?.(model);
   };
 
-  const handleOneFingerRotate = (dx) => {
+  // 1 ngón vuốt dọc: nghiêng model quanh trục X (nhìn từ trên xuống/dưới lên), giới hạn góc để
+  // không lật úp model.
+  const handleOneFingerTilt = (dy) => {
     if (!model) return;
-    model.rotation.y += dx * ROTATE_FACTOR;
+    tiltX = Math.min(Math.max(tiltX + dy * TILT_X_FACTOR, -TILT_LIMIT), TILT_LIMIT);
+    model.rotation.x = tiltX;
   };
 
+  // 2 ngón xoay tròn quanh nhau (góc giữa 2 điểm chạm thay đổi): xoay model quanh trục Y.
+  const handleTwoFingerRotateY = (angleChange) => {
+    if (!model) return;
+    model.rotation.y += angleChange;
+  };
+
+  // 2 ngón kéo dãn/thu hẹp (khoảng cách giữa 2 điểm chạm thay đổi): zoom to/nhỏ.
   const handlePinchScale = (spreadChange, startSpread) => {
     if (!model || !startSpread) return;
     scaleFactor *= 1 + spreadChange / startSpread;
@@ -110,24 +127,11 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
     model.scale.set(baseScale.x * scaleFactor, baseScale.y * scaleFactor, baseScale.z * scaleFactor);
   };
 
-  const handleDrag = (clientX, clientY, camera) => {
-    if (!model || !groundPlane || !raycaster) return;
-    const ndcX = (clientX / window.innerWidth) * 2 - 1;
-    const ndcY = -(clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera({ x: ndcX, y: ndcY }, camera);
-    const hit = new THREE.Vector3();
-    if (raycaster.ray.intersectPlane(groundPlane, hit)) {
-      model.position.x = hit.x;
-      model.position.z = hit.z;
-    }
-  };
-
   return {
     name: 'villageScene',
 
     onStart: ({ canvas }) => {
       const { scene, camera } = XR8.Threejs.xrScene();
-      raycaster = new THREE.Raycaster();
 
       const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
       scene.add(light);
@@ -139,9 +143,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
 
       canvas.addEventListener('touchmove', (e) => e.preventDefault());
 
-      let dragTimer = null;
-      let isDragging = false;
-
       canvas.addEventListener(
         'touchstart',
         (e) => {
@@ -150,13 +151,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
             return;
           }
           prevTouch = getTouchState(e.touches);
-          if (e.touches.length === 1) {
-            // Giữ 300ms không di chuyển thì bắt đầu kéo (giống holdDragComponent gốc) — tránh
-            // xung đột với thao tác chạm nhanh để mở bong bóng info trên hotspot.
-            dragTimer = setTimeout(() => {
-              isDragging = true;
-            }, 300);
-          }
         },
         true
       );
@@ -173,13 +167,12 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
           }
 
           if (current.touchCount === 1) {
-            if (isDragging) {
-              handleDrag(e.touches[0].clientX, e.touches[0].clientY, camera);
-            } else {
-              handleOneFingerRotate(current.position.x - prevTouch.position.x);
-            }
+            handleOneFingerTilt(current.position.y - prevTouch.position.y);
           } else if (current.touchCount === 2 && current.spread && prevTouch.spread) {
             handlePinchScale(current.spread - prevTouch.spread, prevTouch.spread);
+            if (current.angle != null && prevTouch.angle != null) {
+              handleTwoFingerRotateY(angleDelta(prevTouch.angle, current.angle));
+            }
           }
 
           prevTouch = current;
@@ -190,8 +183,6 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
       canvas.addEventListener(
         'touchend',
         (e) => {
-          clearTimeout(dragTimer);
-          isDragging = false;
           prevTouch = e.touches.length > 0 ? getTouchState(e.touches) : null;
         },
         true
