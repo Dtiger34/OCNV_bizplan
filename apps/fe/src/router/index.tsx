@@ -9,7 +9,7 @@ const HomePage = lazy(() => import('@/features/home/pages/HomePage'));
 const ShopPage = lazy(() => import('@/features/shop/pages/ShopPage'));
 const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
 const ArPage = lazy(() => import('@/features/ar/pages/ArPage'));
-const VillageArPage = lazy(() => import('@/features/ar/pages/VillageArPage'));
+const VillageXr8Page = lazy(() => import('@/features/ar/pages/VillageXr8Page'));
 const VillagePage = lazy(() => import('@/features/villages/pages/VillagePage'));
 const VillagesListPage = lazy(() => import('@/features/villages/pages/VillagesListPage'));
 const StaticContentPage = lazy(() => import('@/features/pages/StaticContentPage'));
@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/villages/:slug/ar',
-    element: S(VillageArPage),
+    element: S(VillageXr8Page),
   },
   {
     path: '/admin',

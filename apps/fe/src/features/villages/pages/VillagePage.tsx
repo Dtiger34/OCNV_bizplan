@@ -1,16 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, AlertTriangle, Smartphone } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, Smartphone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
 import { VILLAGE_AR_MODELS } from '@/features/ar/data/village-ar-models';
 
-// Chrome/Firefox/Edge trên iOS đều dùng WebKit nhưng gắn CriOS/FxiOS/EdgiOS trong UA —
-// AR (Quick Look/WebXR) trên iOS chỉ chạy được trong Safari thật
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-const isNonSafariOniOS = /CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
-const isChromeIOS = isIOS && isNonSafariOniOS;
 const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
 // Khai báo để TypeScript không báo lỗi với custom element của model-viewer
@@ -21,10 +16,6 @@ declare global {
         React.HTMLAttributes<HTMLElement> & {
           src?: string;
           alt?: string;
-          ar?: boolean;
-          'ar-modes'?: string;
-          'ar-placement'?: string;
-          'ar-scale'?: string;
           'camera-controls'?: boolean;
           'auto-rotate'?: boolean;
           'touch-action'?: string;
@@ -37,38 +28,27 @@ declare global {
 
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const village = getVillage(slug ?? '');
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [viewerReady, setViewerReady] = useState(false);
-  const [arUnsupported, setArUnsupported] = useState(false);
   const [showDesktopQr, setShowDesktopQr] = useState(false);
-  const viewerRef = useRef<HTMLElement & { canActivateAR?: boolean; activateAR?: () => Promise<void> }>(null);
+  const viewerRef = useRef<HTMLElement>(null);
   const arModel = VILLAGE_AR_MODELS[slug ?? ''];
 
   useEffect(() => {
     customElements.whenDefined('model-viewer').then(() => setViewerReady(true));
   }, []);
 
-  useEffect(() => {
-    setArUnsupported(false);
-  }, [slug]);
-
-  // Bấm "Xem AR" ngay trong trang làng nghề — model đã hiển thị & tải sẵn từ trước,
-  // nên activateAR() chạy trong chính user gesture của cú click, không bị trình duyệt chặn
-  // (khác với việc điều hướng sang trang khác rồi mới activate, lúc đó user activation đã hết hạn)
+  // AR thật chạy qua 8th Wall ở trang riêng /villages/:slug/ar (world-tracking trong chính
+  // trang web, không mở app rời như Quick Look/Scene Viewer — nhờ vậy có thể chèn UI point
+  // tuỳ biến ngay trong lúc AR đang chạy, trên cả iOS lẫn Android).
   const handleViewAr = () => {
-    // Desktop không có camera/ARCore/Quick Look — hiện QR để quét bằng điện thoại
     if (!isMobile) {
       setShowDesktopQr(true);
       return;
     }
-    const viewer = viewerRef.current;
-    if (!viewer) return;
-    if (!viewer.canActivateAR) {
-      setArUnsupported(true);
-      return;
-    }
-    viewer.activateAR?.().catch(() => setArUnsupported(true));
+    navigate(`/villages/${slug}/ar`);
   };
 
   if (!village) {
@@ -236,10 +216,6 @@ export default function VillagePage() {
                   ref={viewerRef}
                   src={arModel.model}
                   alt={arModel.label}
-                  ar={!isChromeIOS}
-                  ar-modes="webxr scene-viewer quick-look"
-                  ar-placement="floor"
-                  ar-scale="auto"
                   camera-controls
                   auto-rotate
                   touch-action="pan-y"
@@ -251,7 +227,7 @@ export default function VillagePage() {
             {!showDesktopQr && (
               <button
                 onClick={handleViewAr}
-                disabled={!viewerReady || isChromeIOS}
+                disabled={!viewerReady}
                 className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-[#B8862A] disabled:opacity-50 disabled:cursor-not-allowed text-ink text-sm font-semibold rounded-sm transition-all duration-200"
               >
                 <ScanLine size={16} />
@@ -269,21 +245,6 @@ export default function VillagePage() {
                   <QRCodeSVG value={`${window.location.origin}/villages/${slug}/ar`} size={180} />
                 </div>
               </div>
-            )}
-
-            {isChromeIOS && (
-              <div className="mt-4 flex items-start gap-2 text-left max-w-md mx-auto bg-ink/5 border border-gold/40 rounded-lg p-3">
-                <AlertTriangle className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                <p className="text-xs text-wood">
-                  AR không khả dụng trên Chrome iOS. Vui lòng mở trang này bằng{' '}
-                  <span className="text-gold font-medium">Safari</span> để dùng AR.
-                </p>
-              </div>
-            )}
-            {!isChromeIOS && arUnsupported && (
-              <p className="mt-4 text-xs text-[#9C8670] max-w-md mx-auto">
-                Thiết bị/trình duyệt này chưa hỗ trợ AR. Vui lòng dùng Safari trên iPhone hoặc Chrome trên Android.
-              </p>
             )}
           </div>
         </section>

@@ -1,11 +1,9 @@
-// Map slug → mô hình 3D — AR đặt mô hình trực tiếp trong phòng (model-viewer), không cần marker/ảnh diorama.
-// `usdz` (nếu có) là file đã bake sẵn tap-behavior (xem scripts/ar-usdz/build_interactive_usdz.py) —
-// khi có, model-viewer dùng file này cho Quick Look (ios-src) thay vì tự convert từ .glb, nhờ vậy các
-// point vẫn tap được ngay trong phiên AR thật trên iOS (không chỉ ở bước xem trước trên web).
-export const VILLAGE_AR_MODELS: Record<string, { model: string; usdz?: string; label: string }> = {
+// Map slug → mô hình 3D dùng cho AR (xem VillageXr8Page.tsx, WebAR qua 8th Wall — world
+// tracking chạy ngay trong trang, không mở app rời như Quick Look/Scene Viewer) và cho chế độ
+// xem inline (VillagePage.tsx, model-viewer).
+export const VILLAGE_AR_MODELS: Record<string, { model: string; label: string }> = {
   'bat-trang': {
     model: '/models/lang-gom.glb',
-    usdz: '/models/lang-gom.usdz',
     label: 'Làng Gốm Bát Tràng',
   },
   'non-chuong': {

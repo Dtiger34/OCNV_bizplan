@@ -1,18 +1,12 @@
-// Điểm chú thích cho model AR. Có 2 cách neo, dùng ở 2 chỗ khác nhau:
-// - x/y: toạ độ % màn hình, chỉ dùng cho overlay đè lên khi đang ở trong AR thật qua WebXR (chỉ Android —
-//   Quick Look/Scene Viewer mở app rời nên trang web bị đẩy ra nền, không overlay được).
-// - position/normal: toạ độ 3D neo lên bề mặt model (mét, theo hệ trục gốc của file .glb) — dùng cho
-//   2 nơi độc lập: (1) model-viewer hotspot slot khi xem inline trước AR (mọi nền tảng), và
-//   (2) panel thông tin bake sẵn LUÔN HIỆN trong file .usdz cho iOS (xem
-//   scripts/ar-usdz/build_interactive_usdz.py — không cần tap, tránh phụ thuộc schema
-//   Preliminary_Behavior chưa xác nhận được Quick Look có hỗ trợ hay không).
-//   Lấy toạ độ bằng cách log point/normal khi click lên model ở chế độ xem thường
-//   (xem hướng dẫn calibrate trong VillageArPage.tsx).
+// Điểm chú thích cho model AR trong phiên AR thật (8th Wall, xem VillageXr8Page.tsx).
+// position/normal: toạ độ 3D neo lên bề mặt model (mét, theo hệ trục gốc của file .glb, tương
+// đối so với gốc model — Y-up). Mỗi frame, VillageXr8Page project 3D->2D bằng
+// THREE.Vector3.project(camera) để point luôn bám đúng vị trí trên model dù model xoay/camera
+// di chuyển. Lấy toạ độ bằng dev helper Alt+click trên model ở chế độ xem inline
+// (VillagePage.tsx, xem model-viewer onClick handler) hoặc ước lượng thủ công theo bounding box.
 export interface ArPoint {
   id: string;
-  x: number; // % chiều ngang màn hình (overlay Android in-AR)
-  y: number; // % chiều dọc màn hình (overlay Android in-AR)
-  position?: { x: number; y: number; z: number }; // mét, neo 3D trên model (hotspot slot)
+  position: { x: number; y: number; z: number };
   normal?: { x: number; y: number; z: number };
   title: string;
   description: string;
@@ -22,8 +16,6 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
   'bat-trang': [
     {
       id: 'ban-xoay',
-      x: 50,
-      y: 62,
       position: { x: 0, y: 0.4, z: 0.3 },
       normal: { x: 0, y: 1, z: 0 },
       title: 'Bàn Xoay Gốm',
@@ -32,8 +24,6 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     },
     {
       id: 'lo-nung',
-      x: 22,
-      y: 40,
       position: { x: -0.5, y: 0.6, z: -0.2 },
       normal: { x: -1, y: 0, z: 0 },
       title: 'Lò Nung Bầu',
@@ -42,8 +32,6 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     },
     {
       id: 'hoa-van',
-      x: 78,
-      y: 45,
       position: { x: 0.5, y: 0.5, z: -0.1 },
       normal: { x: 1, y: 0, z: 0 },
       title: 'Hoa Văn & Men Gốm',
