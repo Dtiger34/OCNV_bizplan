@@ -78,11 +78,7 @@ export function createVillageScenePipelineModule({ modelUrl, onModelPlaced, onMo
         baseScale = model.scale.clone();
         onModelReady?.();
       },
-      (progress) => {
-        if (progress.total) {
-          log(`Đang tải: ${((progress.loaded / progress.total) * 100).toFixed(0)}%`);
-        }
-      },
+      undefined,
       (err) => {
         log('LỖI tải model:', err?.message || err);
         onError?.(err);
