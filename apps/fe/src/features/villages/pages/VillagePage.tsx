@@ -220,6 +220,25 @@ export default function VillagePage() {
                   auto-rotate
                   touch-action="pan-y"
                   style={{ width: '100%', height: '100%' }}
+                  onClick={(e: React.MouseEvent<HTMLElement>) => {
+                    // Dev helper để lấy toạ độ 3D calibrate hotspot AR — giữ Alt rồi click lên
+                    // model, tọa độ position/normal sẽ log ra console để copy vào
+                    // village-ar-points.ts (xem VILLAGE_AR_POINTS).
+                    if (!e.altKey) return;
+                    const viewer = e.currentTarget as HTMLElement & {
+                      positionAndNormalFromPoint?: (
+                        x: number,
+                        y: number
+                      ) => { position: { x: number; y: number; z: number }; normal: { x: number; y: number; z: number } } | null;
+                    };
+                    const rect = viewer.getBoundingClientRect();
+                    const hit = viewer.positionAndNormalFromPoint?.(e.clientX - rect.left, e.clientY - rect.top);
+                    if (hit) {
+                      console.log(
+                        `[AR calibrate] slug=${slug}\nposition: { x: ${hit.position.x.toFixed(3)}, y: ${hit.position.y.toFixed(3)}, z: ${hit.position.z.toFixed(3)} },\nnormal: { x: ${hit.normal.x.toFixed(2)}, y: ${hit.normal.y.toFixed(2)}, z: ${hit.normal.z.toFixed(2)} },`
+                      );
+                    }
+                  }}
                 />
               )}
             </div>
