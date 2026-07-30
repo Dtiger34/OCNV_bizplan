@@ -64,7 +64,7 @@ export default function AboutPage() {
           Sức Sống Mới Cho Di Sản Việt
         </h2>
         <div className="w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-        <p className="text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto">
+        <p className="text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto text-pretty">
           Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện
           của những làng nghề Việt Nam đến gần hơn với mọi người. Chúng tôi tin rằng văn hóa truyền thống không
           cần phải khô khan hay xa lạ — mà có thể trở nên sống động, gần gũi và dễ nhớ hơn khi được kể lại đúng cách.

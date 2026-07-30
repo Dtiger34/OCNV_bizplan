@@ -97,7 +97,7 @@ export default function HomePage() {
               Sức Sống Mới Cho Di Sản Việt
             </h2>
             <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-            <p className="reveal delay-300 text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto">
+            <p className="reveal delay-300 text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto text-pretty">
               Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện của những làng nghề Việt Nam đến gần hơn với mọi người.
             </p>
           </div>
