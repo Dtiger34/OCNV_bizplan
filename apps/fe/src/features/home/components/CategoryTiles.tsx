@@ -44,7 +44,7 @@ function CategoryCard({
 
       {/* Content overlay */}
       <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-3 pointer-events-none select-none">
-        <h3 className="text-3xl font-bold text-[#F5EDD6] leading-tight group-hover:text-white transition-colors uppercase tracking-wider">
+        <h3 className="font-display text-3xl text-[#F5EDD6] leading-tight group-hover:text-white transition-colors uppercase tracking-wider">
           {cat.name}
         </h3>
         
