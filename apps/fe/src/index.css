@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Calibri", "Calibri Light", sans-serif;
+  --font-sans: "Montserrat", sans-serif;
+  --font-display: "Agbalumo", serif;
 
   --color-wood: #5C3D1E;
   --color-cream: #F5EDD6;
@@ -35,15 +36,22 @@
 *,
 *::before,
 *::after {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: var(--font-sans);
 }
 
 body {
   background-color: var(--color-cream);
   color: var(--color-ink);
-  font-family: "Josefin Sans", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Title/heading font — Agbalumo, áp dụng nhất quán cho mọi tiêu đề toàn site (h1/h2/h3) và
+   tên thương hiệu cạnh logo trong Header (class .font-display, vì đó là <span>, không phải
+   heading tag). Phần nội dung còn lại dùng --font-sans (Montserrat, khai báo ở trên). */
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */

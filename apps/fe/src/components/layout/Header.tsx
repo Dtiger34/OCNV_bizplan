@@ -32,7 +32,7 @@ export default function Header() {
             alt="Logo"
             className="h-9 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           />
-          <span className="hidden sm:block text-white font-semibold text-sm tracking-widest uppercase whitespace-nowrap">
+          <span className="font-display hidden sm:block text-white text-sm tracking-widest uppercase whitespace-nowrap">
             NGHỀ XƯA NÉT MỚI
           </span>
         </Link>
