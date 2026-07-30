@@ -64,7 +64,7 @@ export default function AboutPage() {
           Sức Sống Mới Cho Di Sản Việt
         </h2>
         <div className="w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-        <p className="text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-3xl mx-auto text-pretty">
+        <p className="text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-4xl mx-auto text-justify text-pretty">
           Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện
           của những làng nghề Việt Nam đến gần hơn với mọi người. Chúng tôi tin rằng văn hóa truyền thống không
           cần phải khô khan hay xa lạ — mà có thể trở nên sống động, gần gũi và dễ nhớ hơn khi được kể lại đúng cách.
@@ -100,7 +100,7 @@ export default function AboutPage() {
           <h2 className="text-2xl md:text-3xl font-bold text-[#2C1A0E]">Một Việt Nam Thu Nhỏ</h2>
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto" />
         </div>
-        <div className="space-y-4 text-[#5C3D1E] leading-relaxed text-sm md:text-base">
+        <div className="space-y-4 text-[#5C3D1E] leading-relaxed text-sm md:text-base text-justify text-pretty">
           <p>
             Lấy cảm hứng từ những làng nghề trăm năm tuổi — làng lụa Vạn Phúc, làng nón Chuông, làng mây tre đan
             Phú Vinh, làng gốm Bát Tràng, làng hương Quảng Phú Cầu — chúng tôi mong muốn không chỉ dừng lại ở việc
