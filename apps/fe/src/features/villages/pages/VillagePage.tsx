@@ -110,7 +110,7 @@ export default function VillagePage() {
           {village.facts.map((fact) => (
             <div key={fact.label}>
               <p className="text-sm sm:text-base font-medium text-ink mb-0.5">{fact.value}</p>
-              <p className="text-[10px] tracking-widest text-[#9C8670] uppercase">{fact.label}</p>
+              <p className="text-[10px] tracking-widest text-[#ab2124] uppercase">{fact.label}</p>
             </div>
           ))}
         </div>
@@ -129,8 +129,8 @@ export default function VillagePage() {
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
               Lịch Sử
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug">
-              Hành Trình <span className="italic text-[#7A5230]">Hàng Thế Kỷ</span>
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
+              Hành Trình <span className="italic text-[#ab2124]">Hàng Thế Kỷ</span>
             </h2>
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </motion.div>
@@ -168,7 +168,7 @@ export default function VillagePage() {
       {village.galleryImages.length > 0 && (
         <section className="py-12 px-6 sm:px-10 bg-[#EDE3CE]">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-[#9C8670] mb-5 text-center">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-5 text-center">
               Hình Ảnh
             </p>
             <div className="grid grid-cols-3 gap-3">
@@ -199,9 +199,9 @@ export default function VillagePage() {
       {arModel && (
         <section className="py-14 px-6 sm:px-10 bg-parchment">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-[#9C8670] mb-2">Mô Hình 3D</p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug mb-6">
-              Khám Phá <span className="italic text-[#7A5230]">{village.name}</span> Trong Không Gian 3D
+            <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-2">Mô Hình 3D</p>
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug mb-6 text-title-gradient">
+              Khám Phá <span className="italic text-[#ab2124]">{village.name}</span> Trong Không Gian 3D
             </h2>
 
             <div className="relative rounded-[10px] overflow-hidden border border-[#D4B896]/60 bg-[#111] aspect-square sm:aspect-video">
@@ -278,7 +278,7 @@ export default function VillagePage() {
               "{village.artisanQuote}"
             </blockquote>
             {village.artisanStory && (
-              <p className="text-xs text-[#8C7B68] leading-relaxed max-w-lg mx-auto">{village.artisanStory}</p>
+              <p className="text-xs text-[#ab2124] leading-relaxed max-w-lg mx-auto">{village.artisanStory}</p>
             )}
           </div>
         </section>
@@ -291,8 +291,8 @@ export default function VillagePage() {
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
               Quy Trình
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug">
-              Từ Nguyên Liệu <span className="italic text-[#7A5230]">Đến Tinh Hoa</span>
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
+              Từ Nguyên Liệu <span className="italic text-[#ab2124]">Đến Tinh Hoa</span>
             </h2>
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </div>
@@ -330,7 +330,7 @@ export default function VillagePage() {
                   {/* Nội dung */}
                   <div className="w-full md:w-1/2 space-y-3">
                     <p
-                      className="text-[10px] font-bold tracking-[0.2em] uppercase"
+                      className="text-[13px] font-bold tracking-[0.2em] uppercase"
                       style={{ color: village.color }}
                     >
                       Bước {stage.order}
@@ -341,7 +341,7 @@ export default function VillagePage() {
                     {stage.details && stage.details.length > 0 && (
                       <ul className="space-y-2 pt-1">
                         {stage.details.map((d, j) => (
-                          <li key={j} className="flex items-start gap-2.5 text-sm text-[#7A5230]">
+                          <li key={j} className="flex items-start gap-2.5 text-sm text-[#ab2124]">
                             <CheckCircle2
                               size={14}
                               className="shrink-0 mt-0.5"
@@ -362,7 +362,7 @@ export default function VillagePage() {
 
       {/* CTA — dark footer band */}
       <section className="py-14 px-4 bg-ink text-center">
-        <p className="text-[10px] tracking-[0.25em] text-[#9C8670] uppercase mb-3">Khám Phá Thêm</p>
+        <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-3">Khám Phá Thêm</p>
         <h2 className="text-2xl font-light text-white mb-6">
           Tìm Hiểu Các Làng Nghề <span className="italic text-[#D4B896]">Khác</span>
         </h2>

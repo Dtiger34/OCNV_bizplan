@@ -52,20 +52,20 @@ function ShopSidebar({
     <div className="space-y-6">
       {/* Search */}
       <div>
-        <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Tìm kiếm</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Tìm kiếm</h3>
         <div className="relative">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9C8670]" />
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab2124]" />
           <input
             type="text"
             placeholder="Tên sản phẩm..."
             value={searchInput}
             onChange={(e) => onSearchInputChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && onSearch()}
-            className="w-full pl-8 pr-3 h-9 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
+            className="w-full pl-8 pr-3 h-9 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
         </div>
         <button onClick={onSearch}
-          className="mt-2 w-full h-9 bg-[#5C3D1E] text-[#F5EDD6] text-xs font-bold uppercase rounded-sm hover:bg-[#7A5230] transition-colors cursor-pointer">
+          className="mt-2 w-full h-9 bg-[#ab2124] text-[#fff8e7] text-xs font-bold uppercase rounded-sm hover:bg-[#ab2124] transition-colors cursor-pointer">
           Tìm kiếm
         </button>
       </div>
@@ -74,7 +74,7 @@ function ShopSidebar({
 
       {/* Category */}
       <div>
-        <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Danh mục</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Danh mục</h3>
         <div className="space-y-1.5">
           {CATEGORIES.map((cat) => (
             <button
@@ -82,8 +82,8 @@ function ShopSidebar({
               onClick={() => onCategorySelect(cat)}
               className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
                 activeCategory === cat
-                  ? 'bg-[#5C3D1E] text-[#F5EDD6] font-semibold'
-                  : 'text-[#5C3D1E] hover:bg-[#EDE3CE]'
+                  ? 'bg-[#ab2124] text-[#fff8e7] font-semibold'
+                  : 'text-[#ab2124] hover:bg-[#EDE3CE]'
               }`}
             >
               {cat}
@@ -96,7 +96,7 @@ function ShopSidebar({
 
       {/* Price ranges */}
       <div>
-        <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Khoảng giá</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Khoảng giá</h3>
         <div className="space-y-1.5">
           {PRICE_RANGES.map((range) => {
             const active = minPrice === range.min && maxPrice === range.max;
@@ -105,7 +105,7 @@ function ShopSidebar({
                 key={range.label}
                 onClick={() => onPriceRangeSelect(range.min, range.max)}
                 className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
-                  active ? 'bg-[#5C3D1E] text-[#F5EDD6] font-semibold' : 'text-[#5C3D1E] hover:bg-[#EDE3CE]'
+                  active ? 'bg-[#ab2124] text-[#fff8e7] font-semibold' : 'text-[#ab2124] hover:bg-[#EDE3CE]'
                 }`}
               >
                 {range.label}
@@ -119,7 +119,7 @@ function ShopSidebar({
 
       {/* Custom price */}
       <div>
-        <h3 className="text-xs font-bold text-[#2C1A0E] uppercase tracking-wider mb-3">Nhập khoảng giá</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Nhập khoảng giá</h3>
         <div className="flex gap-2 items-center">
           <input
             type="text"
@@ -127,20 +127,20 @@ function ShopSidebar({
             placeholder="Từ"
             value={minInput}
             onChange={(e) => onMinInputChange(e.target.value.replace(/\D/g, ''))}
-            className="w-full h-9 px-2 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
+            className="w-full h-9 px-2 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
-          <span className="text-[#9C8670] shrink-0">–</span>
+          <span className="text-[#ab2124] shrink-0">–</span>
           <input
             type="text"
             inputMode="numeric"
             placeholder="Đến"
             value={maxInput}
             onChange={(e) => onMaxInputChange(e.target.value.replace(/\D/g, ''))}
-            className="w-full h-9 px-2 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
+            className="w-full h-9 px-2 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
           />
         </div>
         <button onClick={onPriceFilter}
-          className="mt-2 w-full h-9 border border-[#5C3D1E] text-[#5C3D1E] text-xs font-bold uppercase rounded-sm hover:bg-[#5C3D1E] hover:text-[#F5EDD6] transition-colors cursor-pointer">
+          className="mt-2 w-full h-9 border border-[#ab2124] text-[#ab2124] text-xs font-bold uppercase rounded-sm hover:bg-[#ab2124] hover:text-[#fff8e7] transition-colors cursor-pointer">
           Áp dụng
         </button>
       </div>
@@ -148,7 +148,7 @@ function ShopSidebar({
       <div className="h-[1px] bg-[#D4B896]/40" />
 
       <button onClick={onReset}
-        className="w-full h-9 text-xs text-[#9C8670] hover:text-[#7B1C2E] transition-colors cursor-pointer">
+        className="w-full h-9 text-xs text-[#ab2124] hover:text-[#7B1C2E] transition-colors cursor-pointer">
         Xoá bộ lọc
       </button>
     </div>
@@ -209,9 +209,9 @@ export default function ShopPage() {
     <div className="container mx-auto px-4 md:px-8 py-8">
       {/* Mobile filter toggle */}
       <div className="flex items-center justify-between mb-4 md:hidden">
-        <h1 className="text-xl font-bold text-[#2C1A0E]">Sản Phẩm</h1>
+        <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">Sản Phẩm</h1>
         <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="flex items-center gap-2 px-3 h-9 border border-[#D4B896] rounded-sm text-sm text-[#5C3D1E]">
+          className="flex items-center gap-2 px-3 h-9 border border-[#D4B896] rounded-sm text-sm text-[#ab2124]">
           <SlidersHorizontal size={14} /> Lọc
         </button>
       </div>
@@ -219,8 +219,8 @@ export default function ShopPage() {
       <div className="flex gap-6">
         {/* Sidebar */}
         <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block w-full md:w-56 shrink-0`}>
-          <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-sm p-4 sticky top-24">
-            <h2 className="hidden md:block text-sm font-bold text-[#2C1A0E] mb-4 pb-2 border-b border-[#D4B896]/40">
+          <div className="bg-[#fff8e7] border border-[#D4B896] rounded-sm p-4 sticky top-24">
+            <h2 className="hidden md:block text-sm font-bold text-[#ab2124] mb-4 pb-2 border-b border-[#D4B896]/40 text-title-gradient">
               Tìm kiếm & Lọc
             </h2>
             <ShopSidebar
@@ -245,22 +245,22 @@ export default function ShopPage() {
         {/* Product grid */}
         <div className="flex-1 min-w-0">
           <div className="hidden md:flex items-center justify-between mb-4">
-            <h1 className="text-xl font-bold text-[#2C1A0E]">Tất Cả Sản Phẩm</h1>
-            <span className="text-sm text-[#9C8670]">{products.length} sản phẩm</span>
+            <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">Tất Cả Sản Phẩm</h1>
+            <span className="text-sm text-[#ab2124]">{products.length} sản phẩm</span>
           </div>
 
           {isLoading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-[3/4] bg-[#F5EDD6] rounded-sm animate-pulse" />
+                <div key={i} className="aspect-[3/4] bg-[#fff8e7] rounded-sm animate-pulse" />
               ))}
             </div>
           )}
 
           {!isLoading && products.length === 0 && (
-            <div className="h-64 flex flex-col items-center justify-center text-center space-y-2 border border-[#D4B896] rounded-sm bg-[#FDF6E3]">
-              <p className="text-[#9C8670]">Không tìm thấy sản phẩm phù hợp</p>
-              <p className="text-xs text-[#9C8670]">Thử từ khóa khác hoặc bỏ bộ lọc.</p>
+            <div className="h-64 flex flex-col items-center justify-center text-center space-y-2 border border-[#D4B896] rounded-sm bg-[#fff8e7]">
+              <p className="text-[#ab2124]">Không tìm thấy sản phẩm phù hợp</p>
+              <p className="text-xs text-[#ab2124]">Thử từ khóa khác hoặc bỏ bộ lọc.</p>
             </div>
           )}
 
@@ -290,8 +290,8 @@ export default function ShopPage() {
                       )}
                     </div>
                     <div className="p-2.5 space-y-1">
-                      {product.village?.name?.vi && <p className="text-[9px] font-bold text-[#7A5A1A] uppercase truncate">{product.village.name.vi}</p>}
-                      <h3 className="text-xs font-semibold text-[#2C1A0E] line-clamp-2 leading-snug">{product.name.vi}</h3>
+                      {product.village?.name?.vi && <p className="text-[9px] font-bold text-[#ab2124] uppercase truncate">{product.village.name.vi}</p>}
+                      <h3 className="text-xs font-semibold text-[#ab2124] line-clamp-2 leading-snug">{product.name.vi}</h3>
                       <div className="flex text-[#C9973A]">
                         {[1,2,3,4,5].map(s => <Star key={s} size={10} fill="currentColor" />)}
                       </div>
@@ -299,7 +299,7 @@ export default function ShopPage() {
                       <button
                         disabled={stockStatus === 'out_of_stock'}
                         onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
-                        className="w-full h-7 bg-[#5C3D1E] text-[#F5EDD6] text-[9px] font-bold uppercase rounded-sm hover:bg-[#7A5230] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                        className="w-full h-7 bg-[#ab2124] text-[#fff8e7] text-[9px] font-bold uppercase rounded-sm hover:bg-[#ab2124] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                       >
                         {stockStatus === 'out_of_stock' ? 'Hết hàng' : 'Thêm vào giỏ'}
                       </button>

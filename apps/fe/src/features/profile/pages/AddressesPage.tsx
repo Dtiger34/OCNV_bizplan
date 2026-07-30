@@ -44,17 +44,17 @@ export default function AddressesPage() {
 
   return (
     <ProfileLayout>
-      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
+      <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
         <div className="flex items-center justify-between border-b border-[#D4B896]/30 pb-3">
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">DANH SÁCH ĐỊA CHỈ GIAO NHẬN</h3>
+          <h3 className="text-2xl font-bold text-[#ab2124]">DANH SÁCH ĐỊA CHỈ GIAO NHẬN</h3>
           <button onClick={() => setShowForm(!showForm)}
-            className="px-4 py-2 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm flex items-center gap-1 cursor-pointer">
+            className="px-4 py-2 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm flex items-center gap-1 cursor-pointer">
             <Plus size={14} /> Thêm địa chỉ
           </button>
         </div>
 
         {showForm && (
-          <form onSubmit={handleAdd} className="p-4 bg-[#F5EDD6] border border-[#D4B896] rounded-md space-y-4">
+          <form onSubmit={handleAdd} className="p-4 bg-[#fff8e7] border border-[#D4B896] rounded-md space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {([
                 { key: 'fullName', label: 'Họ Tên Nhận Hàng', placeholder: 'Nguyễn Văn A', type: 'text' },
@@ -64,24 +64,24 @@ export default function AddressesPage() {
                 { key: 'ward', label: 'Phường / Xã', placeholder: 'Quán Thánh', type: 'text' },
               ] as const).map(({ key, label, placeholder, type }) => (
                 <div key={key} className="space-y-1">
-                  <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">{label}</label>
+                  <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{label}</label>
                   <input type={type} placeholder={placeholder} value={form[key]} onChange={set(key)}
-                    className="w-full h-10 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                    className="w-full h-10 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
                 </div>
               ))}
               <div className="space-y-1 md:col-span-2">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Số Nhà, Tên Đường</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Số Nhà, Tên Đường</label>
                 <input type="text" placeholder="10 Hùng Vương" value={form.street} onChange={set('street')} required
-                  className="w-full h-10 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-10 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
             </div>
             <div className="flex gap-2">
               <button type="submit" disabled={createAddress.isPending}
-                className="px-4 py-2 bg-[#5C3D1E] text-[#F5EDD6] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
+                className="px-4 py-2 bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
                 {createAddress.isPending ? 'Đang lưu...' : 'Lưu Địa Chỉ'}
               </button>
               <button type="button" onClick={() => setShowForm(false)}
-                className="px-4 py-2 border border-[#D4B896] text-[#5C3D1E] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
+                className="px-4 py-2 border border-[#D4B896] text-[#ab2124] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
                 Hủy Bỏ
               </button>
             </div>
@@ -89,30 +89,30 @@ export default function AddressesPage() {
         )}
 
         <div className="space-y-4">
-          {isLoading && <p className="text-sm text-[#9C8670] italic">Đang tải...</p>}
+          {isLoading && <p className="text-sm text-[#ab2124] italic">Đang tải...</p>}
           {!isLoading && addresses.length === 0 && (
-            <p className="text-sm text-[#9C8670] italic">Chưa khai báo địa chỉ nhận hàng nào.</p>
+            <p className="text-sm text-[#ab2124] italic">Chưa khai báo địa chỉ nhận hàng nào.</p>
           )}
           {addresses.map((a) => (
             <div key={a._id}
-              className="p-4 border border-[#D4B896] rounded-md bg-[#FDF6E3] hover:border-[#C9973A] transition-all flex flex-col sm:flex-row justify-between gap-4">
+              className="p-4 border border-[#D4B896] rounded-md bg-[#fff8e7] hover:border-[#C9973A] transition-all flex flex-col sm:flex-row justify-between gap-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-lg font-bold text-[#2C1A0E]">{a.fullName}</span>
-                  <span className="text-xs text-[#5C3D1E]">{a.phone}</span>
+                  <span className="text-lg font-bold text-[#ab2124]">{a.fullName}</span>
+                  <span className="text-xs text-[#ab2124]">{a.phone}</span>
                   {a.isDefault && (
                     <span className="flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase px-2 py-0.5 border border-[#3A6B4A] bg-[rgba(58,107,74,0.1)] text-[#3A6B4A] rounded-sm">
                       <Home size={10} /> Mặc Định
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-[#2C1A0E]">{formatAddress(a)}</p>
+                <p className="text-sm text-[#ab2124]">{formatAddress(a)}</p>
               </div>
 
               <div className="flex items-center gap-2 self-end sm:self-center">
                 {!a.isDefault && (
                   <button onClick={() => setDefault.mutate(a._id)}
-                    className="px-3 py-1.5 border border-[#D4B896] text-xs font-bold text-[#5C3D1E] uppercase hover:bg-[#5C3D1E]/5 rounded-sm cursor-pointer">
+                    className="px-3 py-1.5 border border-[#D4B896] text-xs font-bold text-[#ab2124] uppercase hover:bg-[#ab2124]/5 rounded-sm cursor-pointer">
                     Đặt làm mặc định
                   </button>
                 )}

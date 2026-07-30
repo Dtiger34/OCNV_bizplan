@@ -63,7 +63,7 @@ const SECTIONS: Section[] = [
     id: 'product',
     icon: <Package size={20} />,
     title: 'Chất Lượng Sản Phẩm',
-    color: '#5C3D1E',
+    color: '#ab2124',
     items: [
       {
         heading: 'Vật liệu và chế tác',
@@ -123,7 +123,7 @@ const SECTIONS: Section[] = [
     id: 'faq',
     icon: <HelpCircle size={20} />,
     title: 'Câu Hỏi Thường Gặp',
-    color: '#7A5A1A',
+    color: '#ab2124',
     items: [
       {
         heading: 'Hộp mô hình có đèn LED không?',
@@ -153,12 +153,12 @@ function AccordionItem({ heading, body }: { heading: string; body: string }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-3.5 text-left cursor-pointer group"
       >
-        <span className="text-sm font-semibold text-[#2C1A0E] group-hover:text-[#5C3D1E] transition-colors">
+        <span className="text-sm font-semibold text-[#ab2124] group-hover:text-[#ab2124] transition-colors">
           {heading}
         </span>
         <ChevronDown
           size={15}
-          className={`text-[#9C8670] shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`text-[#ab2124] shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
       </button>
       <AnimatePresence initial={false}>
@@ -170,7 +170,7 @@ function AccordionItem({ heading, body }: { heading: string; body: string }) {
             transition={{ duration: 0.22 }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-sm text-[#5C3D1E]/80 leading-relaxed">{body}</p>
+            <p className="pb-4 text-sm text-[#ab2124]/80 leading-relaxed">{body}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -189,12 +189,12 @@ export default function RegulationsPage() {
       <section className="max-w-5xl mx-auto px-6 md:px-8 pt-12 pb-8 border-b border-[#D4B896]/50 reveal">
         <div className="flex items-end justify-between gap-6">
           <div className="space-y-2">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
+            <span className="text-[13px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
               Nghề Xưa Nét Mới
             </span>
-            <h1 className="text-4xl md:text-5xl font-light text-[#2C1A0E]">Chính Sách</h1>
+            <h1 className="text-4xl md:text-5xl font-light text-[#ab2124] text-title-gradient">Chính Sách</h1>
           </div>
-          <p className="hidden md:block text-sm text-[#9C8670] max-w-xs text-right leading-relaxed">
+          <p className="hidden md:block text-sm text-[#ab2124] max-w-xs text-right leading-relaxed">
             Tổng hợp chính sách, điều khoản và hướng dẫn mua hàng
           </p>
         </div>
@@ -211,7 +211,7 @@ export default function RegulationsPage() {
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-[6px] text-left text-sm transition-all cursor-pointer ${
                 activeSection === s.id
                   ? 'font-semibold'
-                  : 'text-[#5C3D1E]/60 hover:text-[#5C3D1E] hover:bg-[#FDF6E3]'
+                  : 'text-[#ab2124]/60 hover:text-[#ab2124] hover:bg-[#fff8e7]'
               }`}
               style={activeSection === s.id ? { color: s.color, backgroundColor: `${s.color}12` } : {}}
             >
@@ -226,7 +226,7 @@ export default function RegulationsPage() {
           <select
             value={activeSection}
             onChange={(e) => setActiveSection(e.target.value)}
-            className="w-full border border-[#D4B896] rounded-[6px] px-3 py-2 text-sm text-[#2C1A0E] bg-[#FDF6E3]"
+            className="w-full border border-[#D4B896] rounded-[6px] px-3 py-2 text-sm text-[#ab2124] bg-[#fff8e7]"
           >
             {SECTIONS.map((s) => (
               <option key={s.id} value={s.id}>{s.title}</option>
@@ -243,7 +243,7 @@ export default function RegulationsPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-6 md:p-8 shadow-subtle"
+              className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] p-6 md:p-8 shadow-subtle"
             >
               {/* Section header */}
               <div className="flex items-center gap-3 pb-5 mb-5 border-b border-[#D4B896]/50">
@@ -253,7 +253,7 @@ export default function RegulationsPage() {
                 >
                   {current.icon}
                 </div>
-                <h2 className="text-xl font-semibold text-[#2C1A0E]">{current.title}</h2>
+                <h2 className="text-xl font-semibold text-[#ab2124] text-title-gradient">{current.title}</h2>
               </div>
 
               {/* Accordion items */}
@@ -277,7 +277,7 @@ export default function RegulationsPage() {
                     {prev && (
                       <button
                         onClick={() => setActiveSection(prev.id)}
-                        className="text-xs text-[#7A5A1A] hover:text-[#5C3D1E] flex items-center gap-1 cursor-pointer transition-colors"
+                        className="text-xs text-[#ab2124] hover:text-[#ab2124] flex items-center gap-1 cursor-pointer transition-colors"
                       >
                         ← {prev.title}
                       </button>
@@ -287,7 +287,7 @@ export default function RegulationsPage() {
                     {next && (
                       <button
                         onClick={() => setActiveSection(next.id)}
-                        className="text-xs text-[#7A5A1A] hover:text-[#5C3D1E] flex items-center gap-1 cursor-pointer transition-colors"
+                        className="text-xs text-[#ab2124] hover:text-[#ab2124] flex items-center gap-1 cursor-pointer transition-colors"
                       >
                         {next.title} →
                       </button>

@@ -22,9 +22,9 @@ createRoot(document.getElementById('root')!).render(
         toastOptions={{
           duration: 2000,
           style: {
-            background: '#FDF6E3',
+            background: '#fff8e7',
             border: '1px solid #D4B896',
-            color: '#2C1A0E',
+            color: '#ab2124',
             fontFamily: 'inherit',
             fontSize: '13px',
           },

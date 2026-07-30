@@ -32,7 +32,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
       case 'in_stock':
         return 'bg-[#3A6B4A]/10 text-[#3A6B4A] border-[#3A6B4A]/30';
       case 'low_stock':
-        return 'bg-[#C9973A]/10 text-[#7A5A1A] border-[#C9973A]/30';
+        return 'bg-[#C9973A]/10 text-[#ab2124] border-[#C9973A]/30';
       case 'out_of_stock':
         return 'bg-[#7B1C2E]/10 text-[#7B1C2E] border-[#7B1C2E]/30';
       case 'featured':
@@ -49,7 +49,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
     <motion.div
       whileHover={{ y: -6, scale: 1.01 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="relative group bg-[#FDF6E3] overflow-hidden flex flex-col h-[400px] hover:shadow-xl border-b-[2px] border-[#D4B896] hover:border-[#C9973A] rounded-[4px] cursor-pointer"
+      className="relative group bg-[#fff8e7] overflow-hidden flex flex-col h-[400px] hover:shadow-xl border-b-[2px] border-[#D4B896] hover:border-[#C9973A] rounded-[4px] cursor-pointer"
     >
       {/* Image container: fills top 60% */}
       <div className="relative w-full h-[60%] overflow-hidden bg-[#EDE3CE] rounded-t-[4px]">
@@ -61,7 +61,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
         />
         
         {/* Soft elegant darkening overlay on hover */}
-        <div className="absolute inset-0 bg-[#2C1A0E]/0 group-hover:bg-[#2C1A0E]/30 transition-all duration-300 flex items-center justify-center gap-3">
+        <div className="absolute inset-0 bg-[#ab2124]/0 group-hover:bg-[#ab2124]/30 transition-all duration-300 flex items-center justify-center gap-3">
           {/* Add to Cart Icon Button Overlay (Hidden until hover) */}
           {product.stockStatus !== 'out_of_stock' && (
             <motion.button
@@ -78,7 +78,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
               }}
               whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.92 }}
-              className="w-10 h-10 rounded-full bg-[#5C3D1E] text-[#F5EDD6] hover:bg-[#7A5230] flex items-center justify-center shadow-md cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-3 group-hover:translate-y-0"
+              className="w-10 h-10 rounded-full bg-[#ab2124] text-[#fff8e7] hover:bg-[#ab2124] flex items-center justify-center shadow-md cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-3 group-hover:translate-y-0"
               title="Thêm vào giỏ"
             >
               <ShoppingCart size={16} />
@@ -93,7 +93,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
             }}
             whileHover={{ scale: 1.12 }}
             whileTap={{ scale: 0.92 }}
-            className="w-10 h-10 rounded-full bg-[#FDF6E3] text-[#5C3D1E] hover:bg-[#F5EDD6] flex items-center justify-center shadow-md cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-3 group-hover:translate-y-0 delay-75"
+            className="w-10 h-10 rounded-full bg-[#fff8e7] text-[#ab2124] hover:bg-[#fff8e7] flex items-center justify-center shadow-md cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-3 group-hover:translate-y-0 delay-75"
             title="Xem chi tiết"
           >
             <Eye size={16} />
@@ -105,20 +105,20 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
       <div className="p-4 flex-1 flex flex-col justify-between relative">
         <div className="space-y-1">
           {/* Overline Category */}
-          <span className="text-[9px] font-bold tracking-[0.15em] text-[#7A5A1A] uppercase block pointer-events-none select-none">
+          <span className="text-[9px] font-bold tracking-[0.15em] text-[#ab2124] uppercase block pointer-events-none select-none">
             {product.category}
           </span>
 
           {/* Product Name */}
           <h3 
             onClick={() => onViewDetails?.(product)}
-            className="text-[18px] md:text-[20px] font-bold text-[#2C1A0E] hover:text-[#7B1C2E] cursor-pointer transition-colors leading-snug line-clamp-2"
+            className="text-[18px] md:text-[20px] font-bold text-[#ab2124] hover:text-[#7B1C2E] cursor-pointer transition-colors leading-snug line-clamp-2"
           >
             {product.name}
           </h3>
 
           {/* Material & Provenance */}
-          <p className="text-[11px] text-[#9C8670] italic pointer-events-none select-none">
+          <p className="text-[11px] text-[#ab2124] italic pointer-events-none select-none">
             {product.material} — {product.origin}
           </p>
         </div>
@@ -132,13 +132,13 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
                   {formatPrice(product.price)}
                   <span className="text-[11px] font-semibold align-super ml-0.5">₫</span>
                 </span>
-                <span className="text-xs line-through text-[#9C8670]">
+                <span className="text-xs line-through text-[#ab2124]">
                   {formatPrice(product.originalPrice)}
                   <span className="text-[9px] align-super ml-0.5">₫</span>
                 </span>
               </>
             ) : (
-              <span className="text-lg font-bold text-[#2C1A0E]">
+              <span className="text-lg font-bold text-[#ab2124]">
                 {formatPrice(product.price)}
                 <span className="text-[11px] font-semibold align-super ml-0.5">₫</span>
               </span>

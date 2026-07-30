@@ -75,7 +75,7 @@ export default function HomePage() {
       {/* 3. Brand Story Section */}
       <section
         id="story-section"
-        className="relative bg-[#3A1A0A]/5 py-12 md:py-24 overflow-hidden border-t border-b border-[#D4B896]/20"
+        className="relative bg-[#ab2124]/5 py-12 md:py-24 overflow-hidden border-t border-b border-[#D4B896]/20"
       >
         {/* Calligraphic Watermark */}
         <div className="absolute inset-0 flex items-center justify-center text-[60px] md:text-[110px] lg:text-[180px] font-bold text-[#C9973A]/5 select-none pointer-events-none uppercase tracking-[0.15em] leading-none overflow-hidden">
@@ -90,14 +90,14 @@ export default function HomePage() {
         <div className="relative z-10 container mx-auto px-6 md:px-8 max-w-5xl space-y-12">
           {/* Header */}
           <div className="text-center space-y-4">
-            <span className="reveal text-[11px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
+            <span className="reveal text-[13px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">
               BẢN SẮC CỦA CHÚNG TÔI
             </span>
-            <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#2C1A0E] leading-tight">
+            <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#ab2124] leading-tight text-title-gradient">
               Sức Sống Mới Cho Di Sản Việt
             </h2>
             <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-            <p className="reveal delay-300 text-base md:text-lg text-[#5C3D1E] leading-relaxed max-w-4xl mx-auto text-justify text-pretty">
+            <p className="reveal delay-300 text-base md:text-lg text-[#ab2124] leading-relaxed max-w-4xl mx-auto text-justify text-pretty">
               Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện của những làng nghề Việt Nam đến gần hơn với mọi người.
             </p>
           </div>
@@ -121,12 +121,12 @@ export default function HomePage() {
                 desc: 'Đi sâu vào lịch sử, con người và tinh thần của 5 làng nghề nổi tiếng Việt Nam. Mỗi trang làng nghề là một hành trình — từ nguồn gốc, quy trình đến nét đặc trưng chỉ nơi đó mới có.',
               },
             ].map((item, i) => (
-              <div key={i} className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-3 hover:border-[#C9973A] transition-colors">
+              <div key={i} className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-3 hover:border-[#C9973A] transition-colors">
                 <div className="w-12 h-12 rounded-full bg-[#EDE3CE] flex items-center justify-center">
                   {item.icon}
                 </div>
-                <h3 className="font-bold text-[#2C1A0E] text-base">{item.title}</h3>
-                <p className="text-sm text-[#5C3D1E] leading-relaxed">{item.desc}</p>
+                <h3 className="font-bold text-[#ab2124] text-base">{item.title}</h3>
+                <p className="text-sm text-[#ab2124] leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function HomePage() {
           <div className="text-center reveal delay-400">
             <Link
               to="/villages"
-              className="inline-flex items-center gap-2 px-7 py-3 bg-[#7B1C2E] text-[#F5EDD6] text-sm font-bold tracking-wider uppercase rounded-sm hover:bg-[#9B2438] transition-colors"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#7B1C2E] text-[#fff8e7] text-sm font-bold tracking-wider uppercase rounded-sm hover:bg-[#9B2438] transition-colors"
             >
               Khám phá các làng nghề
               <ArrowRight size={15} />
@@ -155,10 +155,10 @@ export default function HomePage() {
             { value: '98%', label: 'Khách hàng hài lòng', icon: <Star size={20} className="text-[#C9973A]" /> },
             { value: '2-5 ngày', label: 'Giao hàng toàn quốc', icon: <Truck size={20} className="text-[#C9973A]" /> },
           ].map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center text-center gap-2 p-6 border border-[#D4B896]/40 rounded-[4px] bg-[#FDF6E3]/60 hover:border-[#C9973A]/60 transition-colors">
+            <div key={stat.label} className="flex flex-col items-center text-center gap-2 p-6 border border-[#D4B896]/40 rounded-[4px] bg-[#fff8e7]/60 hover:border-[#C9973A]/60 transition-colors">
               {stat.icon}
-              <span className="text-3xl font-bold text-[#2C1A0E]">{stat.value}</span>
-              <span className="text-[11px] text-[#5C3D1E] leading-tight">{stat.label}</span>
+              <span className="text-3xl font-bold text-[#ab2124]">{stat.value}</span>
+              <span className="text-[11px] text-[#ab2124] leading-tight">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -175,8 +175,8 @@ export default function HomePage() {
       {/* 5. News / Blog Section */}
       <section className="container mx-auto px-6 md:px-8 space-y-8">
         <div className="text-center space-y-3 reveal">
-          <span className="text-[11px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">TIN TỨC & CẢM HỨNG</span>
-          <h2 className="text-3xl md:text-[36px] font-bold text-[#2C1A0E] tracking-wide">Câu Chuyện Di Sản</h2>
+          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">TIN TỨC & CẢM HỨNG</span>
+          <h2 className="text-3xl md:text-[36px] font-bold text-[#ab2124] tracking-wide text-title-gradient">Câu Chuyện Di Sản</h2>
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -194,19 +194,19 @@ export default function HomePage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-5 space-y-3 bg-[#FDF6E3]">
+                <div className="p-5 space-y-3 bg-[#fff8e7]">
                   <div className="flex items-center gap-3">
                     <span className="text-[9px] font-bold tracking-wider text-[#7B1C2E] uppercase bg-[#7B1C2E]/10 px-2 py-0.5 rounded-full">
                       {article.tag}
                     </span>
-                    <span className="text-[10px] text-[#9C8670] flex items-center gap-1">
+                    <span className="text-[10px] text-[#ab2124] flex items-center gap-1">
                       <Calendar size={10} /> {article.date}
                     </span>
                   </div>
-                  <h3 className="text-base font-bold text-[#2C1A0E] leading-snug group-hover:text-[#7B1C2E] transition-colors">
+                  <h3 className="text-base font-bold text-[#ab2124] leading-snug group-hover:text-[#7B1C2E] transition-colors">
                     {article.title}
                   </h3>
-                  <p className="text-[12px] text-[#5C3D1E]/80 leading-relaxed line-clamp-2">{article.excerpt}</p>
+                  <p className="text-[12px] text-[#ab2124]/80 leading-relaxed line-clamp-2">{article.excerpt}</p>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#C9973A] tracking-wide group-hover:gap-2 transition-all">
                     Đọc thêm <ArrowRight size={11} />
                   </span>
@@ -220,8 +220,8 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="container mx-auto px-6 md:px-8 space-y-8 pb-16">
         <div className="text-center space-y-2 reveal">
-          <span className="text-[11px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">KHÁCH HÀNG NÓI GÌ</span>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#2C1A0E]">Cảm Nhận Thực Tế</h2>
+          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">KHÁCH HÀNG NÓI GÌ</span>
+          <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Cảm Nhận Thực Tế</h2>
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto mt-2" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -245,16 +245,16 @@ export default function HomePage() {
               rating: 5,
             },
           ].map((t, idx) => (
-            <div key={t.name} className={`reveal ${idx === 1 ? 'delay-150' : idx === 2 ? 'delay-300' : ''} bg-[#FDF6E3] border border-[#D4B896]/50 rounded-[6px] p-5 space-y-3 hover:border-[#C9973A]/50 transition-colors`}>
+            <div key={t.name} className={`reveal ${idx === 1 ? 'delay-150' : idx === 2 ? 'delay-300' : ''} bg-[#fff8e7] border border-[#D4B896]/50 rounded-[6px] p-5 space-y-3 hover:border-[#C9973A]/50 transition-colors`}>
               <div className="flex gap-0.5">
                 {Array.from({ length: t.rating }).map((_, i) => (
                   <Star key={i} size={12} className="text-[#C9973A] fill-[#C9973A]" />
                 ))}
               </div>
-              <p className="text-sm text-[#2C1A0E]/80 leading-relaxed italic">"{t.text}"</p>
+              <p className="text-sm text-[#ab2124]/80 leading-relaxed italic">"{t.text}"</p>
               <div className="pt-1 border-t border-[#D4B896]/30">
-                <span className="text-[12px] font-bold text-[#2C1A0E] block">{t.name}</span>
-                <span className="text-[10px] text-[#9C8670]">{t.role}</span>
+                <span className="text-[12px] font-bold text-[#ab2124] block">{t.name}</span>
+                <span className="text-[10px] text-[#ab2124]">{t.role}</span>
               </div>
             </div>
           ))}
@@ -265,14 +265,14 @@ export default function HomePage() {
       {selectedProduct && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-[#2C1A0E]/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-[#ab2124]/60 backdrop-blur-xs transition-opacity"
             onClick={() => setSelectedProduct(null)}
           />
 
-          <div className="relative bg-[#FDF6E3] border-[2px] border-[#C9973A] rounded-[8px] max-w-3xl w-full max-h-[90vh] overflow-y-auto z-10 shadow-overlay flex flex-col md:flex-row p-6 gap-6">
+          <div className="relative bg-[#fff8e7] border-[2px] border-[#C9973A] rounded-[8px] max-w-3xl w-full max-h-[90vh] overflow-y-auto z-10 shadow-overlay flex flex-col md:flex-row p-6 gap-6">
             <button
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 text-[#5C3D1E] hover:text-[#7B1C2E] transition-colors p-1"
+              className="absolute top-4 right-4 text-[#ab2124] hover:text-[#7B1C2E] transition-colors p-1"
             >
               <X size={22} strokeWidth={1.5} />
             </button>
@@ -286,11 +286,11 @@ export default function HomePage() {
               />
 
               {/* Product Info details inside modal */}
-              <div className="bg-[#F5EDD6] border border-[#D4B896] p-4 rounded-[6px] space-y-2">
-                <span className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase block">
+              <div className="bg-[#fff8e7] border border-[#D4B896] p-4 rounded-[6px] space-y-2">
+                <span className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase block">
                   THÔNG SỐ CHI TIẾT
                 </span>
-                <ul className="text-[13px] text-[#2C1A0E] space-y-1">
+                <ul className="text-[13px] text-[#ab2124] space-y-1">
                   <li><strong>Xuất xứ:</strong> {selectedProduct.origin}</li>
                   <li><strong>Chất liệu:</strong> {selectedProduct.material}</li>
                   <li><strong>Tình trạng:</strong> {selectedProduct.stockStatus === 'in_stock' ? 'Còn hàng trong kho' : 'Đặt làm thủ công (3-5 tuần)'}</li>
@@ -301,11 +301,11 @@ export default function HomePage() {
             {/* Product Details Content & Seller Story Card */}
             <div className="w-full md:w-1/2 flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <span className="text-[10px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">
+                <span className="text-[13px] font-bold tracking-[0.14em] text-[#ab2124] uppercase block">
                   {selectedProduct.category}
                 </span>
 
-                <h3 className="text-[28px] font-bold text-[#2C1A0E] leading-tight">
+                <h3 className="text-[28px] font-bold text-[#ab2124] leading-tight">
                   {selectedProduct.name}
                 </h3>
 
@@ -314,28 +314,28 @@ export default function HomePage() {
                   <span className="text-[13px] font-semibold align-super ml-0.5">₫</span>
                 </div>
 
-                <p className="text-sm text-[#2C1A0E] leading-relaxed">
+                <p className="text-sm text-[#ab2124] leading-relaxed">
                   Mô hình tiểu cảnh diorama gỗ ghép nhiều lớp tinh xảo, tái hiện sống động quy trình làng nghề cổ truyền Việt Nam, đóng gói trong hộp mica bảo vệ 360 độ kèm hệ thống đèn LED ấm cúng.
                 </p>
               </div>
 
               {/* Seller Story Card */}
               {selectedProduct.makerName && (
-                <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-4 space-y-2">
+                <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] p-4 space-y-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#5C3D1E] flex items-center justify-center text-[#F5EDD6] text-lg font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[#ab2124] flex items-center justify-center text-[#fff8e7] text-lg font-bold">
                       {selectedProduct.makerName[0]}
                     </div>
                     <div>
-                      <h4 className="text-base font-bold text-[#2C1A0E] leading-tight">
+                      <h4 className="text-base font-bold text-[#ab2124] leading-tight">
                         {selectedProduct.makerName}
                       </h4>
-                      <span className="text-[9px] font-semibold tracking-wider uppercase text-[#9C8670]">
+                      <span className="text-[9px] font-semibold tracking-wider uppercase text-[#ab2124]">
                         Nghệ nhân tỉnh {selectedProduct.makerProvince}
                       </span>
                     </div>
                   </div>
-                  <p className="text-[12px] text-[#2C1A0E]/80 leading-relaxed italic">
+                  <p className="text-[12px] text-[#ab2124]/80 leading-relaxed italic">
                     "{selectedProduct.makerStory}"
                   </p>
                 </div>
@@ -355,7 +355,7 @@ export default function HomePage() {
                   });
                   setSelectedProduct(null);
                 }}
-                className="w-full h-11 bg-[#5C3D1E] text-[#F5EDD6] text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#7A5230] active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 border border-[#C9973A]/20 shadow-md"
+                className="w-full h-11 bg-[#ab2124] text-[#fff8e7] text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#ab2124] active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 border border-[#C9973A]/20 shadow-md"
               >
                 {selectedProduct.stockStatus === 'out_of_stock' ? 'HẾT HÀNG TRÊN HỆ THỐNG' : 'THÊM VÀO GIỎ HÀNG'}
               </button>

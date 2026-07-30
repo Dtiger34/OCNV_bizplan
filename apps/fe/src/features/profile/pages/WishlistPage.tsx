@@ -12,19 +12,19 @@ export default function WishlistPage() {
 
   return (
     <ProfileLayout>
-      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
-        <h3 className="text-2xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-3">
+      <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
+        <h3 className="text-2xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
           DANH SÁCH SẢN PHẨM YÊU THÍCH
         </h3>
 
         {isLoading && (
-          <div className="h-[220px] flex items-center justify-center text-[#9C8670] text-sm">Đang tải...</div>
+          <div className="h-[220px] flex items-center justify-center text-[#ab2124] text-sm">Đang tải...</div>
         )}
 
         {!isLoading && items.length === 0 && (
           <div className="h-[220px] flex flex-col items-center justify-center text-center p-8 space-y-4">
-            <Heart size={32} className="text-[#9C8670] animate-pulse" />
-            <span className="text-xl text-[#9C8670] italic">Chưa lưu sản phẩm nào</span>
+            <Heart size={32} className="text-[#ab2124] animate-pulse" />
+            <span className="text-xl text-[#ab2124] italic">Chưa lưu sản phẩm nào</span>
           </div>
         )}
 
@@ -32,7 +32,7 @@ export default function WishlistPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {items.map((item) => (
               <div key={item._id}
-                className="flex gap-4 p-3 bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] relative group hover:border-[#C9973A] transition-all">
+                className="flex gap-4 p-3 bg-[#fff8e7] border border-[#D4B896] rounded-[6px] relative group hover:border-[#C9973A] transition-all">
                 <img
                   src={item.mainImageUrl ?? PLACEHOLDER}
                   alt={item.name.vi}
@@ -40,8 +40,8 @@ export default function WishlistPage() {
                 />
                 <div className="flex-1 flex flex-col justify-between">
                   <div className="space-y-0.5">
-                    <span className="text-[9px] font-bold text-[#7A5A1A] uppercase">{item.village?.name?.vi ?? 'OCNV'}</span>
-                    <h4 className="text-base font-bold text-[#2C1A0E] leading-tight line-clamp-1">{item.name.vi}</h4>
+                    <span className="text-[9px] font-bold text-[#ab2124] uppercase">{item.village?.name?.vi ?? 'OCNV'}</span>
+                    <h4 className="text-base font-bold text-[#ab2124] leading-tight line-clamp-1">{item.name.vi}</h4>
                     <span className="text-sm font-semibold text-[#7B1C2E] block">{item.price.toLocaleString('vi-VN')} ₫</span>
                   </div>
 
@@ -55,12 +55,12 @@ export default function WishlistPage() {
                         material: '',
                         origin: item.village?.name?.vi ?? 'OCNV',
                       })}
-                      className="flex items-center gap-1 text-[9px] font-bold text-[#5C3D1E] hover:text-[#7B1C2E] uppercase transition-colors">
+                      className="flex items-center gap-1 text-[9px] font-bold text-[#ab2124] hover:text-[#7B1C2E] uppercase transition-colors">
                       <ShoppingCart size={12} />
                       Thêm vào giỏ
                     </button>
                     <button onClick={() => removeFromWishlist.mutate(item._id)}
-                      className="text-[#9C8670] hover:text-[#7B1C2E] transition-colors p-1">
+                      className="text-[#ab2124] hover:text-[#7B1C2E] transition-colors p-1">
                       <Trash2 size={13} />
                     </button>
                   </div>

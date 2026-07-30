@@ -16,13 +16,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#3A1A0A] text-[#F5EDD6] border-t border-[#C9973A]/20 pt-16 pb-8 transition-colors">
+    <footer className="bg-[#ab2124] text-[#fff8e7] border-t border-[#C9973A]/20 pt-16 pb-8 transition-colors">
       {/* 3-Column Minimal Layout */}
       <div className="container mx-auto px-6 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12">
         
         {/* Column 1: Brand Info */}
         <div className="space-y-4">
-          <h4 className="text-2xl font-bold tracking-wider text-[#C9973A] uppercase">
+          <h4 className="text-2xl font-bold tracking-wider text-[#fff8e7] uppercase">
             NGHỀ XƯA NÉT MỚI
           </h4>
           <div className="space-y-2 pt-2 text-[#C9B99A] text-sm">
@@ -40,7 +40,7 @@ export default function Footer() {
         {/* Column 2: Navigation Links (Grouped lists side-by-side) */}
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">
-            <h4 className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
+            <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase">
               TIỂU CẢNH LÀNG NGHỀ
             </h4>
             <ul className="text-xs text-[#C9B99A] space-y-3">
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
+            <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase whitespace-nowrap">
               QUY ĐỊNH & THƯỞNG LÃM
             </h4>
             <ul className="text-xs text-[#C9B99A] space-y-3">
@@ -103,7 +103,7 @@ export default function Footer() {
 
         {/* Column 3: Newsletter */}
         <div className="space-y-4">
-          <h4 className="text-[10px] font-bold tracking-[0.2em] text-[#C9973A] uppercase">
+          <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase">
             TIN TỨC DI SẢN
           </h4>
           <p className="text-sm text-[#C9B99A] leading-relaxed">
@@ -118,11 +118,11 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="flex-1 h-9 bg-transparent text-[#F5EDD6] placeholder-[#9C8670]/80 text-xs focus:outline-none"
+                className="flex-1 h-9 bg-transparent text-[#fff8e7] placeholder-[#ab2124]/80 text-xs focus:outline-none"
               />
               <button
                 type="submit"
-                className="h-9 px-2 bg-transparent text-[#C9973A] hover:text-[#F5EDD6] transition-colors cursor-pointer flex items-center justify-center"
+                className="h-9 px-2 bg-transparent text-[#C9973A] hover:text-[#fff8e7] transition-colors cursor-pointer flex items-center justify-center"
               >
                 <Mail size={16} strokeWidth={1.5} />
               </button>
@@ -149,7 +149,7 @@ export default function Footer() {
             href="https://www.facebook.com/NgheXuaNetMoi"
             target="_blank"
             rel="noreferrer"
-            className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#F5EDD6] hover:border-[#C9973A]/40 transition-colors"
+            className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#fff8e7] hover:border-[#C9973A]/40 transition-colors"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -159,7 +159,7 @@ export default function Footer() {
             href="https://www.tiktok.com/@nghexuanetmoi"
             target="_blank"
             rel="noreferrer"
-            className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#F5EDD6] hover:border-[#C9973A]/40 transition-colors"
+            className="w-8 h-8 rounded-full border border-[#D4B896]/10 flex items-center justify-center text-[#C9973A]/80 hover:text-[#fff8e7] hover:border-[#C9973A]/40 transition-colors"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/>

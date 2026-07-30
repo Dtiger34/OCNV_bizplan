@@ -27,7 +27,7 @@ export default function ProductDetailPage() {
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-[#C9973A] border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-[#9C8670]">Đang tải sản phẩm...</p>
+          <p className="text-sm text-[#ab2124]">Đang tải sản phẩm...</p>
         </div>
       </div>
     );
@@ -36,7 +36,7 @@ export default function ProductDetailPage() {
   if (isError || !product) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <p className="text-lg text-[#2C1A0E]">Không tìm thấy sản phẩm.</p>
+        <p className="text-lg text-[#ab2124]">Không tìm thấy sản phẩm.</p>
         <Link to="/shop" className="text-[#C9973A] underline text-sm">← Quay lại gian hàng</Link>
       </div>
     );
@@ -104,7 +104,7 @@ export default function ProductDetailPage() {
           <ChevronRight size={12} />
           <Link to="/shop" className="hover:text-[#C9973A]">Cửa hàng</Link>
           <ChevronRight size={12} />
-          <span className="text-[#2C1A0E] truncate max-w-[200px]">{product.name[lang]}</span>
+          <span className="text-[#ab2124] truncate max-w-[200px]">{product.name[lang]}</span>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export default function ProductDetailPage() {
                 {product.village?.name?.[lang] && (
                   <span className="text-xs text-[#C9973A] font-medium">{product.village.name[lang]}</span>
                 )}
-                <h1 className="text-lg md:text-xl font-medium text-[#2C1A0E] mt-1 leading-snug">
+                <h1 className="text-lg md:text-xl font-medium text-[#ab2124] mt-1 leading-snug text-title-gradient">
                   {product.name[lang]}
                 </h1>
               </div>
@@ -172,21 +172,21 @@ export default function ProductDetailPage() {
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex gap-2">
                   <span className="text-gray-400 w-32 shrink-0">Loại sản phẩm</span>
-                  <span className="text-[#2C1A0E]">Mô hình tiểu cảnh làng nghề 3D</span>
+                  <span className="text-[#ab2124]">Mô hình tiểu cảnh làng nghề 3D</span>
                 </div>
                 {product.village?.name?.[lang] && (
                   <div className="flex gap-2">
                     <span className="text-gray-400 w-32 shrink-0">Chủ đề làng nghề</span>
-                    <span className="text-[#2C1A0E]">{product.village.name[lang]}</span>
+                    <span className="text-[#ab2124]">{product.village.name[lang]}</span>
                   </div>
                 )}
                 <div className="flex gap-2">
                   <span className="text-gray-400 w-32 shrink-0">Công nghệ</span>
-                  <span className="text-[#2C1A0E]">Tích hợp AR — quét mã để xem 3D</span>
+                  <span className="text-[#ab2124]">Tích hợp AR — quét mã để xem 3D</span>
                 </div>
                 <div className="flex gap-2">
                   <span className="text-gray-400 w-32 shrink-0">Xuất xứ</span>
-                  <span className="text-[#2C1A0E]">Việt Nam — Nghề Xưa Nét Mới</span>
+                  <span className="text-[#ab2124]">Việt Nam — Nghề Xưa Nét Mới</span>
                 </div>
                 <div className="flex gap-2">
                   <span className="text-gray-400 w-32 shrink-0">Tình trạng</span>
@@ -243,7 +243,7 @@ export default function ProductDetailPage() {
 
         {/* ── Description ─────────────────────────────────────────── */}
         <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
-          <h2 className="text-sm font-bold text-[#2C1A0E] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4">
+          <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 text-title-gradient">
             Mô Tả Sản Phẩm
           </h2>
           <div className="text-sm text-gray-700 leading-relaxed space-y-3">
@@ -260,7 +260,7 @@ export default function ProductDetailPage() {
                 { label: 'Câu chuyện văn hóa', desc: 'Mỗi mô hình mang theo lịch sử và tinh thần của làng nghề' },
               ].map((item, i) => (
                 <div key={i} className="bg-[#FAFAF5] border border-gray-100 rounded-sm p-3">
-                  <p className="text-xs font-bold text-[#2C1A0E] mb-1">{item.label}</p>
+                  <p className="text-xs font-bold text-[#ab2124] mb-1">{item.label}</p>
                   <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
@@ -275,7 +275,7 @@ export default function ProductDetailPage() {
 
         {/* ── Reviews ─────────────────────────────────────────────── */}
         <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
-          <h2 className="text-sm font-bold text-[#2C1A0E] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 flex items-center gap-2">
+          <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 flex items-center gap-2 text-title-gradient">
             <MessageSquare size={15} className="text-[#C9973A]" />
             Đánh Giá Sản Phẩm
           </h2>
@@ -303,12 +303,12 @@ export default function ProductDetailPage() {
             ) : (
               displayReviews.map((r: any) => (
                 <div key={r._id} className="flex gap-3 py-4 border-b border-gray-50 last:border-0">
-                  <div className="w-9 h-9 rounded-full bg-[#EDE3CE] flex items-center justify-center text-sm font-bold text-[#5C3D1E] shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-[#EDE3CE] flex items-center justify-center text-sm font-bold text-[#ab2124] shrink-0">
                     {(r.user?.fullName ?? r.guestName ?? 'K').charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#2C1A0E]">{r.user?.fullName ?? r.guestName ?? 'Khách hàng'}</span>
+                      <span className="text-sm font-medium text-[#ab2124]">{r.user?.fullName ?? r.guestName ?? 'Khách hàng'}</span>
                       <span className="text-xs text-gray-400">{new Date(r.createdAt).toLocaleDateString('vi-VN')}</span>
                     </div>
                     <div className="flex text-[#C9973A]">
@@ -325,7 +325,7 @@ export default function ProductDetailPage() {
 
           {/* Write review */}
           <div className="border-t border-gray-100 pt-6">
-            <h3 className="text-sm font-semibold text-[#2C1A0E] mb-4">Viết đánh giá của bạn</h3>
+            <h3 className="text-sm font-semibold text-[#ab2124] mb-4">Viết đánh giá của bạn</h3>
             <form onSubmit={handleSubmitReview} className="space-y-4">
               <div>
                 <label className="text-sm text-gray-500 block mb-1">Tên của bạn *</label>
@@ -335,7 +335,7 @@ export default function ProductDetailPage() {
                   placeholder="Nguyễn Văn A"
                   value={newReview.guestName}
                   onChange={e => setNewReview(r => ({ ...r, guestName: e.target.value }))}
-                  className="w-full max-w-xs p-2.5 border border-gray-200 rounded-sm text-sm text-[#2C1A0E] focus:outline-none focus:border-[#C9973A]"
+                  className="w-full max-w-xs p-2.5 border border-gray-200 rounded-sm text-sm text-[#ab2124] focus:outline-none focus:border-[#C9973A]"
                 />
               </div>
               <div className="flex items-center gap-3">
@@ -358,7 +358,7 @@ export default function ProductDetailPage() {
                 placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."
                 value={newReview.content}
                 onChange={e => setNewReview(r => ({ ...r, content: e.target.value }))}
-                className="w-full p-3 border border-gray-200 rounded-sm text-sm text-[#2C1A0E] focus:outline-none focus:border-[#C9973A] resize-none"
+                className="w-full p-3 border border-gray-200 rounded-sm text-sm text-[#ab2124] focus:outline-none focus:border-[#C9973A] resize-none"
                 required
               />
               <button
@@ -375,7 +375,7 @@ export default function ProductDetailPage() {
         {/* ── Related products ─────────────────────────────────────── */}
         {related.length > 0 && (
           <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
-            <h2 className="text-sm font-bold text-[#2C1A0E] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4">
+            <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 text-title-gradient">
               Sản Phẩm Liên Quan
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -393,7 +393,7 @@ export default function ProductDetailPage() {
                     />
                   </div>
                   <div className="p-2 space-y-1">
-                    <p className="text-xs text-[#2C1A0E] line-clamp-2 leading-tight">{p.name?.vi}</p>
+                    <p className="text-xs text-[#ab2124] line-clamp-2 leading-tight">{p.name?.vi}</p>
                     <p className="text-sm font-bold text-[#C9973A]">{p.price?.toLocaleString('vi-VN')}₫</p>
                   </div>
                 </Link>

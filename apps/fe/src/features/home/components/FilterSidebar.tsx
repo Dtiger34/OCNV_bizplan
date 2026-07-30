@@ -58,12 +58,12 @@ export default function FilterSidebar({
       type="button"
       onClick={onToggle}
       className={`w-9 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-colors duration-300 ${
-        active ? 'bg-[#5C3D1E]' : 'bg-[#C9B99A]/50'
+        active ? 'bg-[#ab2124]' : 'bg-[#C9B99A]/50'
       }`}
     >
       <motion.div
         layout
-        className="bg-[#F5EDD6] w-4 h-4 rounded-full shadow-sm"
+        className="bg-[#fff8e7] w-4 h-4 rounded-full shadow-sm"
         animate={{ x: active ? 16 : 0 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       />
@@ -73,7 +73,7 @@ export default function FilterSidebar({
   return (
     <div className="w-full bg-transparent space-y-6">
       {/* Sidebar Header */}
-      <div className="flex items-center gap-2 pb-3 border-b border-[#D4B896]/40 text-[#2C1A0E]">
+      <div className="flex items-center gap-2 pb-3 border-b border-[#D4B896]/40 text-[#ab2124]">
         <SlidersHorizontal size={18} strokeWidth={1.5} className="text-[#C9973A]" />
         <h3 className="text-[20px] font-bold tracking-wide">
           Bộ Lọc Tìm Kiếm
@@ -84,7 +84,7 @@ export default function FilterSidebar({
       <div className="pb-4 border-b border-[#D4B896]/20">
         <button
           onClick={() => toggleSection('categories')}
-          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#5C3D1E] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
+          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#ab2124] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
         >
           DANH MỤC TRƯNG BÀY
           {openSections.categories ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -102,7 +102,7 @@ export default function FilterSidebar({
               <div className="mt-3 space-y-3">
                 {categories.map((cat) => (
                   <div key={cat} className="flex items-center justify-between group">
-                    <span className="text-sm text-[#2C1A0E] group-hover:text-[#7B1C2E] transition-colors">
+                    <span className="text-sm text-[#ab2124] group-hover:text-[#7B1C2E] transition-colors">
                       {cat}
                     </span>
                     <ToggleSwitch
@@ -121,7 +121,7 @@ export default function FilterSidebar({
       <div className="pb-4 border-b border-[#D4B896]/20">
         <button
           onClick={() => toggleSection('materials')}
-          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#5C3D1E] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
+          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#ab2124] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
         >
           CHẤT LIỆU CHẾ TÁC
           {openSections.materials ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -139,7 +139,7 @@ export default function FilterSidebar({
               <div className="mt-3 space-y-3">
                 {materials.map((mat) => (
                   <div key={mat} className="flex items-center justify-between group">
-                    <span className="text-sm text-[#2C1A0E] group-hover:text-[#7B1C2E] transition-colors">
+                    <span className="text-sm text-[#ab2124] group-hover:text-[#7B1C2E] transition-colors">
                       {mat}
                     </span>
                     <ToggleSwitch
@@ -158,7 +158,7 @@ export default function FilterSidebar({
       <div className="pb-4 border-b border-[#D4B896]/20">
         <button
           onClick={() => toggleSection('price')}
-          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#5C3D1E] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
+          className="w-full flex items-center justify-between text-[11px] font-bold tracking-[0.12em] text-[#ab2124] uppercase pb-2 text-left cursor-pointer hover:text-[#C9973A] transition-colors"
         >
           KHOẢNG NGÂN LƯỢNG
           {openSections.price ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -181,9 +181,9 @@ export default function FilterSidebar({
                   step="1000000"
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                  className="w-full h-[2px] bg-[#C9B99A]/40 rounded-lg appearance-none cursor-pointer accent-[#5C3D1E]"
+                  className="w-full h-[2px] bg-[#C9B99A]/40 rounded-lg appearance-none cursor-pointer accent-[#ab2124]"
                 />
-                <div className="flex justify-between items-baseline text-[11px] font-bold text-[#5C3D1E]">
+                <div className="flex justify-between items-baseline text-[11px] font-bold text-[#ab2124]">
                   <span>TỐI THIỂU: {formatPrice(priceRange[0])}</span>
                   <span className="text-[#7B1C2E]">TỐI ĐA: {formatPrice(priceRange[1])}</span>
                 </div>
@@ -202,7 +202,7 @@ export default function FilterSidebar({
           setSelectedMaterials([]);
           setPriceRange([0, 50000000]);
         }}
-        className="w-full h-10 border border-[#D4B896] text-[#5C3D1E] hover:bg-[#5C3D1E]/5 transition-all text-[10px] font-bold tracking-wider uppercase rounded-full cursor-pointer flex items-center justify-center"
+        className="w-full h-10 border border-[#D4B896] text-[#ab2124] hover:bg-[#ab2124]/5 transition-all text-[10px] font-bold tracking-wider uppercase rounded-full cursor-pointer flex items-center justify-center"
       >
         THIẾT LẬP LẠI
       </motion.button>

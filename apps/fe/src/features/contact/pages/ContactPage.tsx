@@ -65,14 +65,14 @@ export default function ContactPage() {
   ) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   return (
-    <div className="bg-[#F5EDD6] min-h-screen">
+    <div className="bg-[#fff8e7] min-h-screen">
       {/* Hero */}
-      <div className="relative bg-[#3A1A0A] py-20 px-6 text-center overflow-hidden">
+      <div className="relative bg-[#ab2124] py-20 px-6 text-center overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center text-[120px] font-bold text-white/[0.03] select-none pointer-events-none uppercase tracking-widest leading-none">
           LIÊN HỆ
         </div>
         <div className="relative z-10 space-y-3">
-          <span className="text-[10px] font-bold tracking-[0.22em] text-[#C9973A] uppercase block">
+          <span className="text-[13px] font-bold tracking-[0.22em] text-[#C9973A] uppercase block">
             NGHỀ XƯA NÉT MỚI
           </span>
           <h1 className="text-4xl md:text-5xl font-bold text-white">Liên Hệ & Phản Hồi</h1>
@@ -86,7 +86,7 @@ export default function ContactPage() {
         {/* Left — Info */}
         <aside className="lg:col-span-2 space-y-8">
           <div className="space-y-5">
-            <h2 className="text-lg font-bold text-[#2C1A0E]">Thông tin liên hệ</h2>
+            <h2 className="text-lg font-bold text-[#ab2124] text-title-gradient">Thông tin liên hệ</h2>
             {[
               {
                 icon: <MapPin size={18} className="text-[#C9973A] shrink-0 mt-0.5" />,
@@ -112,10 +112,10 @@ export default function ContactPage() {
               <div key={item.label} className="flex gap-3">
                 {item.icon}
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-[#9C8670] uppercase mb-0.5">
+                  <p className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase mb-0.5">
                     {item.label}
                   </p>
-                  <p className="text-sm text-[#2C1A0E] whitespace-pre-line leading-relaxed">
+                  <p className="text-sm text-[#ab2124] whitespace-pre-line leading-relaxed">
                     {item.value}
                   </p>
                 </div>
@@ -124,11 +124,11 @@ export default function ContactPage() {
           </div>
 
           {/* Rating prompt */}
-          <div className="bg-[#FDF6E3] border border-[#D4B896]/60 rounded-[6px] p-5 space-y-3">
-            <p className="text-[11px] font-bold tracking-[0.15em] text-[#7A5A1A] uppercase">
+          <div className="bg-[#fff8e7] border border-[#D4B896]/60 rounded-[6px] p-5 space-y-3">
+            <p className="text-[13px] font-bold tracking-[0.15em] text-[#ab2124] uppercase">
               Đánh giá trải nghiệm
             </p>
-            <p className="text-xs text-[#5C3D1E] leading-relaxed">
+            <p className="text-xs text-[#ab2124] leading-relaxed">
               Bạn cảm thấy thế nào về sản phẩm và dịch vụ của chúng tôi? Hãy chọn mức độ trong form bên cạnh.
             </p>
             <div className="flex gap-1">
@@ -157,8 +157,8 @@ export default function ContactPage() {
           {submitted ? (
             <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
               <CheckCircle2 size={48} className="text-[#7A9E8E]" />
-              <h3 className="text-xl font-bold text-[#2C1A0E]">Cảm ơn bạn đã liên hệ!</h3>
-              <p className="text-sm text-[#5C3D1E] max-w-xs leading-relaxed">
+              <h3 className="text-xl font-bold text-[#ab2124]">Cảm ơn bạn đã liên hệ!</h3>
+              <p className="text-sm text-[#ab2124] max-w-xs leading-relaxed">
                 Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc. Trân trọng mọi ý kiến đóng góp từ bạn.
               </p>
             </div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Name */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+                  <label className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase">
                     Họ và tên <span className="text-[#7B1C2E]">*</span>
                   </label>
                   <input
@@ -175,14 +175,14 @@ export default function ContactPage() {
                     value={form.name}
                     onChange={set('name')}
                     placeholder="Nguyễn Văn A"
-                    className={`w-full h-10 px-3 bg-[#FDF6E3] border rounded-[4px] text-sm text-[#2C1A0E] placeholder-[#9C8670]/60 focus:outline-none focus:border-[#C9973A] transition-colors ${errors.name ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
+                    className={`w-full h-10 px-3 bg-[#fff8e7] border rounded-[4px] text-sm text-[#ab2124] placeholder-[#ab2124]/60 focus:outline-none focus:border-[#C9973A] transition-colors ${errors.name ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
                   />
                   {errors.name && <p className="text-[10px] text-[#7B1C2E]">{errors.name}</p>}
                 </div>
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+                  <label className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase">
                     Email <span className="text-[#7B1C2E]">*</span>
                   </label>
                   <input
@@ -190,7 +190,7 @@ export default function ContactPage() {
                     value={form.email}
                     onChange={set('email')}
                     placeholder="ban@email.com"
-                    className={`w-full h-10 px-3 bg-[#FDF6E3] border rounded-[4px] text-sm text-[#2C1A0E] placeholder-[#9C8670]/60 focus:outline-none focus:border-[#C9973A] transition-colors ${errors.email ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
+                    className={`w-full h-10 px-3 bg-[#fff8e7] border rounded-[4px] text-sm text-[#ab2124] placeholder-[#ab2124]/60 focus:outline-none focus:border-[#C9973A] transition-colors ${errors.email ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
                   />
                   {errors.email && <p className="text-[10px] text-[#7B1C2E]">{errors.email}</p>}
                 </div>
@@ -199,7 +199,7 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+                  <label className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase">
                     Số điện thoại
                   </label>
                   <input
@@ -207,19 +207,19 @@ export default function ContactPage() {
                     value={form.phone}
                     onChange={set('phone')}
                     placeholder="0901 234 567"
-                    className="w-full h-10 px-3 bg-[#FDF6E3] border border-[#D4B896] rounded-[4px] text-sm text-[#2C1A0E] placeholder-[#9C8670]/60 focus:outline-none focus:border-[#C9973A] transition-colors"
+                    className="w-full h-10 px-3 bg-[#fff8e7] border border-[#D4B896] rounded-[4px] text-sm text-[#ab2124] placeholder-[#ab2124]/60 focus:outline-none focus:border-[#C9973A] transition-colors"
                   />
                 </div>
 
                 {/* Subject */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+                  <label className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase">
                     Chủ đề
                   </label>
                   <select
                     value={form.subject}
                     onChange={set('subject')}
-                    className="w-full h-10 px-3 bg-[#FDF6E3] border border-[#D4B896] rounded-[4px] text-sm text-[#2C1A0E] focus:outline-none focus:border-[#C9973A] transition-colors cursor-pointer"
+                    className="w-full h-10 px-3 bg-[#fff8e7] border border-[#D4B896] rounded-[4px] text-sm text-[#ab2124] focus:outline-none focus:border-[#C9973A] transition-colors cursor-pointer"
                   >
                     {SUBJECTS.map((s) => (
                       <option key={s} value={s}>{s}</option>
@@ -230,7 +230,7 @@ export default function ContactPage() {
 
               {/* Message */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+                <label className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase">
                   Nội dung <span className="text-[#7B1C2E]">*</span>
                 </label>
                 <textarea
@@ -238,14 +238,14 @@ export default function ContactPage() {
                   value={form.message}
                   onChange={set('message')}
                   placeholder="Nhập nội dung bạn muốn gửi đến chúng tôi..."
-                  className={`w-full px-3 py-2.5 bg-[#FDF6E3] border rounded-[4px] text-sm text-[#2C1A0E] placeholder-[#9C8670]/60 focus:outline-none focus:border-[#C9973A] transition-colors resize-none ${errors.message ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
+                  className={`w-full px-3 py-2.5 bg-[#fff8e7] border rounded-[4px] text-sm text-[#ab2124] placeholder-[#ab2124]/60 focus:outline-none focus:border-[#C9973A] transition-colors resize-none ${errors.message ? 'border-[#7B1C2E]' : 'border-[#D4B896]'}`}
                 />
                 {errors.message && <p className="text-[10px] text-[#7B1C2E]">{errors.message}</p>}
               </div>
 
               {/* Rating display in form */}
               <div className="flex items-center gap-3 py-2 border-y border-[#D4B896]/30">
-                <span className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase shrink-0">
+                <span className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase shrink-0">
                   Mức độ hài lòng:
                 </span>
                 <div className="flex gap-1">
@@ -266,14 +266,14 @@ export default function ContactPage() {
                     </button>
                   ))}
                 </div>
-                <span className="text-xs text-[#9C8670]">
+                <span className="text-xs text-[#ab2124]">
                   {['', 'Rất tệ', 'Chưa tốt', 'Bình thường', 'Hài lòng', 'Rất hài lòng'][form.rating]}
                 </span>
               </div>
 
               <button
                 type="submit"
-                className="w-full h-12 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center gap-2 transition-colors active:scale-[0.98] cursor-pointer"
+                className="w-full h-12 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-[13px] font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center gap-2 transition-colors active:scale-[0.98] cursor-pointer"
               >
                 <Send size={14} />
                 Gửi Phản Hồi

@@ -212,7 +212,7 @@ export default function VillageXr8Page() {
       {loading && (
         <div className="absolute inset-0 z-40 bg-ink flex flex-col items-center justify-center gap-4">
           <Loader2 className="w-10 h-10 text-gold animate-spin" />
-          <p className="text-[#9C8670] text-sm">Đang khởi động AR...</p>
+          <p className="text-[#ab2124] text-sm">Đang khởi động AR...</p>
         </div>
       )}
 
@@ -275,7 +275,7 @@ export default function VillageXr8Page() {
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
                   <p className="text-sm font-semibold text-ink">{point.title}</p>
-                  <button onClick={() => setActivePointId(null)} className="text-[#9C8670] hover:text-ink shrink-0">
+                  <button onClick={() => setActivePointId(null)} className="text-[#ab2124] hover:text-ink shrink-0">
                     <X size={16} />
                   </button>
                 </div>

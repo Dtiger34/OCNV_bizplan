@@ -40,11 +40,11 @@ function CategoryCard({
       />
       
       {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/95 via-[#2C1A0E]/40 to-[#2C1A0E]/20 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#ab2124]/95 via-[#ab2124]/40 to-[#ab2124]/20 pointer-events-none" />
 
       {/* Content overlay */}
       <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-3 pointer-events-none select-none">
-        <h3 className="font-display text-3xl text-[#F5EDD6] leading-tight group-hover:text-white transition-colors uppercase tracking-wider">
+        <h3 className="font-display text-3xl text-[#fff8e7] leading-tight group-hover:text-white transition-colors uppercase tracking-wider">
           {cat.name}
         </h3>
         
@@ -118,10 +118,10 @@ export default function CategoryTiles({ onSelectCategory }: CategoryTilesProps) 
     <div className="space-y-10">
       {/* Category Tiles Header */}
       <div className="text-center space-y-2 max-w-2xl mx-auto reveal">
-        <span className="text-[11px] font-bold tracking-[0.14em] text-[#7A5A1A] uppercase block">
+        <span className="text-[13px] font-bold tracking-[0.14em] text-[#ab2124] uppercase block">
           KHÔNG GIAN VĂN HÓA THU NHỎ
         </span>
-        <h2 className="text-3xl md:text-[36px] font-bold text-[#2C1A0E] tracking-wide">
+        <h2 className="text-3xl md:text-[36px] font-bold text-[#ab2124] tracking-wide text-title-gradient">
           Hộp Tiểu Cảnh Diorama Làng Nghề
         </h2>
         <div className="w-12 h-[1px] bg-[#C9973A] mx-auto mt-2 reveal delay-75" />

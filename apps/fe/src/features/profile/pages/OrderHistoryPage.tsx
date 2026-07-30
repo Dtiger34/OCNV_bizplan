@@ -10,7 +10,7 @@ const getStatusIcon = (status: string) => {
   switch (status) {
     case 'shipping': return <Truck size={16} className="text-[#C9973A]" />;
     case 'delivered': return <CheckCircle2 size={16} className="text-[#3A6B4A]" />;
-    default: return <Clock size={16} className="text-[#5C3D1E]" />;
+    default: return <Clock size={16} className="text-[#ab2124]" />;
   }
 };
 
@@ -25,9 +25,9 @@ const getStatusText = (status: string) => {
 const getStatusBadgeClass = (status: string) => {
   switch (status) {
     case 'delivered': return 'border-[#3A6B4A] bg-[rgba(58,107,74,0.1)] text-[#3A6B4A]';
-    case 'shipping':  return 'border-[#C9973A] bg-[rgba(201,151,58,0.12)] text-[#7A5A1A]';
+    case 'shipping':  return 'border-[#C9973A] bg-[rgba(201,151,58,0.12)] text-[#ab2124]';
     case 'cancelled': return 'border-[#7B1C2E] bg-[rgba(123,28,46,0.1)] text-[#7B1C2E]';
-    default:          return 'border-[#5C3D1E] bg-[#5C3D1E]/5 text-[#5C3D1E]';
+    default:          return 'border-[#ab2124] bg-[#ab2124]/5 text-[#ab2124]';
   }
 };
 
@@ -41,8 +41,8 @@ export default function OrderHistoryPage() {
 
   return (
     <ProfileLayout>
-      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
-        <h3 className="text-2xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-3">
+      <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
+        <h3 className="text-2xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
           LỊCH SỬ ĐƠN ĐẶT HÀNG
         </h3>
 
@@ -54,7 +54,7 @@ export default function OrderHistoryPage() {
             { id: 'delivered', name: 'ĐÃ NHẬN' }
           ] as const).map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`text-[11px] font-bold tracking-wider uppercase pb-2 transition-all relative shrink-0 ${activeTab === tab.id ? 'text-[#7B1C2E]' : 'text-[#9C8670] hover:text-[#5C3D1E]'}`}>
+              className={`text-[11px] font-bold tracking-wider uppercase pb-2 transition-all relative shrink-0 ${activeTab === tab.id ? 'text-[#7B1C2E]' : 'text-[#ab2124] hover:text-[#ab2124]'}`}>
               {tab.name}
               {activeTab === tab.id && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#7B1C2E]" />}
             </button>
@@ -62,23 +62,23 @@ export default function OrderHistoryPage() {
         </div>
 
         <div className="space-y-4">
-          {isLoading && <p className="text-sm text-[#9C8670] italic text-center py-8">Đang tải...</p>}
+          {isLoading && <p className="text-sm text-[#ab2124] italic text-center py-8">Đang tải...</p>}
           {!isLoading && orders.length === 0 && (
-            <p className="text-sm text-[#9C8670] italic text-center py-8">Chưa có đơn đặt hàng nào trong danh mục này.</p>
+            <p className="text-sm text-[#ab2124] italic text-center py-8">Chưa có đơn đặt hàng nào trong danh mục này.</p>
           )}
           {orders.map((order) => (
             <div key={order._id}
-              className="p-4 border border-[#D4B896] rounded-md bg-[#FDF6E3] hover:border-[#C9973A] transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              className="p-4 border border-[#D4B896] rounded-md bg-[#fff8e7] hover:border-[#C9973A] transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-[#2C1A0E]">{order.orderCode}</span>
-                  <span className="text-xs text-[#9C8670]">{new Date(order.createdAt).toLocaleDateString('vi-VN')}</span>
+                  <span className="text-sm font-bold text-[#ab2124]">{order.orderCode}</span>
+                  <span className="text-xs text-[#ab2124]">{new Date(order.createdAt).toLocaleDateString('vi-VN')}</span>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-[#2C1A0E]">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-[#ab2124]">
                   <span className="flex items-center gap-1.5 font-semibold text-[#7B1C2E]">
                     Tổng tiền: {order.total.toLocaleString('vi-VN')} ₫
                   </span>
-                  <span className="text-[#9C8670]">|</span>
+                  <span className="text-[#ab2124]">|</span>
                   <span>
                     {order.paymentMethod === 'cod' ? 'COD' : 'Internet Banking / VietQR'}
                     {' — '}
@@ -92,7 +92,7 @@ export default function OrderHistoryPage() {
                   {getStatusIcon(order.status)}
                   {getStatusText(order.status)}
                 </span>
-                <Link to={`/orders/${order._id}`} className="p-2 border border-[#D4B896] text-[#5C3D1E] hover:bg-[#5C3D1E]/5 rounded-sm">
+                <Link to={`/orders/${order._id}`} className="p-2 border border-[#D4B896] text-[#ab2124] hover:bg-[#ab2124]/5 rounded-sm">
                   <Eye size={14} />
                 </Link>
               </div>

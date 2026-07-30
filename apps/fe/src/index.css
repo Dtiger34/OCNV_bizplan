@@ -4,15 +4,15 @@
   --font-sans: "Montserrat", sans-serif;
   --font-display: "Agbalumo", serif;
 
-  --color-wood: #5C3D1E;
-  --color-cream: #F5EDD6;
+  --color-wood: #ab2124;
+  --color-cream: #fff8e7;
   --color-burgundy: #7B1C2E;
   --color-gold: #C9973A;
-  --color-lacquer: #3A1A0A;
-  --color-parchment: #FDF6E3;
+  --color-lacquer: #ab2124;
+  --color-parchment: #fff8e7;
   --color-ash: #C9B99A;
   --color-celadon: #7A9E8E;
-  --color-ink: #2C1A0E;
+  --color-ink: #ab2124;
 
   --radius-none: 0px;
   --radius-xs: 2px;
@@ -62,6 +62,29 @@ h1 *, h2 *, .font-display * {
   font-family: var(--font-display);
   font-weight: 400 !important;
   font-style: normal !important;
+}
+
+/* Title gradient — chảy từ đỏ chính (--color-wood) xuống đỏ đậm hơn theo trục dọc (180deg).
+   Chỉ áp cho các h1/h2 đang dùng màu đỏ thương hiệu (class .text-title-gradient, gắn thủ công
+   ở từng heading màu đỏ trên nền sáng) — KHÔNG áp global vì nhiều h1/h2 dùng text-white trên
+   banner nền đỏ đặc (Hero các trang) hoặc text-gray-800 ở khu vực admin, gradient sẽ làm mất
+   tương phản/đọc được ở những chỗ đó. */
+.text-title-gradient {
+  background-image: linear-gradient(180deg, #eb4b3f 0%, #f0945b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Với h1/h2 nhiều dòng, mỗi dòng cần tự có 1 dải gradient đầy đủ (không bị cắt lệch giữa
+   chừng) — bọc mỗi dòng trong .gradient-line (display: block/inline-block riêng) thay vì áp
+   .text-title-gradient thẳng lên cả khối nhiều dòng. */
+.gradient-line {
+  display: inline-block;
+  background-image: linear-gradient(180deg, #eb4b3f 0%, #f0945b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Toàn bộ đoạn văn (<p>) căn đều 2 bên — kể cả đoạn ngắn/1 dòng, không riêng đoạn dài, và ghi

@@ -48,7 +48,7 @@ function RevealObserver() {
 
 export default function MainLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#F5EDD6]">
+    <div className="flex min-h-screen flex-col bg-[#fff8e7]">
       <ScrollToTop />
       <RevealObserver />
       <Header />

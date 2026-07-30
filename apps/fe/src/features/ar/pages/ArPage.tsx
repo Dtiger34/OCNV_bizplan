@@ -54,7 +54,7 @@ export default function ArPage() {
 
   if (!isMobile) {
     return (
-      <div className="min-h-screen bg-[#3A1A0A] text-[#F5EDD6] flex flex-col items-center justify-center p-6 text-center space-y-8">
+      <div className="min-h-screen bg-[#ab2124] text-[#fff8e7] flex flex-col items-center justify-center p-6 text-center space-y-8">
         <Smartphone className="w-16 h-16 text-[#C9973A] animate-bounce" />
         <h1 className="text-3xl font-light tracking-widest uppercase">AR Trải Nghiệm Di Động</h1>
         <p className="text-sm max-w-md text-[#C9B99A] leading-relaxed">
@@ -66,7 +66,7 @@ export default function ArPage() {
         <p className="text-[10px] text-[#C9B99A] tracking-widest">{arUrl}</p>
         <button
           onClick={handleClose}
-          className="px-6 py-2.5 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm cursor-pointer"
+          className="px-6 py-2.5 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm cursor-pointer"
         >
           Quay Lại Chi Tiết Sản Phẩm
         </button>
@@ -112,7 +112,7 @@ export default function ArPage() {
               width: '28px',
               height: '28px',
               borderRadius: '50%',
-              border: '2px solid #F5EDD6',
+              border: '2px solid #fff8e7',
               backgroundColor: '#C9973A',
               cursor: 'pointer',
             }}
@@ -129,7 +129,7 @@ export default function ArPage() {
             transform: 'translateX(-50%)',
             padding: '12px 28px',
             background: '#C9973A',
-            color: '#2C1A0E',
+            color: '#ab2124',
             fontWeight: 700,
             fontSize: '12px',
             letterSpacing: '0.15em',
@@ -146,14 +146,14 @@ export default function ArPage() {
 
       {/* Hotspot info bubble */}
       {activeHotspot && (
-        <div className="absolute bottom-24 left-4 right-4 z-20 bg-[#3A1A0A]/95 border border-[#C9973A] rounded-xl p-4 space-y-2 shadow-2xl pointer-events-auto">
+        <div className="absolute bottom-24 left-4 right-4 z-20 bg-[#ab2124]/95 border border-[#C9973A] rounded-xl p-4 space-y-2 shadow-2xl pointer-events-auto">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="text-[#F5EDD6] font-semibold text-sm leading-snug">
+            <h3 className="text-[#fff8e7] font-semibold text-sm leading-snug">
               {activeHotspot.title[lang]}
             </h3>
             <button
               onClick={() => setActiveHotspot(null)}
-              className="shrink-0 w-6 h-6 flex items-center justify-center text-[#C9B99A] hover:text-[#F5EDD6]"
+              className="shrink-0 w-6 h-6 flex items-center justify-center text-[#C9B99A] hover:text-[#fff8e7]"
             >
               <X size={14} />
             </button>
@@ -181,8 +181,8 @@ export default function ArPage() {
                   onClick={() => setActiveHotspot(h)}
                   className={`flex-1 py-1 rounded text-[10px] font-semibold tracking-wide transition-colors ${
                     h._id === activeHotspot._id
-                      ? 'bg-[#C9973A] text-[#3A1A0A]'
-                      : 'bg-[#5C3D1E] text-[#F5EDD6] hover:bg-[#7A5230]'
+                      ? 'bg-[#C9973A] text-[#ab2124]'
+                      : 'bg-[#ab2124] text-[#fff8e7] hover:bg-[#ab2124]'
                   }`}
                 >
                   {h.title[lang].slice(0, 12)}
@@ -202,7 +202,7 @@ export default function ArPage() {
         )}
         <button
           onClick={handleClose}
-          className="pointer-events-auto px-5 py-2 bg-black/50 text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-sm border border-white/20"
+          className="pointer-events-auto px-5 py-2 bg-black/50 text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm border border-white/20"
         >
           Quay Lại
         </button>

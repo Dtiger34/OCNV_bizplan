@@ -29,13 +29,13 @@ export default function LoginPage() {
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-10 md:py-16 max-w-md">
-      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] p-8 space-y-6 shadow-subtle">
+      <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] p-8 space-y-6 shadow-subtle">
 
         <div className="text-center space-y-1">
-          <span className="text-[10px] font-bold tracking-[0.2em] text-[#7A5A1A] uppercase block">
+          <span className="text-[10px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">
             ĐĂNG NHẬP HỆ THỐNG
           </span>
-          <h2 className="text-3xl font-normal text-[#2C1A0E]">
+          <h2 className="text-3xl font-normal text-[#ab2124] text-title-gradient">
             Đăng Nhập
           </h2>
           <div className="h-[1px] w-12 bg-[#C9973A]/60 mx-auto pt-1" />
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-1">
-            <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase block">
+            <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase block">
               THƯ ĐIỆN TỬ (EMAIL)
             </label>
             <div className="relative">
@@ -53,20 +53,20 @@ export default function LoginPage() {
                 placeholder=""
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-11 pl-10 pr-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
+                className="w-full h-11 pl-10 pr-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
               />
-              <Mail size={16} className="absolute left-3.5 top-3.5 text-[#9C8670]" />
+              <Mail size={16} className="absolute left-3.5 top-3.5 text-[#ab2124]" />
             </div>
           </div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-center">
-              <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">
                 MẬT KHẨU
               </label>
               <Link
                 to="/forgot-password"
-                className="text-xs text-[#9C8670] hover:text-[#7B1C2E] underline"
+                className="text-xs text-[#ab2124] hover:text-[#7B1C2E] underline"
               >
                 Quên mật khẩu?
               </Link>
@@ -78,23 +78,23 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-11 pl-10 pr-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
+                className="w-full h-11 pl-10 pr-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
               />
-              <Lock size={16} className="absolute left-3.5 top-3.5 text-[#9C8670]" />
+              <Lock size={16} className="absolute left-3.5 top-3.5 text-[#ab2124]" />
             </div>
           </div>
 
           <button
             type="submit"
             disabled={login.isPending}
-            className="w-full h-12 bg-[#5C3D1E] hover:bg-[#7A5230] text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full h-12 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <LogIn size={16} />
             {login.isPending ? 'ĐANG ĐĂNG NHẬP...' : 'ĐĂNG NHẬP NGAY'}
           </button>
         </form>
 
-        <div className="text-center text-xs text-[#9C8670] pt-2 border-t border-[#D4B896]/20">
+        <div className="text-center text-xs text-[#ab2124] pt-2 border-t border-[#D4B896]/20">
           Chưa có tài khoản?{' '}
           <Link to="/register" className="text-[#7B1C2E] hover:underline font-bold">
             Đăng ký tài khoản mới

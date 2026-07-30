@@ -43,14 +43,14 @@ function PayOSModal({
 
   return (
     <div className="fixed inset-0 z-[200] bg-black/60 flex items-center justify-center p-4">
-      <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[8px] w-full max-w-sm shadow-2xl relative">
+      <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] w-full max-w-sm shadow-2xl relative">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#D4B896]/50">
           <div>
-            <p className="text-[10px] tracking-widest text-[#9C8670] uppercase">PayOS</p>
-            <h2 className="text-base font-semibold text-[#2C1A0E]">Quét Mã QR Thanh Toán</h2>
+            <p className="text-[10px] tracking-widest text-[#ab2124] uppercase">PayOS</p>
+            <h2 className="text-base font-semibold text-[#ab2124] text-title-gradient">Quét Mã QR Thanh Toán</h2>
           </div>
-          <button onClick={onClose} className="text-[#9C8670] hover:text-[#2C1A0E] transition-colors">
+          <button onClick={onClose} className="text-[#ab2124] hover:text-[#ab2124] transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -75,7 +75,7 @@ function PayOSModal({
 
           {/* Amount */}
           <div className="text-center">
-            <p className="text-xs text-[#9C8670]">Số tiền cần thanh toán</p>
+            <p className="text-xs text-[#ab2124]">Số tiền cần thanh toán</p>
             <p className="text-2xl font-bold text-[#7B1C2E]">
               {total.toLocaleString('vi-VN')}
               <span className="text-sm font-normal ml-1">₫</span>
@@ -83,8 +83,8 @@ function PayOSModal({
           </div>
 
           {/* Hướng dẫn */}
-          <div className="bg-[#EDE3CE] rounded-[6px] p-3 space-y-1.5 text-xs text-[#5C3D1E]">
-            <p className="font-semibold text-[#2C1A0E]">Cách thanh toán:</p>
+          <div className="bg-[#EDE3CE] rounded-[6px] p-3 space-y-1.5 text-xs text-[#ab2124]">
+            <p className="font-semibold text-[#ab2124]">Cách thanh toán:</p>
             <ol className="list-decimal list-inside space-y-1">
               <li>Mở app ngân hàng (VPBank, Vietcombank, Techcombank…)</li>
               <li>Chọn "Quét mã QR" hoặc "Chuyển khoản"</li>
@@ -93,7 +93,7 @@ function PayOSModal({
           </div>
 
           {/* Polling status */}
-          <div className="flex items-center justify-center gap-2 text-xs text-[#9C8670]">
+          <div className="flex items-center justify-center gap-2 text-xs text-[#ab2124]">
             <Loader2 size={12} className="animate-spin" />
             Đang chờ xác nhận thanh toán...
           </div>
@@ -103,11 +103,11 @@ function PayOSModal({
             <input
               readOnly
               value={checkoutUrl}
-              className="flex-1 min-w-0 px-3 py-2 border border-[#D4B896] bg-white rounded-sm text-[10px] text-[#9C8670] truncate"
+              className="flex-1 min-w-0 px-3 py-2 border border-[#D4B896] bg-white rounded-sm text-[10px] text-[#ab2124] truncate"
             />
             <button
               onClick={handleCopy}
-              className="px-3 py-2 border border-[#D4B896] rounded-sm text-xs text-[#5C3D1E] hover:bg-[#EDE3CE] transition-colors flex items-center gap-1"
+              className="px-3 py-2 border border-[#D4B896] rounded-sm text-xs text-[#ab2124] hover:bg-[#EDE3CE] transition-colors flex items-center gap-1"
             >
               {copied ? <Check size={12} /> : <Copy size={12} />}
               {copied ? 'Đã copy' : 'Copy'}
@@ -235,15 +235,15 @@ export default function CheckoutPage() {
 
       {/* Title */}
       <div className="border-b border-[#D4B896] pb-4">
-        <h1 className="text-3xl md:text-4xl font-normal text-[#2C1A0E]">TIẾN HÀNH THANH TOÁN</h1>
-        <p className="text-xs text-[#9C8670] mt-1">
+        <h1 className="text-3xl md:text-4xl font-normal text-[#ab2124] text-title-gradient">TIẾN HÀNH THANH TOÁN</h1>
+        <p className="text-xs text-[#ab2124] mt-1">
           Vui lòng nhập thông tin giao nhận và lựa chọn phương thức thanh toán
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {error && (
-          <div className="lg:col-span-12 p-4 bg-[#FDF6E3] border-2 border-[#7B1C2E] rounded-[6px] text-[#7B1C2E] text-sm">
+          <div className="lg:col-span-12 p-4 bg-[#fff8e7] border-2 border-[#7B1C2E] rounded-[6px] text-[#7B1C2E] text-sm">
             ❌ {error}
           </div>
         )}
@@ -251,65 +251,65 @@ export default function CheckoutPage() {
         {/* Left — shipping + payment */}
         <div className="lg:col-span-8 space-y-6">
           {/* Shipping */}
-          <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-4">
-            <h3 className="text-xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-2">
+          <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-4">
+            <h3 className="text-xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-2">
               1. Địa Chỉ Giao Nhận Hàng
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Họ Tên Người Nhận *</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Họ Tên Người Nhận *</label>
                 <input type="text" required placeholder="Nguyễn Văn A" value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Số Điện Thoại *</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Số Điện Thoại *</label>
                 <input type="tel" required placeholder="0901234567" value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Tỉnh / Thành Phố *</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Tỉnh / Thành Phố *</label>
                 <input type="text" required placeholder="Hà Nội" value={province}
                   onChange={(e) => setProvince(e.target.value)}
-                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Quận / Huyện *</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Quận / Huyện *</label>
                 <input type="text" required placeholder="Ba Đình" value={district}
                   onChange={(e) => setDistrict(e.target.value)}
-                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Phường / Xã *</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Phường / Xã *</label>
                 <input type="text" required placeholder="Quán Thánh" value={ward}
                   onChange={(e) => setWard(e.target.value)}
-                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                  className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Địa Chỉ Chi Tiết (Số nhà, Đường) *</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Địa Chỉ Chi Tiết (Số nhà, Đường) *</label>
               <input type="text" required placeholder="Số 10 Hùng Vương" value={street}
                 onChange={(e) => setStreet(e.target.value)}
-                className="w-full h-11 px-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                className="w-full h-11 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#5C3D1E] uppercase">Ghi chú đơn hàng</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Ghi chú đơn hàng</label>
               <textarea rows={2} placeholder="Ghi chú cho đơn vị vận chuyển..." value={note}
                 onChange={(e) => setNote(e.target.value)}
-                className="w-full p-3 border border-[#D4B896] bg-[#FDF6E3] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
+                className="w-full p-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
             </div>
           </div>
 
           {/* Payment method */}
-          <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-3">
-            <h3 className="text-xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-2">
+          <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-3">
+            <h3 className="text-xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-2">
               2. Phương Thức Thanh Toán
             </h3>
 
@@ -320,16 +320,16 @@ export default function CheckoutPage() {
               className={`w-full flex items-center gap-3 p-4 border rounded-[4px] transition-all text-left ${
                 paymentMethod === 'cod'
                   ? 'border-[#3A6B4A] bg-[rgba(58,107,74,0.06)]'
-                  : 'border-[#D4B896] bg-transparent hover:border-[#9C8670]'
+                  : 'border-[#D4B896] bg-transparent hover:border-[#ab2124]'
               }`}
             >
               <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === 'cod' ? 'border-[#3A6B4A]' : 'border-[#D4B896]'}`}>
                 {paymentMethod === 'cod' && <div className="w-2 h-2 rounded-full bg-[#3A6B4A]" />}
               </div>
-              <Truck size={20} className={paymentMethod === 'cod' ? 'text-[#3A6B4A]' : 'text-[#9C8670]'} />
+              <Truck size={20} className={paymentMethod === 'cod' ? 'text-[#3A6B4A]' : 'text-[#ab2124]'} />
               <div>
-                <p className="font-bold text-sm text-[#2C1A0E]">Thanh toán khi nhận hàng (COD)</p>
-                <p className="text-xs text-[#9C8670] mt-0.5">Trả tiền mặt khi shipper giao hàng đến tay bạn</p>
+                <p className="font-bold text-sm text-[#ab2124]">Thanh toán khi nhận hàng (COD)</p>
+                <p className="text-xs text-[#ab2124] mt-0.5">Trả tiền mặt khi shipper giao hàng đến tay bạn</p>
               </div>
             </button>
 
@@ -339,22 +339,22 @@ export default function CheckoutPage() {
               onClick={() => setPaymentMethod('payos')}
               className={`w-full flex items-center gap-3 p-4 border rounded-[4px] transition-all text-left ${
                 paymentMethod === 'payos'
-                  ? 'border-[#C9973A] bg-[#F5EDD6]'
-                  : 'border-[#D4B896] bg-transparent hover:border-[#9C8670]'
+                  ? 'border-[#C9973A] bg-[#fff8e7]'
+                  : 'border-[#D4B896] bg-transparent hover:border-[#ab2124]'
               }`}
             >
               <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === 'payos' ? 'border-[#C9973A]' : 'border-[#D4B896]'}`}>
                 {paymentMethod === 'payos' && <div className="w-2 h-2 rounded-full bg-[#C9973A]" />}
               </div>
-              <QrCode size={20} className={paymentMethod === 'payos' ? 'text-[#C9973A]' : 'text-[#9C8670]'} />
+              <QrCode size={20} className={paymentMethod === 'payos' ? 'text-[#C9973A]' : 'text-[#ab2124]'} />
               <div>
-                <p className="font-bold text-sm text-[#2C1A0E]">Internet Banking / VietQR</p>
-                <p className="text-xs text-[#9C8670] mt-0.5">Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam</p>
+                <p className="font-bold text-sm text-[#ab2124]">Internet Banking / VietQR</p>
+                <p className="text-xs text-[#ab2124] mt-0.5">Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam</p>
               </div>
             </button>
 
             {paymentMethod === 'payos' && (
-              <p className="text-xs text-[#9C8670] pl-1">
+              <p className="text-xs text-[#ab2124] pl-1">
                 Mã QR sẽ hiển thị ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.
               </p>
             )}
@@ -362,20 +362,20 @@ export default function CheckoutPage() {
         </div>
 
         {/* Right — order summary */}
-        <div className="lg:col-span-4 bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 space-y-6 sticky top-24">
-          <h3 className="text-xl font-bold text-[#2C1A0E] border-b border-[#D4B896]/30 pb-3">
+        <div className="lg:col-span-4 bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6 sticky top-24">
+          <h3 className="text-xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
             TÓM TẮT ĐƠN HÀNG
           </h3>
 
           {cartItems.length === 0 ? (
-            <p className="text-sm text-[#9C8670] text-center py-4">Giỏ hàng trống</p>
+            <p className="text-sm text-[#ab2124] text-center py-4">Giỏ hàng trống</p>
           ) : (
             <div className="space-y-4 max-h-[220px] overflow-y-auto pr-1">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex gap-3 justify-between items-start text-xs">
                   <div className="flex-1">
-                    <span className="font-semibold text-[#2C1A0E]">{item.name}</span>
-                    <span className="text-[#9C8670] ml-1">x {item.quantity}</span>
+                    <span className="font-semibold text-[#ab2124]">{item.name}</span>
+                    <span className="text-[#ab2124] ml-1">x {item.quantity}</span>
                   </div>
                   <span className="text-[#7B1C2E] font-medium shrink-0">
                     {(item.price * item.quantity).toLocaleString('vi-VN')} ₫
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
             </div>
             <div className="h-[1px] bg-[#D4B896]/30" />
             <div className="flex justify-between items-baseline">
-              <span className="text-[11px] font-bold text-[#5C3D1E] uppercase">Tổng cộng:</span>
+              <span className="text-[11px] font-bold text-[#ab2124] uppercase">Tổng cộng:</span>
               <span className="text-2xl font-bold text-[#7B1C2E]">
                 {total.toLocaleString('vi-VN')}
                 <span className="text-[11px] font-semibold align-super ml-0.5">₫</span>
@@ -409,7 +409,7 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={isPending || cartItems.length === 0}
-            className="w-full h-12 bg-[#7B1C2E] hover:bg-[#9B2438] disabled:bg-[#9C8670] disabled:cursor-not-allowed text-[#F5EDD6] text-xs font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all cursor-pointer"
+            className="w-full h-12 bg-[#7B1C2E] hover:bg-[#9B2438] disabled:bg-[#ab2124] disabled:cursor-not-allowed text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-[4px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all cursor-pointer"
           >
             {isCreatingOrder ? (
               <><Loader2 size={16} className="animate-spin" />ĐANG TẠO ĐƠN HÀNG...</>

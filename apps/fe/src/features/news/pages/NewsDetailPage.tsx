@@ -11,7 +11,7 @@ export default function NewsDetailPage() {
 
   if (!article) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 text-[#5C3D1E]">
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 text-[#ab2124]">
         <p className="text-lg font-semibold">Không tìm thấy bài viết.</p>
         <button
           onClick={() => navigate(-1)}
@@ -24,7 +24,7 @@ export default function NewsDetailPage() {
   }
 
   return (
-    <div className="bg-[#F5EDD6] min-h-screen">
+    <div className="bg-[#fff8e7] min-h-screen">
       {/* Hero Image */}
       <div className="w-full h-[420px] md:h-[520px] relative overflow-hidden">
         <img
@@ -32,7 +32,7 @@ export default function NewsDetailPage() {
           alt={article.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/80 via-[#2C1A0E]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#ab2124]/80 via-[#ab2124]/30 to-transparent" />
 
         {/* Back button */}
         <button
@@ -62,32 +62,32 @@ export default function NewsDetailPage() {
       {/* Content */}
       <div className="container mx-auto px-6 md:px-8 max-w-3xl py-12 space-y-10">
         {/* Lead paragraph */}
-        <p className="text-base md:text-lg text-[#2C1A0E] leading-relaxed italic border-l-2 border-[#C9973A] pl-5">
+        <p className="text-base md:text-lg text-[#ab2124] leading-relaxed italic border-l-2 border-[#C9973A] pl-5">
           {article.content.lead}
         </p>
 
         {/* Sections */}
         {article.content.sections.map((section) => (
           <div key={section.heading} className="space-y-3">
-            <h2 className="text-xl font-bold text-[#2C1A0E]">{section.heading}</h2>
+            <h2 className="text-xl font-bold text-[#ab2124] text-title-gradient">{section.heading}</h2>
             <div className="w-8 h-[2px] bg-[#C9973A]" />
-            <p className="text-[15px] text-[#5C3D1E] leading-relaxed">{section.body}</p>
+            <p className="text-[15px] text-[#ab2124] leading-relaxed">{section.body}</p>
           </div>
         ))}
 
         {/* CTA */}
-        <div className="bg-[#FDF6E3] border border-[#D4B896] rounded-[6px] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.15em] text-[#7A5A1A] uppercase mb-1">
+            <p className="text-[13px] font-bold tracking-[0.15em] text-[#ab2124] uppercase mb-1">
               Khám phá sản phẩm liên quan
             </p>
-            <p className="text-sm text-[#5C3D1E]">
+            <p className="text-sm text-[#ab2124]">
               Xem bộ sưu tập hộp tiểu cảnh diorama làng nghề của chúng tôi.
             </p>
           </div>
           <Link
             to="/shop"
-            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#5C3D1E] text-[#F5EDD6] text-[11px] font-bold tracking-wider uppercase rounded-full hover:bg-[#7A5230] transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#ab2124] text-[#fff8e7] text-[13px] font-bold tracking-wider uppercase rounded-full hover:bg-[#ab2124] transition-colors"
           >
             Xem bộ sưu tập <ArrowRight size={12} />
           </Link>
@@ -96,7 +96,7 @@ export default function NewsDetailPage() {
         {/* Related articles */}
         {related.length > 0 && (
           <div className="space-y-5 pt-4 border-t border-[#D4B896]/40">
-            <h3 className="text-[11px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase">
+            <h3 className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase">
               Bài viết liên quan
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -104,7 +104,7 @@ export default function NewsDetailPage() {
                 <Link
                   key={r.slug}
                   to={`/news/${r.slug}`}
-                  className="group flex gap-4 border border-[#D4B896]/40 rounded-[6px] overflow-hidden hover:border-[#C9973A]/60 transition-colors bg-[#FDF6E3]"
+                  className="group flex gap-4 border border-[#D4B896]/40 rounded-[6px] overflow-hidden hover:border-[#C9973A]/60 transition-colors bg-[#fff8e7]"
                 >
                   <div className="w-24 shrink-0 overflow-hidden">
                     <img
@@ -117,10 +117,10 @@ export default function NewsDetailPage() {
                     <span className="text-[9px] font-bold tracking-wider text-[#7B1C2E] uppercase flex items-center gap-1">
                       <Tag size={9} /> {r.tag}
                     </span>
-                    <p className="text-[12px] font-bold text-[#2C1A0E] leading-snug group-hover:text-[#7B1C2E] transition-colors line-clamp-2">
+                    <p className="text-[12px] font-bold text-[#ab2124] leading-snug group-hover:text-[#7B1C2E] transition-colors line-clamp-2">
                       {r.title}
                     </p>
-                    <span className="text-[10px] text-[#9C8670]">{r.date}</span>
+                    <span className="text-[10px] text-[#ab2124]">{r.date}</span>
                   </div>
                 </Link>
               ))}

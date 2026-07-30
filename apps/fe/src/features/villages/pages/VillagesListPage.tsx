@@ -8,7 +8,7 @@ export default function VillagesListPage() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#FDF6E3]">
+    <div className="min-h-screen bg-[#fff8e7]">
       {/* Hero — dark cinematic band */}
       <section className="relative h-[60vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <div
@@ -18,7 +18,7 @@ export default function VillagesListPage() {
             filter: 'brightness(0.3)',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2C1A0E]/70 via-transparent to-[#FDF6E3]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#ab2124]/70 via-transparent to-[#fff8e7]" />
 
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <motion.p
@@ -35,8 +35,8 @@ export default function VillagesListPage() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-5"
           >
-            Câu Chuyện <br />
-            <span className="italic text-[#D4B896]">Làng Nghề</span>
+            <span className="gradient-line">Câu Chuyện</span> <br />
+            <span className="gradient-line italic">Làng Nghề</span>
           </motion.h1>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -65,8 +65,8 @@ export default function VillagesListPage() {
             { value: '∞', label: 'Câu Chuyện' },
           ].map(({ value, label }) => (
             <div key={label}>
-              <p className="text-3xl sm:text-4xl font-light text-[#5C3D1E] mb-0.5">{value}</p>
-              <p className="text-[10px] tracking-widest text-[#9C8670] uppercase">{label}</p>
+              <p className="text-3xl sm:text-4xl font-light text-[#ab2124] mb-0.5">{value}</p>
+              <p className="text-[10px] tracking-widest text-[#ab2124] uppercase">{label}</p>
             </div>
           ))}
         </div>
@@ -76,9 +76,9 @@ export default function VillagesListPage() {
       <section className="py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <p className="text-[10px] tracking-[0.25em] text-[#9C8670] uppercase mb-2">Khám Phá</p>
-            <h2 className="text-2xl sm:text-3xl font-light text-[#2C1A0E]">
-              Các Làng Nghề <span className="italic text-[#7A5230]">Tiêu Biểu</span>
+            <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-2">Khám Phá</p>
+            <h2 className="text-2xl sm:text-3xl font-light text-[#ab2124] text-title-gradient">
+              Các Làng Nghề <span className="italic text-[#ab2124]">Tiêu Biểu</span>
             </h2>
           </div>
 
@@ -93,7 +93,7 @@ export default function VillagesListPage() {
               >
                 <Link
                   to={`/villages/${village.slug}`}
-                  className="group block overflow-hidden rounded-[8px] bg-[#FDF6E3] border border-[#D4B896] hover:border-[#C9973A]/60 hover:shadow-lg transition-all duration-400"
+                  className="group block overflow-hidden rounded-[8px] bg-[#fff8e7] border border-[#D4B896] hover:border-[#C9973A]/60 hover:shadow-lg transition-all duration-400"
                   onMouseEnter={() => setHoveredSlug(village.slug)}
                   onMouseLeave={() => setHoveredSlug(null)}
                 >
@@ -104,7 +104,7 @@ export default function VillagesListPage() {
                       alt={village.name}
                       className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-108"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/70 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#ab2124]/70 via-transparent to-transparent" />
 
                     {/* Accent bar bottom */}
                     <div
@@ -121,17 +121,17 @@ export default function VillagesListPage() {
 
                   {/* Body — nền kem */}
                   <div className="p-5 space-y-3">
-                    <p className="text-xs italic text-[#7A5230]">{village.tagline}</p>
-                    <p className="text-sm text-[#5C3D1E] leading-relaxed line-clamp-3">
+                    <p className="text-xs italic text-[#ab2124]">{village.tagline}</p>
+                    <p className="text-sm text-[#ab2124] leading-relaxed line-clamp-3">
                       {village.shortDescription}
                     </p>
 
                     <div className="flex items-center gap-4 pt-1">
-                      <span className="flex items-center gap-1.5 text-[10px] text-[#9C8670]">
+                      <span className="flex items-center gap-1.5 text-[10px] text-[#ab2124]">
                         <MapPin size={11} />
                         {village.facts.find((f) => f.label === 'Vị trí')?.value ?? 'Hà Nội'}
                       </span>
-                      <span className="flex items-center gap-1.5 text-[10px] text-[#9C8670]">
+                      <span className="flex items-center gap-1.5 text-[10px] text-[#ab2124]">
                         <Clock size={11} />
                         {village.facts.find((f) => f.label === 'Lịch sử')?.value ?? ''}
                       </span>
@@ -139,7 +139,7 @@ export default function VillagesListPage() {
 
                     <div
                       className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider pt-1 transition-colors duration-300"
-                      style={{ color: hoveredSlug === village.slug ? village.color : '#9C8670' }}
+                      style={{ color: hoveredSlug === village.slug ? village.color : '#ab2124' }}
                     >
                       Khám Phá
                       <ArrowRight
@@ -152,22 +152,6 @@ export default function VillagesListPage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Editorial footer — dark band */}
-      <section className="bg-[#2C1A0E] py-16 px-4">
-        <div className="max-w-2xl mx-auto text-center space-y-4">
-          <p className="text-[10px] tracking-[0.25em] text-[#C9973A] uppercase">Sứ Mệnh</p>
-          <h2 className="text-2xl sm:text-3xl font-light text-white leading-snug">
-            Gìn Giữ Tinh Hoa, <br />
-            <span className="italic text-[#D4B896]">Kết Nối Thế Hệ</span>
-          </h2>
-          <div className="h-[1px] w-12 bg-[#C9973A]/40 mx-auto" />
-          <p className="text-sm text-[#8C7B68] leading-relaxed">
-            Mỗi sản phẩm thủ công là một câu chuyện — về đôi bàn tay người thợ, về đất, về lửa,
-            về những kỹ thuật được truyền từ đời này sang đời khác.
-          </p>
         </div>
       </section>
     </div>
