@@ -64,6 +64,15 @@ h1 *, h2 *, .font-display * {
   font-style: normal !important;
 }
 
+/* Toàn bộ đoạn văn (<p>) căn đều 2 bên — kể cả đoạn ngắn/1 dòng, không riêng đoạn dài, và ghi
+   đè lên mọi class text-center/text-right/text-left khác đang đặt trực tiếp trên <p> ở nơi
+   khác (Tailwind utility layer thắng plain element selector theo thứ tự build, dùng
+   !important ở đây để không phụ thuộc thứ tự đó). Đặt ở tầng global thay vì text-justify rải
+   rác trên từng <p> trong JSX để không sót vị trí nào. */
+p {
+  text-align: justify !important;
+}
+
 /* Nhiều h1/h2 nhấn một cụm từ bằng <span> màu khác (ví dụ "Gìn Giữ Tinh Hoa," + span màu be
    "Kết Nối Thế Hệ") — bỏ hẳn màu nhấn riêng, toàn bộ tiêu đề dùng đúng 1 màu kế thừa từ chính
    thẻ h1/h2. Không áp dụng cho .font-display (tên thương hiệu cạnh logo) vì đó không phải
