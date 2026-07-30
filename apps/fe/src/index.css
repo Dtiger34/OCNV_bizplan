@@ -64,6 +64,14 @@ h1 *, h2 *, .font-display * {
   font-style: normal !important;
 }
 
+/* Nhiều h1/h2 nhấn một cụm từ bằng <span> màu khác (ví dụ "Gìn Giữ Tinh Hoa," + span màu be
+   "Kết Nối Thế Hệ") — bỏ hẳn màu nhấn riêng, toàn bộ tiêu đề dùng đúng 1 màu kế thừa từ chính
+   thẻ h1/h2. Không áp dụng cho .font-display (tên thương hiệu cạnh logo) vì đó không phải
+   heading nhiều đoạn màu khác nhau. */
+h1 *, h2 * {
+  color: inherit !important;
+}
+
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
 
 @keyframes fade-up {
