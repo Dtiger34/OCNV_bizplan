@@ -42,9 +42,6 @@ export default function AboutPage() {
     <div className="bg-[#F5EDD6] min-h-screen">
       {/* Hero */}
       <div className="relative bg-[#3A1A0A] py-20 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center text-[100px] md:text-[140px] font-bold text-white/[0.03] select-none pointer-events-none uppercase tracking-widest leading-none">
-          DI SẢN
-        </div>
         <div className="relative z-10 space-y-4 max-w-2xl mx-auto">
           <span className="text-[10px] font-bold tracking-[0.22em] text-[#C9973A] uppercase block">
             NGHỀ XƯA NÉT MỚI · OLD CRAFTS NEW VIBES
