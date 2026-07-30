@@ -50,13 +50,18 @@ body {
 /* Title/heading font — Agbalumo, áp dụng nhất quán cho h1/h2 toàn site và tên thương hiệu
    cạnh logo trong Header (class .font-display, vì đó là <span>, không phải heading tag). h3
    trở xuống và phần nội dung còn lại dùng --font-sans (Montserrat, khai báo ở trên).
-   Agbalumo chỉ có 1 weight (400/Regular) — nhiều h1/h2 hiện có class font-bold/font-light của
-   Tailwind (thiết kế ban đầu cho font khác), ép font-weight lên font chỉ-có-1-weight khiến
-   trình duyệt giả lập đậm/mảnh (synthetic bold/light), làm méo hình chữ so với bản gốc của
-   font. Ép về normal ở đây thay vì sửa từng className rải rác trong JSX. */
-h1, h2, .font-display {
+   Agbalumo chỉ có 1 weight/style (400 Regular, không có italic riêng) — nhiều h1/h2 (và các
+   <span> con bên trong, ví dụ phần chữ nhấn màu vàng) vẫn còn class font-bold/font-light/
+   italic của Tailwind từ thiết kế cũ (dành cho font khác). Ép các thuộc tính này lên một font
+   không có sẵn variant tương ứng khiến trình duyệt tự giả lập (đậm/mảnh/nghiêng bằng cách bóp
+   méo hình chữ gốc) — nhìn như 2 font khác nhau trong cùng một tiêu đề. Ép về bình thường ở
+   đây, áp dụng cả cho phần tử con (span, em...) bên trong h1/h2, thay vì sửa từng className
+   rải rác trong JSX. */
+h1, h2, .font-display,
+h1 *, h2 *, .font-display * {
   font-family: var(--font-display);
   font-weight: 400 !important;
+  font-style: normal !important;
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
