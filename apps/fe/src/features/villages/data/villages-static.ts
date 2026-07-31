@@ -7,12 +7,22 @@ export interface VillageStage {
   imageUrl: string;
 }
 
+export interface HistoryMilestone {
+  period: string;
+  points: string[];
+}
+
 export interface VillageStatic {
   slug: string;
   name: string;
   tagline: string;
   shortDescription: string;
-  fullHistory: string;
+  /** 1. Giới thiệu chung — đoạn văn, tách bằng \n\n */
+  intro: string;
+  /** 2. Lịch sử hình thành và phát triển — đoạn văn thuật lại (dùng khi không có milestones) */
+  historyText?: string;
+  /** 2. Lịch sử hình thành và phát triển — dạng mốc thời gian có gạch đầu dòng */
+  historyMilestones?: HistoryMilestone[];
   coverImageUrl: string;
   heroImageUrl: string;
   galleryImages: string[];
@@ -30,8 +40,44 @@ export const VILLAGES: VillageStatic[] = [
     tagline: 'Hơn 700 năm tinh hoa gốm sứ',
     shortDescription:
       'Bát Tràng là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam, nằm bên bờ sông Hồng, cách trung tâm Hà Nội khoảng 15 km.',
-    fullHistory:
-      'Làng Gốm Bát Tràng thuộc xã Bát Tràng, nằm bên bờ sông Hồng và cách trung tâm Hà Nội khoảng 15 km. Đây là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam với lịch sử hơn 700 năm hình thành và phát triển.\n\nTừ xa xưa, gốm sứ không chỉ là vật dụng phục vụ đời sống hằng ngày mà còn mang giá trị nghệ thuật và văn hóa sâu sắc. Những sản phẩm gốm Bát Tràng thể hiện sự kết hợp hài hòa giữa kỹ thuật thủ công tinh xảo, óc sáng tạo và nét đẹp truyền thống của người Việt. Vì vậy, nghề làm gốm không chỉ góp phần phát triển kinh tế mà còn giữ vai trò quan trọng trong việc bảo tồn bản sắc văn hóa dân tộc.\n\nTại Bát Tràng, mỗi sản phẩm đều trải qua nhiều công đoạn công phu như xử lý đất, tạo hình, trang trí hoa văn, phủ men và nung trong lò. Sự khéo léo và kinh nghiệm của các nghệ nhân đã tạo nên những sản phẩm gốm có độ bền cao, hoa văn tinh tế và giá trị thẩm mỹ đặc trưng.\n\nThế kỷ XV–XVI, nghề gốm phát triển nhờ chính sách khuyến khích giao thương của nhà Mạc, sản phẩm bắt đầu mang dấu ấn riêng với tên người chế tác và niên đại sản xuất. Thế kỷ XVI–XVII là giai đoạn hưng thịnh nhất — nhờ thuận lợi giao thương, sản phẩm được xuất khẩu rộng rãi sang nhiều nước trong khu vực và thế giới. Cuối thế kỷ XVII–XIX, gốm Bát Tràng gặp nhiều khó khăn do cạnh tranh từ gốm Trung Quốc và Nhật Bản nên hoạt động sản xuất chủ yếu phục vụ nhu cầu trong nước. Từ thế kỷ XX đến nay, nghề gốm dần được phục hồi và phát triển mạnh, các cơ sở sản xuất không ngừng đổi mới mẫu mã, đa dạng hóa sản phẩm và kết hợp phát triển du lịch làng nghề.\n\nNgày nay, bên cạnh việc sản xuất và kinh doanh gốm sứ, Bát Tràng còn là điểm du lịch văn hóa nổi tiếng, thu hút đông đảo du khách trong và ngoài nước đến tham quan, trải nghiệm làm gốm và tìm hiểu về nghề thủ công truyền thống Việt Nam.',
+    intro:
+      'Làng Gốm Bát Tràng thuộc xã Bát Tràng, nằm bên bờ sông Hồng và cách trung tâm Hà Nội khoảng 15 km. Đây là một trong những làng nghề gốm sứ truyền thống nổi tiếng và lâu đời nhất Việt Nam với lịch sử hơn 700 năm hình thành và phát triển.\n\nTừ xa xưa, gốm sứ không chỉ là vật dụng phục vụ đời sống hằng ngày mà còn mang giá trị nghệ thuật và văn hóa sâu sắc. Những sản phẩm gốm Bát Tràng thể hiện sự kết hợp hài hòa giữa kỹ thuật thủ công tinh xảo, óc sáng tạo và nét đẹp truyền thống của người Việt. Vì vậy, nghề làm gốm không chỉ góp phần phát triển kinh tế mà còn giữ vai trò quan trọng trong việc bảo tồn bản sắc văn hóa dân tộc.\n\nTại Bát Tràng, mỗi sản phẩm đều trải qua nhiều công đoạn công phu như xử lý đất, tạo hình, trang trí hoa văn, phủ men và nung trong lò. Sự khéo léo và kinh nghiệm của các nghệ nhân đã tạo nên những sản phẩm gốm có độ bền cao, hoa văn tinh tế và giá trị thẩm mỹ đặc trưng.\n\nNgày nay, bên cạnh việc sản xuất và kinh doanh gốm sứ, Bát Tràng còn là điểm du lịch văn hóa nổi tiếng, thu hút đông đảo du khách trong và ngoài nước đến tham quan, trải nghiệm làm gốm và tìm hiểu về nghề thủ công truyền thống Việt Nam.',
+    historyMilestones: [
+      {
+        period: 'Thế kỷ XV – XVI',
+        points: [
+          'Nghề gốm phát triển nhờ chính sách khuyến khích giao thương của nhà Mạc.',
+          'Sản phẩm gốm bắt đầu mang dấu ấn riêng với tên người chế tác và niên đại sản xuất.',
+        ],
+      },
+      {
+        period: 'Thế kỷ XVI – XVII',
+        points: [
+          'Giai đoạn hưng thịnh nhất của gốm Bát Tràng.',
+          'Nhờ thuận lợi về giao thương, sản phẩm được xuất khẩu rộng rãi sang nhiều nước trong khu vực và thế giới.',
+        ],
+      },
+      {
+        period: 'Cuối thế kỷ XVII – XIX',
+        points: [
+          'Gốm Bát Tràng gặp nhiều khó khăn do sự cạnh tranh từ gốm Trung Quốc và Nhật Bản.',
+          'Hoạt động sản xuất chủ yếu phục vụ nhu cầu trong nước.',
+        ],
+      },
+      {
+        period: 'Từ thế kỷ XX đến nay',
+        points: [
+          'Nghề gốm dần được phục hồi và phát triển mạnh.',
+          'Các cơ sở sản xuất không ngừng đổi mới mẫu mã, đa dạng hóa sản phẩm và kết hợp phát triển du lịch làng nghề.',
+        ],
+      },
+      {
+        period: 'Hiện nay',
+        points: [
+          'Bát Tràng là một trong những làng nghề gốm nổi tiếng nhất Việt Nam, góp phần bảo tồn và quảng bá văn hóa truyền thống dân tộc.',
+        ],
+      },
+    ],
     coverImageUrl: '/image/gom_cover.jpg',
     heroImageUrl: '/image/gom_cover.jpg',
     galleryImages: [
@@ -87,8 +133,10 @@ export const VILLAGES: VillageStatic[] = [
     tagline: 'Giữ lại hồn Việt trên từng lá nón',
     shortDescription:
       'Làng Chuông (Phú Xuyên, Hà Nội) là một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam, nơi gần như mỗi gia đình đều biết làm nón.',
-    fullHistory:
-      'Nằm ở vùng ven của Phú Xuyên, Hà Nội, làng Chuông (thường được gọi là làng Chuông nón) từ lâu đã trở thành một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam. Nếu nhìn từ xa, làng Chuông có vẻ yên bình như bao làng quê khác. Nhưng khi bước vào sâu bên trong, bạn sẽ thấy một "hệ sinh thái nghề thủ công" tồn tại bền bỉ hàng trăm năm — nơi mà gần như mỗi gia đình đều có ít nhất một người biết làm nón.\n\nĐiều đặc biệt là nơi đây không chỉ "làm nón", mà gần như cả làng cùng sống trong nhịp thở của nón. Từ sân nhà, ngõ nhỏ đến hiên cửa, đâu đâu cũng có hình ảnh những chiếc lá cọ được phơi trắng, những vành tre được uốn tròn, hay tiếng kim khâu nón lách cách đều đặn như một bản nhạc rất riêng của làng quê Bắc Bộ.\n\nLàng Chuông là một trong những làng nghề truyền thống lâu đời của Hà Nội, gắn liền với nghề làm nón lá qua nhiều thế hệ. Tuy nhiên, thời điểm chính xác nghề nón xuất hiện tại đây vẫn chưa được xác định rõ ràng. Theo lời kể của các bậc cao niên trong làng, nghề làm nón đã có mặt từ khoảng thế kỷ thứ 8. Khi đó, vùng đất này còn được gọi là Trang Thì Trung và đã sớm nổi tiếng với nghề thủ công làm nón, phục vụ nhu cầu sử dụng của nhiều tầng lớp trong xã hội, từ người dân lao động đến giới quan lại.\n\nNhưng theo thời gian, nón lá dần vượt khỏi chức năng "vật dụng lao động" để trở thành một phần của văn hóa Việt. Hình ảnh người phụ nữ đội nón, áo dài đã đi vào thơ ca, hội họa và ký ức nhiều thế hệ.',
+    intro:
+      'Nằm ở vùng ven của Phú Xuyên, Hà Nội, làng Chuông (thường được gọi là làng Chuông nón) từ lâu đã trở thành một trong những cái tên tiêu biểu nhất khi nhắc đến nghề làm nón lá truyền thống Việt Nam. Nếu nhìn từ xa, làng Chuông có vẻ yên bình như bao làng quê khác. Nhưng khi bước vào sâu bên trong, bạn sẽ thấy một "hệ sinh thái nghề thủ công" tồn tại bền bỉ hàng trăm năm — nơi mà gần như mỗi gia đình đều có ít nhất một người biết làm nón.\n\nĐiều đặc biệt là nơi đây không chỉ "làm nón", mà gần như cả làng cùng sống trong nhịp thở của nón. Từ sân nhà, ngõ nhỏ đến hiên cửa, đâu đâu cũng có hình ảnh những chiếc lá cọ được phơi trắng, những vành tre được uốn tròn, hay tiếng kim khâu nón lách cách đều đặn như một bản nhạc rất riêng của làng quê Bắc Bộ.',
+    historyText:
+      'Làng Chuông là một trong những làng nghề truyền thống lâu đời của Hà Nội, gắn liền với nghề làm nón lá qua nhiều thế hệ. Tuy nhiên, thời điểm chính xác nghề nón xuất hiện tại đây vẫn chưa được xác định rõ ràng.\n\nTheo lời kể của các bậc cao niên trong làng, nghề làm nón đã có mặt từ khoảng thế kỷ thứ 8. Khi đó, vùng đất này còn được gọi là Trang Thì Trung và đã sớm nổi tiếng với nghề thủ công làm nón, phục vụ nhu cầu sử dụng của nhiều tầng lớp trong xã hội, từ người dân lao động đến giới quan lại.\n\nNhưng theo thời gian, nón lá dần vượt khỏi chức năng "vật dụng lao động" để trở thành một phần của văn hóa Việt. Hình ảnh người phụ nữ đội nón, áo dài đã đi vào thơ ca, hội họa và ký ức nhiều thế hệ.',
     coverImageUrl: '/image/non_cover.jpg',
     heroImageUrl: '/image/non_cover.jpg',
     galleryImages: [
@@ -144,8 +192,30 @@ export const VILLAGES: VillageStatic[] = [
     tagline: 'Kết nối tâm linh qua từng nén hương',
     shortDescription:
       'Làng Hương Quảng Phú Cầu (Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng nhất Việt Nam, nơi những bó hương đỏ rực phơi dưới nắng trở thành biểu tượng đặc trưng.',
-    fullHistory:
-      'Làng Hương Quảng Phú Cầu (huyện Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng của Việt Nam với lịch sử hơn 100 năm. Từ bao đời nay, hương đã trở thành một phần không thể thiếu trong văn hóa tâm linh dân tộc. Mỗi nén hương được thắp lên là sự kết nối giữa hiện tại và cội nguồn, thể hiện lòng thành kính đối với tổ tiên, thần linh và những giá trị truyền thống tốt đẹp. Chính vì vậy, nghề làm hương không đơn thuần tạo ra một sản phẩm phục vụ nhu cầu sinh hoạt mà còn góp phần gìn giữ bản sắc văn hóa và đời sống tinh thần của cộng đồng.\n\nTại Quảng Phú Cầu, các công đoạn làm hương như chẻ tăm, nhuộm chân hương, se hương và phơi hương đều được thực hiện một cách tỉ mỉ, thể hiện sự khéo léo của người thợ thủ công. Đặc biệt, hình ảnh những bó chân hương đỏ rực được xòe tròn dưới nắng đã trở thành biểu tượng đặc trưng của làng nghề.\n\nNghề làm hương tại Quảng Phú Cầu xuất hiện từ đầu thế kỷ XX và được lưu truyền qua nhiều thế hệ người dân địa phương. Ban đầu, người dân chủ yếu làm nông nghiệp và các nghề thủ công từ tre nứa trước khi phát triển mạnh nghề sản xuất tăm hương. Nhờ nhu cầu sử dụng hương trong đời sống tín ngưỡng ngày càng tăng, nghề làm hương dần trở thành nghề truyền thống và nguồn thu nhập chính của nhiều hộ gia đình. Qua thời gian, người dân không ngừng cải tiến kỹ thuật sản xuất nhưng vẫn giữ gìn những giá trị thủ công truyền thống.\n\nNgày nay, Quảng Phú Cầu là một trong những làng nghề hương nổi tiếng nhất Việt Nam, vừa phát triển kinh tế vừa góp phần bảo tồn và quảng bá văn hóa dân tộc, đồng thời phát triển du lịch làng nghề, đưa những giá trị truyền thống đến gần hơn với thế hệ trẻ.',
+    intro:
+      'Làng Hương Quảng Phú Cầu (huyện Ứng Hòa, Hà Nội) là một trong những làng nghề làm hương truyền thống nổi tiếng của Việt Nam với lịch sử hơn 100 năm. Từ bao đời nay, hương đã trở thành một phần không thể thiếu trong văn hóa tâm linh dân tộc. Mỗi nén hương được thắp lên là sự kết nối giữa hiện tại và cội nguồn, thể hiện lòng thành kính đối với tổ tiên, thần linh và những giá trị truyền thống tốt đẹp. Chính vì vậy, nghề làm hương không đơn thuần tạo ra một sản phẩm phục vụ nhu cầu sinh hoạt mà còn góp phần gìn giữ bản sắc văn hóa và đời sống tinh thần của cộng đồng.\n\nTại Quảng Phú Cầu, các công đoạn làm hương như chẻ tăm, nhuộm chân hương, se hương và phơi hương đều được thực hiện một cách tỉ mỉ, thể hiện sự khéo léo của người thợ thủ công. Đặc biệt, hình ảnh những bó chân hương đỏ rực được xòe tròn dưới nắng đã trở thành biểu tượng đặc trưng của làng nghề.\n\nNgày nay, bên cạnh việc duy trì nghề truyền thống, Quảng Phú Cầu còn phát triển du lịch làng nghề, góp phần quảng bá văn hóa Việt Nam và đưa những giá trị truyền thống đến gần hơn với thế hệ trẻ.',
+    historyMilestones: [
+      {
+        period: 'Đầu thế kỷ XX',
+        points: [
+          'Nghề làm hương tại Quảng Phú Cầu xuất hiện và được lưu truyền qua nhiều thế hệ người dân địa phương.',
+          'Ban đầu, người dân chủ yếu làm nông nghiệp và các nghề thủ công từ tre nứa trước khi phát triển mạnh nghề sản xuất tăm hương.',
+        ],
+      },
+      {
+        period: 'Giai đoạn phát triển',
+        points: [
+          'Nhờ nhu cầu sử dụng hương trong đời sống tín ngưỡng ngày càng tăng, nghề làm hương dần trở thành nghề truyền thống và nguồn thu nhập chính của nhiều hộ gia đình.',
+          'Người dân không ngừng cải tiến kỹ thuật sản xuất nhưng vẫn giữ gìn những giá trị thủ công truyền thống.',
+        ],
+      },
+      {
+        period: 'Ngày nay',
+        points: [
+          'Quảng Phú Cầu là một trong những làng nghề hương nổi tiếng nhất Việt Nam, vừa phát triển kinh tế vừa góp phần bảo tồn và quảng bá văn hóa dân tộc.',
+        ],
+      },
+    ],
     coverImageUrl: '/image/huong_cover.webp',
     heroImageUrl: '/image/huong_cover.webp',
     galleryImages: [
@@ -201,8 +271,10 @@ export const VILLAGES: VillageStatic[] = [
     tagline: 'Tơ lụa Việt Nam kể câu chuyện hơn 1.000 năm',
     shortDescription:
       'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam với lịch sử hơn 1.000 năm.',
-    fullHistory:
-      'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc từ lâu đã được xem là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam. Điều khiến Vạn Phúc đặc biệt không chỉ nằm ở sản phẩm lụa mềm, nhẹ, có độ óng tự nhiên, mà còn ở "không khí nghề" bao trùm cả làng. Dạo bước trong làng, bạn dễ dàng bắt gặp hình ảnh khung cửi đặt ngay trong nhà, tiếng thoi đưa đều đặn vang lên từ sáng sớm, và những tấm lụa nhiều màu sắc phơi dọc theo các con ngõ nhỏ.\n\nLụa Vạn Phúc không chỉ được sử dụng trong nước mà còn từng xuất hiện ở nhiều thị trường quốc tế, trở thành một trong những biểu tượng tiêu biểu của thủ công mỹ nghệ Việt Nam. Với nhiều người trẻ, nơi đây không chỉ là làng nghề, mà còn là một "background sống ảo" mang đậm chất truyền thống xen lẫn hiện đại.\n\nLàng lụa Vạn Phúc xưa kia có tên Vạn Bảo, do kị húy nhà Nguyễn nên đã đổi thành Vạn Phúc. Theo các tài liệu và truyền thuyết địa phương, nghề dệt lụa ở Vạn Phúc có lịch sử hơn 1.000 năm, gắn với tên tuổi bà A Lã Thị Nương — người được xem là tổ nghề dệt lụa.\n\nBà được cho là đã truyền dạy kỹ thuật trồng dâu, nuôi tằm, ươm tơ và dệt lụa cho người dân trong vùng, đặt nền móng cho nghề lụa phát triển bền vững qua nhiều thế hệ. Nhờ đó, Vạn Phúc sớm trở thành một trung tâm dệt lụa lớn, cung cấp sản phẩm cho cả khu vực kinh thành Thăng Long xưa.\n\nTrải qua nhiều thế hệ, lụa Vạn Phúc vẫn giữ được nét đẹp truyền thống và đang đi đầu trong ngành dệt nước ta. Lụa ở làng Vạn Phúc được đánh giá là đẹp và bền. Hoa văn trên lụa rất đa dạng, trang trí đối xứng với nhau, đường nét không rườm rà, phức tạp mà luôn tạo cảm giác phóng thoáng, dứt khoát.',
+    intro:
+      'Nằm tại khu vực Hà Đông, Hà Nội, làng lụa Vạn Phúc từ lâu đã được xem là một trong những cái nôi quan trọng nhất của nghề dệt lụa truyền thống Việt Nam. Điều khiến Vạn Phúc đặc biệt không chỉ nằm ở sản phẩm lụa mềm, nhẹ, có độ óng tự nhiên, mà còn ở "không khí nghề" bao trùm cả làng. Dạo bước trong làng, bạn dễ dàng bắt gặp hình ảnh khung cửi đặt ngay trong nhà, tiếng thoi đưa đều đặn vang lên từ sáng sớm, và những tấm lụa nhiều màu sắc phơi dọc theo các con ngõ nhỏ.\n\nLụa Vạn Phúc không chỉ được sử dụng trong nước mà còn từng xuất hiện ở nhiều thị trường quốc tế, trở thành một trong những biểu tượng tiêu biểu của thủ công mỹ nghệ Việt Nam. Với nhiều người trẻ, nơi đây không chỉ là làng nghề, mà còn là một "background sống ảo" mang đậm chất truyền thống xen lẫn hiện đại.',
+    historyText:
+      'Làng lụa Vạn Phúc xưa kia có tên Vạn Bảo, do kị húy nhà Nguyễn nên đã đổi thành Vạn Phúc. Theo các tài liệu và truyền thuyết địa phương, nghề dệt lụa ở Vạn Phúc có lịch sử hơn 1.000 năm, gắn với tên tuổi bà A Lã Thị Nương — người được xem là tổ nghề dệt lụa.\n\nBà được cho là đã truyền dạy kỹ thuật trồng dâu, nuôi tằm, ươm tơ và dệt lụa cho người dân trong vùng, đặt nền móng cho nghề lụa phát triển bền vững qua nhiều thế hệ. Nhờ đó, Vạn Phúc sớm trở thành một trung tâm dệt lụa lớn, cung cấp sản phẩm cho cả khu vực kinh thành Thăng Long xưa.\n\nTrải qua nhiều thế hệ, lụa Vạn Phúc vẫn giữ được nét đẹp truyền thống và đang đi đầu trong ngành dệt nước ta. Lụa ở làng Vạn Phúc được đánh giá là đẹp và bền. Hoa văn trên lụa rất đa dạng, trang trí đối xứng với nhau, đường nét không rườm rà, phức tạp mà luôn tạo cảm giác phóng thoáng, dứt khoát.',
     coverImageUrl: '/image/lua_cover.jpg',
     heroImageUrl: '/image/lua_cover.jpg',
     galleryImages: [
@@ -259,8 +331,10 @@ export const VILLAGES: VillageStatic[] = [
     tagline: 'Nét tinh hoa thủ công giữa lòng xứ Đoài',
     shortDescription:
       'Nằm tại xã Chàng Sơn (Thạch Thất, Hà Nội), làng nghề quạt Chàng Sơn là một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài, với lịch sử từ thế kỷ XVII.',
-    fullHistory:
-      'Nằm tại xã Chàng Sơn, làng nghề quạt Chàng Sơn từ lâu đã được biết đến như một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài. Không chỉ đơn thuần là nơi sản xuất quạt giấy, quạt lụa, nơi đây còn là không gian lưu giữ tinh hoa lao động thủ công, nơi mỗi chiếc quạt mang trong mình dấu ấn của sự tỉ mỉ, khéo léo và bền bỉ qua nhiều thế hệ.\n\nTrong nhịp sống hiện đại, Chàng Sơn vẫn giữ được "hơi thở" truyền thống, đồng thời từng bước thích ứng với thị trường, đưa sản phẩm làng nghề đến gần hơn với du khách và người tiêu dùng trong nước cũng như quốc tế.\n\nNghề làm quạt ở Chàng Sơn (trước đây có tên là Nủa Chàng) đã có lịch sử từ rất lâu đời, các tư liệu lịch sử ghi nhận nghề đã hình thành và phát triển từ khoảng thế kỷ XVII đến XIX.\n\nNgay từ thế kỷ XIX, quạt Chàng Sơn đã không chỉ là vật dụng làm mát thông thường mà còn là vật phẩm sang trọng. Nó nổi tiếng đến mức từng được người Pháp mang sang Paris để trưng bày trong các triển lãm quốc tế, khẳng định đẳng cấp của thủ công mỹ nghệ Việt.\n\nThời kỳ bao cấp, làng Chàng Sơn trở thành một "công xưởng" lớn cung cấp quạt giấy cho cả nước theo cơ chế tập trung, giúp nghề quạt được duy trì và phổ biến rộng rãi khắp các vùng miền.',
+    intro:
+      'Nằm tại xã Chàng Sơn, làng nghề quạt Chàng Sơn từ lâu đã được biết đến như một trong những cái nôi của nghề thủ công truyền thống tiêu biểu vùng xứ Đoài. Không chỉ đơn thuần là nơi sản xuất quạt giấy, quạt lụa, nơi đây còn là không gian lưu giữ tinh hoa lao động thủ công, nơi mỗi chiếc quạt mang trong mình dấu ấn của sự tỉ mỉ, khéo léo và bền bỉ qua nhiều thế hệ.\n\nTrong nhịp sống hiện đại, Chàng Sơn vẫn giữ được "hơi thở" truyền thống, đồng thời từng bước thích ứng với thị trường, đưa sản phẩm làng nghề đến gần hơn với du khách và người tiêu dùng trong nước cũng như quốc tế.',
+    historyText:
+      'Nghề làm quạt ở Chàng Sơn (trước đây có tên là Nủa Chàng) đã có lịch sử từ rất lâu đời, các tư liệu lịch sử ghi nhận nghề đã hình thành và phát triển từ khoảng thế kỷ XVII đến XIX.\n\nNgay từ thế kỷ XIX, quạt Chàng Sơn đã không chỉ là vật dụng làm mát thông thường mà còn là vật phẩm sang trọng. Nó nổi tiếng đến mức từng được người Pháp mang sang Paris để trưng bày trong các triển lãm quốc tế, khẳng định đẳng cấp của thủ công mỹ nghệ Việt.\n\nThời kỳ bao cấp, làng Chàng Sơn trở thành một "công xưởng" lớn cung cấp quạt giấy cho cả nước theo cơ chế tập trung, giúp nghề quạt được duy trì và phổ biến rộng rãi khắp các vùng miền.',
     coverImageUrl: '/image/quat_cover.jpg',
     heroImageUrl: '/image/quat_cover.jpg',
     galleryImages: [

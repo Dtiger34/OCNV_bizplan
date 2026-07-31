@@ -62,7 +62,8 @@ export default function VillagePage() {
     );
   }
 
-  const historyParagraphs = village.fullHistory.split('\n\n').filter(Boolean);
+  const introParagraphs = village.intro.split('\n\n').filter(Boolean);
+  const historyParagraphs = village.historyText?.split('\n\n').filter(Boolean) ?? [];
 
   return (
     <div className="min-h-screen bg-parchment">
@@ -116,7 +117,7 @@ export default function VillagePage() {
         </div>
       </section>
 
-      {/* History — nền kem trắng */}
+      {/* 1. Giới thiệu chung — nền kem trắng */}
       <section className="py-16 px-6 sm:px-10">
         <div className="max-w-3xl mx-auto">
           <motion.div
@@ -127,16 +128,16 @@ export default function VillagePage() {
             className="mb-8"
           >
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
-              Lịch Sử
+              1. Giới Thiệu Chung
             </p>
             <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
-              Hành Trình <span className="italic text-[#ab2124]">Hàng Thế Kỷ</span>
+              Đôi Nét Về <span className="italic text-[#ab2124]">Làng Nghề</span>
             </h2>
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </motion.div>
 
           <div className="space-y-5">
-            {historyParagraphs.map((para, i) => (
+            {introParagraphs.map((para, i) => (
               <motion.p
                 key={i}
                 initial={{ opacity: 0, y: 14 }}
@@ -164,9 +165,80 @@ export default function VillagePage() {
         </div>
       </section>
 
+      {/* 2. Lịch sử hình thành và phát triển — nền kem đậm, tách khỏi Giới thiệu chung */}
+      <section className="py-16 px-6 sm:px-10 bg-[#EDE3CE]">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
+              2. Lịch Sử Hình Thành Và Phát Triển
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
+              Hành Trình <span className="italic text-[#ab2124]">Hàng Thế Kỷ</span>
+            </h2>
+            <div className="h-px w-12 bg-[#D4B896] mt-4" />
+          </motion.div>
+
+          {village.historyMilestones ? (
+            <div className="space-y-6">
+              {village.historyMilestones.map((milestone, i) => (
+                <motion.div
+                  key={milestone.period}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="flex gap-4 sm:gap-6"
+                >
+                  <div className="flex flex-col items-center shrink-0 pt-1">
+                    <div
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: village.color }}
+                    />
+                    {i < village.historyMilestones!.length - 1 && (
+                      <div className="w-px flex-1 mt-1.5" style={{ backgroundColor: village.color + '40' }} />
+                    )}
+                  </div>
+                  <div className="pb-6">
+                    <p className="text-sm sm:text-base font-semibold text-ink mb-2">{milestone.period}</p>
+                    <ul className="space-y-1.5">
+                      {milestone.points.map((point, j) => (
+                        <li key={j} className="text-sm text-wood leading-relaxed">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-5">
+              {historyParagraphs.map((para, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="text-wood leading-relaxed text-sm sm:text-base"
+                >
+                  {para}
+                </motion.p>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Gallery — nền kem đậm */}
       {village.galleryImages.length > 0 && (
-        <section className="py-12 px-6 sm:px-10 bg-[#EDE3CE]">
+        <section className="py-12 px-6 sm:px-10 bg-[#EDE3CE] border-t border-[#D4B896]/60">
           <div className="max-w-5xl mx-auto">
             <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-5 text-center">
               Hình Ảnh
