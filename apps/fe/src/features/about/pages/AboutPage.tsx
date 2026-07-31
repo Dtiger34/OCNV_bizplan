@@ -1,132 +1,197 @@
 import { Link } from 'react-router-dom';
-import { Award, MapPin, Star, Sparkles, GraduationCap, Landmark, ArrowRight } from 'lucide-react';
-
-const PILLARS = [
-  {
-    icon: <Award size={28} className="text-[#C9973A]" />,
-    title: 'Sản phẩm mang câu chuyện',
-    desc: 'Mỗi mô hình tiểu cảnh 3D không chỉ là vật trang trí — đó là cả một câu chuyện về làng nghề, về người nghệ nhân và tâm huyết truyền đời. Bạn sở hữu một tác phẩm, bạn giữ một ký ức văn hóa.',
-  },
-  {
-    icon: <MapPin size={28} className="text-[#C9973A]" />,
-    title: 'Quy trình làng nghề thật',
-    desc: 'Từ bàn tay người thợ gốm Bát Tràng, khung cửi lụa Vạn Phúc đến lò hương Quảng Phú Cầu — chúng tôi ghi lại và tái hiện từng công đoạn thủ công qua mô hình và trải nghiệm AR sống động.',
-  },
-  {
-    icon: <Star size={28} className="text-[#C9973A]" />,
-    title: 'Khám phá văn hóa làng nghề',
-    desc: 'Đi sâu vào lịch sử, con người và tinh thần của những làng nghề nổi tiếng Việt Nam. Mỗi trang làng nghề là một hành trình — từ nguồn gốc, quy trình đến nét đặc trưng chỉ nơi đó mới có.',
-  },
-];
+import { Landmark, Sparkles, GraduationCap, Users, Leaf, ArrowRight, Quote } from 'lucide-react';
 
 const VALUES = [
   {
-    icon: <Landmark size={22} className="text-[#C9973A]" />,
-    title: 'Giá trị văn hóa',
-    desc: 'Góp phần giới thiệu và bảo tồn hình ảnh làng nghề truyền thống Việt Nam.',
+    icon: <Landmark size={26} className="text-[#C9973A]" />,
+    title: 'Cultural Authenticity',
+    subtitle: 'Gìn giữ bản sắc văn hóa',
+    desc: 'Tôn trọng và gìn giữ những giá trị nguyên bản của các làng nghề truyền thống Việt Nam, bảo đảm mỗi sản phẩm và trải nghiệm đều phản ánh đúng bản sắc và tinh hoa văn hóa.',
   },
   {
-    icon: <GraduationCap size={22} className="text-[#C9973A]" />,
-    title: 'Giá trị giáo dục',
-    desc: 'Giúp người xem hiểu quy trình và ý nghĩa của từng nghề thủ công qua trải nghiệm trực quan.',
+    icon: <Sparkles size={26} className="text-[#C9973A]" />,
+    title: 'Innovation',
+    subtitle: 'Đổi mới sáng tạo',
+    desc: 'Kết hợp công nghệ hiện đại với tư duy sáng tạo để phát triển những trải nghiệm văn hóa hấp dẫn, đồng thời vẫn gìn giữ giá trị cốt lõi của nghề thủ công truyền thống.',
   },
   {
-    icon: <Sparkles size={22} className="text-[#C9973A]" />,
-    title: 'Giá trị sáng tạo',
-    desc: 'Kết hợp giữa thiết kế thủ công và công nghệ AR hiện đại, tạo ra một cách mới để trải nghiệm văn hóa.',
+    icon: <GraduationCap size={26} className="text-[#C9973A]" />,
+    title: 'Cultural Learning',
+    subtitle: 'Lan tỏa tri thức văn hóa',
+    desc: 'Chuyển tải câu chuyện và tri thức văn hóa thành những trải nghiệm trực quan, dễ tiếp cận và có tính tương tác, giúp công chúng hiểu rõ hơn về di sản làng nghề Việt Nam.',
   },
+  {
+    icon: <Users size={26} className="text-[#C9973A]" />,
+    title: 'Community Connection',
+    subtitle: 'Kết nối cộng đồng',
+    desc: 'Thúc đẩy sự kết nối và hợp tác giữa nghệ nhân, cộng đồng địa phương, khách hàng và các tổ chức văn hóa nhằm cùng tạo ra giá trị và góp phần gìn giữ di sản.',
+  },
+  {
+    icon: <Leaf size={26} className="text-[#C9973A]" />,
+    title: 'Sustainability',
+    subtitle: 'Phát triển bền vững',
+    desc: 'Cam kết góp phần bảo tồn và phát triển bền vững các làng nghề truyền thống Việt Nam thông qua đổi mới có trách nhiệm và việc tạo ra những giá trị văn hóa lâu dài.',
+  },
+];
+
+const STATS = [
+  { value: '5+', label: 'Làng nghề' },
+  { value: '100+', label: 'Năm lịch sử' },
+  { value: 'AR', label: 'Tương tác' },
+];
+
+const VILLAGE_IMAGES = [
+  { src: '/image/lang-gom.jpg', label: 'Gốm Bát Tràng' },
+  { src: '/image/lang-lua.jpg', label: 'Lụa Vạn Phúc' },
+  { src: '/image/lang-non.webp', label: 'Nón Chuông' },
+  { src: '/image/lang-huong.webp', label: 'Hương Quảng Phú Cầu' },
+  { src: '/image/lang-quat.jpg', label: 'Quạt giấy' },
 ];
 
 export default function AboutPage() {
   return (
     <div className="bg-[#fff8e7] min-h-screen">
-      {/* Hero */}
-      <div className="relative bg-[#ab2124] py-20 px-6 text-center overflow-hidden">
-        <div className="relative z-10 space-y-4 max-w-2xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-white">Về Chúng Tôi</h1>
-          <p className="text-[#C9B99A] text-sm md:text-base leading-relaxed">
-            Chúng tôi tái hiện các làng nghề truyền thống Việt Nam dưới dạng mô hình tiểu cảnh, kết hợp công nghệ
-            thực tế tăng cường (AR) để biến không gian thủ công tĩnh lặng thành trải nghiệm sống động.
-          </p>
-        </div>
-      </div>
+      {/* Hero — ảnh nền làng nghề phủ overlay đỏ, chữ + số liệu đè lên trên */}
+      <section className="relative overflow-hidden">
+        <img
+          src="/image/anh-cau-chuyen-lang-nghe.jpg"
+          alt="Làng nghề truyền thống Việt Nam"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#ab2124]/85" />
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #fff8e7 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+          }}
+        />
+        <div className="container mx-auto px-6 md:px-10 max-w-6xl relative grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-4 items-center py-20 md:py-28">
+          <div className="space-y-6 reveal-left in-view">
+            <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] text-[#C9973A] uppercase">
+              <span className="w-8 h-px bg-[#C9973A]" />
+              Về Chúng Tôi
+            </span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05]">
+              Nghề Xưa
+              <br />
+              Nét Mới
+            </h1>
+            <p className="text-[#C9B99A] text-sm md:text-base leading-relaxed text-justify text-pretty max-w-xl">
+              Thương hiệu văn hóa sáng tạo mang đến một cách tiếp cận mới với các làng nghề truyền thống Việt Nam —
+              kết hợp giá trị thủ công với AR, QR Storytelling và các sản phẩm phygital, biến mỗi sản phẩm thành
+              một hành trình khám phá văn hóa.
+            </p>
+          </div>
 
-      {/* Sứ mệnh */}
-      <section className="container mx-auto px-6 md:px-8 max-w-4xl py-16 text-center space-y-5">
-        <span className="text-[13px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">Sứ Mệnh</span>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] leading-snug text-title-gradient">
-          Sức Sống Mới Cho Di Sản Việt
-        </h2>
-        <div className="w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
-        <p className="text-base md:text-lg text-[#ab2124] leading-relaxed max-w-4xl mx-auto text-justify text-pretty">
-          Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện
-          của những làng nghề Việt Nam đến gần hơn với mọi người. Chúng tôi tin rằng văn hóa truyền thống không
-          cần phải khô khan hay xa lạ — mà có thể trở nên sống động, gần gũi và dễ nhớ hơn khi được kể lại đúng cách.
-        </p>
-      </section>
-
-      {/* 3 pillars */}
-      <section className="bg-[#ab2124]/5 py-14 md:py-20 border-t border-b border-[#D4B896]/20">
-        <div className="container mx-auto px-6 md:px-8 max-w-5xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PILLARS.map((item) => (
-              <div
-                key={item.title}
-                className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-3 hover:border-[#C9973A] transition-colors"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#EDE3CE] flex items-center justify-center">
-                  {item.icon}
-                </div>
-                <h3 className="font-bold text-[#ab2124] text-base">{item.title}</h3>
-                <p className="text-sm text-[#ab2124] leading-relaxed">{item.desc}</p>
+          {/* Cột số liệu — xếp dọc, kẻ ngăn cách, khác hẳn lưới 4 ô căn giữa cũ */}
+          <div className="reveal-right in-view border-t border-white/15 lg:border-t-0 lg:border-l lg:pl-10 pt-8 lg:pt-0 divide-y divide-white/15">
+            {STATS.map((s) => (
+              <div key={s.label} className="flex items-baseline justify-between py-4 first:pt-0">
+                <span className="text-3xl md:text-4xl font-bold text-title-gradient">{s.value}</span>
+                <span className="text-xs text-[#C9B99A] uppercase tracking-wide">{s.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Câu chuyện & ý tưởng */}
-      <section className="container mx-auto px-6 md:px-8 max-w-4xl py-16 space-y-6">
-        <div className="text-center space-y-3">
-          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">
-            Ý Tưởng Của Chúng Tôi
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Một Việt Nam Thu Nhỏ</h2>
-          <div className="w-12 h-[1px] bg-[#C9973A] mx-auto" />
+      {/* Tầm nhìn & Sứ mệnh — mỗi mục kèm khung ảnh làng nghề, xen kẽ trái/phải */}
+      <section className="container mx-auto px-6 md:px-10 max-w-5xl py-20 md:py-28 space-y-16 md:space-y-24">
+        <div className="reveal-left in-view grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="space-y-3 order-2 md:order-1">
+            <span className="text-[64px] md:text-[80px] leading-none font-bold text-[#C9973A]/15 select-none block">
+              01
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Tầm Nhìn</h2>
+            <p className="text-sm md:text-base text-[#ab2124] leading-relaxed text-justify text-pretty">
+              Nghề Xưa Nét Mới hướng tới trở thành một thương hiệu hàng đầu về văn hóa sáng tạo, góp phần đưa di sản
+              làng nghề truyền thống Việt Nam đến gần hơn với công chúng thông qua những trải nghiệm tương tác hiện
+              đại, khơi dậy tình yêu và niềm tự hào về bản sắc văn hóa dân tộc.
+            </p>
+          </div>
+          <div className="order-1 md:order-2 relative">
+            <div className="absolute -inset-3 border-2 border-[#C9973A]/40 rounded-lg -z-10 hidden md:block" />
+            <img
+              src="/image/lang-gom.jpg"
+              alt="Tầm nhìn — làng nghề gốm Bát Tràng"
+              className="w-full h-56 md:h-72 object-cover rounded-lg shadow-large"
+            />
+          </div>
         </div>
-        <div className="space-y-4 text-[#ab2124] leading-relaxed text-sm md:text-base text-justify text-pretty">
-          <p>
-            Lấy cảm hứng từ những làng nghề trăm năm tuổi — làng lụa Vạn Phúc, làng nón Chuông, làng mây tre đan
-            Phú Vinh, làng gốm Bát Tràng, làng hương Quảng Phú Cầu — chúng tôi mong muốn không chỉ dừng lại ở việc
-            trưng bày, mà hướng tới tái hiện trọn vẹn câu chuyện văn hóa, tạo trải nghiệm đa giác quan và kết nối
-            truyền thống với công nghệ hiện đại.
-          </p>
-          <p>
-            Khi người dùng mở trải nghiệm AR trên điện thoại, mô hình không còn tĩnh lặng nữa — người thợ gốm xoay
-            bàn, khung cửi dệt lụa chuyển động, câu chuyện làng nghề hiện ra ngay trước mắt. Đây là điều khiến
-            chúng tôi khác biệt so với những sản phẩm lưu niệm truyền thống trên thị trường.
-          </p>
+
+        <div className="reveal-right in-view grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="relative">
+            <div className="absolute -inset-3 border-2 border-[#C9973A]/40 rounded-lg -z-10 hidden md:block" />
+            <img
+              src="/image/lang-lua.jpg"
+              alt="Sứ mệnh — làng lụa Vạn Phúc"
+              className="w-full h-56 md:h-72 object-cover rounded-lg shadow-large"
+            />
+          </div>
+          <div className="space-y-3">
+            <span className="text-[64px] md:text-[80px] leading-none font-bold text-[#C9973A]/15 select-none block">
+              02
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Sứ Mệnh</h2>
+            <p className="text-sm md:text-base text-[#ab2124] leading-relaxed text-justify text-pretty">
+              Gìn giữ và lan tỏa tinh hoa làng nghề truyền thống Việt Nam bằng việc kiến tạo các sản phẩm văn hóa kết
+              hợp công nghệ, giúp di sản được tiếp cận theo cách gần gũi, hấp dẫn và phù hợp với nhịp sống đương đại.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Giá trị mang lại */}
-      <section className="bg-[#ab2124]/5 py-14 md:py-20 border-t border-b border-[#D4B896]/20">
-        <div className="container mx-auto px-6 md:px-8 max-w-5xl">
-          <div className="text-center space-y-3 mb-10">
-            <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">
-              Giá Trị Mang Lại
+      {/* Dải ảnh làng nghề — phá khối chữ trước khi vào Core Values */}
+      <section className="grid grid-cols-2 md:grid-cols-5 reveal in-view">
+        {VILLAGE_IMAGES.map((v) => (
+          <div key={v.label} className="relative h-40 md:h-52 overflow-hidden group">
+            <img
+              src={v.src}
+              alt={v.label}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#ab2124]/80 via-transparent to-transparent" />
+            <span className="absolute bottom-2 left-2 right-2 text-[11px] md:text-xs font-semibold text-white leading-tight">
+              {v.label}
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Không Chỉ Là Một Sản Phẩm</h2>
-            <div className="w-12 h-[1px] bg-[#C9973A] mx-auto" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {VALUES.map((item) => (
-              <div key={item.title} className="flex flex-col items-center text-center gap-3 p-6">
-                <div className="w-12 h-12 rounded-full bg-[#EDE3CE] flex items-center justify-center">
+        ))}
+      </section>
+
+      {/* Core Values — danh sách ngang có số đếm, thay cho lưới card 3 cột */}
+      <section className="bg-[#ab2124] py-20 md:py-28">
+        <div className="container mx-auto px-6 md:px-10 max-w-5xl">
+          <div className="mb-14 reveal in-view">
+            <span className="text-[11px] font-bold tracking-[0.3em] text-[#C9973A] uppercase block mb-3">
+              Core Values
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Giá Trị Cốt Lõi</h2>
+          </div>
+
+          <div className="divide-y divide-white/15">
+            {VALUES.map((item, i) => (
+              <div
+                key={item.title}
+                className="reveal in-view group py-8 grid grid-cols-1 md:grid-cols-[80px_auto_1fr] gap-4 md:gap-8 items-start"
+              >
+                <span className="text-2xl font-bold text-[#C9973A]/40 group-hover:text-[#C9973A] transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="w-12 h-12 shrink-0 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#C9973A]/20 transition-colors">
                   {item.icon}
                 </div>
-                <h3 className="font-bold text-[#ab2124] text-base">{item.title}</h3>
-                <p className="text-sm text-[#ab2124] leading-relaxed">{item.desc}</p>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-baseline gap-x-3">
+                    <h3 className="font-bold text-white text-lg">{item.title}</h3>
+                    <span className="text-xs font-semibold text-[#C9973A] uppercase tracking-wide">
+                      {item.subtitle}
+                    </span>
+                  </div>
+                  <p className="text-sm text-[#C9B99A] leading-relaxed text-justify text-pretty max-w-2xl">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -134,15 +199,16 @@ export default function AboutPage() {
       </section>
 
       {/* Quote kết */}
-      <section className="container mx-auto px-6 md:px-8 max-w-3xl py-16 text-center space-y-6">
-        <p className="text-lg md:text-xl text-[#ab2124] italic leading-relaxed font-medium">
+      <section className="container mx-auto px-6 md:px-10 max-w-3xl py-20 md:py-28 text-center space-y-6 reveal in-view">
+        <Quote size={36} className="mx-auto text-[#C9973A]/60" />
+        <p className="text-lg md:text-2xl text-[#ab2124] italic leading-relaxed font-medium">
           "Nghề Xưa Nét Mới không chỉ tái hiện làng nghề Việt Nam, mà còn tạo ra một cách mới để con người trải nghiệm
           văn hóa truyền thống trong thời đại công nghệ số."
         </p>
         <div className="w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
         <Link
           to="/villages"
-          className="inline-flex items-center gap-2 px-7 py-3 bg-[#7B1C2E] text-[#fff8e7] text-sm font-bold tracking-wider uppercase rounded-sm hover:bg-[#9B2438] transition-colors"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#7B1C2E] text-[#fff8e7] text-sm font-bold tracking-wider uppercase rounded-full hover:bg-[#9B2438] shadow-gold-glow transition-colors"
         >
           Khám phá các làng nghề
           <ArrowRight size={15} />
