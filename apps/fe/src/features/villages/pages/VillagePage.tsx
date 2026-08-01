@@ -77,14 +77,12 @@ export default function VillagePage() {
         Làng Nghề
       </Link>
 
-      {/* Hero — dark cinematic, chia 2 cột: giới thiệu + ô video/model 3D */}
-      <section className="relative min-h-[80vh] overflow-hidden">
+      {/* Hero — nền màu đặc trưng làng nghề, chia 2 cột: giới thiệu + ô video/model 3D */}
+      <section className="relative min-h-[80vh] overflow-hidden bg-ink">
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
+          className="absolute inset-0 opacity-90"
+          style={{ background: `linear-gradient(135deg, ${village.color} 0%, var(--color-ink) 70%)` }}
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent" />
 
         <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-24 md:py-28 min-h-[80vh] flex items-center">
           <div className="w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
