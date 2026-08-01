@@ -83,8 +83,8 @@ export default function VillagePage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
         />
-        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/50 to-ink/20" />
-        <div className="absolute inset-0 bg-linear-to-r from-ink/60 via-ink/10 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent" />
 
         <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-24 md:py-28 min-h-[80vh] flex items-center">
           <div className="w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
