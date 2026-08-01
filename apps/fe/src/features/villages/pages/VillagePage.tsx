@@ -77,13 +77,8 @@ export default function VillagePage() {
         Làng Nghề
       </Link>
 
-      {/* Hero — nền tối trung tính (không dùng đỏ thương hiệu, tránh trùng Header) */}
-      <section className="relative min-h-[80vh] overflow-hidden bg-[#1C1815]">
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{ background: `radial-gradient(circle at 15% 20%, ${village.color} 0%, transparent 55%)` }}
-        />
-
+      {/* Hero — nền be như phần dưới trang, khối video/model 3D bên phải dùng đỏ thương hiệu */}
+      <section className="relative min-h-[80vh] overflow-hidden bg-parchment">
         <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-24 md:py-28 min-h-[80vh] flex items-center">
           <div className="w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
             <motion.div
@@ -98,19 +93,19 @@ export default function VillagePage() {
               >
                 Làng Nghề Truyền Thống
               </p>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-ink leading-tight mb-4">
                 {village.name}
               </h1>
-              <p className="text-base sm:text-lg italic text-[#D4B896] mb-5">{village.tagline}</p>
+              <p className="text-base sm:text-lg italic text-wood mb-5">{village.tagline}</p>
               <div className="h-px w-16" style={{ backgroundColor: village.color + '80' }} />
             </motion.div>
 
-            {/* Ô Video giới thiệu + Model 3D — nằm cạnh hero, thay cho section Mô Hình 3D riêng lẻ phía dưới */}
+            {/* Ô Video giới thiệu + Model 3D — khối nền đỏ thương hiệu, nằm cạnh hero */}
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="grid grid-cols-2 lg:grid-cols-1 gap-4"
+              className="grid grid-cols-2 lg:grid-cols-1 gap-4 bg-ink rounded-xl p-4"
             >
               {/* Video giới thiệu */}
               <button
