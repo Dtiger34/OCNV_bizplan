@@ -137,30 +137,77 @@ export default function VillagePage() {
                 </div>
               </button>
 
-              {/* Model 3D */}
-              {arModel ? (
-                <button
-                  onClick={() => {
-                    document.getElementById('model-3d-section')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="group relative rounded-lg overflow-hidden border border-white/20 bg-black/30 backdrop-blur-sm aspect-video hover:border-white/40 transition-colors cursor-pointer"
-                >
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                    <div
-                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
-                      style={{ backgroundColor: village.color }}
-                    >
-                      <Box size={18} className="text-white" />
+              {/* Model 3D — model-viewer thật ngay trong banner */}
+              {arModel && (
+                <div className="relative rounded-lg overflow-hidden border border-white/20 bg-black/40 backdrop-blur-sm aspect-video">
+                  {!viewerReady && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                      <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin" />
                     </div>
-                    <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
+                  )}
+                  {viewerReady && (
+                    // @ts-ignore — model-viewer là custom element
+                    <model-viewer
+                      ref={viewerRef}
+                      src={arModel.model}
+                      alt={arModel.label}
+                      camera-controls
+                      auto-rotate
+                      touch-action="pan-y"
+                      style={{ width: '100%', height: '100%' }}
+                      onClick={(e: React.MouseEvent<HTMLElement>) => {
+                        // Dev helper để lấy toạ độ 3D calibrate hotspot AR — giữ Alt rồi click lên
+                        // model, tọa độ position/normal sẽ log ra console để copy vào
+                        // village-ar-points.ts (xem VILLAGE_AR_POINTS).
+                        if (!e.altKey) return;
+                        const viewer = e.currentTarget as HTMLElement & {
+                          positionAndNormalFromPoint?: (
+                            x: number,
+                            y: number
+                          ) => { position: { x: number; y: number; z: number }; normal: { x: number; y: number; z: number } } | null;
+                        };
+                        const rect = viewer.getBoundingClientRect();
+                        const hit = viewer.positionAndNormalFromPoint?.(e.clientX - rect.left, e.clientY - rect.top);
+                        if (hit) {
+                          console.log(
+                            `[AR calibrate] slug=${slug}\nposition: { x: ${hit.position.x.toFixed(3)}, y: ${hit.position.y.toFixed(3)}, z: ${hit.position.z.toFixed(3)} },\nnormal: { x: ${hit.normal.x.toFixed(2)}, y: ${hit.normal.y.toFixed(2)}, z: ${hit.normal.z.toFixed(2)} },`
+                          );
+                        }
+                      }}
+                    />
+                  )}
+                  <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm pointer-events-none">
+                    <Box size={11} className="text-white" />
+                    <span className="text-[9px] font-semibold tracking-wide text-white uppercase">
                       Mô Hình 3D
                     </span>
                   </div>
-                </button>
-              ) : (
-                <div className="hidden lg:block" />
+                  <button
+                    onClick={handleViewAr}
+                    disabled={!viewerReady}
+                    className="absolute bottom-2 right-2 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-white text-[10px] font-semibold uppercase tracking-wide shadow-lg disabled:opacity-50 transition-transform hover:scale-105"
+                    style={{ backgroundColor: village.color }}
+                  >
+                    <ScanLine size={12} />
+                    AR
+                  </button>
+                </div>
               )}
             </motion.div>
+
+            {showDesktopQr && arModel && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="lg:col-start-2 flex flex-col items-center gap-2 bg-white/95 rounded-lg p-4"
+              >
+                <div className="flex items-center gap-2 text-xs text-ink">
+                  <Smartphone size={14} className="text-gold" />
+                  Quét mã QR bằng điện thoại để xem AR
+                </div>
+                <QRCodeSVG value={`${window.location.origin}/villages/${slug}/ar`} size={140} />
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
@@ -343,80 +390,6 @@ export default function VillagePage() {
                 </motion.button>
               ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Model 3D — xem trước ngay trên trang, bấm để chuyển thẳng sang AR */}
-      {arModel && (
-        <section id="model-3d-section" className="py-14 px-6 sm:px-10 bg-parchment scroll-mt-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-2">Mô Hình 3D</p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug mb-6 text-title-gradient">
-              Khám Phá <span className="italic text-[#ab2124]">{village.name}</span> Trong Không Gian 3D
-            </h2>
-
-            <div className="relative rounded-[10px] overflow-hidden border border-[#D4B896]/60 bg-[#111] aspect-square sm:aspect-video">
-              {!viewerReady && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
-              {viewerReady && (
-                // @ts-ignore — model-viewer là custom element
-                <model-viewer
-                  ref={viewerRef}
-                  src={arModel.model}
-                  alt={arModel.label}
-                  camera-controls
-                  auto-rotate
-                  touch-action="pan-y"
-                  style={{ width: '100%', height: '100%' }}
-                  onClick={(e: React.MouseEvent<HTMLElement>) => {
-                    // Dev helper để lấy toạ độ 3D calibrate hotspot AR — giữ Alt rồi click lên
-                    // model, tọa độ position/normal sẽ log ra console để copy vào
-                    // village-ar-points.ts (xem VILLAGE_AR_POINTS).
-                    if (!e.altKey) return;
-                    const viewer = e.currentTarget as HTMLElement & {
-                      positionAndNormalFromPoint?: (
-                        x: number,
-                        y: number
-                      ) => { position: { x: number; y: number; z: number }; normal: { x: number; y: number; z: number } } | null;
-                    };
-                    const rect = viewer.getBoundingClientRect();
-                    const hit = viewer.positionAndNormalFromPoint?.(e.clientX - rect.left, e.clientY - rect.top);
-                    if (hit) {
-                      console.log(
-                        `[AR calibrate] slug=${slug}\nposition: { x: ${hit.position.x.toFixed(3)}, y: ${hit.position.y.toFixed(3)}, z: ${hit.position.z.toFixed(3)} },\nnormal: { x: ${hit.normal.x.toFixed(2)}, y: ${hit.normal.y.toFixed(2)}, z: ${hit.normal.z.toFixed(2)} },`
-                      );
-                    }
-                  }}
-                />
-              )}
-            </div>
-
-            {!showDesktopQr && (
-              <button
-                onClick={handleViewAr}
-                disabled={!viewerReady}
-                className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-[#B8862A] disabled:opacity-50 disabled:cursor-not-allowed text-ink text-sm font-semibold rounded-sm transition-all duration-200"
-              >
-                <ScanLine size={16} />
-                Xem Trong Không Gian Thực · AR
-              </button>
-            )}
-
-            {showDesktopQr && (
-              <div className="mt-6 flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2 text-sm text-wood">
-                  <Smartphone size={16} className="text-gold" />
-                  Quét mã QR bằng điện thoại để xem AR
-                </div>
-                <div className="p-4 bg-white rounded-xl border border-[#D4B896]/60">
-                  <QRCodeSVG value={`${window.location.origin}/villages/${slug}/ar`} size={180} />
-                </div>
-              </div>
-            )}
           </div>
         </section>
       )}
