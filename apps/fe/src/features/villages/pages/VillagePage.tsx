@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, Smartphone, Play, X, Box } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, Smartphone, Play, X, Box, Maximize2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
@@ -34,6 +34,7 @@ export default function VillagePage() {
   const [viewerReady, setViewerReady] = useState(false);
   const [showDesktopQr, setShowDesktopQr] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const viewerRef = useRef<HTMLElement>(null);
   const arModel = VILLAGE_AR_MODELS[slug ?? ''];
 
@@ -107,28 +108,48 @@ export default function VillagePage() {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="grid grid-cols-2 lg:grid-cols-1 gap-4 bg-ink rounded-xl p-4"
             >
-              {/* Video giới thiệu */}
-              <button
-                onClick={() => setShowVideo(true)}
-                className="group relative rounded-lg overflow-hidden border border-white/20 bg-black/30 backdrop-blur-sm aspect-video hover:border-white/40 transition-colors cursor-pointer"
-              >
-                <img
-                  src={village.coverImageUrl}
-                  alt={`Video giới thiệu ${village.name}`}
-                  className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-ink/30 flex flex-col items-center justify-center gap-2">
-                  <div
-                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: village.color }}
-                  >
-                    <Play size={16} className="text-white ml-0.5" fill="white" />
+              {/* Video giới thiệu — phát ngay trong ô, nút mở rộng riêng để phóng to giữa màn hình */}
+              <div className="group relative rounded-lg overflow-hidden border border-white/20 bg-black aspect-video">
+                {isVideoPlaying ? (
+                  <div className="w-full h-full flex items-center justify-center px-4 text-center">
+                    <p className="text-[#D4B896] text-xs sm:text-sm">
+                      Video giới thiệu {village.name} sẽ sớm được cập nhật.
+                    </p>
                   </div>
-                  <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
-                    Video Giới Thiệu
-                  </span>
-                </div>
-              </button>
+                ) : (
+                  <button
+                    onClick={() => setIsVideoPlaying(true)}
+                    className="absolute inset-0 cursor-pointer"
+                  >
+                    <img
+                      src={village.coverImageUrl}
+                      alt={`Video giới thiệu ${village.name}`}
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-ink/30 flex flex-col items-center justify-center gap-2">
+                      <div
+                        className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
+                        style={{ backgroundColor: village.color }}
+                      >
+                        <Play size={16} className="text-white ml-0.5" fill="white" />
+                      </div>
+                      <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
+                        Video Giới Thiệu
+                      </span>
+                    </div>
+                  </button>
+                )}
+
+                {isVideoPlaying && (
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    className="absolute top-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors"
+                    aria-label="Phóng to video"
+                  >
+                    <Maximize2 size={13} />
+                  </button>
+                )}
+              </div>
 
               {/* Model 3D — model-viewer thật ngay trong banner */}
               {arModel && (
@@ -205,14 +226,14 @@ export default function VillagePage() {
         </div>
       </section>
 
-      {/* Video modal */}
+      {/* Video modal — mở rộng cỡ lớn giữa màn hình */}
       {showVideo && (
         <div
-          className="fixed inset-0 z-100 bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 z-100 bg-black/90 flex items-center justify-center p-4 sm:p-8 cursor-pointer"
           onClick={() => setShowVideo(false)}
         >
-          <div className="relative w-full max-w-3xl aspect-video bg-ink rounded-lg overflow-hidden flex items-center justify-center">
-            <p className="text-[#D4B896] text-sm px-6 text-center">
+          <div className="relative w-full max-w-6xl aspect-video bg-ink rounded-lg overflow-hidden flex items-center justify-center">
+            <p className="text-[#D4B896] text-base sm:text-lg px-6 text-center">
               Video giới thiệu {village.name} sẽ sớm được cập nhật.
             </p>
           </div>
