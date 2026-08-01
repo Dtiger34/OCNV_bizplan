@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, Smartphone } from 'lucide-react';
+import { ChevronLeft, Quote, ArrowRight, CheckCircle2, ScanLine, Smartphone, Play, X, Box } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
@@ -33,6 +33,7 @@ export default function VillagePage() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [viewerReady, setViewerReady] = useState(false);
   const [showDesktopQr, setShowDesktopQr] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const viewerRef = useRef<HTMLElement>(null);
   const arModel = VILLAGE_AR_MODELS[slug ?? ''];
 
@@ -76,34 +77,113 @@ export default function VillagePage() {
         Làng Nghề
       </Link>
 
-      {/* Hero — dark cinematic */}
-      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+      {/* Hero — dark cinematic, chia 2 cột: giới thiệu + ô video/model 3D */}
+      <section className="relative min-h-[80vh] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${village.heroImageUrl}')` }}
         />
-        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-r from-ink/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/50 to-ink/20" />
+        <div className="absolute inset-0 bg-linear-to-r from-ink/60 via-ink/10 to-transparent" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 px-6 sm:px-10 lg:px-16 pb-16 max-w-4xl"
-        >
-          <p
-            className="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3"
-            style={{ color: village.color }}
-          >
-            Làng Nghề Truyền Thống
-          </p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-4">
-            {village.name}
-          </h1>
-          <p className="text-base sm:text-lg italic text-[#D4B896] mb-5">{village.tagline}</p>
-          <div className="h-px w-16" style={{ backgroundColor: village.color + '80' }} />
-        </motion.div>
+        <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-24 md:py-28 min-h-[80vh] flex items-center">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl"
+            >
+              <p
+                className="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3"
+                style={{ color: village.color }}
+              >
+                Làng Nghề Truyền Thống
+              </p>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-4">
+                {village.name}
+              </h1>
+              <p className="text-base sm:text-lg italic text-[#D4B896] mb-5">{village.tagline}</p>
+              <div className="h-px w-16" style={{ backgroundColor: village.color + '80' }} />
+            </motion.div>
+
+            {/* Ô Video giới thiệu + Model 3D — nằm cạnh hero, thay cho section Mô Hình 3D riêng lẻ phía dưới */}
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="grid grid-cols-2 lg:grid-cols-1 gap-4"
+            >
+              {/* Video giới thiệu */}
+              <button
+                onClick={() => setShowVideo(true)}
+                className="group relative rounded-lg overflow-hidden border border-white/20 bg-black/30 backdrop-blur-sm aspect-video hover:border-white/40 transition-colors cursor-pointer"
+              >
+                <img
+                  src={village.coverImageUrl}
+                  alt={`Video giới thiệu ${village.name}`}
+                  className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-ink/30 flex flex-col items-center justify-center gap-2">
+                  <div
+                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
+                    style={{ backgroundColor: village.color }}
+                  >
+                    <Play size={16} className="text-white ml-0.5" fill="white" />
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
+                    Video Giới Thiệu
+                  </span>
+                </div>
+              </button>
+
+              {/* Model 3D */}
+              {arModel ? (
+                <button
+                  onClick={() => {
+                    document.getElementById('model-3d-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group relative rounded-lg overflow-hidden border border-white/20 bg-black/30 backdrop-blur-sm aspect-video hover:border-white/40 transition-colors cursor-pointer"
+                >
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                    <div
+                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
+                      style={{ backgroundColor: village.color }}
+                    >
+                      <Box size={18} className="text-white" />
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
+                      Mô Hình 3D
+                    </span>
+                  </div>
+                </button>
+              ) : (
+                <div className="hidden lg:block" />
+              )}
+            </motion.div>
+          </div>
+        </div>
       </section>
+
+      {/* Video modal */}
+      {showVideo && (
+        <div
+          className="fixed inset-0 z-100 bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setShowVideo(false)}
+        >
+          <div className="relative w-full max-w-3xl aspect-video bg-ink rounded-lg overflow-hidden flex items-center justify-center">
+            <p className="text-[#D4B896] text-sm px-6 text-center">
+              Video giới thiệu {village.name} sẽ sớm được cập nhật.
+            </p>
+          </div>
+          <button
+            className="absolute top-4 right-4 text-white/60 hover:text-white"
+            onClick={() => setShowVideo(false)}
+          >
+            <X size={28} />
+          </button>
+        </div>
+      )}
 
       {/* Facts bar — nền kem đậm */}
       <section className="bg-[#EDE3CE] border-b border-[#D4B896]/60">
@@ -269,7 +349,7 @@ export default function VillagePage() {
 
       {/* Model 3D — xem trước ngay trên trang, bấm để chuyển thẳng sang AR */}
       {arModel && (
-        <section className="py-14 px-6 sm:px-10 bg-parchment">
+        <section id="model-3d-section" className="py-14 px-6 sm:px-10 bg-parchment scroll-mt-20">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-2">Mô Hình 3D</p>
             <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug mb-6 text-title-gradient">
