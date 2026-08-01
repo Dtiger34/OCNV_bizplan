@@ -77,11 +77,11 @@ export default function VillagePage() {
         Làng Nghề
       </Link>
 
-      {/* Hero — nền màu đặc trưng làng nghề, chia 2 cột: giới thiệu + ô video/model 3D */}
-      <section className="relative min-h-[80vh] overflow-hidden bg-ink">
+      {/* Hero — nền tối trung tính (không dùng đỏ thương hiệu, tránh trùng Header) */}
+      <section className="relative min-h-[80vh] overflow-hidden bg-[#1C1815]">
         <div
-          className="absolute inset-0 opacity-90"
-          style={{ background: `linear-gradient(135deg, ${village.color} 0%, var(--color-ink) 70%)` }}
+          className="absolute inset-0 opacity-25"
+          style={{ background: `radial-gradient(circle at 15% 20%, ${village.color} 0%, transparent 55%)` }}
         />
 
         <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-24 md:py-28 min-h-[80vh] flex items-center">
