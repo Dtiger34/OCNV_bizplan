@@ -52,7 +52,7 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     {
       // Cụm lá cọ xanh — sát cạnh trái nhà, gần bề mặt (không nhô xa ra trước)
       id: 'la-co-chon-loc',
-      position: { x: -0.28, y: -0.15, z: 0.12 },
+      position: { x: -0.48, y: -0.15, z: 0.12 },
       normal: { x: -0.3, y: 0, z: 0.3 },
       title: 'Lá Cọ Được Chọn Lọc',
       description:
@@ -61,7 +61,7 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     {
       // Giỏ/khung tre đan — sát đất, cạnh trái nhà, thấp nhất trong nhóm 4 điểm
       id: 'khung-tre',
-      position: { x: -0.2, y: -0.32, z: 0.15 },
+      position: { x: -0.4, y: -0.32, z: 0.15 },
       normal: { x: -0.2, y: -0.1, z: 0.35 },
       title: 'Khung Tre',
       description:
@@ -79,7 +79,7 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     {
       // Kệ nón lá thành phẩm — sát cạnh phải nhà, ngang tầm giữa
       id: 'non-la-thanh-pham',
-      position: { x: 0.22, y: -0.02, z: 0.1 },
+      position: { x: 0.5, y: -0.02, z: 0.1 },
       normal: { x: 0.3, y: 0.1, z: 0.25 },
       title: 'Nón Lá Thành Phẩm',
       description:
