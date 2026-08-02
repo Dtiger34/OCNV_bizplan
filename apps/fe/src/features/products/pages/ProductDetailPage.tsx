@@ -131,6 +131,24 @@ export default function ProductDetailPage() {
                   XEM AR 3D
                 </Link>
               </div>
+
+              {/* Thumbnails */}
+              {images.length > 1 && (
+                <div className="grid grid-cols-5 gap-2 mt-2">
+                  {images.map((src, i) => (
+                    <button
+                      key={src + i}
+                      type="button"
+                      onClick={() => setActiveImg(i)}
+                      className={`aspect-square rounded-sm overflow-hidden border-2 transition-colors cursor-pointer ${
+                        i === activeImg ? 'border-[#C9973A]' : 'border-gray-100 hover:border-[#C9973A]/40'
+                      }`}
+                    >
+                      <img src={src} alt={`${product.name[lang]} ${i + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Info */}
