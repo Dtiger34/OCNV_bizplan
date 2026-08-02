@@ -120,28 +120,40 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
 
   'lua-van-phuc': [
     {
+      // Cụm sợi tơ nhuộm màu treo — trái, thấp-giữa
+      id: 'nhuom-soi-to',
+      position: { x: -0.45, y: -0.05, z: 0.15 },
+      normal: { x: -0.35, y: 0, z: 0.3 },
+      title: 'Nhuộm Sợi Tơ',
+      description:
+        'Sợi tơ được nhuộm bằng nhiều gam màu khác nhau trước khi đưa lên khung cửi, tạo nên những sắc màu và hoa văn đặc trưng của lụa Vạn Phúc.',
+    },
+    {
+      // Kén tơ tằm — dưới-trái, thấp hơn cụm sợi nhuộm, gần đất
+      id: 'ken-to-tam',
+      position: { x: -0.35, y: -0.3, z: 0.15 },
+      normal: { x: -0.25, y: -0.15, z: 0.3 },
+      title: 'Kén Tơ Tằm',
+      description:
+        'Nguồn nguyên liệu của nghề dệt lụa. Sau khi ươm, sợi tơ tự nhiên thường có màu trắng ngà hoặc vàng nhạt, trước khi được nhuộm hoặc đưa vào dệt.',
+    },
+    {
+      // Khung cửi — chính giữa, nơi người thợ đang thao tác
       id: 'khung-cui',
-      position: { x: 0, y: 0.4, z: 0.3 },
-      normal: { x: 0, y: 1, z: 0 },
+      position: { x: 0.05, y: -0.05, z: 0.2 },
+      normal: { x: 0, y: 0, z: 0.4 },
       title: 'Khung Cửi',
       description:
-        'Sợi tơ sau khi xử lý được đưa lên khung cửi. Tiếng thoi đưa trên khung cửi chính là "âm thanh đặc trưng" của làng nghề Vạn Phúc suốt hơn nghìn năm.',
+        'Hoạt động theo cơ chế nâng–hạ sợi dọc và đưa thoi qua lại, giúp các sợi tơ đan xen thành vải.',
     },
     {
-      id: 'guong-to',
-      position: { x: -0.5, y: 0.6, z: -0.2 },
-      normal: { x: -1, y: 0, z: 0 },
-      title: 'Guồng Ươm Tơ',
-      description:
-        'Kén tằm sau khi thu hoạch được xử lý bằng nước nóng để tách sợi tơ — công đoạn đòi hỏi sự khéo léo để giữ sợi tơ không bị đứt hoặc rối.',
-    },
-    {
+      // Vải lụa thành phẩm — phải, tấm vải treo/xếp cạnh bình hoa
       id: 'lua-thanh-pham',
-      position: { x: 0.5, y: 0.5, z: -0.1 },
-      normal: { x: 1, y: 0, z: 0 },
-      title: 'Lụa Thành Phẩm',
+      position: { x: 0.45, y: -0.15, z: 0.15 },
+      normal: { x: 0.35, y: 0, z: 0.3 },
+      title: 'Vải Lụa Thành Phẩm',
       description:
-        'Mỗi tấm lụa đạt chuẩn phải có độ mềm, độ rũ và độ óng tự nhiên đặc trưng của Vạn Phúc, sau khi nhuộm màu và xử lý bề mặt để tạo độ bóng.',
+        'Sau quá trình dệt và hoàn thiện, tấm lụa mềm mại, óng mượt trở thành chất liệu để may áo dài, khăn lụa và nhiều sản phẩm thủ công truyền thống.',
     },
   ],
 
