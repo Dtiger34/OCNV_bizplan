@@ -171,28 +171,28 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
         'Những chiếc quạt hoàn thiện với màu sắc và họa tiết đa dạng, tôn vinh vẻ đẹp nghệ thuật của nghề làm quạt truyền thống.',
     },
     {
-      // Giỏ tre nguyên liệu — trái-giữa
+      // Giỏ tre nguyên liệu — trái-thấp (sát giỏ đựng thanh tre)
       id: 'tre-trong-gio',
-      position: { x: -0.5, y: -0.05, z: 0.15 },
-      normal: { x: -0.35, y: 0, z: 0.3 },
+      position: { x: -0.6, y: -0.35, z: 0.15 },
+      normal: { x: -0.35, y: -0.2, z: 0.3 },
       title: 'Tre Trong Giỏ',
       description:
         'Những ống tre già, thẳng thân, ít mắt được chọn kỹ làm nguyên liệu chính. Tre sau khi chặt sẽ được ngâm, phơi khô và xử lý chống mối mọt để đảm bảo độ dai, bền và không cong vênh.',
     },
     {
-      // Dụng cụ và bát màu vẽ — trái-thấp, phía trước
+      // Dụng cụ và bát màu vẽ — trái-rất thấp, sát giỏ màu phía trước
       id: 'dung-cu-va-mau-ve',
-      position: { x: -0.15, y: -0.28, z: 0.25 },
-      normal: { x: -0.1, y: -0.15, z: 0.4 },
+      position: { x: -0.15, y: -0.45, z: 0.25 },
+      normal: { x: -0.1, y: -0.25, z: 0.4 },
       title: 'Dụng Cụ Và Màu Vẽ',
       description:
         'Bút lông, chén màu... là những dụng cụ không thể thiếu. Màu được pha từ chất liệu truyền thống, an toàn và bền màu, giúp sản phẩm giữ được nét đẹp lâu dài.',
     },
     {
-      // Khung nan tre — giữa-thấp, phía trước bàn làm việc
+      // Khung nan tre — giữa-rất thấp, sát bó thanh tre trên bàn
       id: 'khung-nan-tre',
-      position: { x: 0.15, y: -0.32, z: 0.2 },
-      normal: { x: 0.1, y: -0.15, z: 0.35 },
+      position: { x: 0.15, y: -0.48, z: 0.2 },
+      normal: { x: 0.1, y: -0.25, z: 0.35 },
       title: 'Khung Nan Tre',
       description:
         'Nan tre được chẻ mảnh, vót mỏng, mài nhẵn — khung quạt quyết định độ bền và độ cân đối của sản phẩm.',
