@@ -26,6 +26,10 @@ export interface VillageStatic {
   coverImageUrl: string;
   heroImageUrl: string;
   galleryImages: string[];
+  /** Video giới thiệu — file local trong public/video/, ưu tiên nếu có cả hai */
+  videoUrl?: string;
+  /** Video giới thiệu — YouTube video ID (phần sau ?v=) */
+  youtubeId?: string;
   color: string;
   artisanStory?: string;
   artisanQuote?: string;
@@ -85,6 +89,7 @@ export const VILLAGES: VillageStatic[] = [
       '/image/gom_gallery2.jpg',
       '/image/gom_gallery3.jpg',
     ],
+    youtubeId: 'Z5VHUW5oUe4',
     color: '#8B5E3C',
     artisanStory: 'Các nghệ nhân Bát Tràng đã dành cả cuộc đời để hoàn thiện kỹ thuật làm gốm, truyền từ đời này sang đời khác với tất cả tâm huyết và niềm tự hào.',
     artisanQuote: 'Mỗi chiếc bát, mỗi cái bình đều mang trong mình hơi thở của người thợ, của đất, của lửa — ba yếu tố tạo nên linh hồn gốm Bát Tràng.',
@@ -144,6 +149,7 @@ export const VILLAGES: VillageStatic[] = [
       '/image/non_gallery2.png',
       '/image/non_gallery3.webp',
     ],
+    videoUrl: '/video/video làng nón.mp4',
     color: '#4A7C59',
     artisanStory: 'Những người thợ làng Chuông, từ già đến trẻ, tiếng kim khâu nón lách cách như một bản nhạc rất riêng — nhịp thở của cả một làng quê.',
     artisanQuote: 'Một chiếc nón đẹp không phải ở hình dáng — mà ở cái hồn người thợ gửi vào từng mũi kim, từng sợi chỉ.',
@@ -223,6 +229,7 @@ export const VILLAGES: VillageStatic[] = [
       '/image/huong_gallery2.jpg',
       '/image/huong_gallery3.jpg',
     ],
+    videoUrl: '/video/làng hương quảng phú cầu.mp4',
     color: '#C0392B',
     artisanStory: 'Người dân Quảng Phú Cầu đã gắn bó với nghề làm hương suốt hàng thế kỷ, biến những que tre bình thường thành những nén hương mang theo tâm tư, lòng thành kính của người Việt.',
     artisanQuote: 'Mỗi nén hương chúng tôi làm ra không chỉ là sản phẩm — đó là sợi dây vô hình nối giữa người sống và người đã khuất, giữa hiện tại và cội nguồn.',
@@ -282,6 +289,7 @@ export const VILLAGES: VillageStatic[] = [
       '/image/lua_gallery2.jpg',
       '/image/lua_gallery3.jpg',
     ],
+    videoUrl: '/video/làng lụa.mp4',
     color: '#7B3F8C',
     artisanStory: 'Tiếng thoi đưa trên khung cửi là âm thanh đặc trưng nhất của làng Vạn Phúc — một bản nhạc đã vang lên suốt hơn một nghìn năm và vẫn còn đó trong từng ngôi nhà.',
     artisanQuote: 'Lụa Vạn Phúc không chỉ là vải — đó là cả một câu chuyện dài hơn nghìn năm được dệt nên bởi đôi tay của những người phụ nữ Việt.',
@@ -342,6 +350,7 @@ export const VILLAGES: VillageStatic[] = [
       '/image/quat_gallery2.jpg',
       '/image/quat_gallery3.jpg',
     ],
+    youtubeId: 'RaNZh6sEL7U',
     color: '#2E6B8A',
     artisanStory: 'Người thợ Chàng Sơn đã đưa những chiếc quạt đơn giản trở thành tác phẩm nghệ thuật được trưng bày ở Paris — bằng chính đôi tay khéo léo và tình yêu với nghề truyền thống.',
     artisanQuote: 'Một chiếc quạt của Chàng Sơn không chỉ làm mát thân thể mà còn làm mát cả tâm hồn — bởi trong đó có cả trăm năm tinh hoa của người xứ Đoài.',

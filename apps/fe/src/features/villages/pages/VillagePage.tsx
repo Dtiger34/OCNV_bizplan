@@ -111,11 +111,28 @@ export default function VillagePage() {
               {/* Video giới thiệu — phát ngay trong ô, nút mở rộng riêng để phóng to giữa màn hình */}
               <div className="group relative rounded-lg overflow-hidden border border-white/20 bg-black aspect-video">
                 {isVideoPlaying ? (
-                  <div className="w-full h-full flex items-center justify-center px-4 text-center">
-                    <p className="text-[#D4B896] text-xs sm:text-sm">
-                      Video giới thiệu {village.name} sẽ sớm được cập nhật.
-                    </p>
-                  </div>
+                  village.youtubeId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${village.youtubeId}?autoplay=1`}
+                      title={`Video giới thiệu ${village.name}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : village.videoUrl ? (
+                    <video
+                      src={encodeURI(village.videoUrl)}
+                      controls
+                      autoPlay
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center px-4 text-center">
+                      <p className="text-[#D4B896] text-xs sm:text-sm">
+                        Video giới thiệu {village.name} sẽ sớm được cập nhật.
+                      </p>
+                    </div>
+                  )
                 ) : (
                   <button
                     onClick={() => setIsVideoPlaying(true)}
@@ -232,10 +249,30 @@ export default function VillagePage() {
           className="fixed inset-0 z-100 bg-black/90 flex items-center justify-center p-4 sm:p-8 cursor-pointer"
           onClick={() => setShowVideo(false)}
         >
-          <div className="relative w-full max-w-6xl aspect-video bg-ink rounded-lg overflow-hidden flex items-center justify-center">
-            <p className="text-[#D4B896] text-base sm:text-lg px-6 text-center">
-              Video giới thiệu {village.name} sẽ sớm được cập nhật.
-            </p>
+          <div
+            className="relative w-full max-w-6xl aspect-video bg-ink rounded-lg overflow-hidden flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {village.youtubeId ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${village.youtubeId}?autoplay=1`}
+                title={`Video giới thiệu ${village.name}`}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : village.videoUrl ? (
+              <video
+                src={encodeURI(village.videoUrl)}
+                controls
+                autoPlay
+                className="w-full h-full"
+              />
+            ) : (
+              <p className="text-[#D4B896] text-base sm:text-lg px-6 text-center">
+                Video giới thiệu {village.name} sẽ sớm được cập nhật.
+              </p>
+            )}
           </div>
           <button
             className="absolute top-4 right-4 text-white/60 hover:text-white"
