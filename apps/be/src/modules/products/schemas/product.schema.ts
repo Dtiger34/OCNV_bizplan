@@ -76,3 +76,10 @@ export const ProductSchema = SchemaFactory.createForClass(Product);
 ProductSchema.index({ price: 1 });
 ProductSchema.index({ createdAt: -1 });
 ProductSchema.index({ 'name.vi': 'text', 'name.en': 'text' });
+
+ProductSchema.virtual('mainImageUrl').get(function (this: Product) {
+  if (!this.images?.length) return null;
+  return (this.images.find((img) => img.isMain) ?? this.images[0]).url;
+});
+ProductSchema.set('toJSON', { virtuals: true });
+ProductSchema.set('toObject', { virtuals: true });
