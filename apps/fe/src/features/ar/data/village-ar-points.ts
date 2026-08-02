@@ -93,28 +93,31 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
 
   'huong-quang-phu-cau': [
     {
-      id: 'chan-huong',
-      position: { x: 0, y: 0.4, z: 0.3 },
-      normal: { x: 0, y: 1, z: 0 },
-      title: 'Chẻ Tăm & Nhuộm Chân Hương',
+      // Chọn nguyên liệu — trái-dưới, thấp (bó tăm tre phía trước)
+      id: 'chon-nguyen-lieu',
+      position: { x: -0.45, y: -0.3, z: 0.15 },
+      normal: { x: -0.3, y: -0.1, z: 0.3 },
+      title: 'Chọn Nguyên Liệu',
       description:
-        'Tre hoặc vầu già được chẻ nhỏ, vót thành que tăm đều nhau rồi nhuộm màu đỏ hoặc hồng — đây là công đoạn tạo nên sắc đỏ đặc trưng của làng Hương Quảng Phú Cầu.',
+        'Tre hoặc nứa được tuyển chọn kỹ để làm tăm hương, bảo đảm độ thẳng, dẻo và bền trước khi sản xuất.',
     },
     {
-      id: 'phoi-huong',
-      position: { x: -0.5, y: 0.6, z: -0.2 },
-      normal: { x: -1, y: 0, z: 0 },
-      title: 'Phơi Hương',
-      description:
-        'Những bó chân hương được xoè tròn như những bông hoa lớn và phơi dưới nắng, tạo nên khung cảnh đặc sắc rực rỡ đã trở thành biểu tượng của làng nghề.',
-    },
-    {
+      // Se hương — giữa, ngang tầm người thợ đang thao tác
       id: 'se-huong',
-      position: { x: 0.5, y: 0.5, z: -0.1 },
-      normal: { x: 1, y: 0, z: 0 },
+      position: { x: 0, y: -0.15, z: 0.2 },
+      normal: { x: 0, y: 0, z: 0.4 },
       title: 'Se Hương',
       description:
-        'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy móc hỗ trợ để tạo thành nén hương hoàn chỉnh.',
+        'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy se hương. Lớp bột được phủ đều, tạo thành nén hương hoàn chỉnh.',
+    },
+    {
+      // Phơi hương — phải, cao hơn (kệ hương xếp phơi phía sau-phải)
+      id: 'phoi-huong',
+      position: { x: 0.45, y: 0.05, z: 0.15 },
+      normal: { x: 0.35, y: 0.1, z: 0.3 },
+      title: 'Phơi Hương',
+      description:
+        'Những bó hương được phơi dưới nắng để khô tự nhiên, giúp hương giữ mùi thơm và cháy đều.',
     },
   ],
 
@@ -159,28 +162,49 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
 
   'quat-chang-son': [
     {
-      id: 'khung-quat',
-      position: { x: 0, y: 0.4, z: 0.3 },
-      normal: { x: 0, y: 1, z: 0 },
+      // Quạt thành phẩm treo — trái, cao (phía trên cùng bên trái)
+      id: 'quat-thanh-pham',
+      position: { x: -0.45, y: 0.25, z: 0.2 },
+      normal: { x: -0.3, y: 0.2, z: 0.35 },
+      title: 'Quạt Thành Phẩm',
+      description:
+        'Những chiếc quạt hoàn thiện với màu sắc và họa tiết đa dạng, tôn vinh vẻ đẹp nghệ thuật của nghề làm quạt truyền thống.',
+    },
+    {
+      // Giỏ tre nguyên liệu — trái-giữa
+      id: 'tre-trong-gio',
+      position: { x: -0.5, y: -0.05, z: 0.15 },
+      normal: { x: -0.35, y: 0, z: 0.3 },
+      title: 'Tre Trong Giỏ',
+      description:
+        'Những ống tre già, thẳng thân, ít mắt được chọn kỹ làm nguyên liệu chính. Tre sau khi chặt sẽ được ngâm, phơi khô và xử lý chống mối mọt để đảm bảo độ dai, bền và không cong vênh.',
+    },
+    {
+      // Dụng cụ và bát màu vẽ — trái-thấp, phía trước
+      id: 'dung-cu-va-mau-ve',
+      position: { x: -0.15, y: -0.28, z: 0.25 },
+      normal: { x: -0.1, y: -0.15, z: 0.4 },
+      title: 'Dụng Cụ Và Màu Vẽ',
+      description:
+        'Bút lông, chén màu... là những dụng cụ không thể thiếu. Màu được pha từ chất liệu truyền thống, an toàn và bền màu, giúp sản phẩm giữ được nét đẹp lâu dài.',
+    },
+    {
+      // Khung nan tre — giữa-thấp, phía trước bàn làm việc
+      id: 'khung-nan-tre',
+      position: { x: 0.15, y: -0.32, z: 0.2 },
+      normal: { x: 0.1, y: -0.15, z: 0.35 },
       title: 'Khung Nan Tre',
       description:
-        'Nan tre được chẻ mảnh, vót mỏng, mài nhẵn rồi uốn theo đúng hình dạng của quạt — khung quạt quyết định độ bền và độ cân đối của sản phẩm.',
+        'Nan tre được chẻ mảnh, vót mỏng, mài nhẵn — khung quạt quyết định độ bền và độ cân đối của sản phẩm.',
     },
     {
-      id: 'giay-quat',
-      position: { x: -0.5, y: 0.6, z: -0.2 },
-      normal: { x: -1, y: 0, z: 0 },
-      title: 'Dán Giấy Quạt',
+      // Vẽ trang trí quạt — giữa-cao, ngay tay người thợ đang vẽ
+      id: 've-trang-tri-quat',
+      position: { x: 0.05, y: 0.05, z: 0.25 },
+      normal: { x: 0, y: 0.1, z: 0.4 },
+      title: 'Vẽ Trang Trí Quạt',
       description:
-        'Giấy dó hoặc giấy chuyên dụng được dán lên khung nan tre — công đoạn đòi hỏi sự khéo léo cao, chỉ cần sai lệch nhỏ quạt có thể bị nhăn hoặc mất dáng.',
-    },
-    {
-      id: 've-quat',
-      position: { x: 0.5, y: 0.5, z: -0.1 },
-      normal: { x: 1, y: 0, z: 0 },
-      title: 'Vẽ Tranh Trang Trí',
-      description:
-        'Quạt được vẽ tranh thủ công hoặc viết thư pháp, trang trí họa tiết truyền thống — nhiều chiếc quạt Chàng Sơn từng được trưng bày tại Paris thế kỷ XIX.',
+        'Nghệ nhân dùng bút lông và màu truyền thống để vẽ thủ công lên mặt quạt giấy hoặc lụa. Những họa tiết thường là phong cảnh, hoa lá, chim muông hoặc thư pháp, đòi hỏi sự tỉ mỉ và cảm hứng nghệ thuật.',
     },
   ],
 };
