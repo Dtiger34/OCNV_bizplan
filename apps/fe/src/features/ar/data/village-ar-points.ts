@@ -47,37 +47,37 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
 
   'non-chuong': [
     {
-      // Cụm lá cọ xanh phía trước-trái mô hình (rổ lá bên trái nhà)
+      // Cụm lá cọ xanh — trước-trái mô hình, ngang tầm đế nhà (không phải gần mái)
       id: 'la-co-chon-loc',
-      position: { x: -0.75, y: 0.15, z: 0.55 },
-      normal: { x: -0.6, y: 0.3, z: 0.7 },
+      position: { x: -0.85, y: -0.35, z: 0.65 },
+      normal: { x: -0.5, y: 0, z: 0.87 },
       title: 'Lá Cọ Được Chọn Lọc',
       description:
         'Lá cọ non được tuyển chọn, phơi khô và là phẳng để tạo bề mặt trắng mịn, bền đẹp cho chiếc nón.',
     },
     {
-      // Giỏ/khung tre đan phía trước-trái, thấp hơn cụm lá
+      // Giỏ/khung tre đan — sát đất, trước-trái, thấp nhất trong nhóm 4 điểm
       id: 'khung-tre',
-      position: { x: -0.55, y: -0.15, z: 0.6 },
-      normal: { x: -0.5, y: 0.1, z: 0.85 },
+      position: { x: -0.6, y: -0.55, z: 0.7 },
+      normal: { x: -0.4, y: -0.2, z: 0.9 },
       title: 'Khung Tre',
       description:
         'Các vành tre được uốn thành nhiều vòng tròn đồng tâm, tạo bộ khung cho chiếc nón lá.',
     },
     {
-      // Người thợ ngồi khâu nón ở trung tâm-trước mô hình
+      // Người thợ ngồi khâu nón — chính giữa, ngay trước cửa nhà, thấp (dáng ngồi)
       id: 'lop-la-len-vanh-non',
-      position: { x: 0.05, y: -0.05, z: 0.65 },
-      normal: { x: 0, y: 0.2, z: 1 },
+      position: { x: 0, y: -0.45, z: 0.75 },
+      normal: { x: 0, y: 0, z: 1 },
       title: 'Lợp Lá Lên Vành Nón',
       description:
         'Những lớp lá được xếp đều lên khung nón theo từng vòng, bảo đảm cân đối và ôm sát từng vành.',
     },
     {
-      // Kệ nón lá thành phẩm phía phải, cao hơn (tầng trên của giá)
+      // Kệ nón lá thành phẩm — bên phải nhà, ngang tầm giữa (không sát mái), nhô ra trước
       id: 'non-la-thanh-pham',
-      position: { x: 0.7, y: 0.45, z: 0.35 },
-      normal: { x: 0.6, y: 0.4, z: 0.7 },
+      position: { x: 0.85, y: -0.1, z: 0.6 },
+      normal: { x: 0.7, y: 0.1, z: 0.7 },
       title: 'Nón Lá Thành Phẩm',
       description:
         'Sau khi khâu hoàn thiện và cắt viền, chiếc nón trở nên nhẹ, bền. Nhiều nghệ nhân còn trang trí thêm họa tiết hoặc hình vẽ để tạo nên những mẫu nón đa dạng.',
