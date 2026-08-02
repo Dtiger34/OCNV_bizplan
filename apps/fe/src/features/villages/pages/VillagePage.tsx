@@ -170,6 +170,11 @@ export default function VillagePage() {
                   </button>
                 )}
               </div>
+              {village.videoSource && (
+                <p className="text-[10px] text-[#D4B896]/70 col-start-1 -mt-2">
+                  Nguồn: {village.videoSource}
+                </p>
+              )}
 
               {/* Model 3D — model-viewer thật ngay trong banner */}
               {arModel && (
