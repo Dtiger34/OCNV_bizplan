@@ -16,7 +16,7 @@ const PRICE_RANGES = [
   { label: 'Trên 500.000₫', min: 500000, max: undefined },
 ];
 
-const CATEGORIES = ['Tất cả', 'Mô hình', 'Thẻ flashcard', 'Tranh ghép'];
+const CATEGORIES = ['Tất cả', 'Mô hình', 'Tranh ghép', 'Thẻ nam châm'];
 
 function getStockStatus(stock: number): 'in_stock' | 'low_stock' | 'out_of_stock' {
   if (stock === 0) return 'out_of_stock';
