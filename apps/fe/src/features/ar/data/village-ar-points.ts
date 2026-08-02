@@ -12,36 +12,40 @@ export interface ArPoint {
   description: string;
 }
 
-// LƯU Ý: toạ độ position/normal cho non-chuong, huong-quang-phu-cau, lua-van-phuc,
-// quat-chang-son là ƯỚC LƯỢNG (chưa calibrate trực quan trên từng model .glb thật) — chỉ có
-// bat-trang đã được calibrate chính xác bằng dev helper Alt+click. Trước khi dùng thật, mở từng
-// trang /villages/<slug> (chế độ xem inline), giữ Alt rồi click vào đúng chi tiết trên model,
-// đọc toạ độ log ra console, thay vào đây.
+// LƯU Ý: toạ độ position/normal cho tất cả làng nghề hiện là ƯỚC LƯỢNG theo ảnh tham chiếu
+// (chưa calibrate chính xác qua dev helper — API positionAndNormalFromPoint của model-viewer 4.x
+// bị lỗi raycast trên các model này, xem lịch sử fix non-chuong). Điều chỉnh dần theo phản hồi
+// trực quan: so ảnh chụp preview với vị trí vật thể thật, rồi nudge x/y/z tương ứng.
 export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
+  // Toạ độ ƯỚC LƯỢNG theo ảnh tham chiếu (chưa calibrate qua Alt+click) — kéo gần tâm/bề mặt
+  // model theo kinh nghiệm rút ra từ non-chuong, cần tinh chỉnh dần theo phản hồi thực tế.
   'bat-trang': [
     {
-      id: 'ban-xoay',
-      position: { x: 0, y: 0.4, z: 0.3 },
-      normal: { x: 0, y: 1, z: 0 },
-      title: 'Bàn Xoay Gốm',
+      // Người thợ ngồi nặn gốm — trái-giữa, thấp (dáng ngồi), sát bàn xoay
+      id: 'nan-va-cat-got',
+      position: { x: -0.15, y: -0.15, z: 0.2 },
+      normal: { x: -0.1, y: 0, z: 0.4 },
+      title: 'Nặn Và Cắt Gọt',
       description:
-        'Người thợ dùng lực chân đạp bàn xoay, hai tay vuốt đất sét để tạo hình sản phẩm — kỹ thuật đòi hỏi sự khéo léo và cảm nhận tinh tế về độ dày, độ cân đối của thành gốm.',
+        'Đất sét được tạo hình trên bàn xoay, sau đó cắt gọt và chỉnh sửa để sản phẩm cân đối trước khi nung.',
     },
     {
-      id: 'lo-nung',
-      position: { x: -0.5, y: 0.6, z: -0.2 },
-      normal: { x: -1, y: 0, z: 0 },
-      title: 'Lò Nung Bầu',
+      // Lò nung mái vòm — bên phải, ngang tầm giữa/dưới
+      id: 'lo-nung-gom',
+      position: { x: 0.45, y: -0.1, z: 0.15 },
+      normal: { x: 0.4, y: 0.1, z: 0.3 },
+      title: 'Lò Nung Gốm',
       description:
-        'Lò nung truyền thống của Bát Tràng đạt nhiệt độ 1.000°C–1.300°C, quyết định màu men và độ bền của sản phẩm. Đây là công đoạn khó kiểm soát nhất trong toàn bộ quy trình.',
+        'Sản phẩm được nung ở 1.200–1.300°C, giúp gốm cứng chắc, bền và giữ màu men đẹp.',
     },
     {
-      id: 'hoa-van',
-      position: { x: 0.5, y: 0.5, z: -0.1 },
-      normal: { x: 1, y: 0, z: 0 },
-      title: 'Hoa Văn & Men Gốm',
+      // Kệ gốm thành phẩm — giữa-cao, phía sau người thợ, gần mái nhà
+      id: 'gom-thanh-pham',
+      position: { x: 0, y: 0.15, z: 0.15 },
+      normal: { x: 0, y: 0.3, z: 0.35 },
+      title: 'Gốm Thành Phẩm',
       description:
-        'Các nghệ nhân vẽ tay hoa văn truyền thống rồi phủ men — mỗi lớp men tạo ra sắc độ và độ bóng riêng, là dấu ấn nhận diện của gốm Bát Tràng qua từng thời kỳ.',
+        'Sau khi nung và hoàn thiện, sản phẩm mang vẻ đẹp mộc mạc, bền bỉ và đậm dấu ấn thủ công.',
     },
   ],
 
