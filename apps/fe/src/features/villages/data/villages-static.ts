@@ -174,7 +174,7 @@ export const VILLAGES: VillageStatic[] = [
         id: '2', order: 2,
         title: 'Chuẩn bị khung nón',
         description: 'Người thợ sử dụng khuôn gỗ có 8 gọng, trên mỗi gọng có 16 khấc để định vị các vòng nón. Các vành tre được lắp lên khuôn theo đúng vị trí, tạo nên bộ khung cân đối cho chiếc nón.',
-        imageUrl: '/image/non_step2.jpg',
+        imageUrl: '/image/non_step2.jpeg',
       },
       {
         id: '3', order: 3,
