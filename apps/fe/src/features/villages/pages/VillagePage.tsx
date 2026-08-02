@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
 import { VILLAGE_AR_MODELS } from '@/features/ar/data/village-ar-models';
+import { VILLAGE_AR_POINTS } from '@/features/ar/data/village-ar-points';
 
 const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
@@ -35,8 +36,10 @@ export default function VillagePage() {
   const [showDesktopQr, setShowDesktopQr] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [activePreviewPoint, setActivePreviewPoint] = useState<string | null>(null);
   const viewerRef = useRef<HTMLElement>(null);
   const arModel = VILLAGE_AR_MODELS[slug ?? ''];
+  const arPoints = VILLAGE_AR_POINTS[slug ?? ''] ?? [];
 
   useEffect(() => {
     customElements.whenDefined('model-viewer').then(() => setViewerReady(true));
@@ -205,8 +208,44 @@ export default function VillagePage() {
                           );
                         }
                       }}
-                    />
+                    >
+                      {/* Hotspot preview — dùng đúng toạ độ AR (village-ar-points.ts), model-viewer
+                          tự chiếu 3D->2D và ẩn hotspot bị khuất sau model (built-in occlusion) */}
+                      {arPoints.map((point) => (
+                        <button
+                          key={point.id}
+                          // @ts-ignore — slot/data-position/data-normal là API riêng của model-viewer
+                          slot={`hotspot-${point.id}`}
+                          data-position={`${point.position.x} ${point.position.y} ${point.position.z}`}
+                          data-normal={point.normal ? `${point.normal.x} ${point.normal.y} ${point.normal.z}` : undefined}
+                          onClick={(e: React.MouseEvent) => {
+                            e.stopPropagation();
+                            setActivePreviewPoint((cur) => (cur === point.id ? null : point.id));
+                          }}
+                          className="w-4 h-4 -ml-2 -mt-2 rounded-full border-2 border-white shadow-lg animate-pulse cursor-pointer"
+                          style={{ backgroundColor: village.color }}
+                        />
+                      ))}
+                    </model-viewer>
                   )}
+                  {activePreviewPoint && (() => {
+                    const point = arPoints.find((p) => p.id === activePreviewPoint);
+                    if (!point) return null;
+                    return (
+                      <div className="absolute inset-x-2 bottom-2 z-20 bg-white rounded-lg shadow-2xl p-2.5">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <p className="text-[11px] font-semibold text-ink leading-tight">{point.title}</p>
+                          <button
+                            onClick={() => setActivePreviewPoint(null)}
+                            className="text-[#ab2124] hover:text-ink shrink-0"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                        <p className="text-[10px] text-wood leading-snug line-clamp-3">{point.description}</p>
+                      </div>
+                    );
+                  })()}
                   <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm pointer-events-none">
                     <Box size={11} className="text-white" />
                     <span className="text-[9px] font-semibold tracking-wide text-white uppercase">
