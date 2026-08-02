@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { ShoppingCart, Sparkles, Star, ChevronRight, Minus, Plus, MessageSquare } from 'lucide-react';
+import { ShoppingCart, Sparkles, Star, ChevronRight, ChevronLeft, Minus, Plus, MessageSquare } from 'lucide-react';
 import { useProduct, useProductReviews, useRelatedProducts, useCreateReview } from '../hooks/useProducts';
 import { toast } from 'sonner';
 
@@ -116,13 +116,37 @@ export default function ProductDetailPage() {
 
             {/* Images */}
             <div className="md:col-span-5">
-              {/* Ảnh chính */}
-              <div className="aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative">
+              {/* Ảnh chính dạng slide */}
+              <div className="aspect-square bg-[#F9F5EE] rounded-sm overflow-hidden border border-gray-100 relative group">
                 <img
                   src={images[activeImg] ?? PLACEHOLDER}
                   alt={product.name[lang]}
+                  loading="eager"
                   className="w-full h-full object-cover transition-opacity duration-200"
                 />
+                {images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setActiveImg(i => (i - 1 + images.length) % images.length)}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-[#ab2124] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      aria-label="Ảnh trước"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveImg(i => (i + 1) % images.length)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-[#ab2124] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      aria-label="Ảnh tiếp theo"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                    <span className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-2 py-0.5 rounded-full">
+                      {activeImg + 1}/{images.length}
+                    </span>
+                  </>
+                )}
                 <Link
                   to={`/ar/${product._id}`}
                   className="absolute bottom-3 right-3 bg-[#C9973A] text-white px-3 py-1.5 rounded-sm text-[11px] font-bold tracking-wide flex items-center gap-1 shadow-md hover:bg-[#b8852e] transition-colors"
@@ -132,19 +156,19 @@ export default function ProductDetailPage() {
                 </Link>
               </div>
 
-              {/* Thumbnails */}
+              {/* Thumbnail slide ngang */}
               {images.length > 1 && (
-                <div className="grid grid-cols-5 gap-2 mt-2">
+                <div className="flex gap-2 mt-2 overflow-x-auto pb-1 scrollbar-thin">
                   {images.map((src, i) => (
                     <button
                       key={src + i}
                       type="button"
                       onClick={() => setActiveImg(i)}
-                      className={`aspect-square rounded-sm overflow-hidden border-2 transition-colors cursor-pointer ${
+                      className={`shrink-0 w-16 h-16 rounded-sm overflow-hidden border-2 transition-colors cursor-pointer ${
                         i === activeImg ? 'border-[#C9973A]' : 'border-gray-100 hover:border-[#C9973A]/40'
                       }`}
                     >
-                      <img src={src} alt={`${product.name[lang]} ${i + 1}`} className="w-full h-full object-cover" />
+                      <img src={src} alt={`${product.name[lang]} ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>
