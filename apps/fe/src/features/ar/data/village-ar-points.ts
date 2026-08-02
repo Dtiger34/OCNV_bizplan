@@ -113,8 +113,8 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
     {
       // Phơi hương — phải, cao hơn (kệ hương xếp phơi phía sau-phải)
       id: 'phoi-huong',
-      position: { x: 0.45, y: 0.05, z: 0.15 },
-      normal: { x: 0.35, y: 0.1, z: 0.3 },
+      position: { x: 0.6, y: 0.05, z: 0.15 },
+      normal: { x: 0.45, y: 0.1, z: 0.3 },
       title: 'Phơi Hương',
       description:
         'Những bó hương được phơi dưới nắng để khô tự nhiên, giúp hương giữ mùi thơm và cháy đều.',
