@@ -123,37 +123,37 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
 
   'lua-van-phuc': [
     {
-      // Cụm sợi tơ nhuộm màu treo — trái, thấp-giữa
+      // Cụm sợi tơ nhuộm màu treo — trái-thấp, sát khung treo sợi
       id: 'nhuom-soi-to',
-      position: { x: -0.45, y: -0.05, z: 0.15 },
-      normal: { x: -0.35, y: 0, z: 0.3 },
+      position: { x: -0.6, y: -0.25, z: 0.15 },
+      normal: { x: -0.4, y: -0.1, z: 0.3 },
       title: 'Nhuộm Sợi Tơ',
       description:
         'Sợi tơ được nhuộm bằng nhiều gam màu khác nhau trước khi đưa lên khung cửi, tạo nên những sắc màu và hoa văn đặc trưng của lụa Vạn Phúc.',
     },
     {
-      // Kén tơ tằm — dưới-trái, thấp hơn cụm sợi nhuộm, gần đất
+      // Kén tơ tằm — dưới-trái, thấp hơn cụm sợi nhuộm, gần đất (giỏ kén phía trước)
       id: 'ken-to-tam',
-      position: { x: -0.35, y: -0.3, z: 0.15 },
-      normal: { x: -0.25, y: -0.15, z: 0.3 },
+      position: { x: -0.45, y: -0.5, z: 0.15 },
+      normal: { x: -0.3, y: -0.3, z: 0.3 },
       title: 'Kén Tơ Tằm',
       description:
         'Nguồn nguyên liệu của nghề dệt lụa. Sau khi ươm, sợi tơ tự nhiên thường có màu trắng ngà hoặc vàng nhạt, trước khi được nhuộm hoặc đưa vào dệt.',
     },
     {
-      // Khung cửi — chính giữa, nơi người thợ đang thao tác
+      // Khung cửi — chính giữa-thấp, tại mặt vải đang dệt trên khung
       id: 'khung-cui',
-      position: { x: 0.05, y: -0.05, z: 0.2 },
-      normal: { x: 0, y: 0, z: 0.4 },
+      position: { x: 0.05, y: -0.35, z: 0.2 },
+      normal: { x: 0, y: -0.15, z: 0.4 },
       title: 'Khung Cửi',
       description:
         'Hoạt động theo cơ chế nâng–hạ sợi dọc và đưa thoi qua lại, giúp các sợi tơ đan xen thành vải.',
     },
     {
-      // Vải lụa thành phẩm — phải, tấm vải treo/xếp cạnh bình hoa
+      // Vải lụa thành phẩm — phải-thấp, tấm vải xếp cạnh bình hoa
       id: 'lua-thanh-pham',
-      position: { x: 0.45, y: -0.15, z: 0.15 },
-      normal: { x: 0.35, y: 0, z: 0.3 },
+      position: { x: 0.45, y: -0.4, z: 0.15 },
+      normal: { x: 0.35, y: -0.2, z: 0.3 },
       title: 'Vải Lụa Thành Phẩm',
       description:
         'Sau quá trình dệt và hoàn thiện, tấm lụa mềm mại, óng mượt trở thành chất liệu để may áo dài, khăn lụa và nhiều sản phẩm thủ công truyền thống.',
