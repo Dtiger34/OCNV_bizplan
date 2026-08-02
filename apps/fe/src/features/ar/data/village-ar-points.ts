@@ -111,10 +111,10 @@ export const VILLAGE_AR_POINTS: Record<string, ArPoint[]> = {
         'Người thợ phủ hỗn hợp bột hương lên thân tăm bằng phương pháp thủ công hoặc máy se hương. Lớp bột được phủ đều, tạo thành nén hương hoàn chỉnh.',
     },
     {
-      // Phơi hương — phải, cao hơn (kệ hương xếp phơi phía sau-phải)
+      // Phơi hương — hẳn ngoài kệ hương phơi bên phải nhà
       id: 'phoi-huong',
-      position: { x: 0.6, y: 0.05, z: 0.15 },
-      normal: { x: 0.45, y: 0.1, z: 0.3 },
+      position: { x: 0.9, y: 0.05, z: 0.2 },
+      normal: { x: 0.6, y: 0.1, z: 0.3 },
       title: 'Phơi Hương',
       description:
         'Những bó hương được phơi dưới nắng để khô tự nhiên, giúp hương giữ mùi thơm và cháy đều.',
