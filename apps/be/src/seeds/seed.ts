@@ -327,13 +327,93 @@ async function seed(): Promise<void> {
 
   // ── Products (mô hình 3D + thẻ nam châm + tranh ghép per village) ─────────
   const MAGNET_DESCRIPTION_VI =
-    'Thẻ nam châm làng nghề là món quà lưu niệm nhỏ gọn, tái hiện hình ảnh đặc trưng của các làng nghề truyền thống Việt Nam như Nón Chuông, Gốm Bát Tràng, Lụa Vạn Phúc, Hương Quảng Phú Cầu và Quạt Chàng Sơn. Mỗi chiếc thẻ không chỉ mang giá trị trang trí mà còn kể một câu chuyện văn hóa thông qua mã QR tích hợp, cho phép người dùng trải nghiệm công nghệ AR và khám phá lịch sử, quy trình chế tác cũng như những nét đặc sắc của từng làng nghề.';
+    'Thẻ nam châm làng nghề là món quà lưu niệm nhỏ gọn, tái hiện hình ảnh đặc trưng của các làng nghề truyền thống Việt Nam như Nón Chuông, Gốm Bát Tràng, Lụa Vạn Phúc, Hương Quảng Phú Cầu và Quạt Chàng Sơn. Mỗi chiếc thẻ không chỉ mang giá trị trang trí mà còn kể một câu chuyện văn hóa thông qua mã QR tích hợp, cho phép người dùng trải nghiệm công nghệ AR và khám phá lịch sử, quy trình chế tác cũng như những nét đặc sắc của từng làng nghề.\n\n' +
+    'Thông số sản phẩm\n' +
+    '- Tên sản phẩm: Thẻ nam châm Làng nghề truyền thống\n' +
+    '- Kích thước: 6,5cm x 9cm\n' +
+    '- Độ dày: Khoảng 5 mm\n' +
+    '- Chất liệu: Ảnh nam châm 5 lớp - lớp bóng kính, lớp ảnh in màu cao cấp, lớp kẽm, lớp bìa lót và lớp nam châm\n' +
+    '- Khối lượng: ~20 g\n' +
+    '- Công nghệ: In UV sắc nét, cắt laser chính xác\n' +
+    '- Độ tuổi phù hợp: Từ 4 tuổi trở lên\n' +
+    '- Xuất xứ: Việt Nam\n' +
+    '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+    'Bộ sản phẩm bao gồm\n' +
+    '- 01 thẻ nam châm làng nghề.\n' +
+    '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+    '- 01 bao bì mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n\n' +
+    'Hướng dẫn bảo quản\n' +
+    '- Lau sạch bằng khăn mềm, khô khi cần vệ sinh.\n' +
+    '- Tránh để sản phẩm tiếp xúc lâu với nước hoặc môi trường có độ ẩm cao.\n' +
+    '- Hạn chế va đập mạnh để bảo vệ lớp in và bề mặt sản phẩm.\n' +
+    '- Bảo quản nơi khô ráo, tránh ánh nắng trực tiếp để giữ màu sắc bền đẹp.';
   const MAGNET_DESCRIPTION_EN =
-    'The craft village fridge magnet is a compact souvenir depicting the distinctive imagery of Vietnam\'s traditional craft villages — Chuong, Bat Trang, Van Phuc, Quang Phu Cau, and Chang Son. Each magnet carries not only decorative value but also a cultural story through its integrated QR code, letting users experience AR technology and explore the history, craft process, and unique character of each village.';
+    'The craft village fridge magnet is a compact souvenir depicting the distinctive imagery of Vietnam\'s traditional craft villages — Chuong, Bat Trang, Van Phuc, Quang Phu Cau, and Chang Son. Each magnet carries not only decorative value but also a cultural story through its integrated QR code, letting users experience AR technology and explore the history, craft process, and unique character of each village.\n\n' +
+    'Product specifications\n' +
+    '- Product name: Traditional Craft Village Fridge Magnet\n' +
+    '- Size: 6.5cm x 9cm\n' +
+    '- Thickness: About 5 mm\n' +
+    '- Material: 5-layer magnetic photo — gloss laminate, premium color print, zinc layer, backing board, and magnet layer\n' +
+    '- Weight: ~20 g\n' +
+    '- Technology: Sharp UV printing, precision laser cutting\n' +
+    '- Recommended age: 4 years and up\n' +
+    '- Origin: Vietnam\n' +
+    '- Brand: Nghe Xua Net Moi\n\n' +
+    'Package includes\n' +
+    '- 01 craft village fridge magnet.\n' +
+    '- 01 instruction card with QR code.\n' +
+    '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n\n' +
+    'Care instructions\n' +
+    '- Wipe clean with a soft, dry cloth when needed.\n' +
+    '- Avoid prolonged contact with water or high humidity.\n' +
+    '- Avoid strong impacts to protect the print layer and surface.\n' +
+    '- Store in a dry place, away from direct sunlight, to keep colors vivid.';
   const PUZZLE_DESCRIPTION_VI =
-    'Tranh ghép Làng nghề – Bộ sưu tập Nghề Xưa Nét Mới là sản phẩm kết hợp giữa trò chơi ghép tranh và trải nghiệm khám phá văn hóa, tái hiện hình ảnh đặc trưng của các làng nghề truyền thống Việt Nam như Nón Chuông, Gốm Bát Tràng, Lụa Vạn Phúc, Hương Quảng Phú Cầu và Quạt Chàng Sơn. Trong quá trình ghép từng mảnh tranh, người chơi sẽ dần hoàn thiện bức tranh về làng nghề, đồng thời khám phá những nét đẹp văn hóa ẩn sau mỗi chi tiết. Sau khi hoàn thành, người dùng có thể quét mã QR để trải nghiệm nội dung AR, tìm hiểu lịch sử hình thành, quy trình chế tác và những câu chuyện văn hóa gắn với từng làng nghề ngay trên điện thoại.';
+    'Tranh ghép Làng nghề – Bộ sưu tập Nghề Xưa Nét Mới là sản phẩm kết hợp giữa trò chơi ghép tranh và trải nghiệm khám phá văn hóa, tái hiện hình ảnh đặc trưng của các làng nghề truyền thống Việt Nam như Nón Chuông, Gốm Bát Tràng, Lụa Vạn Phúc, Hương Quảng Phú Cầu và Quạt Chàng Sơn. Trong quá trình ghép từng mảnh tranh, người chơi sẽ dần hoàn thiện bức tranh về làng nghề, đồng thời khám phá những nét đẹp văn hóa ẩn sau mỗi chi tiết. Sau khi hoàn thành, người dùng có thể quét mã QR để trải nghiệm nội dung AR, tìm hiểu lịch sử hình thành, quy trình chế tác và những câu chuyện văn hóa gắn với từng làng nghề ngay trên điện thoại.\n\n' +
+    'Thông số sản phẩm\n' +
+    '- Tên sản phẩm: Tranh ghép Làng nghề truyền thống\n' +
+    '- Kích thước hoàn thiện: 18 × 25 cm\n' +
+    '- Số lượng mảnh ghép: 80 mảnh\n' +
+    '- Chất liệu: Bìa carton cứng cao cấp (chipboard), bề mặt cán bóng giúp hình ảnh sắc nét và màu sắc nổi bật.\n' +
+    '- Khối lượng: ~200 g\n' +
+    '- Công nghệ: In offset chất lượng cao, cắt bế chính xác\n' +
+    '- Độ tuổi phù hợp: Từ 5 tuổi trở lên\n' +
+    '- Xuất xứ: Việt Nam\n' +
+    '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+    'Bộ sản phẩm bao gồm\n' +
+    '- 01 bộ tranh ghép 80 mảnh.\n' +
+    '- 01 khung trưng bày tranh\n' +
+    '- 01 hình mẫu tham khảo\n' +
+    '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+    '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n\n' +
+    'Hướng dẫn bảo quản\n' +
+    '- Bảo quản nơi khô ráo, tránh nước và độ ẩm cao.\n' +
+    '- Tránh bẻ cong hoặc làm gấp các mảnh ghép.\n' +
+    '- Sau khi hoàn thành, có thể đặt tranh vào khung để cố định các mảnh ghép và thuận tiện cho việc trưng bày.\n' +
+    '- Tránh ánh nắng trực tiếp để giữ màu sắc bền đẹp theo thời gian.';
   const PUZZLE_DESCRIPTION_EN =
-    'The Craft Village Puzzle — Nghề Xưa Nét Mới Collection blends jigsaw play with cultural discovery, recreating the distinctive imagery of Vietnam\'s traditional craft villages — Chuong, Bat Trang, Van Phuc, Quang Phu Cau, and Chang Son. As players assemble each piece, the village picture gradually comes together, revealing the cultural beauty hidden within every detail. Once complete, users can scan the QR code to experience AR content and learn about the history, craft process, and cultural stories behind each village right on their phone.';
+    'The Craft Village Puzzle — Nghề Xưa Nét Mới Collection blends jigsaw play with cultural discovery, recreating the distinctive imagery of Vietnam\'s traditional craft villages — Chuong, Bat Trang, Van Phuc, Quang Phu Cau, and Chang Son. As players assemble each piece, the village picture gradually comes together, revealing the cultural beauty hidden within every detail. Once complete, users can scan the QR code to experience AR content and learn about the history, craft process, and cultural stories behind each village right on their phone.\n\n' +
+    'Product specifications\n' +
+    '- Product name: Traditional Craft Village Jigsaw Puzzle\n' +
+    '- Finished size: 18 × 25 cm\n' +
+    '- Number of pieces: 80 pieces\n' +
+    '- Material: Premium hard chipboard with a glossy laminated surface for sharp, vivid imagery.\n' +
+    '- Weight: ~200 g\n' +
+    '- Technology: High-quality offset printing, precision die-cutting\n' +
+    '- Recommended age: 5 years and up\n' +
+    '- Origin: Vietnam\n' +
+    '- Brand: Nghe Xua Net Moi\n\n' +
+    'Package includes\n' +
+    '- 01 set of 80-piece puzzle.\n' +
+    '- 01 display frame\n' +
+    '- 01 reference image\n' +
+    '- 01 instruction card with QR code.\n' +
+    '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n\n' +
+    'Care instructions\n' +
+    '- Store in a dry place, away from water and high humidity.\n' +
+    '- Avoid bending or folding the puzzle pieces.\n' +
+    '- Once completed, the puzzle can be placed in the frame to keep the pieces secure and ready for display.\n' +
+    '- Avoid direct sunlight to keep the colors vivid over time.';
 
   const VILLAGE_IMAGE_FOLDER: Record<string, string> = {
     'bat-trang': 'LÀNG GỐM',
@@ -354,8 +434,46 @@ async function seed(): Promise<void> {
       model: {
         name: { vi: 'Mô hình 3D Làng Gốm Bát Tràng', en: '3D Model — Bat Trang Pottery Village' },
         description: {
-          vi: 'Mô hình 3D Làng Gốm Bát Tràng tái hiện không gian đặc trưng của làng nghề gốm truyền thống với hơn 700 năm lịch sử. Từ khu vực nặn gốm, bàn xoay, lò nung đến không gian trưng bày sản phẩm đều được thu nhỏ tỉ mỉ, mang đến góc nhìn chân thực về quy trình tạo nên những tác phẩm gốm thủ công nổi tiếng của Việt Nam. Sản phẩm tích hợp mã QR và công nghệ AR, giúp người dùng khám phá lịch sử, kỹ thuật chế tác và giá trị văn hóa của làng gốm thông qua trải nghiệm tương tác hiện đại.',
-          en: 'The Bat Trang Pottery Village 3D Model recreates the distinctive space of a traditional ceramic craft village with over 700 years of history. The clay-shaping area, potter\'s wheel, kiln, and display space are all meticulously miniaturized, offering an authentic view of how Vietnam\'s famous handcrafted ceramics are made. The product integrates QR code and AR technology, letting users explore the village\'s history, techniques, and cultural value through a modern interactive experience.',
+          vi: 'Mô hình 3D Làng Gốm Bát Tràng tái hiện không gian đặc trưng của làng nghề gốm truyền thống với hơn 700 năm lịch sử. Từ khu vực nặn gốm, bàn xoay, lò nung đến không gian trưng bày sản phẩm đều được thu nhỏ tỉ mỉ, mang đến góc nhìn chân thực về quy trình tạo nên những tác phẩm gốm thủ công nổi tiếng của Việt Nam. Sản phẩm tích hợp mã QR và công nghệ AR, giúp người dùng khám phá lịch sử, kỹ thuật chế tác và giá trị văn hóa của làng gốm thông qua trải nghiệm tương tác hiện đại.\n\n' +
+            'Thông số sản phẩm\n' +
+            '- Tên sản phẩm: Mô hình 3D Làng Gốm Bát Tràng\n' +
+            '- Chất liệu: Nhựa PLA in 3D, mica trong, sơn gốc nước thân thiện với môi trường\n' +
+            '- Kích thước: 21 × 21 × 17 cm\n' +
+            '- Khối lượng: ~680 g\n' +
+            '- Màu sắc: Tông màu đất nung, gỗ tự nhiên và men gốm đặc trưng\n' +
+            '- Công nghệ: In 3D kết hợp lắp ráp, hoàn thiện thủ công và tích hợp trải nghiệm QR/AR\n' +
+            '- Độ tuổi phù hợp: Từ 12 tuổi trở lên\n' +
+            '- Xuất xứ: Việt Nam\n' +
+            '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+            'Bộ sản phẩm bao gồm\n' +
+            '- 01 mô hình 3D Làng Gốm Bát Tràng.\n' +
+            '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+            '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n' +
+            '- 01 phiếu bảo hành và hướng dẫn bảo quản.\n\n' +
+            'Hướng dẫn bảo quản\n' +
+            '- Đặt sản phẩm ở nơi khô ráo, tránh ánh nắng trực tiếp và môi trường có độ ẩm cao.\n' +
+            '- Vệ sinh bằng khăn mềm, khô; không sử dụng hóa chất tẩy rửa mạnh.\n' +
+            '- Tránh va đập mạnh để bảo vệ các chi tiết của mô hình.',
+          en: 'The Bat Trang Pottery Village 3D Model recreates the distinctive space of a traditional ceramic craft village with over 700 years of history. The clay-shaping area, potter\'s wheel, kiln, and display space are all meticulously miniaturized, offering an authentic view of how Vietnam\'s famous handcrafted ceramics are made. The product integrates QR code and AR technology, letting users explore the village\'s history, techniques, and cultural value through a modern interactive experience.\n\n' +
+            'Product specifications\n' +
+            '- Product name: 3D Model — Bat Trang Pottery Village\n' +
+            '- Material: 3D-printed PLA plastic, clear acrylic, eco-friendly water-based paint\n' +
+            '- Size: 21 × 21 × 17 cm\n' +
+            '- Weight: ~680 g\n' +
+            '- Color: Terracotta and natural wood tones with signature ceramic-glaze accents\n' +
+            '- Technology: 3D printing combined with assembly, hand-finishing, and integrated QR/AR experience\n' +
+            '- Recommended age: 12 years and up\n' +
+            '- Origin: Vietnam\n' +
+            '- Brand: Nghe Xua Net Moi\n\n' +
+            'Package includes\n' +
+            '- 01 Bat Trang Pottery Village 3D model.\n' +
+            '- 01 instruction card with QR code.\n' +
+            '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n' +
+            '- 01 warranty card and care instructions.\n\n' +
+            'Care instructions\n' +
+            '- Place in a dry area, away from direct sunlight and high humidity.\n' +
+            '- Clean with a soft, dry cloth; do not use harsh chemical cleaners.\n' +
+            '- Avoid strong impacts to protect the model\'s details.',
         },
         price: 700000,
       },
@@ -380,8 +498,46 @@ async function seed(): Promise<void> {
       model: {
         name: { vi: 'Mô hình 3D Làng Nón Chuông', en: '3D Model — Chuong Conical Hat Village' },
         description: {
-          vi: 'Mô hình 3D Làng Nón Chuông tái hiện không gian đặc trưng của làng nghề làm nón truyền thống hơn 300 năm tuổi tại Hà Nội. Từng chi tiết như nghệ nhân, nguyên liệu lá cọ, khung phơi và ngôi nhà cổ được thu nhỏ một cách tinh xảo, giúp người xem hình dung quy trình làm nón ngay trên mô hình. Khi quét mã QR, người dùng có thể trải nghiệm nội dung AR với hình ảnh, video và thông tin về từng công đoạn sản xuất, mang đến hành trình khám phá làng nghề trực quan ngay trên điện thoại.',
-          en: 'The Chuong Conical Hat Village 3D Model recreates the distinctive space of a traditional hat-making village over 300 years old in Hanoi. Details such as artisans, palm-leaf material, drying racks, and ancient houses are finely miniaturized, letting viewers visualize the hat-making process on the model itself. By scanning the QR code, users can experience AR content with images, videos, and information about each production stage, offering a vivid journey through the craft village right on their phone.',
+          vi: 'Mô hình 3D Làng Nón Chuông tái hiện không gian đặc trưng của làng nghề làm nón truyền thống hơn 300 năm tuổi tại Hà Nội. Từng chi tiết như nghệ nhân, nguyên liệu lá cọ, khung phơi và ngôi nhà cổ được thu nhỏ một cách tinh xảo, giúp người xem hình dung quy trình làm nón ngay trên mô hình. Khi quét mã QR, người dùng có thể trải nghiệm nội dung AR với hình ảnh, video và thông tin về từng công đoạn sản xuất, mang đến hành trình khám phá làng nghề trực quan ngay trên điện thoại.\n\n' +
+            'Thông số sản phẩm\n' +
+            '- Tên sản phẩm: Mô hình 3D Làng Nón Chuông\n' +
+            '- Chất liệu: Nhựa PLA in 3D, mica trong, sơn gốc nước thân thiện với môi trường\n' +
+            '- Kích thước: 21 × 21 × 17 cm\n' +
+            '- Khối lượng: ~650 g\n' +
+            '- Màu sắc: Tông màu gỗ tự nhiên kết hợp sắc màu đặc trưng của làng nghề nón Chuông\n' +
+            '- Công nghệ: In 3D kết hợp lắp ráp, hoàn thiện thủ công và tích hợp trải nghiệm QR/AR\n' +
+            '- Độ tuổi phù hợp: Từ 12 tuổi trở lên\n' +
+            '- Xuất xứ: Việt Nam\n' +
+            '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+            'Bộ sản phẩm bao gồm\n' +
+            '- 01 mô hình 3D Làng Nón Chuông.\n' +
+            '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+            '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n' +
+            '- 01 phiếu bảo hành và hướng dẫn bảo quản.\n\n' +
+            'Hướng dẫn bảo quản\n' +
+            '- Đặt sản phẩm ở nơi khô ráo, tránh ánh nắng trực tiếp và môi trường có độ ẩm cao.\n' +
+            '- Vệ sinh bằng khăn mềm, khô hoặc hơi ẩm; không sử dụng hóa chất tẩy rửa mạnh.\n' +
+            '- Hạn chế va đập mạnh để bảo vệ các chi tiết của mô hình.',
+          en: 'The Chuong Conical Hat Village 3D Model recreates the distinctive space of a traditional hat-making village over 300 years old in Hanoi. Details such as artisans, palm-leaf material, drying racks, and ancient houses are finely miniaturized, letting viewers visualize the hat-making process on the model itself. By scanning the QR code, users can experience AR content with images, videos, and information about each production stage, offering a vivid journey through the craft village right on their phone.\n\n' +
+            'Product specifications\n' +
+            '- Product name: 3D Model — Chuong Conical Hat Village\n' +
+            '- Material: 3D-printed PLA plastic, clear acrylic, eco-friendly water-based paint\n' +
+            '- Size: 21 × 21 × 17 cm\n' +
+            '- Weight: ~650 g\n' +
+            '- Color: Natural wood tones combined with the signature colors of Chuong hat village\n' +
+            '- Technology: 3D printing combined with assembly, hand-finishing, and integrated QR/AR experience\n' +
+            '- Recommended age: 12 years and up\n' +
+            '- Origin: Vietnam\n' +
+            '- Brand: Nghe Xua Net Moi\n\n' +
+            'Package includes\n' +
+            '- 01 Chuong Conical Hat Village 3D model.\n' +
+            '- 01 instruction card with QR code.\n' +
+            '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n' +
+            '- 01 warranty card and care instructions.\n\n' +
+            'Care instructions\n' +
+            '- Place in a dry area, away from direct sunlight and high humidity.\n' +
+            '- Clean with a soft, dry or slightly damp cloth; do not use harsh chemical cleaners.\n' +
+            '- Avoid strong impacts to protect the model\'s details.',
         },
         price: 700000,
       },
@@ -406,8 +562,46 @@ async function seed(): Promise<void> {
       model: {
         name: { vi: 'Mô hình 3D Làng Hương Quảng Phú Cầu', en: '3D Model — Quang Phu Cau Incense Village' },
         description: {
-          vi: 'Mô hình 3D Làng Hương Quảng Phú Cầu tái hiện không gian đặc trưng của làng nghề làm hương truyền thống nổi tiếng với những bó tăm hương đỏ rực. Các công đoạn từ lựa chọn nguyên liệu, nhuộm chân hương, phơi hương đến bó hương thành phẩm được thể hiện sinh động, giúp người dùng hiểu rõ quy trình tạo nên những nén hương mang đậm giá trị văn hóa và tâm linh của người Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm khám phá làng nghề trực quan và tương tác ngay trên điện thoại.',
-          en: 'The Quang Phu Cau Incense Village 3D Model recreates the distinctive space of a traditional incense-making village famous for its vivid red incense bundles. Stages from selecting materials, dyeing incense sticks, and drying to bundling the finished incense are vividly depicted, helping users understand the process behind incense sticks that carry deep cultural and spiritual value for Vietnamese people. The product integrates QR code and AR technology, offering a vivid and interactive way to explore the craft village right on the phone.',
+          vi: 'Mô hình 3D Làng Hương Quảng Phú Cầu tái hiện không gian đặc trưng của làng nghề làm hương truyền thống nổi tiếng với những bó tăm hương đỏ rực. Các công đoạn từ lựa chọn nguyên liệu, nhuộm chân hương, phơi hương đến bó hương thành phẩm được thể hiện sinh động, giúp người dùng hiểu rõ quy trình tạo nên những nén hương mang đậm giá trị văn hóa và tâm linh của người Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm khám phá làng nghề trực quan và tương tác ngay trên điện thoại.\n\n' +
+            'Thông số sản phẩm\n' +
+            '- Tên sản phẩm: Mô hình 3D Làng Hương Quảng Phú Cầu\n' +
+            '- Chất liệu: Nhựa PLA in 3D, mica trong, sơn gốc nước thân thiện với môi trường\n' +
+            '- Kích thước: 21 × 21 × 17 cm\n' +
+            '- Khối lượng: ~670 g\n' +
+            '- Màu sắc: Tông nâu gỗ tự nhiên kết hợp các điểm nhấn màu đỏ lấy cảm hứng từ những bó hương Quảng Phú Cầu\n' +
+            '- Công nghệ: In 3D kết hợp lắp ráp, hoàn thiện thủ công và tích hợp trải nghiệm QR/AR\n' +
+            '- Độ tuổi phù hợp: Từ 12 tuổi trở lên\n' +
+            '- Xuất xứ: Việt Nam\n' +
+            '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+            'Bộ sản phẩm bao gồm\n' +
+            '- 01 mô hình 3D Làng Hương Quảng Phú Cầu.\n' +
+            '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+            '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n' +
+            '- 01 phiếu bảo hành và hướng dẫn bảo quản.\n\n' +
+            'Hướng dẫn bảo quản\n' +
+            '- Đặt sản phẩm ở nơi khô ráo, tránh ánh nắng trực tiếp và môi trường có độ ẩm cao.\n' +
+            '- Vệ sinh bằng khăn mềm, khô; không sử dụng hóa chất tẩy rửa mạnh.\n' +
+            '- Tránh va đập mạnh để bảo vệ các chi tiết của mô hình.',
+          en: 'The Quang Phu Cau Incense Village 3D Model recreates the distinctive space of a traditional incense-making village famous for its vivid red incense bundles. Stages from selecting materials, dyeing incense sticks, and drying to bundling the finished incense are vividly depicted, helping users understand the process behind incense sticks that carry deep cultural and spiritual value for Vietnamese people. The product integrates QR code and AR technology, offering a vivid and interactive way to explore the craft village right on the phone.\n\n' +
+            'Product specifications\n' +
+            '- Product name: 3D Model — Quang Phu Cau Incense Village\n' +
+            '- Material: 3D-printed PLA plastic, clear acrylic, eco-friendly water-based paint\n' +
+            '- Size: 21 × 21 × 17 cm\n' +
+            '- Weight: ~670 g\n' +
+            '- Color: Natural brown wood tones with red accents inspired by Quang Phu Cau incense bundles\n' +
+            '- Technology: 3D printing combined with assembly, hand-finishing, and integrated QR/AR experience\n' +
+            '- Recommended age: 12 years and up\n' +
+            '- Origin: Vietnam\n' +
+            '- Brand: Nghe Xua Net Moi\n\n' +
+            'Package includes\n' +
+            '- 01 Quang Phu Cau Incense Village 3D model.\n' +
+            '- 01 instruction card with QR code.\n' +
+            '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n' +
+            '- 01 warranty card and care instructions.\n\n' +
+            'Care instructions\n' +
+            '- Place in a dry area, away from direct sunlight and high humidity.\n' +
+            '- Clean with a soft, dry cloth; do not use harsh chemical cleaners.\n' +
+            '- Avoid strong impacts to protect the model\'s details.',
         },
         price: 700000,
       },
@@ -432,8 +626,46 @@ async function seed(): Promise<void> {
       model: {
         name: { vi: 'Mô hình 3D Làng Lụa Vạn Phúc', en: '3D Model — Van Phuc Silk Village' },
         description: {
-          vi: 'Mô hình 3D Làng Lụa Vạn Phúc tái hiện không gian đặc trưng của một trong những làng nghề dệt lụa lâu đời và nổi tiếng nhất Việt Nam. Từng chi tiết như khu vực ươm tơ, dệt lụa trên khung cửi truyền thống, nhuộm màu và trưng bày thành phẩm được thu nhỏ một cách tinh xảo, giúp người dùng khám phá hành trình tạo nên những tấm lụa mềm mại, mang đậm bản sắc văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giữa giá trị truyền thống và công nghệ hiện đại.',
-          en: 'The Van Phuc Silk Village 3D Model recreates the distinctive space of one of Vietnam\'s oldest and most renowned silk-weaving villages. Details such as the silk-reeling area, weaving on traditional looms, dyeing, and finished-product display are finely miniaturized, letting users discover the journey behind soft silk fabrics steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.',
+          vi: 'Mô hình 3D Làng Lụa Vạn Phúc tái hiện không gian đặc trưng của một trong những làng nghề dệt lụa lâu đời và nổi tiếng nhất Việt Nam. Từng chi tiết như khu vực ươm tơ, dệt lụa trên khung cửi truyền thống, nhuộm màu và trưng bày thành phẩm được thu nhỏ một cách tinh xảo, giúp người dùng khám phá hành trình tạo nên những tấm lụa mềm mại, mang đậm bản sắc văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giữa giá trị truyền thống và công nghệ hiện đại.\n\n' +
+            'Thông số sản phẩm\n' +
+            '- Tên sản phẩm: Mô hình 3D Làng Lụa Vạn Phúc\n' +
+            '- Chất liệu: Gỗ MDF, nhựa PLA in 3D, mica trong, sơn gốc nước thân thiện với môi trường\n' +
+            '- Kích thước: 21 × 21 × 17 cm\n' +
+            '- Khối lượng: ~660 g\n' +
+            '- Màu sắc: Tông nâu gỗ tự nhiên, lấy cảm hứng từ vẻ mộc mạc của các làng nghề truyền thống Việt Nam\n' +
+            '- Công nghệ: In 3D kết hợp lắp ráp, hoàn thiện thủ công và tích hợp trải nghiệm QR/AR\n' +
+            '- Độ tuổi phù hợp: Từ 12 tuổi trở lên\n' +
+            '- Xuất xứ: Việt Nam\n' +
+            '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+            'Bộ sản phẩm bao gồm\n' +
+            '- 01 mô hình 3D Làng Lụa Vạn Phúc.\n' +
+            '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+            '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n' +
+            '- 01 phiếu bảo hành và hướng dẫn bảo quản.\n\n' +
+            'Hướng dẫn bảo quản\n' +
+            '- Đặt sản phẩm ở nơi khô ráo, tránh ánh nắng trực tiếp và môi trường có độ ẩm cao.\n' +
+            '- Vệ sinh bằng khăn mềm, khô; không sử dụng hóa chất tẩy rửa mạnh.\n' +
+            '- Tránh va đập mạnh để bảo vệ các chi tiết của mô hình.',
+          en: 'The Van Phuc Silk Village 3D Model recreates the distinctive space of one of Vietnam\'s oldest and most renowned silk-weaving villages. Details such as the silk-reeling area, weaving on traditional looms, dyeing, and finished-product display are finely miniaturized, letting users discover the journey behind soft silk fabrics steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.\n\n' +
+            'Product specifications\n' +
+            '- Product name: 3D Model — Van Phuc Silk Village\n' +
+            '- Material: MDF wood, 3D-printed PLA plastic, clear acrylic, eco-friendly water-based paint\n' +
+            '- Size: 21 × 21 × 17 cm\n' +
+            '- Weight: ~660 g\n' +
+            '- Color: Natural brown wood tones, inspired by the rustic charm of Vietnam\'s traditional craft villages\n' +
+            '- Technology: 3D printing combined with assembly, hand-finishing, and integrated QR/AR experience\n' +
+            '- Recommended age: 12 years and up\n' +
+            '- Origin: Vietnam\n' +
+            '- Brand: Nghe Xua Net Moi\n\n' +
+            'Package includes\n' +
+            '- 01 Van Phuc Silk Village 3D model.\n' +
+            '- 01 instruction card with QR code.\n' +
+            '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n' +
+            '- 01 warranty card and care instructions.\n\n' +
+            'Care instructions\n' +
+            '- Place in a dry area, away from direct sunlight and high humidity.\n' +
+            '- Clean with a soft, dry cloth; do not use harsh chemical cleaners.\n' +
+            '- Avoid strong impacts to protect the model\'s details.',
         },
         price: 700000,
       },
@@ -458,8 +690,46 @@ async function seed(): Promise<void> {
       model: {
         name: { vi: 'Mô hình 3D Làng Quạt Chàng Sơn', en: '3D Model — Chang Son Fan Village' },
         description: {
-          vi: 'Mô hình 3D Làng Quạt Chàng Sơn tái hiện không gian đặc trưng của làng nghề làm quạt truyền thống với lịch sử hàng trăm năm. Từ công đoạn chọn tre, làm nan quạt, dán giấy hoặc lụa, vẽ hoa văn đến hoàn thiện sản phẩm đều được thu nhỏ một cách tinh xảo, giúp người dùng khám phá quy trình chế tác nên những chiếc quạt thủ công mang đậm dấu ấn văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giá trị truyền thống với công nghệ hiện đại.',
-          en: 'The Chang Son Fan Village 3D Model recreates the distinctive space of a traditional fan-making village with a history of hundreds of years. Stages from selecting bamboo, making fan ribs, pasting paper or silk, painting patterns, to finishing the product are finely miniaturized, letting users explore the process behind handcrafted fans steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.',
+          vi: 'Mô hình 3D Làng Quạt Chàng Sơn tái hiện không gian đặc trưng của làng nghề làm quạt truyền thống với lịch sử hàng trăm năm. Từ công đoạn chọn tre, làm nan quạt, dán giấy hoặc lụa, vẽ hoa văn đến hoàn thiện sản phẩm đều được thu nhỏ một cách tinh xảo, giúp người dùng khám phá quy trình chế tác nên những chiếc quạt thủ công mang đậm dấu ấn văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giá trị truyền thống với công nghệ hiện đại.\n\n' +
+            'Thông số sản phẩm\n' +
+            '- Tên sản phẩm: Mô hình 3D Làng Quạt Chàng Sơn\n' +
+            '- Chất liệu: Gỗ MDF, nhựa PLA in 3D, mica trong, sơn gốc nước thân thiện với môi trường\n' +
+            '- Kích thước: 21 × 21 × 17 cm\n' +
+            '- Khối lượng: ~640 g\n' +
+            '- Màu sắc: Tông nâu gỗ tự nhiên, lấy cảm hứng từ vẻ mộc mạc của các làng nghề truyền thống Việt Nam\n' +
+            '- Công nghệ: In 3D kết hợp lắp ráp, hoàn thiện thủ công và tích hợp trải nghiệm QR/AR\n' +
+            '- Độ tuổi phù hợp: Từ 12 tuổi trở lên\n' +
+            '- Xuất xứ: Việt Nam\n' +
+            '- Thương hiệu: Nghề Xưa Nét Mới\n\n' +
+            'Bộ sản phẩm bao gồm\n' +
+            '- 01 mô hình 3D Làng Quạt Chàng Sơn.\n' +
+            '- 01 thẻ hướng dẫn sử dụng và quét mã QR.\n' +
+            '- 01 hộp đựng mang nhận diện thương hiệu Nghề Xưa Nét Mới.\n' +
+            '- 01 phiếu bảo hành và hướng dẫn bảo quản.\n\n' +
+            'Hướng dẫn bảo quản\n' +
+            '- Đặt sản phẩm ở nơi khô ráo, tránh ánh nắng trực tiếp và môi trường có độ ẩm cao.\n' +
+            '- Vệ sinh bằng khăn mềm, khô; không sử dụng hóa chất tẩy rửa mạnh.\n' +
+            '- Tránh va đập mạnh để bảo vệ các chi tiết của mô hình.',
+          en: 'The Chang Son Fan Village 3D Model recreates the distinctive space of a traditional fan-making village with a history of hundreds of years. Stages from selecting bamboo, making fan ribs, pasting paper or silk, painting patterns, to finishing the product are finely miniaturized, letting users explore the process behind handcrafted fans steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.\n\n' +
+            'Product specifications\n' +
+            '- Product name: 3D Model — Chang Son Fan Village\n' +
+            '- Material: MDF wood, 3D-printed PLA plastic, clear acrylic, eco-friendly water-based paint\n' +
+            '- Size: 21 × 21 × 17 cm\n' +
+            '- Weight: ~640 g\n' +
+            '- Color: Natural brown wood tones, inspired by the rustic charm of Vietnam\'s traditional craft villages\n' +
+            '- Technology: 3D printing combined with assembly, hand-finishing, and integrated QR/AR experience\n' +
+            '- Recommended age: 12 years and up\n' +
+            '- Origin: Vietnam\n' +
+            '- Brand: Nghe Xua Net Moi\n\n' +
+            'Package includes\n' +
+            '- 01 Chang Son Fan Village 3D model.\n' +
+            '- 01 instruction card with QR code.\n' +
+            '- 01 packaging carrying the Nghe Xua Net Moi brand identity.\n' +
+            '- 01 warranty card and care instructions.\n\n' +
+            'Care instructions\n' +
+            '- Place in a dry area, away from direct sunlight and high humidity.\n' +
+            '- Clean with a soft, dry cloth; do not use harsh chemical cleaners.\n' +
+            '- Avoid strong impacts to protect the model\'s details.',
         },
         price: 700000,
       },

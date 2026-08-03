@@ -95,6 +95,42 @@ export default function ProductDetailPage() {
   const displayReviews = reviews.length > 0 ? reviews : MOCK_REVIEWS;
   const displayReviewCount = reviews.length > 0 ? (product.reviewCount ?? reviews.length) : MOCK_REVIEWS.length;
 
+  // Mô tả sản phẩm được seed theo cấu trúc: đoạn giới thiệu, rồi các mục
+  // "Thông số sản phẩm" / "Bộ sản phẩm bao gồm" / "Hướng dẫn bảo quản" mỗi dòng
+  // bắt đầu bằng "- Tiêu chí: Giá trị". Tách ra để hiển thị bảng thay vì text thô.
+  const SECTION_TITLES = ['Thông số sản phẩm', 'Bộ sản phẩm bao gồm', 'Hướng dẫn bảo quản'];
+  const descRaw: string = product.description?.[lang] ?? '';
+  const descBlocks = descRaw.split(/\n\n+/).map((b) => b.trim()).filter(Boolean);
+  const introParagraphs = descBlocks.filter((b) => !SECTION_TITLES.includes(b.split('\n')[0].trim()));
+  const specsBlock = descBlocks.find((b) => b.split('\n')[0].trim() === 'Thông số sản phẩm');
+  const includesBlock = descBlocks.find((b) => b.split('\n')[0].trim() === 'Bộ sản phẩm bao gồm');
+  const careBlock = descBlocks.find((b) => b.split('\n')[0].trim() === 'Hướng dẫn bảo quản');
+
+  const parseSpecRows = (block?: string) => {
+    if (!block) return [];
+    return block
+      .split('\n')
+      .slice(1)
+      .map((line) => line.replace(/^-\s*/, ''))
+      .filter(Boolean)
+      .map((line) => {
+        const idx = line.indexOf(':');
+        return idx === -1 ? [line, ''] : [line.slice(0, idx).trim(), line.slice(idx + 1).trim()];
+      });
+  };
+  const parseListItems = (block?: string) => {
+    if (!block) return [];
+    return block
+      .split('\n')
+      .slice(1)
+      .map((line) => line.replace(/^-\s*/, '').trim())
+      .filter(Boolean);
+  };
+
+  const specRows = parseSpecRows(specsBlock);
+  const includesItems = parseListItems(includesBlock);
+  const careItems = parseListItems(careBlock);
+
   return (
     <div className="bg-[#F5F5F5] min-h-screen">
       {/* Breadcrumb */}
@@ -289,12 +325,65 @@ export default function ProductDetailPage() {
             Mô Tả Sản Phẩm
           </h2>
           <div className="text-sm text-gray-700 leading-relaxed space-y-3">
-            <p>{product.description[lang]}</p>
+            {introParagraphs.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
             <p>
               Đây là mô hình tiểu cảnh 3D tái hiện không gian và quy trình sản xuất của{' '}
               <strong>{product.village?.name?.[lang] ?? 'làng nghề truyền thống Việt Nam'}</strong>.
               Mỗi sản phẩm được chế tác thủ công tỉ mỉ, kết hợp công nghệ AR để bạn có thể quét mã và khám phá toàn bộ câu chuyện làng nghề ngay trên điện thoại.
             </p>
+
+            {specRows.length > 0 && (
+              <div className="pt-3">
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Thông số sản phẩm</h3>
+                <div className="overflow-x-auto border border-gray-200 rounded-sm">
+                  <table className="w-full text-sm">
+                    <tbody>
+                      {specRows.map(([label, value], i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-[#FAFAF5]' : 'bg-white'}>
+                          <td className="py-2 px-3 w-1/3 font-medium text-gray-500 border-b border-gray-100 align-top">
+                            {label}
+                          </td>
+                          <td className="py-2 px-3 text-[#ab2124] border-b border-gray-100 align-top">
+                            {value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {includesItems.length > 0 && (
+              <div className="pt-3">
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Bộ sản phẩm bao gồm</h3>
+                <ul className="space-y-1.5">
+                  {includesItems.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[#C9973A] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#C9973A] shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {careItems.length > 0 && (
+              <div className="pt-3">
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Hướng dẫn bảo quản</h3>
+                <ul className="space-y-1.5">
+                  {careItems.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[#C9973A] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#C9973A] shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               {[
                 { label: 'Thủ công mỹ nghệ', desc: 'Từng chi tiết được làm thủ công bởi nghệ nhân lành nghề' },

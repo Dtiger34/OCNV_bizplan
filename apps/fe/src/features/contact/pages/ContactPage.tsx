@@ -91,7 +91,7 @@ export default function ContactPage() {
               {
                 icon: <MapPin size={18} className="text-[#C9973A] shrink-0 mt-0.5" />,
                 label: 'Địa chỉ',
-                value: 'Phân xưởng Nghề Xưa Nét Mới\nTràng Tiền, Hoàn Kiếm, Hà Nội',
+                value: 'Phân xưởng Nghề Xưa Nét Mới\nNo. 36 Hang Be Street, Hoan Kiem Ward, Hanoi, Vietnam',
               },
               {
                 icon: <Phone size={18} className="text-[#C9973A] shrink-0 mt-0.5" />,
