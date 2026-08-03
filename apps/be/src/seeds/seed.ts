@@ -842,20 +842,58 @@ async function seed(): Promise<void> {
   const orders = await Order.insertMany(orderRecords);
   console.log(`Created ${orders.length} orders`);
 
-  // ── Reviews ───────────────────────────────────────────────────────────────
+  // ── Reviews (3-5 đánh giá 4-5 sao cho mỗi sản phẩm) ────────────────────────
+  const GUEST_REVIEWERS = [
+    'Nguyễn Thị Lan', 'Trần Minh Quân', 'Phạm Thu Hương', 'Lê Văn Đức', 'Vũ Thị Mai',
+    'Hoàng Anh Tuấn', 'Ngô Thị Bích', 'Đinh Thanh Tùng', 'Bùi Thị Ngọc', 'Đỗ Văn Nam',
+    'Phan Thị Thảo', 'Trịnh Quốc Bảo',
+  ];
+  const REVIEW_CONTENTS = [
+    'Sản phẩm rất đẹp, chi tiết tỉ mỉ, đóng gói cẩn thận. Mình mua làm quà tặng và được khen rất nhiều!',
+    'Hộp tiểu cảnh chất lượng vượt kỳ vọng. Tính năng AR quét mã thực sự thú vị, con mình thích mê.',
+    'Giao hàng nhanh, sản phẩm nguyên vẹn. Khung gỗ và chi tiết bên trong rất tinh xảo. Sẽ mua thêm!',
+    'Mua về trưng bày trên bàn làm việc, ai vào cũng hỏi mua ở đâu. Câu chuyện văn hóa đằng sau sản phẩm rất ý nghĩa.',
+    'Tặng sinh nhật bạn bè rất phù hợp. Sản phẩm đẹp, ý nghĩa, khác biệt so với quà thông thường.',
+    'Chất lượng tốt, giao hàng đúng hẹn. Đóng gói chắc chắn, mở hộp ra là ưng ngay.',
+    'Đây là lần thứ 3 mình mua sản phẩm của Nghề Xưa Nét Mới. Chất lượng luôn ổn định, dịch vụ nhiệt tình.',
+    'Mô hình tiểu cảnh rất chân thực, cảm giác như đang thu nhỏ cả một làng nghề vào lòng bàn tay. Rất đáng tiền!',
+    'Màu sắc y như hình, không bị lỗi chi tiết nào. Rất hài lòng với trải nghiệm mua hàng lần này.',
+    'Sản phẩm tinh xảo, đúng như mô tả. Nhân viên tư vấn nhiệt tình, đóng gói kỹ càng.',
+  ];
+
   const reviewRecords: unknown[] = [];
-  for (let r = 0; r < 5; r++) {
-    const deliveredOrder = orders.find((o) => (o as { status: string }).status === 'delivered');
-    const order = deliveredOrder ?? orders[0];
-    reviewRecords.push({
-      userId: customers[r % customers.length]._id,
-      productId: products[r % products.length]._id,
-      orderId: order._id,
-      rating: 4 + (r % 2),
-      content: `Sản phẩm rất đẹp và chất lượng tốt. Review số ${r + 1}.`,
-      imageUrls: [],
-      status: 'approved',
-    });
+  const deliveredOrder = orders.find((o) => (o as { status: string }).status === 'delivered') ?? orders[0];
+  let reviewSeq = 0;
+  for (const product of products) {
+    const reviewCount = 3 + (reviewSeq % 3); // 3, 4 hoặc 5 đánh giá mỗi sản phẩm
+    const usedUserIds = new Set<string>();
+    for (let i = 0; i < reviewCount; i++) {
+      const rating = 4 + (reviewSeq % 2); // chỉ 4 hoặc 5 sao
+      const content = REVIEW_CONTENTS[reviewSeq % REVIEW_CONTENTS.length];
+      const useRealCustomer = i < customers.length && !usedUserIds.has(String(customers[i]._id));
+      if (useRealCustomer) {
+        usedUserIds.add(String(customers[i]._id));
+        reviewRecords.push({
+          userId: customers[i]._id,
+          productId: product._id,
+          orderId: deliveredOrder._id,
+          rating,
+          content,
+          imageUrls: [],
+          status: 'approved',
+        });
+      } else {
+        reviewRecords.push({
+          guestName: GUEST_REVIEWERS[reviewSeq % GUEST_REVIEWERS.length],
+          productId: product._id,
+          rating,
+          content,
+          imageUrls: [],
+          status: 'approved',
+        });
+      }
+      reviewSeq++;
+    }
   }
   await Review.insertMany(reviewRecords);
   console.log(`Created ${reviewRecords.length} reviews`);
