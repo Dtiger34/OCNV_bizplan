@@ -295,9 +295,9 @@ async function seed(): Promise<void> {
   });
 
   const customers = await User.insertMany([
-    { fullName: 'Khách hàng 1', email: 'customer1@test.com', password: customerPassword, role: 'customer', status: 'active' },
-    { fullName: 'Khách hàng 2', email: 'customer2@test.com', password: customerPassword, role: 'customer', status: 'active' },
-    { fullName: 'Khách hàng 3', email: 'customer3@test.com', password: customerPassword, role: 'customer', status: 'active' },
+    { fullName: 'Nguyễn Thị Hà', email: 'customer1@test.com', password: customerPassword, role: 'customer', status: 'active' },
+    { fullName: 'Trần Văn Hùng', email: 'customer2@test.com', password: customerPassword, role: 'customer', status: 'active' },
+    { fullName: 'Lê Thị Phương', email: 'customer3@test.com', password: customerPassword, role: 'customer', status: 'active' },
   ]);
 
   console.log(`Created ${1 + customers.length} users`);
