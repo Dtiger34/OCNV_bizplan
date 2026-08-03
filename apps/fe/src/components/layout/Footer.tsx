@@ -28,7 +28,7 @@ export default function Footer() {
           <div className="space-y-2 pt-2 text-[#C9B99A] text-sm">
             <div className="flex items-center gap-2.5">
               <MapPin size={15} className="text-[#C9973A]" />
-              <span>No. 36 Hang Be Street, Hoan Kiem Ward, Hanoi, Vietnam</span>
+              <span>36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam</span>
             </div>
             <div className="flex items-center gap-2.5">
               <Phone size={15} className="text-[#C9973A]" />
