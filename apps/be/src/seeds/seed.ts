@@ -357,7 +357,7 @@ async function seed(): Promise<void> {
           vi: 'Mô hình 3D Làng Gốm Bát Tràng tái hiện không gian đặc trưng của làng nghề gốm truyền thống với hơn 700 năm lịch sử. Từ khu vực nặn gốm, bàn xoay, lò nung đến không gian trưng bày sản phẩm đều được thu nhỏ tỉ mỉ, mang đến góc nhìn chân thực về quy trình tạo nên những tác phẩm gốm thủ công nổi tiếng của Việt Nam. Sản phẩm tích hợp mã QR và công nghệ AR, giúp người dùng khám phá lịch sử, kỹ thuật chế tác và giá trị văn hóa của làng gốm thông qua trải nghiệm tương tác hiện đại.',
           en: 'The Bat Trang Pottery Village 3D Model recreates the distinctive space of a traditional ceramic craft village with over 700 years of history. The clay-shaping area, potter\'s wheel, kiln, and display space are all meticulously miniaturized, offering an authentic view of how Vietnam\'s famous handcrafted ceramics are made. The product integrates QR code and AR technology, letting users explore the village\'s history, techniques, and cultural value through a modern interactive experience.',
         },
-        price: 690000,
+        price: 700000,
       },
       magnet: {
         name: { vi: 'Thẻ nam châm Làng Gốm Bát Tràng', en: 'Fridge Magnet — Bat Trang Pottery Village' },
@@ -365,7 +365,7 @@ async function seed(): Promise<void> {
           vi: MAGNET_DESCRIPTION_VI,
           en: MAGNET_DESCRIPTION_EN,
         },
-        price: 45000,
+        price: 30000,
       },
       puzzle: {
         name: { vi: 'Tranh ghép Làng Gốm Bát Tràng', en: 'Jigsaw Puzzle — Bat Trang Pottery Village' },
@@ -373,7 +373,7 @@ async function seed(): Promise<void> {
           vi: PUZZLE_DESCRIPTION_VI,
           en: PUZZLE_DESCRIPTION_EN,
         },
-        price: 129000,
+        price: 100000,
       },
     },
     'non-chuong': {
@@ -383,7 +383,7 @@ async function seed(): Promise<void> {
           vi: 'Mô hình 3D Làng Nón Chuông tái hiện không gian đặc trưng của làng nghề làm nón truyền thống hơn 300 năm tuổi tại Hà Nội. Từng chi tiết như nghệ nhân, nguyên liệu lá cọ, khung phơi và ngôi nhà cổ được thu nhỏ một cách tinh xảo, giúp người xem hình dung quy trình làm nón ngay trên mô hình. Khi quét mã QR, người dùng có thể trải nghiệm nội dung AR với hình ảnh, video và thông tin về từng công đoạn sản xuất, mang đến hành trình khám phá làng nghề trực quan ngay trên điện thoại.',
           en: 'The Chuong Conical Hat Village 3D Model recreates the distinctive space of a traditional hat-making village over 300 years old in Hanoi. Details such as artisans, palm-leaf material, drying racks, and ancient houses are finely miniaturized, letting viewers visualize the hat-making process on the model itself. By scanning the QR code, users can experience AR content with images, videos, and information about each production stage, offering a vivid journey through the craft village right on their phone.',
         },
-        price: 650000,
+        price: 700000,
       },
       magnet: {
         name: { vi: 'Thẻ nam châm Làng Nón Chuông', en: 'Fridge Magnet — Chuong Conical Hat Village' },
@@ -391,7 +391,7 @@ async function seed(): Promise<void> {
           vi: MAGNET_DESCRIPTION_VI,
           en: MAGNET_DESCRIPTION_EN,
         },
-        price: 45000,
+        price: 30000,
       },
       puzzle: {
         name: { vi: 'Tranh ghép Làng Nón Chuông', en: 'Jigsaw Puzzle — Chuong Conical Hat Village' },
@@ -399,7 +399,7 @@ async function seed(): Promise<void> {
           vi: PUZZLE_DESCRIPTION_VI,
           en: PUZZLE_DESCRIPTION_EN,
         },
-        price: 129000,
+        price: 100000,
       },
     },
     'quang-phu-cau': {
@@ -409,7 +409,7 @@ async function seed(): Promise<void> {
           vi: 'Mô hình 3D Làng Hương Quảng Phú Cầu tái hiện không gian đặc trưng của làng nghề làm hương truyền thống nổi tiếng với những bó tăm hương đỏ rực. Các công đoạn từ lựa chọn nguyên liệu, nhuộm chân hương, phơi hương đến bó hương thành phẩm được thể hiện sinh động, giúp người dùng hiểu rõ quy trình tạo nên những nén hương mang đậm giá trị văn hóa và tâm linh của người Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm khám phá làng nghề trực quan và tương tác ngay trên điện thoại.',
           en: 'The Quang Phu Cau Incense Village 3D Model recreates the distinctive space of a traditional incense-making village famous for its vivid red incense bundles. Stages from selecting materials, dyeing incense sticks, and drying to bundling the finished incense are vividly depicted, helping users understand the process behind incense sticks that carry deep cultural and spiritual value for Vietnamese people. The product integrates QR code and AR technology, offering a vivid and interactive way to explore the craft village right on the phone.',
         },
-        price: 670000,
+        price: 700000,
       },
       magnet: {
         name: { vi: 'Thẻ nam châm Làng Hương Quảng Phú Cầu', en: 'Fridge Magnet — Quang Phu Cau Incense Village' },
@@ -417,7 +417,7 @@ async function seed(): Promise<void> {
           vi: MAGNET_DESCRIPTION_VI,
           en: MAGNET_DESCRIPTION_EN,
         },
-        price: 45000,
+        price: 30000,
       },
       puzzle: {
         name: { vi: 'Tranh ghép Làng Hương Quảng Phú Cầu', en: 'Jigsaw Puzzle — Quang Phu Cau Incense Village' },
@@ -425,7 +425,7 @@ async function seed(): Promise<void> {
           vi: PUZZLE_DESCRIPTION_VI,
           en: PUZZLE_DESCRIPTION_EN,
         },
-        price: 129000,
+        price: 100000,
       },
     },
     'van-phuc': {
@@ -435,7 +435,7 @@ async function seed(): Promise<void> {
           vi: 'Mô hình 3D Làng Lụa Vạn Phúc tái hiện không gian đặc trưng của một trong những làng nghề dệt lụa lâu đời và nổi tiếng nhất Việt Nam. Từng chi tiết như khu vực ươm tơ, dệt lụa trên khung cửi truyền thống, nhuộm màu và trưng bày thành phẩm được thu nhỏ một cách tinh xảo, giúp người dùng khám phá hành trình tạo nên những tấm lụa mềm mại, mang đậm bản sắc văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giữa giá trị truyền thống và công nghệ hiện đại.',
           en: 'The Van Phuc Silk Village 3D Model recreates the distinctive space of one of Vietnam\'s oldest and most renowned silk-weaving villages. Details such as the silk-reeling area, weaving on traditional looms, dyeing, and finished-product display are finely miniaturized, letting users discover the journey behind soft silk fabrics steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.',
         },
-        price: 660000,
+        price: 700000,
       },
       magnet: {
         name: { vi: 'Thẻ nam châm Làng Lụa Vạn Phúc', en: 'Fridge Magnet — Van Phuc Silk Village' },
@@ -443,7 +443,7 @@ async function seed(): Promise<void> {
           vi: MAGNET_DESCRIPTION_VI,
           en: MAGNET_DESCRIPTION_EN,
         },
-        price: 45000,
+        price: 30000,
       },
       puzzle: {
         name: { vi: 'Tranh ghép Làng Lụa Vạn Phúc', en: 'Jigsaw Puzzle — Van Phuc Silk Village' },
@@ -451,7 +451,7 @@ async function seed(): Promise<void> {
           vi: PUZZLE_DESCRIPTION_VI,
           en: PUZZLE_DESCRIPTION_EN,
         },
-        price: 129000,
+        price: 100000,
       },
     },
     'chang-son': {
@@ -461,7 +461,7 @@ async function seed(): Promise<void> {
           vi: 'Mô hình 3D Làng Quạt Chàng Sơn tái hiện không gian đặc trưng của làng nghề làm quạt truyền thống với lịch sử hàng trăm năm. Từ công đoạn chọn tre, làm nan quạt, dán giấy hoặc lụa, vẽ hoa văn đến hoàn thiện sản phẩm đều được thu nhỏ một cách tinh xảo, giúp người dùng khám phá quy trình chế tác nên những chiếc quạt thủ công mang đậm dấu ấn văn hóa Việt. Sản phẩm tích hợp mã QR và công nghệ AR, mang đến trải nghiệm tương tác sinh động, kết nối giá trị truyền thống với công nghệ hiện đại.',
           en: 'The Chang Son Fan Village 3D Model recreates the distinctive space of a traditional fan-making village with a history of hundreds of years. Stages from selecting bamboo, making fan ribs, pasting paper or silk, painting patterns, to finishing the product are finely miniaturized, letting users explore the process behind handcrafted fans steeped in Vietnamese cultural identity. The product integrates QR code and AR technology, offering a vivid interactive experience that connects traditional value with modern technology.',
         },
-        price: 640000,
+        price: 700000,
       },
       magnet: {
         name: { vi: 'Thẻ nam châm Làng Quạt Chàng Sơn', en: 'Fridge Magnet — Chang Son Fan Village' },
@@ -469,7 +469,7 @@ async function seed(): Promise<void> {
           vi: MAGNET_DESCRIPTION_VI,
           en: MAGNET_DESCRIPTION_EN,
         },
-        price: 45000,
+        price: 30000,
       },
       puzzle: {
         name: { vi: 'Tranh ghép Làng Quạt Chàng Sơn', en: 'Jigsaw Puzzle — Chang Son Fan Village' },
@@ -477,7 +477,7 @@ async function seed(): Promise<void> {
           vi: PUZZLE_DESCRIPTION_VI,
           en: PUZZLE_DESCRIPTION_EN,
         },
-        price: 129000,
+        price: 100000,
       },
     },
   };
