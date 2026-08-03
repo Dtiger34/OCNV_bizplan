@@ -864,17 +864,23 @@ async function seed(): Promise<void> {
   const reviewRecords: unknown[] = [];
   const deliveredOrder = orders.find((o) => (o as { status: string }).status === 'delivered') ?? orders[0];
   let reviewSeq = 0;
+  let productIndex = 0;
   for (const product of products) {
     const reviewCount = 3 + (reviewSeq % 3); // 3, 4 hoặc 5 đánh giá mỗi sản phẩm
+    // Xoay vòng thứ tự khách hàng thật và guest reviewer theo từng sản phẩm để
+    // không sản phẩm nào lặp lại đúng cùng một dãy tên như sản phẩm trước.
+    const customerOffset = productIndex % customers.length;
+    const guestOffset = productIndex * 3;
     const usedUserIds = new Set<string>();
     for (let i = 0; i < reviewCount; i++) {
       const rating = 4 + (reviewSeq % 2); // chỉ 4 hoặc 5 sao
       const content = REVIEW_CONTENTS[reviewSeq % REVIEW_CONTENTS.length];
-      const useRealCustomer = i < customers.length && !usedUserIds.has(String(customers[i]._id));
+      const customer = customers[(i + customerOffset) % customers.length];
+      const useRealCustomer = i < customers.length && !usedUserIds.has(String(customer._id));
       if (useRealCustomer) {
-        usedUserIds.add(String(customers[i]._id));
+        usedUserIds.add(String(customer._id));
         reviewRecords.push({
-          userId: customers[i]._id,
+          userId: customer._id,
           productId: product._id,
           orderId: deliveredOrder._id,
           rating,
@@ -884,7 +890,7 @@ async function seed(): Promise<void> {
         });
       } else {
         reviewRecords.push({
-          guestName: GUEST_REVIEWERS[reviewSeq % GUEST_REVIEWERS.length],
+          guestName: GUEST_REVIEWERS[(guestOffset + i) % GUEST_REVIEWERS.length],
           productId: product._id,
           rating,
           content,
@@ -894,6 +900,7 @@ async function seed(): Promise<void> {
       }
       reviewSeq++;
     }
+    productIndex++;
   }
   await Review.insertMany(reviewRecords);
   console.log(`Created ${reviewRecords.length} reviews`);
