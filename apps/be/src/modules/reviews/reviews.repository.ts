@@ -19,7 +19,13 @@ export class ReviewsRepository {
       status: status ?? ReviewStatus.APPROVED,
     };
     const [data, total] = await Promise.all([
-      this.reviewModel.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).exec(),
+      this.reviewModel
+        .find(filter)
+        .populate('userId', 'fullName avatarUrl')
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
       this.reviewModel.countDocuments(filter).exec(),
     ]);
     return { data, total };
@@ -33,7 +39,13 @@ export class ReviewsRepository {
     const filter: Record<string, unknown> = {};
     if (status) filter['status'] = status;
     const [data, total] = await Promise.all([
-      this.reviewModel.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).exec(),
+      this.reviewModel
+        .find(filter)
+        .populate('userId', 'fullName avatarUrl')
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
       this.reviewModel.countDocuments(filter).exec(),
     ]);
     return { data, total };

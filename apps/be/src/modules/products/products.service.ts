@@ -47,10 +47,23 @@ export class ProductsService {
   ): Promise<{ items: unknown[]; total: number; page: number; limit: number }> {
     const filter = { productId: new Types.ObjectId(productId), status: ReviewStatus.APPROVED };
     const [data, total] = await Promise.all([
-      this.reviewModel.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).exec(),
+      this.reviewModel
+        .find(filter)
+        .populate('userId', 'fullName avatarUrl')
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
       this.reviewModel.countDocuments(filter).exec(),
     ]);
-    return { items: data, total, page, limit };
+    const items = data.map((review) => {
+      const obj = review.toObject() as unknown as Record<string, unknown> & {
+        userId?: { fullName?: string; avatarUrl?: string } | Types.ObjectId;
+      };
+      const populatedUser = obj.userId && typeof obj.userId === 'object' && 'fullName' in obj.userId ? obj.userId : undefined;
+      return { ...obj, user: populatedUser };
+    });
+    return { items, total, page, limit };
   }
 
   async createReview(productId: string, userId: string | undefined, dto: CreateReviewDto): Promise<unknown> {
