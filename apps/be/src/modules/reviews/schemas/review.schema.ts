@@ -35,4 +35,11 @@ export class Review {
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);
-ReviewSchema.index({ userId: 1, productId: 1 }, { unique: true, sparse: true });
+// `sparse` chỉ loại trừ document thiếu TẤT CẢ field trong index — vì productId
+// luôn có giá trị, review của guest (userId vắng mặt) vẫn bị tính là trùng khi
+// có từ 2 guest review trở lên cho cùng sản phẩm. Dùng partialFilterExpression
+// để unique constraint chỉ áp dụng khi userId thực sự tồn tại.
+ReviewSchema.index(
+  { userId: 1, productId: 1 },
+  { unique: true, partialFilterExpression: { userId: { $exists: true } } },
+);

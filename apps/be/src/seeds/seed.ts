@@ -137,6 +137,7 @@ const OrderSchema = new mongoose.Schema(
 const ReviewSchema = new mongoose.Schema(
   {
     userId: { type: Types.ObjectId, ref: 'User' },
+    guestName: String,
     productId: { type: Types.ObjectId, ref: 'Product' },
     orderId: { type: Types.ObjectId, ref: 'Order' },
     rating: Number,
@@ -846,7 +847,10 @@ async function seed(): Promise<void> {
   const GUEST_REVIEWERS = [
     'Nguyễn Thị Lan', 'Trần Minh Quân', 'Phạm Thu Hương', 'Lê Văn Đức', 'Vũ Thị Mai',
     'Hoàng Anh Tuấn', 'Ngô Thị Bích', 'Đinh Thanh Tùng', 'Bùi Thị Ngọc', 'Đỗ Văn Nam',
-    'Phan Thị Thảo', 'Trịnh Quốc Bảo',
+    'Phan Thị Thảo', 'Trịnh Quốc Bảo', 'Đặng Thị Huyền', 'Vương Minh Khôi', 'Cao Thị Yến',
+    'Lý Văn Phúc', 'Dương Thị Nga', 'Hồ Anh Dũng', 'Tô Thị Kim', 'Mai Văn Sơn',
+    'Đoàn Thị Thu', 'Chu Văn Hải', 'Nguyễn Văn Long', 'Trần Thị Hồng', 'Phạm Văn Kiên',
+    'Lê Thị Duyên', 'Vũ Văn Toàn', 'Hoàng Thị Nhung', 'Ngô Văn Thắng', 'Bùi Thị Loan',
   ];
   const REVIEW_CONTENTS = [
     'Sản phẩm rất đẹp, chi tiết tỉ mỉ, đóng gói cẩn thận. Mình mua làm quà tặng và được khen rất nhiều!',
@@ -861,24 +865,28 @@ async function seed(): Promise<void> {
     'Sản phẩm tinh xảo, đúng như mô tả. Nhân viên tư vấn nhiệt tình, đóng gói kỹ càng.',
   ];
 
+  // Ngày tạo review random rải rác từ đầu tháng 7 đến thời điểm chạy seed,
+  // tránh việc tất cả review cùng hiện một ngày (ngày chạy script).
+  const REVIEW_DATE_START = new Date('2026-07-01T00:00:00Z').getTime();
+  const REVIEW_DATE_END = Date.now();
+  const randomReviewDate = () => new Date(REVIEW_DATE_START + Math.random() * (REVIEW_DATE_END - REVIEW_DATE_START));
+
   const reviewRecords: unknown[] = [];
   const deliveredOrder = orders.find((o) => (o as { status: string }).status === 'delivered') ?? orders[0];
   let reviewSeq = 0;
-  let productIndex = 0;
+  let guestCursor = 0;
   for (const product of products) {
     const reviewCount = 3 + (reviewSeq % 3); // 3, 4 hoặc 5 đánh giá mỗi sản phẩm
-    // Xoay vòng thứ tự khách hàng thật và guest reviewer theo từng sản phẩm để
-    // không sản phẩm nào lặp lại đúng cùng một dãy tên như sản phẩm trước.
-    const customerOffset = productIndex % customers.length;
-    const guestOffset = productIndex * 3;
-    const usedUserIds = new Set<string>();
+    // Mỗi sản phẩm chỉ dùng 1 tài khoản thật (xoay vòng qua 3 khách hàng demo),
+    // các review còn lại dùng guest reviewer khác nhau kéo dài dần qua danh sách
+    // để không sản phẩm nào lặp lại đúng cùng một nhóm tên.
+    const realCustomerSlot = Math.floor(Math.random() * reviewCount);
+    const customer = customers[reviewSeq % customers.length];
     for (let i = 0; i < reviewCount; i++) {
-      const rating = 4 + (reviewSeq % 2); // chỉ 4 hoặc 5 sao
-      const content = REVIEW_CONTENTS[reviewSeq % REVIEW_CONTENTS.length];
-      const customer = customers[(i + customerOffset) % customers.length];
-      const useRealCustomer = i < customers.length && !usedUserIds.has(String(customer._id));
-      if (useRealCustomer) {
-        usedUserIds.add(String(customer._id));
+      const rating = 4 + Math.round(Math.random()); // chỉ 4 hoặc 5 sao
+      const content = REVIEW_CONTENTS[Math.floor(Math.random() * REVIEW_CONTENTS.length)];
+      const createdAt = randomReviewDate();
+      if (i === realCustomerSlot) {
         reviewRecords.push({
           userId: customer._id,
           productId: product._id,
@@ -887,20 +895,24 @@ async function seed(): Promise<void> {
           content,
           imageUrls: [],
           status: 'approved',
+          createdAt,
+          updatedAt: createdAt,
         });
       } else {
         reviewRecords.push({
-          guestName: GUEST_REVIEWERS[(guestOffset + i) % GUEST_REVIEWERS.length],
+          guestName: GUEST_REVIEWERS[guestCursor % GUEST_REVIEWERS.length],
           productId: product._id,
           rating,
           content,
           imageUrls: [],
           status: 'approved',
+          createdAt,
+          updatedAt: createdAt,
         });
+        guestCursor++;
       }
       reviewSeq++;
     }
-    productIndex++;
   }
   await Review.insertMany(reviewRecords);
   console.log(`Created ${reviewRecords.length} reviews`);
