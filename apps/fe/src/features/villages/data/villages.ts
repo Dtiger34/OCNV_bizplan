@@ -53,7 +53,7 @@ export const VILLAGES: VillageData[] = [
       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1514516345957-556ca7d90a29?auto=format&fit=crop&w=800&q=80',
     ],
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    videoUrl: 'https://www.youtube.com/embed/Z5VHUW5oUe4',
     artisan: {
       name: 'Nghệ nhân Lê Bá Hiển',
       title: { vi: 'Nghệ nhân ưu tú', en: 'Distinguished Master Artisan' },
@@ -389,7 +389,7 @@ export const VILLAGES: VillageData[] = [
       'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=800&q=80',
     ],
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    videoUrl: 'https://www.youtube.com/embed/RaNZh6sEL7U',
     artisan: {
       name: 'Nghệ nhân Đinh Văn Hoàn',
       title: { vi: 'Bậc thầy vẽ tranh quạt', en: 'Master of Fan Painting' },
