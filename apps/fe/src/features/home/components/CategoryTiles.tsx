@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 interface Category {
   id: string;
@@ -62,41 +63,43 @@ function CategoryCard({
 }
 
 export default function CategoryTiles({ onSelectCategory }: CategoryTilesProps) {
+  const { t } = useTranslation();
+
   const categories: Category[] = [
     {
       id: 'hop-lang-gom',
-      name: 'Làng Gốm',
+      name: t('home.categories.items.gom.name'),
       count: '12 Mô Hình',
       image: '/image/lang-gom.jpg',
-      description: 'Mô phỏng chân thực nghệ nhân xoay gốm trên bàn xoay thủ công và lò nung gạch cổ Bát Tràng.'
+      description: t('home.categories.items.gom.desc')
     },
     {
       id: 'hop-lang-lua',
-      name: 'Làng Lụa',
+      name: t('home.categories.items.lua.name'),
       count: '8 Mô Hình',
       image: '/image/lang-lua.jpg',
-      description: 'Lớp dệt cửi tơ tằm óng ả và các sấp lụa Vạn Phúc rực rỡ sắc màu được mô phỏng sinh động.'
+      description: t('home.categories.items.lua.desc')
     },
     {
       id: 'hop-lang-non',
-      name: 'Làng Nón',
+      name: t('home.categories.items.non.name'),
       count: '6 Mô Hình',
       image: '/image/lang-non.webp',
-      description: 'Tái hiện không gian phơi lá cọ non trắng muốt và quá trình nghệ nhân khâu nón Chuông tỉ mỉ.'
+      description: t('home.categories.items.non.desc')
     },
     {
       id: 'hop-lang-huong',
-      name: 'Làng Hương',
+      name: t('home.categories.items.huong.name'),
       count: '9 Mô Hình',
       image: '/image/lang-huong.webp',
-      description: 'Tái hiện sân phơi hương Quảng Phú Cầu đỏ rực rỡ tựa như những đóa hoa khổng lồ nở rộ.',
+      description: t('home.categories.items.huong.desc')
     },
     {
       id: 'hop-lang-quat',
-      name: 'Làng Quạt',
+      name: t('home.categories.items.quat.name'),
       count: '5 Mô Hình',
       image: '/image/lang-quat.jpg',
-      description: 'Tái hiện nghề làm quạt truyền thống Chàng Sơn — nơi từng nan tre, từng nét vẽ đều chứa đựng tâm huyết nghệ nhân.'
+      description: t('home.categories.items.quat.desc')
     }
   ];
 
@@ -119,10 +122,10 @@ export default function CategoryTiles({ onSelectCategory }: CategoryTilesProps) 
       {/* Category Tiles Header */}
       <div className="text-center space-y-2 max-w-2xl mx-auto reveal">
         <span className="text-[13px] font-bold tracking-[0.14em] text-[#ab2124] uppercase block">
-          KHÔNG GIAN VĂN HÓA THU NHỎ
+          {t('home.categories.subtitle')}
         </span>
         <h2 className="text-3xl md:text-[36px] font-bold text-[#ab2124] tracking-wide text-title-gradient">
-          Hộp Tiểu Cảnh Diorama Làng Nghề
+          {t('home.categories.title')}
         </h2>
         <div className="w-12 h-[1px] bg-[#C9973A] mx-auto mt-2 reveal delay-75" />
       </div>

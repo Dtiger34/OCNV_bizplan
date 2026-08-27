@@ -227,29 +227,10 @@ export default function HomePage() {
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto mt-2" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              name: 'Nguyễn Thị Lan',
-              role: 'Giáo viên Mỹ thuật, Hà Nội',
-              text: 'Hộp tiểu cảnh Bát Tràng chi tiết đến kinh ngạc. Tôi dùng làm đồ dùng dạy học cho học sinh về văn hóa truyền thống.',
-              rating: 5,
-            },
-            {
-              name: 'Trần Minh Quân',
-              role: 'Kiến trúc sư, TP. HCM',
-              text: 'Mua làm quà tặng đối tác nước ngoài. Ai cũng trầm trồ vì sự tỉ mỉ và câu chuyện văn hóa đằng sau mỗi sản phẩm.',
-              rating: 5,
-            },
-            {
-              name: 'Phạm Thu Hương',
-              role: 'Blogger du lịch',
-              text: 'Trải nghiệm AR khi quét mã thực sự ấn tượng. Hộp quà nhỏ nhưng mang cả một câu chuyện làng nghề sống động.',
-              rating: 5,
-            },
-          ].map((t, idx) => (
+          {t('home.testimonials.items', { returnObjects: true }).map((t: any, idx: number) => (
             <div key={t.name} className={`reveal ${idx === 1 ? 'delay-150' : idx === 2 ? 'delay-300' : ''} bg-[#fff8e7] border border-[#D4B896]/50 rounded-[6px] p-5 space-y-3 hover:border-[#C9973A]/50 transition-colors`}>
               <div className="flex gap-0.5">
-                {Array.from({ length: t.rating }).map((_, i) => (
+                {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={12} className="text-[#C9973A] fill-[#C9973A]" />
                 ))}
               </div>
@@ -290,12 +271,12 @@ export default function HomePage() {
               {/* Product Info details inside modal */}
               <div className="bg-[#fff8e7] border border-[#D4B896] p-4 rounded-[6px] space-y-2">
                 <span className="text-[13px] font-bold tracking-wider text-[#ab2124] uppercase block">
-                  THÔNG SỐ CHI TIẾT
+                  {t('home.product_modal.details_title')}
                 </span>
                 <ul className="text-[13px] text-[#ab2124] space-y-1">
-                  <li><strong>Xuất xứ:</strong> {selectedProduct.origin}</li>
-                  <li><strong>Chất liệu:</strong> {selectedProduct.material}</li>
-                  <li><strong>Tình trạng:</strong> {selectedProduct.stockStatus === 'in_stock' ? 'Còn hàng trong kho' : 'Đặt làm thủ công (3-5 tuần)'}</li>
+                  <li><strong>{t('home.product_modal.origin')}</strong> {selectedProduct.origin}</li>
+                  <li><strong>{t('home.product_modal.material')}</strong> {selectedProduct.material}</li>
+                  <li><strong>{t('home.product_modal.status')}</strong> {selectedProduct.stockStatus === 'in_stock' ? t('home.product_modal.in_stock') : t('home.product_modal.made_to_order')}</li>
                 </ul>
               </div>
             </div>
@@ -317,7 +298,7 @@ export default function HomePage() {
                 </div>
 
                 <p className="text-sm text-[#ab2124] leading-relaxed">
-                  Mô hình tiểu cảnh diorama gỗ ghép nhiều lớp tinh xảo, tái hiện sống động quy trình làng nghề cổ truyền Việt Nam, đóng gói trong hộp mica bảo vệ 360 độ kèm hệ thống đèn LED ấm cúng.
+                  {t('home.product_modal.desc')}
                 </p>
               </div>
 
@@ -333,7 +314,7 @@ export default function HomePage() {
                         {selectedProduct.makerName}
                       </h4>
                       <span className="text-[9px] font-semibold tracking-wider uppercase text-[#ab2124]">
-                        Nghệ nhân tỉnh {selectedProduct.makerProvince}
+                        {t('home.product_modal.maker_province')} {selectedProduct.makerProvince}
                       </span>
                     </div>
                   </div>
@@ -359,7 +340,7 @@ export default function HomePage() {
                 }}
                 className="w-full h-11 bg-[#ab2124] text-[#fff8e7] text-[12px] font-bold tracking-wider uppercase rounded-full hover:bg-[#ab2124] active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 border border-[#C9973A]/20 shadow-md"
               >
-                {selectedProduct.stockStatus === 'out_of_stock' ? 'HẾT HÀNG TRÊN HỆ THỐNG' : 'THÊM VÀO GIỎ HÀNG'}
+                {selectedProduct.stockStatus === 'out_of_stock' ? t('home.product_modal.out_of_stock') : t('home.product_modal.add_to_cart')}
               </button>
             </div>
           </div>

@@ -40,6 +40,49 @@
     "copyright": "© {{year}} Ancient Craft New Essence. All rights reserved."
   },
   "home": {
+    "hero": {
+      "title": "Quintessence of craft villages,<br />virtual reality experience.",
+      "btn_explore": "Explore now",
+      "btn_story": "Village stories"
+    },
+    "categories": {
+      "subtitle": "MINIATURE CULTURAL SPACES",
+      "title": "Craft Village Diorama Boxes",
+      "items": {
+        "gom": {
+          "name": "Pottery Village",
+          "desc": "Authentic simulation of artisans throwing pottery on a manual wheel and the ancient Bat Trang brick kiln."
+        },
+        "lua": {
+          "name": "Silk Village",
+          "desc": "The glossy silk weaving loom and vibrant Van Phuc silk rolls are vividly simulated."
+        },
+        "non": {
+          "name": "Conical Hat Village",
+          "desc": "Recreating the space of drying pure white young palm leaves and the meticulous process of sewing Chuong conical hats."
+        },
+        "huong": {
+          "name": "Incense Village",
+          "desc": "Recreating the bright red incense drying yard of Quang Phu Cau, blooming like giant flowers."
+        },
+        "quat": {
+          "name": "Fan Village",
+          "desc": "Recreating the traditional fan-making craft of Chang Son - where every bamboo slat and brushstroke contains the artisan's dedication."
+        }
+      }
+    },
+    "product_modal": {
+      "details_title": "SPECIFICATIONS",
+      "origin": "Origin:",
+      "material": "Material:",
+      "status": "Status:",
+      "in_stock": "In stock",
+      "made_to_order": "Made to order (3-5 weeks)",
+      "desc": "Exquisite multi-layered wooden diorama, vividly recreating the traditional Vietnamese craft village process, packaged in a 360-degree protective mica box with a cozy LED system.",
+      "maker_province": "Artisan from",
+      "out_of_stock": "OUT OF STOCK",
+      "add_to_cart": "ADD TO CART"
+    },
     "story": {
       "subtitle": "OUR IDENTITY",
       "title": "New Life For Vietnamese Heritage",
@@ -64,8 +107,25 @@
       "read_more": "Read more"
     },
     "testimonials": {
-      "subtitle": "WHAT CUSTOMERS SAY",
-      "title": "Real Testimonials"
+      "subtitle": "CUSTOMER REVIEWS",
+      "title": "Real Experiences",
+      "items": [
+        {
+          "name": "Nguyen Thi Lan",
+          "role": "Art Teacher, Hanoi",
+          "text": "The Bat Trang miniature box is incredibly detailed. I use it as a teaching aid for my students about traditional culture."
+        },
+        {
+          "name": "Tran Minh Quan",
+          "role": "Architect, HCMC",
+          "text": "Bought as a gift for foreign partners. Everyone was amazed by the meticulousness and cultural story behind each product."
+        },
+        {
+          "name": "Pham Thu Huong",
+          "role": "Travel Blogger",
+          "text": "The AR experience when scanning the code is truly impressive. A small gift box but it carries a vivid craft village story."
+        }
+      ]
     }
   },
   "shop": {

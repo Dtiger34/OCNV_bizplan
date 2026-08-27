@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import heroBannerImg from '@/assets/herobanner.jpg';
+import { useTranslation, Trans } from 'react-i18next';
 
 export default function HeroBanner() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -25,7 +27,7 @@ export default function HeroBanner() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-3 md:mb-5 max-w-3xl drop-shadow-lg"
         >
-          Tinh hoa làng nghề,<br />trải nghiệm thực tế ảo.
+          <Trans i18nKey="home.hero.title" components={{ br: <br /> }} />
         </motion.h1>
 
 
@@ -41,7 +43,7 @@ export default function HeroBanner() {
             onClick={() => navigate('/shop')}
             className="px-6 md:px-8 py-2.5 md:py-3 bg-white text-black text-sm font-semibold tracking-wide rounded-full hover:bg-white/90 transition-colors cursor-pointer"
           >
-            Khám phá ngay
+            {t('home.hero.btn_explore')}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.03 }}
@@ -49,7 +51,7 @@ export default function HeroBanner() {
             onClick={() => navigate('/villages')}
             className="px-6 md:px-8 py-2.5 md:py-3 bg-transparent text-white text-sm font-semibold tracking-wide rounded-full border border-white/60 hover:border-white hover:bg-white/10 transition-colors cursor-pointer"
           >
-            Câu chuyện làng nghề
+            {t('home.hero.btn_story')}
           </motion.button>
         </motion.div>
       </div>

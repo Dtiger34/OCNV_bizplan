@@ -40,6 +40,49 @@
     "copyright": "© {{year}} Nghề Xưa Nét Mới. Bản quyền được bảo hộ."
   },
   "home": {
+    "hero": {
+      "title": "Tinh hoa làng nghề,<br />trải nghiệm thực tế ảo.",
+      "btn_explore": "Khám phá ngay",
+      "btn_story": "Câu chuyện làng nghề"
+    },
+    "categories": {
+      "subtitle": "KHÔNG GIAN VĂN HÓA THU NHỎ",
+      "title": "Hộp Tiểu Cảnh Diorama Làng Nghề",
+      "items": {
+        "gom": {
+          "name": "Làng Gốm",
+          "desc": "Mô phỏng chân thực nghệ nhân xoay gốm trên bàn xoay thủ công và lò nung gạch cổ Bát Tràng."
+        },
+        "lua": {
+          "name": "Làng Lụa",
+          "desc": "Lớp dệt cửi tơ tằm óng ả và các sấp lụa Vạn Phúc rực rỡ sắc màu được mô phỏng sinh động."
+        },
+        "non": {
+          "name": "Làng Nón",
+          "desc": "Tái hiện không gian phơi lá cọ non trắng muốt và quá trình nghệ nhân khâu nón Chuông tỉ mỉ."
+        },
+        "huong": {
+          "name": "Làng Hương",
+          "desc": "Tái hiện sân phơi hương Quảng Phú Cầu đỏ rực rỡ tựa như những đóa hoa khổng lồ nở rộ."
+        },
+        "quat": {
+          "name": "Làng Quạt",
+          "desc": "Tái hiện nghề làm quạt truyền thống Chàng Sơn — nơi từng nan tre, từng nét vẽ đều chứa đựng tâm huyết nghệ nhân."
+        }
+      }
+    },
+    "product_modal": {
+      "details_title": "THÔNG SỐ CHI TIẾT",
+      "origin": "Xuất xứ:",
+      "material": "Chất liệu:",
+      "status": "Tình trạng:",
+      "in_stock": "Còn hàng trong kho",
+      "made_to_order": "Đặt làm thủ công (3-5 tuần)",
+      "desc": "Mô hình tiểu cảnh diorama gỗ ghép nhiều lớp tinh xảo, tái hiện sống động quy trình làng nghề cổ truyền Việt Nam, đóng gói trong hộp mica bảo vệ 360 độ kèm hệ thống đèn LED ấm cúng.",
+      "maker_province": "Nghệ nhân tỉnh",
+      "out_of_stock": "HẾT HÀNG TRÊN HỆ THỐNG",
+      "add_to_cart": "THÊM VÀO GIỎ HÀNG"
+    },
     "story": {
       "subtitle": "BẢN SẮC CỦA CHÚNG TÔI",
       "title": "Sức Sống Mới Cho Di Sản Việt",
@@ -64,8 +107,25 @@
       "read_more": "Đọc thêm"
     },
     "testimonials": {
-      "subtitle": "KHÁCH HÀNG NÓI GÌ",
-      "title": "Cảm Nhận Thực Tế"
+      "subtitle": "ĐÁNH GIÁ TỪ KHÁCH HÀNG",
+      "title": "Cảm Nhận Trải Nghiệm",
+      "items": [
+        {
+          "name": "Nguyễn Thị Lan",
+          "role": "Giáo viên Mỹ thuật, Hà Nội",
+          "text": "Hộp tiểu cảnh Bát Tràng chi tiết đến kinh ngạc. Tôi dùng làm đồ dùng dạy học cho học sinh về văn hóa truyền thống."
+        },
+        {
+          "name": "Trần Minh Quân",
+          "role": "Kiến trúc sư, TP. HCM",
+          "text": "Mua làm quà tặng đối tác nước ngoài. Ai cũng trầm trồ vì sự tỉ mỉ và câu chuyện văn hóa đằng sau mỗi sản phẩm."
+        },
+        {
+          "name": "Phạm Thu Hương",
+          "role": "Blogger du lịch",
+          "text": "Trải nghiệm AR khi quét mã thực sự ấn tượng. Hộp quà nhỏ nhưng mang cả một câu chuyện làng nghề sống động."
+        }
+      ]
     }
   },
   "shop": {
