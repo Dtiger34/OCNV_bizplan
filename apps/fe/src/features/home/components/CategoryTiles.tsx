@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 interface Category {
   id: string;
   name: string;
-  count: string;
   image: string;
   description: string;
   imageFit?: 'cover' | 'contain';
@@ -69,35 +68,30 @@ export default function CategoryTiles({ onSelectCategory }: CategoryTilesProps) 
     {
       id: 'hop-lang-gom',
       name: t('home.categories.items.gom.name'),
-      count: '12 Mô Hình',
       image: '/image/lang-gom.jpg',
       description: t('home.categories.items.gom.desc')
     },
     {
       id: 'hop-lang-lua',
       name: t('home.categories.items.lua.name'),
-      count: '8 Mô Hình',
       image: '/image/lang-lua.jpg',
       description: t('home.categories.items.lua.desc')
     },
     {
       id: 'hop-lang-non',
       name: t('home.categories.items.non.name'),
-      count: '6 Mô Hình',
       image: '/image/lang-non.webp',
       description: t('home.categories.items.non.desc')
     },
     {
       id: 'hop-lang-huong',
       name: t('home.categories.items.huong.name'),
-      count: '9 Mô Hình',
       image: '/image/lang-huong.webp',
       description: t('home.categories.items.huong.desc')
     },
     {
       id: 'hop-lang-quat',
       name: t('home.categories.items.quat.name'),
-      count: '5 Mô Hình',
       image: '/image/lang-quat.jpg',
       description: t('home.categories.items.quat.desc')
     }

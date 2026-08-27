@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 export default function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   const article = articles.find((a) => a.slug === slug);
   const related = articles.filter((a) => a.slug !== slug).slice(0, 2);
@@ -49,14 +50,14 @@ export default function NewsDetailPage() {
         <div className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-[9px] font-bold tracking-wider text-white uppercase bg-[#7B1C2E]/80 px-2.5 py-1 rounded-full">
-              {article.tag}
+              {article.tag[lang]}
             </span>
             <span className="text-[11px] text-white/60 flex items-center gap-1.5">
-              <Calendar size={11} /> {article.date}
+              <Calendar size={11} /> {article.date[lang]}
             </span>
           </div>
           <h1 className="text-2xl md:text-4xl font-bold text-white leading-tight">
-            {article.title}
+            {article.title[lang]}
           </h1>
         </div>
       </div>
@@ -65,15 +66,15 @@ export default function NewsDetailPage() {
       <div className="container mx-auto px-6 md:px-8 max-w-3xl py-12 space-y-10">
         {/* Lead paragraph */}
         <p className="text-base md:text-lg text-[#ab2124] leading-relaxed italic border-l-2 border-[#C9973A] pl-5">
-          {article.content.lead}
+          {article.content.lead[lang]}
         </p>
 
         {/* Sections */}
-        {article.content.sections.map((section) => (
-          <div key={section.heading} className="space-y-3">
-            <h2 className="text-xl font-bold text-[#ab2124] text-title-gradient">{section.heading}</h2>
+        {article.content.sections.map((section, idx) => (
+          <div key={idx} className="space-y-3">
+            <h2 className="text-xl font-bold text-[#ab2124] text-title-gradient">{section.heading[lang]}</h2>
             <div className="w-8 h-[2px] bg-[#C9973A]" />
-            <p className="text-[15px] text-[#ab2124] leading-relaxed">{section.body}</p>
+            <p className="text-[15px] text-[#ab2124] leading-relaxed">{section.body[lang]}</p>
           </div>
         ))}
 
@@ -117,12 +118,12 @@ export default function NewsDetailPage() {
                   </div>
                   <div className="py-3 pr-4 space-y-1.5">
                     <span className="text-[9px] font-bold tracking-wider text-[#7B1C2E] uppercase flex items-center gap-1">
-                      <Tag size={9} /> {r.tag}
+                      <Tag size={9} /> {r.tag[lang]}
                     </span>
                     <p className="text-[12px] font-bold text-[#ab2124] leading-snug group-hover:text-[#7B1C2E] transition-colors line-clamp-2">
-                      {r.title}
+                      {r.title[lang]}
                     </p>
-                    <span className="text-[10px] text-[#ab2124]">{r.date}</span>
+                    <span className="text-[10px] text-[#ab2124]">{r.date[lang]}</span>
                   </div>
                 </Link>
               ))}

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 export default function VillagesListPage() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   return (
     <div className="min-h-screen bg-[#fff8e7]">
@@ -98,7 +99,7 @@ export default function VillagesListPage() {
                   <div className="relative h-52 overflow-hidden">
                     <img
                       src={village.coverImageUrl}
-                      alt={village.name}
+                      alt={village.name[lang]}
                       className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-108"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#ab2124]/70 via-transparent to-transparent" />
@@ -111,26 +112,26 @@ export default function VillagesListPage() {
 
                     <div className="absolute bottom-3 left-4 right-4">
                       <h2 className="text-white text-lg font-medium leading-tight drop-shadow-md">
-                        {village.name}
+                        {village.name[lang]}
                       </h2>
                     </div>
                   </div>
 
                   {/* Body — nền kem */}
                   <div className="p-5 space-y-3">
-                    <p className="text-xs italic text-[#ab2124]">{village.tagline}</p>
+                    <p className="text-xs italic text-[#ab2124]">{village.tagline[lang]}</p>
                     <p className="text-sm text-[#ab2124] leading-relaxed line-clamp-3">
-                      {village.shortDescription}
+                      {village.shortDescription[lang]}
                     </p>
 
                     <div className="flex items-center gap-4 pt-1">
                       <span className="flex items-center gap-1.5 text-[10px] text-[#ab2124]">
                         <MapPin size={11} />
-                        {village.facts.find((f) => f.label === 'Vị trí')?.value ?? 'Hà Nội'}
+                        {village.facts.find((f) => f.label.vi === 'Vị trí' || f.label.en === 'Location')?.value[lang] ?? 'Hà Nội'}
                       </span>
                       <span className="flex items-center gap-1.5 text-[10px] text-[#ab2124]">
                         <Clock size={11} />
-                        {village.facts.find((f) => f.label === 'Lịch sử')?.value ?? ''}
+                        {village.facts.find((f) => f.label.vi === 'Lịch sử' || f.label.en === 'History')?.value[lang] ?? ''}
                       </span>
                     </div>
 

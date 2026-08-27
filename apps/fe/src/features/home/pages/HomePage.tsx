@@ -33,7 +33,8 @@ function apiToProduct(p: any): Product {
 export default function HomePage() {
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -199,16 +200,16 @@ export default function HomePage() {
                 <div className="p-5 space-y-3 bg-[#fff8e7]">
                   <div className="flex items-center gap-3">
                     <span className="text-[9px] font-bold tracking-wider text-[#7B1C2E] uppercase bg-[#7B1C2E]/10 px-2 py-0.5 rounded-full">
-                      {article.tag}
+                      {article.tag[lang]}
                     </span>
                     <span className="text-[10px] text-[#ab2124] flex items-center gap-1">
-                      <Calendar size={10} /> {article.date}
+                      <Calendar size={10} /> {article.date[lang]}
                     </span>
                   </div>
                   <h3 className="text-base font-bold text-[#ab2124] leading-snug group-hover:text-[#7B1C2E] transition-colors">
-                    {article.title}
+                    {article.title[lang]}
                   </h3>
-                  <p className="text-[12px] text-[#ab2124]/80 leading-relaxed line-clamp-2">{article.excerpt}</p>
+                  <p className="text-[12px] text-[#ab2124]/80 leading-relaxed line-clamp-2">{article.excerpt[lang]}</p>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#C9973A] tracking-wide group-hover:gap-2 transition-all">
                     {t('home.news.read_more')} <ArrowRight size={11} />
                   </span>

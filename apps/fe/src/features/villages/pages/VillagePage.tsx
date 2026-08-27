@@ -31,7 +31,8 @@ declare global {
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
   const village = getVillage(slug ?? '');
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [viewerReady, setViewerReady] = useState(false);
@@ -69,8 +70,8 @@ export default function VillagePage() {
     );
   }
 
-  const introParagraphs = village.intro.split('\n\n').filter(Boolean);
-  const historyParagraphs = village.historyText?.split('\n\n').filter(Boolean) ?? [];
+  const introParagraphs = village.intro[lang].split('\n\n').filter(Boolean);
+  const historyParagraphs = village.historyText?.[lang]?.split('\n\n').filter(Boolean) ?? [];
 
   return (
     <div className="min-h-screen bg-parchment">
@@ -100,9 +101,9 @@ export default function VillagePage() {
                 {t('village_detail.traditional_village')}
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-ink leading-tight mb-4">
-                {village.name}
+                {village.name[lang]}
               </h1>
-              <p className="text-base sm:text-lg italic text-wood mb-5">{village.tagline}</p>
+              <p className="text-base sm:text-lg italic text-wood mb-5">{village.tagline[lang]}</p>
               <div className="h-px w-16" style={{ backgroundColor: village.color + '80' }} />
             </motion.div>
 
@@ -119,7 +120,7 @@ export default function VillagePage() {
                   village.youtubeId ? (
                     <iframe
                       src={`https://www.youtube.com/embed/${village.youtubeId}?autoplay=1`}
-                      title={`Video giới thiệu ${village.name}`}
+                      title={`Video giới thiệu ${village.name[lang]}`}
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -134,7 +135,7 @@ export default function VillagePage() {
                   ) : (
                     <div className="w-full h-full flex items-center justify-center px-4 text-center">
                       <p className="text-[#D4B896] text-xs sm:text-sm">
-                        {t('village_detail.video_soon', { name: village.name })}
+                        {t('village_detail.video_soon', { name: village.name[lang] })}
                       </p>
                     </div>
                   )
@@ -145,7 +146,7 @@ export default function VillagePage() {
                   >
                     <img
                       src={village.coverImageUrl}
-                      alt={`${t('village_detail.video_intro')} ${village.name}`}
+                      alt={`${t('village_detail.video_intro')} ${village.name[lang]}`}
                       className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
                     />
                     <div className="absolute inset-0 bg-ink/30 flex flex-col items-center justify-center gap-2">
@@ -241,7 +242,7 @@ export default function VillagePage() {
                     return (
                       <div className="absolute inset-x-2 bottom-2 z-20 bg-white rounded-lg shadow-2xl p-2.5">
                         <div className="flex items-start justify-between gap-2 mb-1">
-                          <p className="text-[11px] font-semibold text-ink leading-tight">{point.title}</p>
+                          <p className="text-[11px] font-semibold text-ink leading-tight">{point.title[lang]}</p>
                           <button
                             onClick={() => setActivePreviewPoint(null)}
                             className="text-[#ab2124] hover:text-ink shrink-0"
@@ -249,7 +250,7 @@ export default function VillagePage() {
                             <X size={12} />
                           </button>
                         </div>
-                        <p className="text-[10px] text-wood leading-snug line-clamp-3">{point.description}</p>
+                        <p className="text-[10px] text-wood leading-snug line-clamp-3">{point.description[lang]}</p>
                       </div>
                     );
                   })()}
@@ -333,9 +334,9 @@ export default function VillagePage() {
       <section className="bg-[#EDE3CE] border-b border-[#D4B896]/60">
         <div className="max-w-5xl mx-auto px-4 py-5 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           {village.facts.map((fact) => (
-            <div key={fact.label}>
-              <p className="text-sm sm:text-base font-medium text-ink mb-0.5">{fact.value}</p>
-              <p className="text-[10px] tracking-widest text-[#ab2124] uppercase">{fact.label}</p>
+            <div key={fact.label.vi}>
+              <p className="text-sm sm:text-base font-medium text-ink mb-0.5">{fact.value[lang]}</p>
+              <p className="text-[10px] tracking-widest text-[#ab2124] uppercase">{fact.label[lang]}</p>
             </div>
           ))}
         </div>
@@ -431,11 +432,11 @@ export default function VillagePage() {
                     )}
                   </div>
                   <div className="pb-6">
-                    <p className="text-sm sm:text-base font-semibold text-ink mb-2">{milestone.period}</p>
+                    <p className="text-sm sm:text-base font-semibold text-ink mb-2">{milestone.period[lang]}</p>
                     <ul className="space-y-1.5">
                       {milestone.points.map((point, j) => (
                         <li key={j} className="text-sm text-wood leading-relaxed">
-                          {point}
+                          {point[lang]}
                         </li>
                       ))}
                     </ul>
@@ -482,7 +483,7 @@ export default function VillagePage() {
                 >
                   <img
                     src={img}
-                    alt={`${village.name} ${i + 1}`}
+                    alt={`${village.name[lang]} ${i + 1}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-all duration-300" />
@@ -499,10 +500,10 @@ export default function VillagePage() {
           <div className="max-w-2xl mx-auto text-center">
             <Quote size={26} className="mx-auto mb-5 opacity-40" style={{ color: village.color }} />
             <blockquote className="text-lg sm:text-xl text-white font-light italic leading-relaxed mb-5">
-              "{village.artisanQuote}"
+              "{village.artisanQuote[lang]}"
             </blockquote>
             {village.artisanStory && (
-              <p className="text-xs text-[#ab2124] leading-relaxed max-w-lg mx-auto">{village.artisanStory}</p>
+              <p className="text-xs text-[#ab2124] leading-relaxed max-w-lg mx-auto">{village.artisanStory[lang]}</p>
             )}
           </div>
         </section>
@@ -539,7 +540,7 @@ export default function VillagePage() {
                     <div className="relative overflow-hidden rounded-lg aspect-4/3">
                       <img
                         src={stage.imageUrl}
-                        alt={stage.title}
+                        alt={stage.title[lang]}
                         className="w-full h-full object-cover"
                       />
                       {/* Số thứ tự đè lên ảnh */}
@@ -560,9 +561,9 @@ export default function VillagePage() {
                     >
                       {t('village_detail.step', { order: stage.order })}
                     </p>
-                    <h3 className="text-xl font-medium text-ink">{stage.title}</h3>
+                    <h3 className="text-xl font-medium text-ink">{stage.title[lang]}</h3>
                     <div className="h-px w-8 bg-[#D4B896]" />
-                    <p className="text-sm text-wood leading-relaxed">{stage.description}</p>
+                    <p className="text-sm text-wood leading-relaxed">{stage.description[lang]}</p>
                     {stage.details && stage.details.length > 0 && (
                       <ul className="space-y-2 pt-1">
                         {stage.details.map((d, j) => (
@@ -572,7 +573,7 @@ export default function VillagePage() {
                               className="shrink-0 mt-0.5"
                               style={{ color: village.color }}
                             />
-                            {d}
+                            {d[lang]}
                           </li>
                         ))}
                       </ul>

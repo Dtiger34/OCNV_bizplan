@@ -55,7 +55,8 @@ export default function VillageXr8Page() {
   const [screenPoints, setScreenPoints] = useState<{ id: string; x: number; y: number }[]>([]);
   const modelRef = useRef<Object3D | null>(null);
   const rafRef = useRef<number>(0);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   const arAssets = VILLAGE_AR_MODELS[slug ?? ''];
   const arPoints = VILLAGE_AR_POINTS[slug ?? ''] ?? [];
@@ -276,12 +277,12 @@ export default function VillageXr8Page() {
                 }}
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
-                  <p className="text-sm font-semibold text-ink">{point.title}</p>
+                  <p className="text-sm font-semibold text-ink">{point.title[lang]}</p>
                   <button onClick={() => setActivePointId(null)} className="text-[#ab2124] hover:text-ink shrink-0">
                     <X size={16} />
                   </button>
                 </div>
-                <p className="text-xs text-wood leading-relaxed">{point.description}</p>
+                <p className="text-xs text-wood leading-relaxed">{point.description[lang]}</p>
               </div>
             );
           })}
