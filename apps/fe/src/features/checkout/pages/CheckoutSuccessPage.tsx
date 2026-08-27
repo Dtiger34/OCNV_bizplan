@@ -1,10 +1,12 @@
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home, Loader2 } from 'lucide-react';
 import { useOrderByCode } from '@/features/orders/hooks/useOrders';
+import { useTranslation } from 'react-i18next';
 
 export default function CheckoutSuccessPage() {
   const [searchParams] = useSearchParams();
   const orderCode = searchParams.get('orderCode');
+  const { t } = useTranslation();
 
   const { data: order, isLoading, error } = useOrderByCode(orderCode || '');
 
@@ -12,9 +14,9 @@ export default function CheckoutSuccessPage() {
     return (
       <div className="container mx-auto px-6 md:px-8 py-16 max-w-md text-center">
         <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] p-8 space-y-4">
-          <h2 className="text-2xl font-bold text-[#7B1C2E]">❌ Không tìm thấy đơn hàng</h2>
+          <h2 className="text-2xl font-bold text-[#7B1C2E]">{t('checkout_success.not_found')}</h2>
           <Link to="/shop" className="text-[#C9973A] hover:underline">
-            ← Quay lại cửa hàng
+            {t('checkout_success.back_to_shop')}
           </Link>
         </div>
       </div>
@@ -26,7 +28,7 @@ export default function CheckoutSuccessPage() {
       <div className="container mx-auto px-6 md:px-8 py-16 max-w-md text-center">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-8 h-8 animate-spin text-[#C9973A]" />
-          <p className="text-[#ab2124]">Đang tải thông tin đơn hàng...</p>
+          <p className="text-[#ab2124]">{t('checkout_success.loading')}</p>
         </div>
       </div>
     );
@@ -36,10 +38,10 @@ export default function CheckoutSuccessPage() {
     return (
       <div className="container mx-auto px-6 md:px-8 py-16 max-w-md text-center">
         <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[8px] p-8 space-y-4">
-          <h2 className="text-2xl font-bold text-[#7B1C2E]">❌ Không tìm thấy đơn hàng</h2>
-          <p className="text-sm text-[#ab2124]">{error ? 'Có lỗi xảy ra' : 'Đơn hàng không tồn tại'}</p>
+          <h2 className="text-2xl font-bold text-[#7B1C2E]">{t('checkout_success.not_found')}</h2>
+          <p className="text-sm text-[#ab2124]">{error ? t('checkout_success.error_occurred') : t('checkout_success.not_exist')}</p>
           <Link to="/profile/orders" className="text-[#C9973A] hover:underline">
-            ← Xem lịch sử đơn hàng
+            {t('checkout_success.view_history')}
           </Link>
         </div>
       </div>
@@ -54,16 +56,16 @@ export default function CheckoutSuccessPage() {
 
           <div className="space-y-2">
             <span className="text-[10px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">
-              ĐẶT HÀNG THÀNH CÔNG
+              {t('checkout_success.success_title')}
             </span>
-            <h1 className="text-3xl font-normal text-[#ab2124] text-title-gradient">Đơn Hàng Ghi Nhận</h1>
+            <h1 className="text-3xl font-normal text-[#ab2124] text-title-gradient">{t('checkout_success.success_heading')}</h1>
             <p className="text-xs text-[#ab2124]">
-              Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ sớm liên hệ qua số điện thoại để xác nhận.
+              {t('checkout_success.success_desc')}
             </p>
           </div>
 
           <div className="p-4 bg-[#fff8e7] border border-[#D4B896] rounded-md text-sm text-[#ab2124] font-bold">
-            MÃ ĐƠN HÀNG: {order.orderCode}
+            {t('checkout_success.order_code', { code: order.orderCode })}
           </div>
         </div>
 
@@ -71,7 +73,7 @@ export default function CheckoutSuccessPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           {/* Shipping Info */}
           <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-            <h4 className="font-bold text-[#ab2124]">Địa chỉ giao nhận</h4>
+            <h4 className="font-bold text-[#ab2124]">{t('checkout_success.shipping_address')}</h4>
             <p className="text-[#ab2124]">
               {order.shippingAddress.fullName}<br />
               {order.shippingAddress.phone}<br />
@@ -82,18 +84,18 @@ export default function CheckoutSuccessPage() {
 
           {/* Payment Info */}
           <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-            <h4 className="font-bold text-[#ab2124]">Thông tin thanh toán</h4>
+            <h4 className="font-bold text-[#ab2124]">{t('checkout_success.payment_info')}</h4>
             <p className="text-[#ab2124]">
-              <strong>Phương thức:</strong> {
-                order.payment.method === 'cod' ? 'Thanh toán khi nhận hàng (COD)' :
-                order.payment.method === 'bank_transfer' ? 'Chuyển khoản ngân hàng' :
-                'PayOS QR Code'
+              <strong>{t('checkout_success.method')}</strong> {
+                order.payment.method === 'cod' ? t('checkout_success.method_cod') :
+                order.payment.method === 'bank_transfer' ? t('checkout_success.method_bank') :
+                t('checkout_success.method_qr')
               }
               <br />
-              <strong>Trạng thái:</strong> {
-                order.payment.status === 'pending' ? 'Chờ thanh toán' :
-                order.payment.status === 'paid' ? 'Đã thanh toán' :
-                'Thanh toán thất bại'
+              <strong>{t('checkout_success.status')}</strong> {
+                order.payment.status === 'pending' ? t('checkout_success.status_pending') :
+                order.payment.status === 'paid' ? t('checkout_success.status_paid') :
+                t('checkout_success.status_failed')
               }
             </p>
           </div>
@@ -101,7 +103,7 @@ export default function CheckoutSuccessPage() {
 
         {/* Order Items */}
         <div className="space-y-2 p-3 bg-white border border-[#D4B896] rounded-md">
-          <h4 className="font-bold text-[#ab2124] mb-2">Sản phẩm đặt hàng</h4>
+          <h4 className="font-bold text-[#ab2124] mb-2">{t('checkout_success.order_items')}</h4>
           <div className="space-y-2">
             {order.items.map((item, idx) => (
               <div key={idx} className="flex justify-between text-xs text-[#ab2124]">
@@ -115,15 +117,15 @@ export default function CheckoutSuccessPage() {
 
           <div className="border-t border-[#D4B896] mt-3 pt-3 space-y-1 text-xs">
             <div className="flex justify-between">
-              <span>Tạm tính:</span>
+              <span>{t('checkout_success.subtotal')}</span>
               <span className="font-bold">{order.subtotal.toLocaleString('vi-VN')} ₫</span>
             </div>
             <div className="flex justify-between">
-              <span>Phí vận chuyển:</span>
+              <span>{t('checkout_success.shipping_fee')}</span>
               <span className="font-bold">{order.shippingFee.toLocaleString('vi-VN')} ₫</span>
             </div>
             <div className="flex justify-between font-bold text-[#7B1C2E]">
-              <span>TỔNG CỘNG:</span>
+              <span>{t('checkout_success.total')}</span>
               <span>{order.total.toLocaleString('vi-VN')} ₫</span>
             </div>
           </div>
@@ -135,7 +137,7 @@ export default function CheckoutSuccessPage() {
             to="/profile/orders"
             className="w-full h-11 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2"
           >
-            Theo dõi Đơn hàng
+            {t('checkout_success.track_order')}
             <ArrowRight size={14} />
           </Link>
 
@@ -144,13 +146,13 @@ export default function CheckoutSuccessPage() {
             className="w-full h-11 border border-[#D4B896] text-[#ab2124] hover:bg-[#ab2124]/5 text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2"
           >
             <Home size={14} />
-            Tiếp tục mua sắm
+            {t('checkout_success.continue_shopping')}
           </Link>
         </div>
 
         {/* Help */}
         <div className="text-center text-[10px] text-[#ab2124] space-y-1">
-          <p>Cần giúp đỡ?</p>
+          <p>{t('checkout_success.need_help')}</p>
           <a href="mailto:hotro@nghexuanetmoi.vn" className="text-[#C9973A] hover:underline">
             hotro@nghexuanetmoi.vn
           </a>

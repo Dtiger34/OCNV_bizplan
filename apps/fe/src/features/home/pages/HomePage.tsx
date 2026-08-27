@@ -7,6 +7,7 @@ import ProductCard, { Product } from '../components/ProductCard';
 import { useCart } from '@/context/CartContext';
 import { X, Calendar, MapPin, Award, ArrowRight, Star, ShieldCheck, Truck } from 'lucide-react';
 import { useFeaturedProducts } from '../../products/hooks/useProducts';
+import { useTranslation } from 'react-i18next';
 
 const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
 
@@ -32,6 +33,7 @@ function apiToProduct(p: any): Product {
 export default function HomePage() {
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -91,14 +93,14 @@ export default function HomePage() {
           {/* Header */}
           <div className="text-center space-y-4">
             <span className="reveal text-[13px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">
-              BẢN SẮC CỦA CHÚNG TÔI
+              {t('home.story.subtitle')}
             </span>
             <h2 className="reveal delay-150 text-2xl md:text-3xl lg:text-[40px] font-bold text-[#ab2124] leading-tight text-title-gradient">
-              Sức Sống Mới Cho Di Sản Việt
+              {t('home.story.title')}
             </h2>
             <div className="reveal delay-225 w-12 h-[1px] bg-[#C9973A]/60 mx-auto" />
             <p className="reveal delay-300 text-base md:text-lg text-[#ab2124] leading-relaxed max-w-4xl mx-auto text-justify text-pretty">
-              Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện của những làng nghề Việt Nam đến gần hơn với mọi người.
+              {t('home.story.desc')}
             </p>
           </div>
 
@@ -107,18 +109,18 @@ export default function HomePage() {
             {[
               {
                 icon: <Award size={28} className="text-[#C9973A]" />,
-                title: 'Sản phẩm mang câu chuyện',
-                desc: 'Mỗi mô hình tiểu cảnh 3D không chỉ là vật trang trí — đó là cả một câu chuyện về làng nghề, về người nghệ nhân và tâm huyết truyền đời. Bạn sở hữu một tác phẩm, bạn giữ một ký ức văn hóa.',
+                title: t('home.story.pillar1_title'),
+                desc: t('home.story.pillar1_desc'),
               },
               {
                 icon: <MapPin size={28} className="text-[#C9973A]" />,
-                title: 'Quy trình làng nghề thật',
-                desc: 'Từ bàn tay người thợ gốm Bát Tràng, khung cửi lụa Vạn Phúc đến lò hương Quảng Phú Cầu — chúng tôi ghi lại và tái hiện từng công đoạn thủ công qua mô hình và trải nghiệm AR sống động.',
+                title: t('home.story.pillar2_title'),
+                desc: t('home.story.pillar2_desc'),
               },
               {
                 icon: <Star size={28} className="text-[#C9973A]" />,
-                title: 'Khám phá văn hóa làng nghề',
-                desc: 'Đi sâu vào lịch sử, con người và tinh thần của 5 làng nghề nổi tiếng Việt Nam. Mỗi trang làng nghề là một hành trình — từ nguồn gốc, quy trình đến nét đặc trưng chỉ nơi đó mới có.',
+                title: t('home.story.pillar3_title'),
+                desc: t('home.story.pillar3_desc'),
               },
             ].map((item, i) => (
               <div key={i} className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-3 hover:border-[#C9973A] transition-colors">
@@ -137,7 +139,7 @@ export default function HomePage() {
               to="/villages"
               className="inline-flex items-center gap-2 px-7 py-3 bg-[#7B1C2E] text-[#fff8e7] text-sm font-bold tracking-wider uppercase rounded-sm hover:bg-[#9B2438] transition-colors"
             >
-              Khám phá các làng nghề
+              {t('home.story.cta')}
               <ArrowRight size={15} />
             </Link>
           </div>
@@ -150,10 +152,10 @@ export default function HomePage() {
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
           {[
-            { value: '5+', label: 'Làng nghề được tái hiện', icon: <MapPin size={20} className="text-[#C9973A]" /> },
-            { value: '1 năm', label: 'Bảo hành sản phẩm', icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
-            { value: '98%', label: 'Khách hàng hài lòng', icon: <Star size={20} className="text-[#C9973A]" /> },
-            { value: '2-5 ngày', label: 'Giao hàng toàn quốc', icon: <Truck size={20} className="text-[#C9973A]" /> },
+            { value: '5+', label: t('home.stats.villages'), icon: <MapPin size={20} className="text-[#C9973A]" /> },
+            { value: '1 năm', label: t('home.stats.warranty'), icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
+            { value: '98%', label: t('home.stats.satisfaction'), icon: <Star size={20} className="text-[#C9973A]" /> },
+            { value: '2-5 ngày', label: t('home.stats.shipping'), icon: <Truck size={20} className="text-[#C9973A]" /> },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col items-center text-center gap-2 p-6 border border-[#D4B896]/40 rounded-[4px] bg-[#fff8e7]/60 hover:border-[#C9973A]/60 transition-colors">
               {stat.icon}
@@ -175,8 +177,8 @@ export default function HomePage() {
       {/* 5. News / Blog Section */}
       <section className="container mx-auto px-6 md:px-8 space-y-8">
         <div className="text-center space-y-3 reveal">
-          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">TIN TỨC & CẢM HỨNG</span>
-          <h2 className="text-3xl md:text-[36px] font-bold text-[#ab2124] tracking-wide text-title-gradient">Câu Chuyện Di Sản</h2>
+          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">{t('home.news.subtitle')}</span>
+          <h2 className="text-3xl md:text-[36px] font-bold text-[#ab2124] tracking-wide text-title-gradient">{t('home.news.title')}</h2>
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -208,7 +210,7 @@ export default function HomePage() {
                   </h3>
                   <p className="text-[12px] text-[#ab2124]/80 leading-relaxed line-clamp-2">{article.excerpt}</p>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#C9973A] tracking-wide group-hover:gap-2 transition-all">
-                    Đọc thêm <ArrowRight size={11} />
+                    {t('home.news.read_more')} <ArrowRight size={11} />
                   </span>
                 </div>
               </div>
@@ -220,8 +222,8 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="container mx-auto px-6 md:px-8 space-y-8 pb-16">
         <div className="text-center space-y-2 reveal">
-          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">KHÁCH HÀNG NÓI GÌ</span>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">Cảm Nhận Thực Tế</h2>
+          <span className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase block">{t('home.testimonials.subtitle')}</span>
+          <h2 className="text-2xl md:text-3xl font-bold text-[#ab2124] text-title-gradient">{t('home.testimonials.title')}</h2>
           <div className="w-12 h-[1px] bg-[#C9973A] mx-auto mt-2" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -1,0 +1,617 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "stories": "Stories",
+      "about": "About Us",
+      "policies": "Policies"
+    },
+    "actions": {
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "admin": "Admin"
+    },
+    "brand": "ANCIENT CRAFT NEW ESSENCE"
+  },
+  "footer": {
+    "brand": "ANCIENT CRAFT NEW ESSENCE",
+    "address": "36 Hang Be Street, Hoan Kiem District, Hanoi, Vietnam",
+    "villages_title": "CRAFT VILLAGE DIORAMAS",
+    "villages": {
+      "bat_trang": "Bat Trang Pottery Village",
+      "van_phuc": "Van Phuc Silk Village",
+      "chuong": "Chuong Conical Hat Village",
+      "quang_phu_cau": "Quang Phu Cau Incense Village",
+      "chang_son": "Chang Son Fan Village"
+    },
+    "policies_title": "POLICIES & VIEWING",
+    "policies": {
+      "shipping": "Nationwide Shipping",
+      "warranty": "Model Warranty (1 Year)",
+      "faq": "Frequently Asked Questions",
+      "contact": "Contact & Feedback"
+    },
+    "newsletter_title": "HERITAGE NEWS",
+    "newsletter_desc": "Subscribe to receive news about the latest diorama models and exclusive offers.",
+    "newsletter_placeholder": "Artisan @email.com",
+    "newsletter_success": "Successfully subscribed to newsletter!",
+    "copyright": "© {{year}} Ancient Craft New Essence. All rights reserved."
+  },
+  "home": {
+    "story": {
+      "subtitle": "OUR IDENTITY",
+      "title": "New Life For Vietnamese Heritage",
+      "desc": "Ancient Craft New Essence is a project combining traditional handicrafts and modern technology — bringing the stories of Vietnamese craft villages closer to everyone.",
+      "pillar1_title": "Products with stories",
+      "pillar1_desc": "Each 3D diorama is not just a decoration — it's a story about the craft village, the artisan, and their lifelong dedication. You own a masterpiece, you keep a cultural memory.",
+      "pillar2_title": "Authentic craft processes",
+      "pillar2_desc": "From the hands of Bat Trang potters, Van Phuc silk looms to Quang Phu Cau incense kilns — we capture and recreate every manual step through models and vivid AR experiences.",
+      "pillar3_title": "Explore craft village culture",
+      "pillar3_desc": "Dive deep into the history, people, and spirit of 5 famous Vietnamese craft villages. Each village page is a journey — from origins, processes to unique characteristics found nowhere else.",
+      "cta": "Explore the villages"
+    },
+    "stats": {
+      "villages": "Villages recreated",
+      "warranty": "Product warranty",
+      "satisfaction": "Satisfied customers",
+      "shipping": "Nationwide shipping"
+    },
+    "news": {
+      "subtitle": "NEWS & INSPIRATION",
+      "title": "Heritage Stories",
+      "read_more": "Read more"
+    },
+    "testimonials": {
+      "subtitle": "WHAT CUSTOMERS SAY",
+      "title": "Real Testimonials"
+    }
+  },
+  "shop": {
+    "title": "Products",
+    "all_products": "All Products",
+    "products_count": "{{count}} products",
+    "filter_btn": "Filter",
+    "sidebar": {
+      "title": "Search & Filter",
+      "search": "Search",
+      "search_placeholder": "Product name...",
+      "search_btn": "Search",
+      "category": "Category",
+      "price_range": "Price Range",
+      "custom_price": "Custom Price Range",
+      "from": "From",
+      "to": "To",
+      "apply_btn": "Apply",
+      "reset_btn": "Clear filters",
+      "ranges": {
+        "all": "All",
+        "under_100": "Under 100,000₫",
+        "100_300": "100,000 – 300,000₫",
+        "300_500": "300,000 – 500,000₫",
+        "above_500": "Above 500,000₫"
+      },
+      "categories": {
+        "all": "All",
+        "model": "Model",
+        "puzzle": "Puzzle",
+        "magnet": "Magnet"
+      }
+    },
+    "no_products": "No matching products found",
+    "try_again": "Try a different keyword or clear filters.",
+    "status": {
+      "out_of_stock": "Out of stock",
+      "low_stock": "Low stock"
+    },
+    "add_to_cart": "Add to cart",
+    "added_success": "Added to cart!"
+  },
+  "about": {
+    "hero": {
+      "subtitle": "About Us",
+      "title": "Ancient Craft<br />New Essence",
+      "desc": "A creative cultural brand bringing a new approach to Vietnamese traditional craft villages — combining craft values with AR, QR Storytelling, and phygital products, turning each product into a cultural discovery journey."
+    },
+    "stats": {
+      "villages": "Villages",
+      "history": "Years of history",
+      "interaction": "Interactive"
+    },
+    "vision": {
+      "title": "Vision",
+      "desc": "Ancient Craft New Essence aims to become a leading creative cultural brand, contributing to bringing the heritage of Vietnamese traditional craft villages closer to the public through modern interactive experiences, awakening love and pride in national cultural identity."
+    },
+    "mission": {
+      "title": "Mission",
+      "desc": "Preserving and spreading the quintessence of Vietnamese traditional craft villages by creating cultural products combining technology, helping heritage to be approached in a friendly, attractive, and suitable way for contemporary life."
+    },
+    "values_title": "Core Values",
+    "values": {
+      "authenticity": {
+        "title": "Cultural Authenticity",
+        "subtitle": "Preserving cultural identity",
+        "desc": "Respecting and preserving the original values of Vietnamese traditional craft villages, ensuring each product and experience truly reflects the cultural identity and quintessence."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "subtitle": "Creative innovation",
+        "desc": "Combining modern technology with creative thinking to develop engaging cultural experiences, while preserving the core values of traditional crafts."
+      },
+      "learning": {
+        "title": "Cultural Learning",
+        "subtitle": "Spreading cultural knowledge",
+        "desc": "Translating cultural stories and knowledge into visual, accessible, and interactive experiences, helping the public better understand the heritage of Vietnamese craft villages."
+      },
+      "community": {
+        "title": "Community Connection",
+        "subtitle": "Connecting communities",
+        "desc": "Promoting connection and cooperation between artisans, local communities, customers, and cultural organizations to co-create values and contribute to heritage preservation."
+      },
+      "sustainability": {
+        "title": "Sustainability",
+        "subtitle": "Sustainable development",
+        "desc": "Committed to contributing to the conservation and sustainable development of Vietnamese traditional craft villages through responsible innovation and creating long-lasting cultural values."
+      }
+    },
+    "quote": "\"Ancient Craft New Essence not only recreates Vietnamese craft villages but also creates a new way for people to experience traditional culture in the digital age.\"",
+    "cta": "Explore the villages"
+  },
+  "villages": {
+    "list": {
+      "subtitle": "Ancient Craft New Essence",
+      "title": "<span className=\"gradient-line\">Craft Village</span> <br /> <span className=\"gradient-line italic\">Stories</span>",
+      "desc": "A journey to discover 5 traditional craft villages in Hanoi — where history, culture, and artisan talent have been preserved for hundreds of years.",
+      "stats": {
+        "villages": "Villages",
+        "history": "Years of History",
+        "stories": "Stories"
+      },
+      "explore": "Explore",
+      "featured_title": "Featured <span className=\"italic text-[#ab2124]\">Villages</span>",
+      "location": "Location",
+      "history_label": "History",
+      "explore_btn": "Explore"
+    }
+  },
+  "product": {
+    "loading": "Loading product...",
+    "not_found": "Product not found.",
+    "back_to_shop": "← Back to shop",
+    "added_success": "Added {{qty}} products to cart!",
+    "review_success": "Thank you for your review!",
+    "review_error": "Failed to submit review. Please try again.",
+    "home": "Home",
+    "shop": "Shop",
+    "prev_image": "Previous image",
+    "next_image": "Next image",
+    "view_ar": "VIEW 3D AR",
+    "reviews_count": "{{count}} Reviews",
+    "sold_count": "Sold {{count}}",
+    "product_type": "Product type",
+    "product_type_val": "3D Miniature Village Model",
+    "village_theme": "Village theme",
+    "technology": "Technology",
+    "technology_val": "AR integrated — scan to view 3D",
+    "origin": "Origin",
+    "origin_val": "Vietnam — Ancient Craft New Essence",
+    "status_label": "Status",
+    "in_stock": "{{count}} products in stock",
+    "out_of_stock": "Out of stock",
+    "quantity": "Quantity",
+    "available": "{{count}} pieces available",
+    "add_to_cart": "Add To Cart",
+    "buy_now": "Buy Now",
+    "description": "Product Description",
+    "desc_intro": "This is a 3D miniature model recreating the space and production process of <strong>{{village}}</strong>. Each product is meticulously handcrafted, combining AR technology so you can scan the code and explore the entire village story right on your phone.",
+    "default_village": "traditional Vietnamese craft village",
+    "specs": "Product Specifications",
+    "includes": "Package includes",
+    "care": "Care instructions",
+    "features": {
+      "craft": {
+        "title": "Handicraft",
+        "desc": "Every detail is handcrafted by skilled artisans"
+      },
+      "ar": {
+        "title": "Integrated 3D AR",
+        "desc": "Scan to explore the village production process via AR"
+      },
+      "culture": {
+        "title": "Cultural story",
+        "desc": "Each model carries the history and spirit of the village"
+      }
+    },
+    "reviews_title": "Product Reviews",
+    "out_of_5": "out of 5",
+    "reviews_from_customers": "{{count}} customer reviews",
+    "no_reviews": "No reviews yet. Be the first!",
+    "write_review": "Write your review",
+    "your_name": "Your name *",
+    "rating": "Rating:",
+    "review_placeholder": "Share your experience with this product...",
+    "submitting": "Submitting...",
+    "submit_review": "Submit Review",
+    "related": "Related Products",
+    "guest": "Customer"
+  },
+  "village_detail": {
+    "not_found": "Village not found.",
+    "back_to_list": "← Back to list",
+    "village_label": "Craft Village",
+    "traditional_village": "Traditional Craft Village",
+    "video_soon": "Introductory video of {{name}} will be updated soon.",
+    "video_intro": "Intro Video",
+    "source": "Source",
+    "3d_model": "3D Model",
+    "scan_ar": "Scan QR code with phone to view AR",
+    "intro_title_1": "1. Overview",
+    "intro_title_2": "About The <span className=\"italic text-[#ab2124]\">Craft Village</span>",
+    "history_title_1": "2. History and Development",
+    "history_title_2": "A Journey of <span className=\"italic text-[#ab2124]\">Centuries</span>",
+    "gallery": "Gallery",
+    "process_title_1": "Process",
+    "process_title_2": "From Raw Materials <span className=\"italic text-[#ab2124]\">To Masterpieces</span>",
+    "step": "Step {{order}}",
+    "explore_more": "Explore More",
+    "explore_other": "Discover <span className=\"italic text-[#D4B896]\">Other</span> Villages",
+    "view_all": "View All Villages"
+  },
+  "cart": {
+    "title": "YOUR SHOPPING CART",
+    "subtitle": "Review the items and quantity of diorama models in your cart",
+    "empty": "Your cart is empty",
+    "empty_desc": "Explore our unique craft village miniature models to find your favorite products.",
+    "go_to_shop": "GO TO SHOP",
+    "clear_all": "CLEAR ALL ITEMS",
+    "continue_shopping": "CONTINUE SHOPPING",
+    "summary_title": "ORDER SUMMARY",
+    "subtotal": "Subtotal:",
+    "shipping": "Shipping fee:",
+    "free_shipping": "Free",
+    "total": "Total:",
+    "checkout_btn": "PROCEED TO CHECKOUT"
+  },
+  "checkout": {
+    "title": "CHECKOUT",
+    "subtitle": "Please enter your shipping information and select a payment method",
+    "success_msg": "Payment successful!",
+    "qr_title": "Scan QR Code to Pay",
+    "qr_amount": "Amount to pay",
+    "qr_guide_title": "How to pay:",
+    "qr_step_1": "Open your banking app (VPBank, Vietcombank, Techcombank…)",
+    "qr_step_2": "Select \"Scan QR code\" or \"Transfer\"",
+    "qr_step_3": "Scan the code above and confirm",
+    "qr_waiting": "Waiting for payment confirmation...",
+    "copy_btn": "Copy",
+    "copied_btn": "Copied",
+    "err_name": "Please enter your full name",
+    "err_phone": "Please enter your phone number",
+    "err_province": "Please enter your province/city",
+    "err_street": "Please enter your detailed address",
+    "err_empty": "Your cart is empty",
+    "err_qr_failed": "Failed to create payment QR. Please try again.",
+    "err_order_failed": "An error occurred while creating your order. Please try again.",
+    "section_address": "1. Shipping Address",
+    "name_label": "Full Name *",
+    "phone_label": "Phone Number *",
+    "province_label": "Province / City *",
+    "district_label": "District *",
+    "ward_label": "Ward *",
+    "street_label": "Detailed Address (House No, Street) *",
+    "note_label": "Order Note",
+    "note_placeholder": "Note for the shipping carrier...",
+    "section_payment": "2. Payment Method",
+    "cod_title": "Cash on Delivery (COD)",
+    "cod_desc": "Pay in cash when the shipper delivers the goods to you",
+    "qr_pay_title": "Internet Banking / VietQR",
+    "qr_pay_desc": "Scan QR code with your banking app — supports all Vietnamese banks",
+    "qr_pay_hint": "The QR code will be displayed right on the next page after placing the order — no need to leave the website.",
+    "summary_title": "ORDER SUMMARY",
+    "empty_cart": "Cart is empty",
+    "creating_order": "CREATING ORDER...",
+    "creating_qr": "GENERATING QR CODE...",
+    "btn_cod": "PLACE ORDER — PAY ON DELIVERY",
+    "btn_qr": "PLACE ORDER & PAY VIA QR",
+    "total_summary": "Total:"
+  },
+  "checkout_success": {
+    "not_found": "❌ Order not found",
+    "back_to_shop": "← Back to shop",
+    "loading": "Loading order information...",
+    "error_occurred": "An error occurred",
+    "not_exist": "Order does not exist",
+    "view_history": "← View order history",
+    "success_title": "ORDER SUCCESSFUL",
+    "success_heading": "Order Received",
+    "success_desc": "Thank you for your order. We will contact you shortly via phone to confirm.",
+    "order_code": "ORDER CODE: {{code}}",
+    "shipping_address": "Shipping Address",
+    "payment_info": "Payment Information",
+    "method": "Method:",
+    "method_cod": "Cash on Delivery (COD)",
+    "method_bank": "Bank Transfer",
+    "method_qr": "PayOS QR Code",
+    "status": "Status:",
+    "status_pending": "Pending",
+    "status_paid": "Paid",
+    "status_failed": "Payment Failed",
+    "order_items": "Order Items",
+    "subtotal": "Subtotal:",
+    "shipping_fee": "Shipping fee:",
+    "total": "TOTAL:",
+    "track_order": "Track Order",
+    "continue_shopping": "Continue Shopping",
+    "need_help": "Need help?"
+  },
+  "auth": {
+    "login_system": "SYSTEM LOGIN",
+    "login_title": "Login",
+    "email_label": "EMAIL ADDRESS",
+    "password_label": "PASSWORD",
+    "forgot_pwd": "Forgot password?",
+    "login_btn": "LOGIN NOW",
+    "logging_in": "LOGGING IN...",
+    "no_account": "Don't have an account?",
+    "register_link": "Register a new account",
+    "login_success": "Login successful!",
+    "login_failed": "Incorrect email or password. Please try again.",
+    "register_system": "MEMBER REGISTRATION",
+    "register_title": "Register Account",
+    "name_label": "FULL NAME",
+    "pwd_min_label": "PASSWORD (MINIMUM 8 CHARACTERS)",
+    "pwd_confirm_label": "CONFIRM PASSWORD",
+    "register_btn": "REGISTER NOW",
+    "registering": "PROCESSING...",
+    "has_account": "Already have an account?",
+    "login_link": "Login now",
+    "pwd_mismatch": "Passwords do not match.",
+    "register_success": "Registration successful! Please log in.",
+    "register_failed": "Registration failed. Please try again."
+  },
+  "profile": {
+    "tab_info": "Account Information",
+    "tab_address": "Shipping Addresses",
+    "tab_orders": "Order History",
+    "tab_wishlist": "Wishlist",
+    "default_name": "Customer",
+    "not_logged_in": "Not logged in",
+    "update_success": "Account information updated successfully.",
+    "title_info": "DETAILED ACCOUNT INFORMATION",
+    "name_label": "Full Name",
+    "phone_label": "Phone Number",
+    "email_label": "Email Address (Cannot change)",
+    "save_changes": "SAVE CHANGES",
+    "change_pwd_title": "Change account password",
+    "current_pwd": "Current password",
+    "new_pwd": "New password",
+    "change_pwd_btn": "CHANGE PASSWORD",
+    "pwd_success": "Password changed successfully.",
+    "pwd_empty": "Please enter both current and new password.",
+    "orders": {
+      "status_pending": "Pending",
+      "status_packing": "Packing",
+      "status_shipping": "Shipping",
+      "status_delivered": "Delivered",
+      "status_cancelled": "Cancelled",
+      "title": "ORDER HISTORY",
+      "tab_all": "ALL",
+      "tab_pending": "PENDING",
+      "tab_shipping": "SHIPPING",
+      "tab_delivered": "DELIVERED",
+      "loading": "Loading...",
+      "empty": "No orders found in this category.",
+      "total": "Total:",
+      "pay_cod": "Cash on Delivery",
+      "pay_paid": "Paid",
+      "pay_waiting": "Pending payment",
+      "banking": "Internet Banking / VietQR",
+      "cod": "COD"
+    },
+    "addresses": {
+      "title": "SHIPPING ADDRESSES",
+      "add_btn": "Add address",
+      "confirm_delete": "Confirm deleting this shipping address?",
+      "lbl_name": "Full Name",
+      "lbl_phone": "Phone Number",
+      "lbl_province": "Province / City",
+      "lbl_district": "District",
+      "lbl_ward": "Ward",
+      "lbl_street": "Street Name, Building, House No.",
+      "saving": "Saving...",
+      "save_btn": "Save Address",
+      "cancel_btn": "Cancel",
+      "loading": "Loading...",
+      "empty": "No shipping addresses declared yet.",
+      "default_badge": "Default",
+      "set_default": "Set as default"
+    },
+    "wishlist": {
+      "title": "WISHLIST",
+      "loading": "Loading...",
+      "empty": "No items saved yet",
+      "add_cart": "Add to cart"
+    }
+  },
+  "contact": {
+    "system": "CONTACT",
+    "brand": "NGHE XUA NET MOI",
+    "title": "Contact & Feedback",
+    "desc": "For any inquiries, feedback, or custom orders — we are always listening.",
+    "info_title": "Contact Information",
+    "address_lbl": "Address",
+    "address_val": "Nghe Xua Net Moi Workshop\n36 Hang Be Street, Hoan Kiem District, Hanoi, Vietnam",
+    "phone_lbl": "Phone",
+    "phone_val": "+84 1900 8888",
+    "email_lbl": "Email",
+    "email_val": "hello@nghexxuanetmoi.vn",
+    "hours_lbl": "Working Hours",
+    "hours_val": "Mon – Sat: 8:00 – 18:00\nSun: 9:00 – 15:00",
+    "rating_title": "Rate your experience",
+    "rating_desc": "How do you feel about our products and services? Please select a rating in the form.",
+    "success_title": "Thank you for contacting us!",
+    "success_desc": "We will respond within 24 business hours. We appreciate all your feedback.",
+    "form_name": "Full Name",
+    "form_email": "Email",
+    "form_phone": "Phone Number",
+    "form_subject": "Subject",
+    "form_message": "Message",
+    "form_message_ph": "Enter the message you want to send us...",
+    "form_rating": "Satisfaction level:",
+    "btn_submit": "Send Feedback",
+    "err_name": "Please enter your name",
+    "err_email": "Invalid email",
+    "err_msg": "Please enter your message",
+    "rating_1": "Very poor",
+    "rating_2": "Poor",
+    "rating_3": "Neutral",
+    "rating_4": "Satisfied",
+    "rating_5": "Very satisfied",
+    "subjects": [
+      "Product inquiry",
+      "Custom order",
+      "Shipping & Delivery",
+      "Warranty & Returns",
+      "Business Partnership",
+      "General feedback"
+    ]
+  },
+  "news": {
+    "not_found": "Article not found.",
+    "back": "Go back",
+    "related_title": "Explore related products",
+    "related_desc": "View our collection of traditional village diorama boxes.",
+    "related_btn": "View collection",
+    "related_articles": "Related articles"
+  },
+  "static": {
+    "return_title": "Return Policy",
+    "return_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Diorama Return Period</h3><p>Diorama models can be returned within 7 days from successful delivery. Returned products must be intact, without cracks on the protective mica layer, and without scratches on the assembled wooden frame.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Return Shipping Fee</h3><p>For returns due to customer preference, the shipping cost will be borne by the customer. If the model has manufacturing defects or is damaged during shipping, we will cover the return shipping fee entirely.</p></div>",
+    "shipping_title": "Shipping Policy",
+    "shipping_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Delivery Coverage</h3><p>We deliver models nationwide from North to South. Delivery time in inner Hanoi is within 24 hours, other provinces from 3 to 5 working days.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Protective Packaging</h3><p>Diorama boxes are carefully wrapped in shock-absorbing foam and sealed in specialized thick foam layers to prevent shaking and cracking during transportation.</p></div>",
+    "faq_title": "FAQ & Support",
+    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Do the diorama boxes use LED lights?</h4><p class=\"mt-1 text-sm\">Yes. The traditional village diorama models are integrated with a cozy LED lighting system using a convenient USB port or batteries to illuminate the display space at night.</p></div><div><h4 class=\"text-lg font-bold text-[#ab2124]\">How to preserve the mica and wooden frame?</h4><p class=\"mt-1 text-sm\">Avoid direct sunlight or high heat sources; use a soft damp cloth to gently wipe the outer protective mica layer. Avoid moisture to preserve the rustic, long-lasting quality of the MDF wood.</p></div></div>",
+    "back_home": "Back to homepage"
+  },
+  "regulations": {
+    "brand": "Nghe Xua Net Moi",
+    "title": "Policies",
+    "desc": "Overview of policies, terms, and shopping guidelines",
+    "sections": {
+      "shipping": {
+        "title": "Shipping & Delivery",
+        "items": [
+          { "heading": "Delivery Coverage", "body": "We deliver models nationwide from North to South. Delivery time in inner Hanoi is within 24 hours, other provinces from 3 to 5 working days." },
+          { "heading": "Shipping Fee", "body": "Fixed shipping fee of 30,000₫ per order nationwide. Free shipping for orders over 1,500,000₫." },
+          { "heading": "Protective Packaging", "body": "Each diorama box is carefully wrapped in shock-absorbing foam and sealed in multiple layers to prevent shaking and cracking during transit. The outer protective mica has an additional anti-scratch film." },
+          { "heading": "Order Tracking", "body": "Once the order is confirmed for shipping, you will receive an email with a tracking number to follow your package journey in real-time." }
+        ]
+      },
+      "return": {
+        "title": "Returns & Refunds",
+        "items": [
+          { "heading": "Return Period", "body": "Diorama models can be returned within 7 days from successful delivery. Returned products must be intact, without cracks on the protective mica layer, and without scratches on the wooden frame." },
+          { "heading": "Return Conditions", "body": "Products must have intact labels, unused, and include all accessories. Photos of the product condition upon receipt are recommended as evidence if needed." },
+          { "heading": "Return Shipping Fee", "body": "For returns due to customer preference, the shipping cost will be borne by the customer. If the model has manufacturing defects or is damaged during shipping, we will cover the return shipping fee entirely." },
+          { "heading": "Refund Time", "body": "After receiving and inspecting the returned product, we will process the refund within 5–7 working days via your original payment method." }
+        ]
+      },
+      "product": {
+        "title": "Product Quality",
+        "items": [
+          { "heading": "Materials and Crafting", "body": "All diorama models use premium acrylic mica, veneer-coated MDF wood, 3D printed resin details, and hand-painted acrylics. Each product undergoes quality checking before packaging." },
+          { "heading": "Dimensional Tolerance", "body": "Due to the handmade nature of the product, there may be slight dimensional tolerances (±2mm) and minor color variations compared to website images due to photography lighting conditions." },
+          { "heading": "Warranty", "body": "Products have a 3-month warranty for frame structure defects, integrated LED failures, or QR connection errors. The warranty does not cover damage caused by impact, moisture, or improper use." }
+        ]
+      },
+      "payment": {
+        "title": "Payment",
+        "items": [
+          { "heading": "Payment Methods", "body": "We support payment via VNPAY (domestic ATM cards, Visa/Mastercard international cards), bank transfers, and Cash on Delivery (COD) for orders under 3,000,000₫." },
+          { "heading": "Information Security", "body": "All payment transactions are encrypted using SSL standards. We do not store customer payment card information on our systems." },
+          { "heading": "Order Confirmation", "body": "An order confirmation email will be sent immediately upon successful payment. If you don't receive the email within 15 minutes, please check your spam folder or contact us." }
+        ]
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "items": [
+          { "heading": "Information Collection", "body": "We only collect necessary information for processing orders and improving user experience: full name, delivery address, email, and contact phone number." },
+          { "heading": "Information Usage", "body": "Your personal information is used to process orders, send delivery notifications, and support customers. We do not sell or share information with third parties for commercial purposes." },
+          { "heading": "Customer Rights", "body": "You have the right to request access, correction, or deletion of your personal information at any time by contacting our support email." }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          { "heading": "Do the model boxes have LED lights?", "body": "Yes. The diorama models are integrated with a warm LED system using a USB port or batteries to illuminate the display space at night." },
+          { "heading": "How to activate AR?", "body": "Scan the QR code on the product base with your phone camera, the browser will open the AR page immediately without needing an app. Requires iOS 12+ or Android 8+ with AR-supported cameras." },
+          { "heading": "Can I place bulk orders (B2B)?", "body": "Yes. We support bulk orders for businesses and organizations with preferential pricing policies and the ability to print logos/branding upon request. Contact our email for a consultation." },
+          { "heading": "How to preserve the product?", "body": "Avoid direct sunlight and high heat sources. Use a soft damp cloth to gently wipe the outer mica layer. Avoid humid environments to protect the MDF wood frame. Do not disassemble the miniature details inside." }
+        ]
+      }
+    }
+  },
+  "order_detail": {
+    "loading": "Loading order...",
+    "not_found": "Order not found.",
+    "back_history": "Back to history",
+    "title": "ORDER DETAILS",
+    "created_at": "Created on",
+    "timeline_title": "Order Delivery Progress",
+    "addr_title": "Shipping Information",
+    "addr_name": "Recipient:",
+    "addr_phone": "Phone:",
+    "addr_address": "Address:",
+    "addr_note": "Note:",
+    "items_title": "Product List",
+    "qty": "Quantity:",
+    "receipt_title": "PAYMENT RECEIPT",
+    "subtotal": "Subtotal:",
+    "shipping": "Shipping fee:",
+    "free_ship": "Free",
+    "total": "Total:",
+    "contact_support": "CONTACT SUPPORT",
+    "status_label": {
+      "pending": "Pending",
+      "packing": "Packing",
+      "shipping": "Shipping",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "status_steps": {
+      "pending": { "label": "Pending", "desc": "Order received" },
+      "packing": { "label": "Packing", "desc": "Packing products" },
+      "shipping": { "label": "Shipping", "desc": "Order is out for delivery" },
+      "delivered": { "label": "Delivered", "desc": "Delivered successfully" }
+    }
+  },
+  "ar": {
+    "title": "Mobile AR Experience",
+    "desc": "To try placing the 3D model in your room, please scan the QR code below with your mobile phone.",
+    "back_product": "Back to Product Details",
+    "ar_model": "AR · 3D Model",
+    "view_ar": "View AR in room",
+    "tap_points": "Tap the golden points to view information",
+    "back": "Go Back",
+    "not_available": "AR not available yet",
+    "place_room": "AR · Place in Room",
+    "starting": "Starting AR...",
+    "error_load": "Failed to load 3D model. Please check your internet connection and try again.",
+    "loading": "Loading 3D model...",
+    "tap_place": "Tap the screen to place the model"
+  },
+  "forgot_password": {
+    "subtitle": "PASSWORD RECOVERY",
+    "title": "Forgot Password",
+    "success_msg": "Password recovery request sent.",
+    "success_desc": "If an account with the email",
+    "success_desc_2": "exists in our system, you will receive a password reset link.",
+    "back_login": "Back to login",
+    "desc": "Enter your registered email address to receive a password reset link.",
+    "email_label": "EMAIL ADDRESS",
+    "email_placeholder": "email@example.com",
+    "submit_btn": "SEND RECOVERY EMAIL",
+    "back_link": "Back to Login"
+  }
+}

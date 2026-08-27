@@ -3,16 +3,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { User, MapPin, ClipboardList, Heart, Save } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 export function ProfileLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const user = useAuthStore((state) => state.user);
+  const { t } = useTranslation();
 
   const tabs = [
-    { name: 'Thông Tin Tài Khoản', path: '/profile', icon: <User size={16} /> },
-    { name: 'Địa Chỉ Nhận Hàng', path: '/profile/addresses', icon: <MapPin size={16} /> },
-    { name: 'Lịch Sử Đơn Hàng', path: '/profile/orders', icon: <ClipboardList size={16} /> },
-    { name: 'Wishlist Sản Phẩm', path: '/profile/wishlist', icon: <Heart size={16} /> }
+    { name: t('profile.tab_info'), path: '/profile', icon: <User size={16} /> },
+    { name: t('profile.tab_address'), path: '/profile/addresses', icon: <MapPin size={16} /> },
+    { name: t('profile.tab_orders'), path: '/profile/orders', icon: <ClipboardList size={16} /> },
+    { name: t('profile.tab_wishlist'), path: '/profile/wishlist', icon: <Heart size={16} /> }
   ];
 
   return (
@@ -25,8 +27,8 @@ export function ProfileLayout({ children }: { children: React.ReactNode }) {
               {user?.fullName?.[0] || 'V'}
             </div>
             <div>
-              <h4 className="text-lg font-bold text-[#ab2124]">{user?.fullName || 'Khách Hàng'}</h4>
-              <span className="text-[9px] text-[#ab2124] uppercase">{user?.email || 'Chưa đăng nhập'}</span>
+              <h4 className="text-lg font-bold text-[#ab2124]">{user?.fullName || t('profile.default_name')}</h4>
+              <span className="text-[9px] text-[#ab2124] uppercase">{user?.email || t('profile.not_logged_in')}</span>
             </div>
           </div>
 
@@ -62,6 +64,7 @@ export function ProfileLayout({ children }: { children: React.ReactNode }) {
 
 export default function ProfilePage() {
   const { user, setUser } = useAuthStore();
+  const { t } = useTranslation();
   const [fullName, setFullName] = useState(user?.fullName ?? 'Nguyễn Minh Tuấn');
   const [phone, setPhone] = useState('0901234567');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -71,7 +74,7 @@ export default function ProfilePage() {
     e.preventDefault();
     if (user) {
       setUser({ ...user, fullName });
-      toast.success('Đã cập nhật thông tin tài khoản thành công.');
+      toast.success(t('profile.update_success'));
     }
   };
 
@@ -79,13 +82,13 @@ export default function ProfilePage() {
     <ProfileLayout>
       <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
         <h3 className="text-2xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
-          THÔNG TIN TÀI KHOẢN CHI TIẾT
+          {t('profile.title_info')}
         </h3>
 
         <form onSubmit={handleUpdate} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Họ Tên Khách Hàng</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.name_label')}</label>
               <input
                 type="text"
                 required
@@ -95,7 +98,7 @@ export default function ProfilePage() {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Điện Thoại Liên Kết</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.phone_label')}</label>
               <input
                 type="tel"
                 value={phone}
@@ -106,7 +109,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Địa chỉ email (Không đổi)</label>
+            <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.email_label')}</label>
             <input
               type="email"
               disabled
@@ -120,17 +123,17 @@ export default function ProfilePage() {
             className="px-6 py-2.5 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle"
           >
             <Save size={16} />
-            LƯU THAY ĐỔI
+            {t('profile.save_changes')}
           </button>
         </form>
 
         {/* Change password section */}
         <div className="border-t border-[#D4B896]/30 pt-6 space-y-4">
-          <h4 className="text-lg font-bold text-[#ab2124]">Đổi mật khẩu tài khoản</h4>
+          <h4 className="text-lg font-bold text-[#ab2124]">{t('profile.change_pwd_title')}</h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Mật khẩu hiện tại</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.current_pwd')}</label>
               <input
                 type="password"
                 value={currentPassword}
@@ -139,7 +142,7 @@ export default function ProfilePage() {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Mật khẩu mới</label>
+              <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.new_pwd')}</label>
               <input
                 type="password"
                 value={newPassword}
@@ -152,16 +155,16 @@ export default function ProfilePage() {
           <button
             onClick={() => {
               if (currentPassword && newPassword) {
-                toast.success('Mật khẩu đã thay đổi thành công.');
+                toast.success(t('profile.pwd_success'));
                 setCurrentPassword('');
                 setNewPassword('');
               } else {
-                toast.error('Vui lòng điền đủ mật khẩu hiện tại và mật khẩu mới.');
+                toast.error(t('profile.pwd_empty'));
               }
             }}
             className="px-6 py-2.5 bg-[#7B1C2E] hover:bg-[#9B2438] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center gap-2 active:scale-95 transition-all cursor-pointer"
           >
-            ĐỔI MẬT KHẨU MỚI
+            {t('profile.change_pwd_btn')}
           </button>
         </div>
       </div>

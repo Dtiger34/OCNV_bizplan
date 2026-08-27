@@ -5,18 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../products/hooks/useProducts';
 import { useCart } from '@/context/CartContext';
 import { ProductCard as ApiProduct } from '@/types/api';
+import { useTranslation } from 'react-i18next';
 
 const PLACEHOLDER = 'https://placehold.co/400x400?text=OCNV';
 
 const PRICE_RANGES = [
-  { label: 'Tất cả', min: undefined as number | undefined, max: undefined as number | undefined },
-  { label: 'Dưới 100.000₫', min: undefined, max: 100000 },
-  { label: '100.000 – 300.000₫', min: 100000, max: 300000 },
-  { label: '300.000 – 500.000₫', min: 300000, max: 500000 },
-  { label: 'Trên 500.000₫', min: 500000, max: undefined },
+  { labelKey: 'shop.sidebar.ranges.all', min: undefined as number | undefined, max: undefined as number | undefined },
+  { labelKey: 'shop.sidebar.ranges.under_100', min: undefined, max: 100000 },
+  { labelKey: 'shop.sidebar.ranges.100_300', min: 100000, max: 300000 },
+  { labelKey: 'shop.sidebar.ranges.300_500', min: 300000, max: 500000 },
+  { labelKey: 'shop.sidebar.ranges.above_500', min: 500000, max: undefined },
 ];
 
-const CATEGORIES = ['Tất cả', 'Mô hình', 'Tranh ghép', 'Thẻ nam châm'];
+const CATEGORIES = [
+  { labelKey: 'shop.sidebar.categories.all', value: 'Tất cả' },
+  { labelKey: 'shop.sidebar.categories.model', value: 'Mô hình' },
+  { labelKey: 'shop.sidebar.categories.puzzle', value: 'Tranh ghép' },
+  { labelKey: 'shop.sidebar.categories.magnet', value: 'Thẻ nam châm' }
+];
 
 function getStockStatus(stock: number): 'in_stock' | 'low_stock' | 'out_of_stock' {
   if (stock === 0) return 'out_of_stock';
@@ -48,16 +54,18 @@ function ShopSidebar({
   minPrice, maxPrice, onPriceRangeSelect,
   activeCategory, onCategorySelect,
 }: SidebarProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Search */}
       <div>
-        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Tìm kiếm</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">{t('shop.sidebar.search')}</h3>
         <div className="relative">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab2124]" />
           <input
             type="text"
-            placeholder="Tên sản phẩm..."
+            placeholder={t('shop.sidebar.search_placeholder')}
             value={searchInput}
             onChange={(e) => onSearchInputChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && onSearch()}
@@ -66,7 +74,7 @@ function ShopSidebar({
         </div>
         <button onClick={onSearch}
           className="mt-2 w-full h-9 bg-[#ab2124] text-[#fff8e7] text-xs font-bold uppercase rounded-sm hover:bg-[#ab2124] transition-colors cursor-pointer">
-          Tìm kiếm
+          {t('shop.sidebar.search_btn')}
         </button>
       </div>
 
@@ -74,19 +82,19 @@ function ShopSidebar({
 
       {/* Category */}
       <div>
-        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Danh mục</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">{t('shop.sidebar.category')}</h3>
         <div className="space-y-1.5">
           {CATEGORIES.map((cat) => (
             <button
-              key={cat}
-              onClick={() => onCategorySelect(cat)}
+              key={cat.value}
+              onClick={() => onCategorySelect(cat.value)}
               className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
-                activeCategory === cat
+                activeCategory === cat.value
                   ? 'bg-[#ab2124] text-[#fff8e7] font-semibold'
                   : 'text-[#ab2124] hover:bg-[#EDE3CE]'
               }`}
             >
-              {cat}
+              {t(cat.labelKey)}
             </button>
           ))}
         </div>
@@ -96,19 +104,19 @@ function ShopSidebar({
 
       {/* Price ranges */}
       <div>
-        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Khoảng giá</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">{t('shop.sidebar.price_range')}</h3>
         <div className="space-y-1.5">
           {PRICE_RANGES.map((range) => {
             const active = minPrice === range.min && maxPrice === range.max;
             return (
               <button
-                key={range.label}
+                key={range.labelKey}
                 onClick={() => onPriceRangeSelect(range.min, range.max)}
                 className={`w-full text-left px-3 py-2 rounded-sm text-sm transition-colors ${
                   active ? 'bg-[#ab2124] text-[#fff8e7] font-semibold' : 'text-[#ab2124] hover:bg-[#EDE3CE]'
                 }`}
               >
-                {range.label}
+                {t(range.labelKey)}
               </button>
             );
           })}
@@ -119,12 +127,12 @@ function ShopSidebar({
 
       {/* Custom price */}
       <div>
-        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">Nhập khoảng giá</h3>
+        <h3 className="text-xs font-bold text-[#ab2124] uppercase tracking-wider mb-3">{t('shop.sidebar.custom_price')}</h3>
         <div className="flex gap-2 items-center">
           <input
             type="text"
             inputMode="numeric"
-            placeholder="Từ"
+            placeholder={t('shop.sidebar.from')}
             value={minInput}
             onChange={(e) => onMinInputChange(e.target.value.replace(/\D/g, ''))}
             className="w-full h-9 px-2 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
@@ -133,7 +141,7 @@ function ShopSidebar({
           <input
             type="text"
             inputMode="numeric"
-            placeholder="Đến"
+            placeholder={t('shop.sidebar.to')}
             value={maxInput}
             onChange={(e) => onMaxInputChange(e.target.value.replace(/\D/g, ''))}
             className="w-full h-9 px-2 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]"
@@ -141,7 +149,7 @@ function ShopSidebar({
         </div>
         <button onClick={onPriceFilter}
           className="mt-2 w-full h-9 border border-[#ab2124] text-[#ab2124] text-xs font-bold uppercase rounded-sm hover:bg-[#ab2124] hover:text-[#fff8e7] transition-colors cursor-pointer">
-          Áp dụng
+          {t('shop.sidebar.apply_btn')}
         </button>
       </div>
 
@@ -149,7 +157,7 @@ function ShopSidebar({
 
       <button onClick={onReset}
         className="w-full h-9 text-xs text-[#ab2124] hover:text-[#7B1C2E] transition-colors cursor-pointer">
-        Xoá bộ lọc
+        {t('shop.sidebar.reset_btn')}
       </button>
     </div>
   );
@@ -158,6 +166,7 @@ function ShopSidebar({
 export default function ShopPage() {
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
@@ -174,9 +183,10 @@ export default function ShopPage() {
   const products = activeCategory === 'Tất cả'
     ? allProducts
     : allProducts.filter((p) => {
-        const name = p.name?.vi?.toLowerCase() ?? '';
+        const nameVi = p.name?.vi?.toLowerCase() ?? '';
+        const nameEn = p.name?.en?.toLowerCase() ?? '';
         const cat = activeCategory.toLowerCase();
-        return name.includes(cat);
+        return nameVi.includes(cat) || nameEn.includes(cat);
       });
 
   const handleSearch = () => setSearch(searchInput);
@@ -202,17 +212,17 @@ export default function ShopPage() {
 
   const handleAddToCart = useCallback((p: ApiProduct) => {
     addToCart({ id: p._id, name: p.name.vi, price: p.price, image: p.mainImageUrl ?? PLACEHOLDER, material: '', origin: p.village?.name?.vi ?? 'OCNV' });
-    toast.success('Đã thêm vào giỏ hàng!');
-  }, [addToCart]);
+    toast.success(t('shop.added_success'));
+  }, [addToCart, t]);
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-8">
       {/* Mobile filter toggle */}
       <div className="flex items-center justify-between mb-4 md:hidden">
-        <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">Sản Phẩm</h1>
+        <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">{t('shop.title')}</h1>
         <button onClick={() => setSidebarOpen(!sidebarOpen)}
           className="flex items-center gap-2 px-3 h-9 border border-[#D4B896] rounded-sm text-sm text-[#ab2124]">
-          <SlidersHorizontal size={14} /> Lọc
+          <SlidersHorizontal size={14} /> {t('shop.filter_btn')}
         </button>
       </div>
 
@@ -221,7 +231,7 @@ export default function ShopPage() {
         <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block w-full md:w-56 shrink-0`}>
           <div className="bg-[#fff8e7] border border-[#D4B896] rounded-sm p-4 sticky top-24">
             <h2 className="hidden md:block text-sm font-bold text-[#ab2124] mb-4 pb-2 border-b border-[#D4B896]/40 text-title-gradient">
-              Tìm kiếm & Lọc
+              {t('shop.sidebar.title')}
             </h2>
             <ShopSidebar
               searchInput={searchInput}
@@ -245,8 +255,8 @@ export default function ShopPage() {
         {/* Product grid */}
         <div className="flex-1 min-w-0">
           <div className="hidden md:flex items-center justify-between mb-4">
-            <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">Tất Cả Sản Phẩm</h1>
-            <span className="text-sm text-[#ab2124]">{products.length} sản phẩm</span>
+            <h1 className="text-xl font-bold text-[#ab2124] text-title-gradient">{t('shop.all_products')}</h1>
+            <span className="text-sm text-[#ab2124]">{t('shop.products_count', { count: products.length })}</span>
           </div>
 
           {isLoading && (
@@ -259,8 +269,8 @@ export default function ShopPage() {
 
           {!isLoading && products.length === 0 && (
             <div className="h-64 flex flex-col items-center justify-center text-center space-y-2 border border-[#D4B896] rounded-sm bg-[#fff8e7]">
-              <p className="text-[#ab2124]">Không tìm thấy sản phẩm phù hợp</p>
-              <p className="text-xs text-[#ab2124]">Thử từ khóa khác hoặc bỏ bộ lọc.</p>
+              <p className="text-[#ab2124]">{t('shop.no_products')}</p>
+              <p className="text-xs text-[#ab2124]">{t('shop.try_again')}</p>
             </div>
           )}
 
@@ -277,21 +287,27 @@ export default function ShopPage() {
                     <div className="aspect-square overflow-hidden relative">
                       <img
                         src={product.mainImageUrl ?? PLACEHOLDER}
-                        alt={product.name.vi}
+                        alt={i18n.language === 'en' && product.name.en ? product.name.en : product.name.vi}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
                       />
                       {stockStatus === 'out_of_stock' && (
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <span className="text-white text-[10px] font-bold uppercase">Hết hàng</span>
+                          <span className="text-white text-[10px] font-bold uppercase">{t('shop.status.out_of_stock')}</span>
                         </div>
                       )}
                       {stockStatus === 'low_stock' && (
-                        <span className="absolute top-1.5 right-1.5 bg-[#C9973A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">Sắp hết</span>
+                        <span className="absolute top-1.5 right-1.5 bg-[#C9973A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{t('shop.status.low_stock')}</span>
                       )}
                     </div>
                     <div className="p-2.5 space-y-1">
-                      {product.village?.name?.vi && <p className="text-[9px] font-bold text-[#ab2124] uppercase truncate">{product.village.name.vi}</p>}
-                      <h3 className="text-xs font-semibold text-[#ab2124] line-clamp-2 leading-snug">{product.name.vi}</h3>
+                      {product.village?.name && (
+                        <p className="text-[9px] font-bold text-[#ab2124] uppercase truncate">
+                          {i18n.language === 'en' && product.village.name.en ? product.village.name.en : product.village.name.vi}
+                        </p>
+                      )}
+                      <h3 className="text-xs font-semibold text-[#ab2124] line-clamp-2 leading-snug">
+                        {i18n.language === 'en' && product.name.en ? product.name.en : product.name.vi}
+                      </h3>
                       <div className="flex text-[#C9973A]">
                         {[1,2,3,4,5].map(s => <Star key={s} size={10} fill="currentColor" />)}
                       </div>
@@ -301,7 +317,7 @@ export default function ShopPage() {
                         onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
                         className="w-full h-7 bg-[#ab2124] text-[#fff8e7] text-[9px] font-bold uppercase rounded-sm hover:bg-[#ab2124] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                       >
-                        {stockStatus === 'out_of_stock' ? 'Hết hàng' : 'Thêm vào giỏ'}
+                        {stockStatus === 'out_of_stock' ? t('shop.status.out_of_stock') : t('shop.add_to_cart')}
                       </button>
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import { ProfileLayout } from './ProfilePage';
 import { Plus, Trash2, Home } from 'lucide-react';
 import { useAddresses, useCreateAddress, useDeleteAddress, useSetDefaultAddress } from '../hooks/useAddresses';
 import { Address } from '@/types/api';
+import { useTranslation } from 'react-i18next';
 
 interface AddressForm { fullName: string; phone: string; province: string; district: string; ward: string; street: string; }
 const EMPTY_FORM: AddressForm = { fullName: '', phone: '', province: '', district: '', ward: '', street: '' };
@@ -12,6 +13,7 @@ export default function AddressesPage() {
   const createAddress = useCreateAddress();
   const deleteAddress = useDeleteAddress();
   const setDefault = useSetDefaultAddress();
+  const { t } = useTranslation();
 
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<AddressForm>(EMPTY_FORM);
@@ -35,7 +37,7 @@ export default function AddressesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Xác nhận xóa địa chỉ giao nhận này?')) return;
+    if (!confirm(t('profile.addresses.confirm_delete'))) return;
     await deleteAddress.mutateAsync(id);
   };
 
@@ -46,10 +48,10 @@ export default function AddressesPage() {
     <ProfileLayout>
       <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
         <div className="flex items-center justify-between border-b border-[#D4B896]/30 pb-3">
-          <h3 className="text-2xl font-bold text-[#ab2124]">DANH SÁCH ĐỊA CHỈ GIAO NHẬN</h3>
+          <h3 className="text-2xl font-bold text-[#ab2124]">{t('profile.addresses.title')}</h3>
           <button onClick={() => setShowForm(!showForm)}
             className="px-4 py-2 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm flex items-center gap-1 cursor-pointer">
-            <Plus size={14} /> Thêm địa chỉ
+            <Plus size={14} /> {t('profile.addresses.add_btn')}
           </button>
         </div>
 
@@ -57,11 +59,11 @@ export default function AddressesPage() {
           <form onSubmit={handleAdd} className="p-4 bg-[#fff8e7] border border-[#D4B896] rounded-md space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {([
-                { key: 'fullName', label: 'Họ Tên Nhận Hàng', placeholder: 'Nguyễn Văn A', type: 'text' },
-                { key: 'phone', label: 'Số Điện Thoại', placeholder: '0901234567', type: 'tel' },
-                { key: 'province', label: 'Tỉnh / Thành Phố', placeholder: 'Hà Nội', type: 'text' },
-                { key: 'district', label: 'Quận / Huyện', placeholder: 'Ba Đình', type: 'text' },
-                { key: 'ward', label: 'Phường / Xã', placeholder: 'Quán Thánh', type: 'text' },
+                { key: 'fullName', label: t('profile.addresses.lbl_name'), placeholder: 'Nguyễn Văn A', type: 'text' },
+                { key: 'phone', label: t('profile.addresses.lbl_phone'), placeholder: '0901234567', type: 'tel' },
+                { key: 'province', label: t('profile.addresses.lbl_province'), placeholder: 'Hà Nội', type: 'text' },
+                { key: 'district', label: t('profile.addresses.lbl_district'), placeholder: 'Ba Đình', type: 'text' },
+                { key: 'ward', label: t('profile.addresses.lbl_ward'), placeholder: 'Quán Thánh', type: 'text' },
               ] as const).map(({ key, label, placeholder, type }) => (
                 <div key={key} className="space-y-1">
                   <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{label}</label>
@@ -70,7 +72,7 @@ export default function AddressesPage() {
                 </div>
               ))}
               <div className="space-y-1 md:col-span-2">
-                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">Số Nhà, Tên Đường</label>
+                <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase">{t('profile.addresses.lbl_street')}</label>
                 <input type="text" placeholder="10 Hùng Vương" value={form.street} onChange={set('street')} required
                   className="w-full h-10 px-3 border border-[#D4B896] bg-[#fff8e7] rounded-sm text-sm focus:outline-none focus:border-[#C9973A]" />
               </div>
@@ -78,20 +80,20 @@ export default function AddressesPage() {
             <div className="flex gap-2">
               <button type="submit" disabled={createAddress.isPending}
                 className="px-4 py-2 bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
-                {createAddress.isPending ? 'Đang lưu...' : 'Lưu Địa Chỉ'}
+                {createAddress.isPending ? t('profile.addresses.saving') : t('profile.addresses.save_btn')}
               </button>
               <button type="button" onClick={() => setShowForm(false)}
                 className="px-4 py-2 border border-[#D4B896] text-[#ab2124] text-[11px] font-bold uppercase rounded-sm cursor-pointer">
-                Hủy Bỏ
+                {t('profile.addresses.cancel_btn')}
               </button>
             </div>
           </form>
         )}
 
         <div className="space-y-4">
-          {isLoading && <p className="text-sm text-[#ab2124] italic">Đang tải...</p>}
+          {isLoading && <p className="text-sm text-[#ab2124] italic">{t('profile.addresses.loading')}</p>}
           {!isLoading && addresses.length === 0 && (
-            <p className="text-sm text-[#ab2124] italic">Chưa khai báo địa chỉ nhận hàng nào.</p>
+            <p className="text-sm text-[#ab2124] italic">{t('profile.addresses.empty')}</p>
           )}
           {addresses.map((a) => (
             <div key={a._id}
@@ -102,7 +104,7 @@ export default function AddressesPage() {
                   <span className="text-xs text-[#ab2124]">{a.phone}</span>
                   {a.isDefault && (
                     <span className="flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase px-2 py-0.5 border border-[#3A6B4A] bg-[rgba(58,107,74,0.1)] text-[#3A6B4A] rounded-sm">
-                      <Home size={10} /> Mặc Định
+                      <Home size={10} /> {t('profile.addresses.default_badge')}
                     </span>
                   )}
                 </div>
@@ -113,7 +115,7 @@ export default function AddressesPage() {
                 {!a.isDefault && (
                   <button onClick={() => setDefault.mutate(a._id)}
                     className="px-3 py-1.5 border border-[#D4B896] text-xs font-bold text-[#ab2124] uppercase hover:bg-[#ab2124]/5 rounded-sm cursor-pointer">
-                    Đặt làm mặc định
+                    {t('profile.addresses.set_default')}
                   </button>
                 )}
                 <button onClick={() => handleDelete(a._id)}

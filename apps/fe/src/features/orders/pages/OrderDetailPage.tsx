@@ -1,35 +1,31 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useOrder } from '../hooks/useOrders';
-
-const STATUS_STEPS = [
-  { key: 'pending', label: 'Đang Xử Lý', desc: 'Đã nhận đơn hàng' },
-  { key: 'packing', label: 'Đóng Gói', desc: 'Đóng gói sản phẩm' },
-  { key: 'shipping', label: 'Đang Giao', desc: 'Đang vận chuyển giao hàng' },
-  { key: 'delivered', label: 'Đã Nhận', desc: 'Đã nhận hàng thành công' },
-];
-
-const STATUS_LABEL: Record<string, string> = {
-  pending: 'Đang Xử Lý',
-  packing: 'Đang Đóng Gói',
-  shipping: 'Đang Giao Hàng',
-  delivered: 'Đã Nhận Hàng',
-  cancelled: 'Đã Hủy',
-};
+import { useTranslation } from 'react-i18next';
 
 export default function OrderDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: order, isLoading, isError } = useOrder(id!);
+  const { t, i18n } = useTranslation();
+
+  const STATUS_STEPS = [
+    { key: 'pending', ...t('order_detail.status_steps.pending', { returnObjects: true }) },
+    { key: 'packing', ...t('order_detail.status_steps.packing', { returnObjects: true }) },
+    { key: 'shipping', ...t('order_detail.status_steps.shipping', { returnObjects: true }) },
+    { key: 'delivered', ...t('order_detail.status_steps.delivered', { returnObjects: true }) },
+  ] as { key: string; label: string; desc: string }[];
+
+  const STATUS_LABEL = t('order_detail.status_label', { returnObjects: true }) as Record<string, string>;
 
   if (isLoading) {
-    return <div className="flex min-h-[60vh] items-center justify-center text-[#ab2124]">Đang tải đơn hàng...</div>;
+    return <div className="flex min-h-[60vh] items-center justify-center text-[#ab2124]">{t('order_detail.loading')}</div>;
   }
 
   if (isError || !order) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <p className="text-lg text-[#ab2124]">Không tìm thấy đơn hàng.</p>
-        <Link to="/profile/orders" className="text-[#C9973A] underline text-sm">← Quay lại lịch sử</Link>
+        <p className="text-lg text-[#ab2124]">{t('order_detail.not_found')}</p>
+        <Link to="/profile/orders" className="text-[#C9973A] underline text-sm">← {t('order_detail.back_history')}</Link>
       </div>
     );
   }
@@ -44,16 +40,16 @@ export default function OrderDetailPage() {
         to="/profile/orders"
         className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider text-[#ab2124] hover:text-[#7B1C2E] uppercase transition-colors"
       >
-        <ArrowLeft size={14} /> Quay lại lịch sử
+        <ArrowLeft size={14} /> {t('order_detail.back_history')}
       </Link>
 
       <div className="border-b border-[#D4B896] pb-4 flex flex-col md:flex-row justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-normal text-[#ab2124] text-title-gradient">
-            CHI TIẾT ĐƠN HÀNG {order.orderCode}
+            {t('order_detail.title')} {order.orderCode}
           </h1>
           <p className="text-xs text-[#ab2124] mt-1">
-            Khởi tạo ngày {new Date(order.createdAt).toLocaleDateString('vi-VN')}
+            {t('order_detail.created_at')} {new Date(order.createdAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'vi-VN')}
           </p>
         </div>
         <span className="text-xs font-bold tracking-wider text-[#ab2124] bg-[rgba(201,151,58,0.12)] border border-[#C9973A] rounded-[4px] px-3 py-1.5 self-start md:self-center">
@@ -63,7 +59,7 @@ export default function OrderDetailPage() {
 
       {/* Progress Timeline */}
       <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6">
-        <h3 className="text-lg font-bold text-[#ab2124] mb-6">Tiến Độ Vận Chuyển Đơn Hàng</h3>
+        <h3 className="text-lg font-bold text-[#ab2124] mb-6">{t('order_detail.timeline_title')}</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {STATUS_STEPS.map((step, idx) => (
             <div key={step.key} className="flex gap-4 items-start">
@@ -88,15 +84,15 @@ export default function OrderDetailPage() {
           {/* Shipping Address */}
           <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-3">
             <h3 className="text-lg font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-2">
-              Thông Tin Địa Chỉ Giao Hàng
+              {t('order_detail.addr_title')}
             </h3>
             <div className="text-sm text-[#ab2124] space-y-1">
-              <div><strong>Người nhận hàng:</strong> {addr.fullName}</div>
-              <div><strong>Số điện thoại:</strong> {addr.phone}</div>
-              <div><strong>Địa chỉ giao nhận:</strong> {fullAddress}</div>
+              <div><strong>{t('order_detail.addr_name')}</strong> {addr.fullName}</div>
+              <div><strong>{t('order_detail.addr_phone')}</strong> {addr.phone}</div>
+              <div><strong>{t('order_detail.addr_address')}</strong> {fullAddress}</div>
               {order.customerNote && (
                 <div className="pt-2 italic text-[#ab2124]">
-                  <strong>Ghi chú giao nhận:</strong> "{order.customerNote}"
+                  <strong>{t('order_detail.addr_note')}</strong> "{order.customerNote}"
                 </div>
               )}
             </div>
@@ -105,7 +101,7 @@ export default function OrderDetailPage() {
           {/* Items */}
           <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-4">
             <h3 className="text-lg font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-2">
-              Danh Sách Sản Phẩm
+              {t('order_detail.items_title')}
             </h3>
             <div className="space-y-4">
               {order.items.map((item, idx) => (
@@ -120,7 +116,7 @@ export default function OrderDetailPage() {
                   <div className="flex-1 flex justify-between items-center text-sm">
                     <div>
                       <h4 className="text-base font-bold text-[#ab2124]">{item.productName}</h4>
-                      <span className="text-xs text-[#ab2124]">Số lượng: {item.quantity}</span>
+                      <span className="text-xs text-[#ab2124]">{t('order_detail.qty')} {item.quantity}</span>
                     </div>
                     <span className="font-bold text-[#7B1C2E]">
                       {(item.unitPrice * item.quantity).toLocaleString('vi-VN')} ₫
@@ -135,20 +131,20 @@ export default function OrderDetailPage() {
         {/* Receipt */}
         <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6 self-start">
           <h3 className="text-lg font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
-            HÓA ĐƠN THANH TOÁN
+            {t('order_detail.receipt_title')}
           </h3>
           <div className="space-y-3 text-xs text-[#ab2124]">
             <div className="flex justify-between">
-              <span>Giá tạm tính:</span>
+              <span>{t('order_detail.subtotal')}</span>
               <span>{order.subtotal.toLocaleString('vi-VN')} ₫</span>
             </div>
             <div className="flex justify-between">
-              <span>Phí vận chuyển:</span>
-              <span>{order.shippingFee > 0 ? `${order.shippingFee.toLocaleString('vi-VN')} ₫` : 'Miễn phí'}</span>
+              <span>{t('order_detail.shipping')}</span>
+              <span>{order.shippingFee > 0 ? `${order.shippingFee.toLocaleString('vi-VN')} ₫` : t('order_detail.free_ship')}</span>
             </div>
             <div className="h-[1px] bg-[#D4B896]/30" />
             <div className="flex justify-between items-baseline">
-              <span className="text-[11px] font-bold text-[#ab2124] uppercase">Tổng thanh toán:</span>
+              <span className="text-[11px] font-bold text-[#ab2124] uppercase">{t('order_detail.total')}</span>
               <span className="text-xl font-bold text-[#7B1C2E]">
                 {order.total.toLocaleString('vi-VN')} ₫
               </span>
@@ -159,7 +155,7 @@ export default function OrderDetailPage() {
               href="mailto:hotro@nghexuanetmoi.vn"
               className="w-full h-10 border border-[#7B1C2E] hover:bg-[#7B1C2E]/5 text-[#7B1C2E] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-1.5 transition-all"
             >
-              LIÊN HỆ TRỢ GIÚP
+              {t('order_detail.contact_support')}
             </a>
           </div>
         </div>

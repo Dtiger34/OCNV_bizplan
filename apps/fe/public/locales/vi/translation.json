@@ -1,0 +1,617 @@
+{
+  "header": {
+    "nav": {
+      "home": "Trang chủ",
+      "products": "Sản phẩm",
+      "stories": "Câu Chuyện",
+      "about": "Về chúng tôi",
+      "policies": "Chính sách"
+    },
+    "actions": {
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "logout": "Đăng xuất",
+      "admin": "Quản trị"
+    },
+    "brand": "NGHỀ XƯA NÉT MỚI"
+  },
+  "footer": {
+    "brand": "NGHỀ XƯA NÉT MỚI",
+    "address": "36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
+    "villages_title": "TIỂU CẢNH LÀNG NGHỀ",
+    "villages": {
+      "bat_trang": "Làng gốm Bát Tràng",
+      "van_phuc": "Làng lụa Vạn Phúc",
+      "chuong": "Làng nón Chuông",
+      "quang_phu_cau": "Làng hương Quảng Phú Cầu",
+      "chang_son": "Làng Quạt Chàng Sơn"
+    },
+    "policies_title": "QUY ĐỊNH & THƯỞNG LÃM",
+    "policies": {
+      "shipping": "Vận Chuyển Toàn Quốc",
+      "warranty": "Bảo Hành Mô Hình (1 Năm)",
+      "faq": "Hỏi Đáp Điển Lệ",
+      "contact": "Liên Hệ & Phản Hồi"
+    },
+    "newsletter_title": "TIN TỨC DI SẢN",
+    "newsletter_desc": "Đăng ký nhận thông tin về các hộp mô hình tiểu cảnh mới nhất và ưu đãi đặc quyền.",
+    "newsletter_placeholder": "Nghệ nhân @email.com",
+    "newsletter_success": "Đăng ký nhận thư điện tử thành công!",
+    "copyright": "© {{year}} Nghề Xưa Nét Mới. Bản quyền được bảo hộ."
+  },
+  "home": {
+    "story": {
+      "subtitle": "BẢN SẮC CỦA CHÚNG TÔI",
+      "title": "Sức Sống Mới Cho Di Sản Việt",
+      "desc": "Nghề Xưa Nét Mới là dự án kết hợp thủ công mỹ nghệ truyền thống và công nghệ hiện đại — mang câu chuyện của những làng nghề Việt Nam đến gần hơn với mọi người.",
+      "pillar1_title": "Sản phẩm mang câu chuyện",
+      "pillar1_desc": "Mỗi mô hình tiểu cảnh 3D không chỉ là vật trang trí — đó là cả một câu chuyện về làng nghề, về người nghệ nhân và tâm huyết truyền đời. Bạn sở hữu một tác phẩm, bạn giữ một ký ức văn hóa.",
+      "pillar2_title": "Quy trình làng nghề thật",
+      "pillar2_desc": "Từ bàn tay người thợ gốm Bát Tràng, khung cửi lụa Vạn Phúc đến lò hương Quảng Phú Cầu — chúng tôi ghi lại và tái hiện từng công đoạn thủ công qua mô hình và trải nghiệm AR sống động.",
+      "pillar3_title": "Khám phá văn hóa làng nghề",
+      "pillar3_desc": "Đi sâu vào lịch sử, con người và tinh thần của 5 làng nghề nổi tiếng Việt Nam. Mỗi trang làng nghề là một hành trình — từ nguồn gốc, quy trình đến nét đặc trưng chỉ nơi đó mới có.",
+      "cta": "Khám phá các làng nghề"
+    },
+    "stats": {
+      "villages": "Làng nghề được tái hiện",
+      "warranty": "Bảo hành sản phẩm",
+      "satisfaction": "Khách hàng hài lòng",
+      "shipping": "Giao hàng toàn quốc"
+    },
+    "news": {
+      "subtitle": "TIN TỨC & CẢM HỨNG",
+      "title": "Câu Chuyện Di Sản",
+      "read_more": "Đọc thêm"
+    },
+    "testimonials": {
+      "subtitle": "KHÁCH HÀNG NÓI GÌ",
+      "title": "Cảm Nhận Thực Tế"
+    }
+  },
+  "shop": {
+    "title": "Sản Phẩm",
+    "all_products": "Tất Cả Sản Phẩm",
+    "products_count": "{{count}} sản phẩm",
+    "filter_btn": "Lọc",
+    "sidebar": {
+      "title": "Tìm kiếm & Lọc",
+      "search": "Tìm kiếm",
+      "search_placeholder": "Tên sản phẩm...",
+      "search_btn": "Tìm kiếm",
+      "category": "Danh mục",
+      "price_range": "Khoảng giá",
+      "custom_price": "Nhập khoảng giá",
+      "from": "Từ",
+      "to": "Đến",
+      "apply_btn": "Áp dụng",
+      "reset_btn": "Xoá bộ lọc",
+      "ranges": {
+        "all": "Tất cả",
+        "under_100": "Dưới 100.000₫",
+        "100_300": "100.000 – 300.000₫",
+        "300_500": "300.000 – 500.000₫",
+        "above_500": "Trên 500.000₫"
+      },
+      "categories": {
+        "all": "Tất cả",
+        "model": "Mô hình",
+        "puzzle": "Tranh ghép",
+        "magnet": "Thẻ nam châm"
+      }
+    },
+    "no_products": "Không tìm thấy sản phẩm phù hợp",
+    "try_again": "Thử từ khóa khác hoặc bỏ bộ lọc.",
+    "status": {
+      "out_of_stock": "Hết hàng",
+      "low_stock": "Sắp hết"
+    },
+    "add_to_cart": "Thêm vào giỏ",
+    "added_success": "Đã thêm vào giỏ hàng!"
+  },
+  "about": {
+    "hero": {
+      "subtitle": "Về Chúng Tôi",
+      "title": "Nghề Xưa<br />Nét Mới",
+      "desc": "Thương hiệu văn hóa sáng tạo mang đến một cách tiếp cận mới với các làng nghề truyền thống Việt Nam — kết hợp giá trị thủ công với AR, QR Storytelling và các sản phẩm phygital, biến mỗi sản phẩm thành một hành trình khám phá văn hóa."
+    },
+    "stats": {
+      "villages": "Làng nghề",
+      "history": "Năm lịch sử",
+      "interaction": "Tương tác"
+    },
+    "vision": {
+      "title": "Tầm Nhìn",
+      "desc": "Nghề Xưa Nét Mới hướng tới trở thành một thương hiệu hàng đầu về văn hóa sáng tạo, góp phần đưa di sản làng nghề truyền thống Việt Nam đến gần hơn với công chúng thông qua những trải nghiệm tương tác hiện đại, khơi dậy tình yêu và niềm tự hào về bản sắc văn hóa dân tộc."
+    },
+    "mission": {
+      "title": "Sứ Mệnh",
+      "desc": "Gìn giữ và lan tỏa tinh hoa làng nghề truyền thống Việt Nam bằng việc kiến tạo các sản phẩm văn hóa kết hợp công nghệ, giúp di sản được tiếp cận theo cách gần gũi, hấp dẫn và phù hợp với nhịp sống đương đại."
+    },
+    "values_title": "Giá Trị Cốt Lõi",
+    "values": {
+      "authenticity": {
+        "title": "Cultural Authenticity",
+        "subtitle": "Gìn giữ bản sắc văn hóa",
+        "desc": "Tôn trọng và gìn giữ những giá trị nguyên bản của các làng nghề truyền thống Việt Nam, bảo đảm mỗi sản phẩm và trải nghiệm đều phản ánh đúng bản sắc và tinh hoa văn hóa."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "subtitle": "Đổi mới sáng tạo",
+        "desc": "Kết hợp công nghệ hiện đại với tư duy sáng tạo để phát triển những trải nghiệm văn hóa hấp dẫn, đồng thời vẫn gìn giữ giá trị cốt lõi của nghề thủ công truyền thống."
+      },
+      "learning": {
+        "title": "Cultural Learning",
+        "subtitle": "Lan tỏa tri thức văn hóa",
+        "desc": "Chuyển tải câu chuyện và tri thức văn hóa thành những trải nghiệm trực quan, dễ tiếp cận và có tính tương tác, giúp công chúng hiểu rõ hơn về di sản làng nghề Việt Nam."
+      },
+      "community": {
+        "title": "Community Connection",
+        "subtitle": "Kết nối cộng đồng",
+        "desc": "Thúc đẩy sự kết nối và hợp tác giữa nghệ nhân, cộng đồng địa phương, khách hàng và các tổ chức văn hóa nhằm cùng tạo ra giá trị và góp phần gìn giữ di sản."
+      },
+      "sustainability": {
+        "title": "Sustainability",
+        "subtitle": "Phát triển bền vững",
+        "desc": "Cam kết góp phần bảo tồn và phát triển bền vững các làng nghề truyền thống Việt Nam thông qua đổi mới có trách nhiệm và việc tạo ra những giá trị văn hóa lâu dài."
+      }
+    },
+    "quote": "\"Nghề Xưa Nét Mới không chỉ tái hiện làng nghề Việt Nam, mà còn tạo ra một cách mới để con người trải nghiệm văn hóa truyền thống trong thời đại công nghệ số.\"",
+    "cta": "Khám phá các làng nghề"
+  },
+  "villages": {
+    "list": {
+      "subtitle": "Nghề Xưa Nét Mới",
+      "title": "<span className=\"gradient-line\">Câu Chuyện</span> <br /> <span className=\"gradient-line italic\">Làng Nghề</span>",
+      "desc": "Hành trình khám phá 5 làng nghề truyền thống Hà Nội — nơi lịch sử, văn hóa và tài hoa người thợ được gìn giữ qua hàng trăm năm.",
+      "stats": {
+        "villages": "Làng Nghề",
+        "history": "Năm Lịch Sử",
+        "stories": "Câu Chuyện"
+      },
+      "explore": "Khám Phá",
+      "featured_title": "Các Làng Nghề <span className=\"italic text-[#ab2124]\">Tiêu Biểu</span>",
+      "location": "Vị trí",
+      "history_label": "Lịch sử",
+      "explore_btn": "Khám Phá"
+    }
+  },
+  "product": {
+    "loading": "Đang tải sản phẩm...",
+    "not_found": "Không tìm thấy sản phẩm.",
+    "back_to_shop": "← Quay lại gian hàng",
+    "added_success": "Đã thêm {{qty}} sản phẩm vào giỏ hàng!",
+    "review_success": "Cảm ơn bạn đã đánh giá!",
+    "review_error": "Không thể gửi đánh giá. Vui lòng thử lại.",
+    "home": "Trang chủ",
+    "shop": "Cửa hàng",
+    "prev_image": "Ảnh trước",
+    "next_image": "Ảnh tiếp theo",
+    "view_ar": "XEM AR 3D",
+    "reviews_count": "{{count}} Đánh Giá",
+    "sold_count": "Đã Bán {{count}}",
+    "product_type": "Loại sản phẩm",
+    "product_type_val": "Mô hình tiểu cảnh làng nghề 3D",
+    "village_theme": "Chủ đề làng nghề",
+    "technology": "Công nghệ",
+    "technology_val": "Tích hợp AR — quét mã để xem 3D",
+    "origin": "Xuất xứ",
+    "origin_val": "Việt Nam — Nghề Xưa Nét Mới",
+    "status_label": "Tình trạng",
+    "in_stock": "Còn {{count}} sản phẩm",
+    "out_of_stock": "Hết hàng",
+    "quantity": "Số lượng",
+    "available": "{{count}} sản phẩm có sẵn",
+    "add_to_cart": "Thêm Vào Giỏ Hàng",
+    "buy_now": "Mua Ngay",
+    "description": "Mô Tả Sản Phẩm",
+    "desc_intro": "Đây là mô hình tiểu cảnh 3D tái hiện không gian và quy trình sản xuất của <strong>{{village}}</strong>. Mỗi sản phẩm được chế tác thủ công tỉ mỉ, kết hợp công nghệ AR để bạn có thể quét mã và khám phá toàn bộ câu chuyện làng nghề ngay trên điện thoại.",
+    "default_village": "làng nghề truyền thống Việt Nam",
+    "specs": "Thông số sản phẩm",
+    "includes": "Bộ sản phẩm bao gồm",
+    "care": "Hướng dẫn bảo quản",
+    "features": {
+      "craft": {
+        "title": "Thủ công mỹ nghệ",
+        "desc": "Từng chi tiết được làm thủ công bởi nghệ nhân lành nghề"
+      },
+      "ar": {
+        "title": "Tích hợp AR 3D",
+        "desc": "Quét mã để khám phá quy trình sản xuất làng nghề qua AR"
+      },
+      "culture": {
+        "title": "Câu chuyện văn hóa",
+        "desc": "Mỗi mô hình mang theo lịch sử và tinh thần của làng nghề"
+      }
+    },
+    "reviews_title": "Đánh Giá Sản Phẩm",
+    "out_of_5": "trên 5",
+    "reviews_from_customers": "{{count}} đánh giá từ khách hàng",
+    "no_reviews": "Chưa có đánh giá nào. Hãy là người đầu tiên!",
+    "write_review": "Viết đánh giá của bạn",
+    "your_name": "Tên của bạn *",
+    "rating": "Đánh giá:",
+    "review_placeholder": "Chia sẻ trải nghiệm của bạn về sản phẩm này...",
+    "submitting": "Đang gửi...",
+    "submit_review": "Gửi Đánh Giá",
+    "related": "Sản Phẩm Liên Quan",
+    "guest": "Khách hàng"
+  },
+  "village_detail": {
+    "not_found": "Không tìm thấy làng nghề này.",
+    "back_to_list": "← Quay lại danh sách",
+    "village_label": "Làng Nghề",
+    "traditional_village": "Làng Nghề Truyền Thống",
+    "video_soon": "Video giới thiệu {{name}} sẽ sớm được cập nhật.",
+    "video_intro": "Video Giới Thiệu",
+    "source": "Nguồn",
+    "3d_model": "Mô Hình 3D",
+    "scan_ar": "Quét mã QR bằng điện thoại để xem AR",
+    "intro_title_1": "1. Giới Thiệu Chung",
+    "intro_title_2": "Đôi Nét Về <span className=\"italic text-[#ab2124]\">Làng Nghề</span>",
+    "history_title_1": "2. Lịch Sử Hình Thành Và Phát Triển",
+    "history_title_2": "Hành Trình <span className=\"italic text-[#ab2124]\">Hàng Thế Kỷ</span>",
+    "gallery": "Hình Ảnh",
+    "process_title_1": "Quy Trình",
+    "process_title_2": "Từ Nguyên Liệu <span className=\"italic text-[#ab2124]\">Đến Tinh Hoa</span>",
+    "step": "Bước {{order}}",
+    "explore_more": "Khám Phá Thêm",
+    "explore_other": "Tìm Hiểu Các Làng Nghề <span className=\"italic text-[#D4B896]\">Khác</span>",
+    "view_all": "Xem Tất Cả Làng Nghề"
+  },
+  "cart": {
+    "title": "GIỎ HÀNG CỦA BẠN",
+    "subtitle": "Xem lại thông tin và số lượng mô hình diorama trong giỏ hàng",
+    "empty": "Giỏ hàng của bạn đang trống",
+    "empty_desc": "Hãy khám phá các mô hình tiểu cảnh làng nghề độc đáo của chúng tôi để chọn sản phẩm ưng ý.",
+    "go_to_shop": "ĐI TỚI CỬA HÀNG",
+    "clear_all": "XÓA TẤT CẢ SẢN PHẨM",
+    "continue_shopping": "TIẾP TỤC MUA SẮM",
+    "summary_title": "THÔNG TIN THANH TOÁN",
+    "subtotal": "Tạm tính:",
+    "shipping": "Phí vận chuyển:",
+    "free_shipping": "Miễn phí",
+    "total": "Tổng thanh toán:",
+    "checkout_btn": "TIẾN HÀNH ĐẶT HÀNG"
+  },
+  "checkout": {
+    "title": "TIẾN HÀNH THANH TOÁN",
+    "subtitle": "Vui lòng nhập thông tin giao nhận và lựa chọn phương thức thanh toán",
+    "success_msg": "Thanh toán thành công!",
+    "qr_title": "Quét Mã QR Thanh Toán",
+    "qr_amount": "Số tiền cần thanh toán",
+    "qr_guide_title": "Cách thanh toán:",
+    "qr_step_1": "Mở app ngân hàng (VPBank, Vietcombank, Techcombank…)",
+    "qr_step_2": "Chọn \"Quét mã QR\" hoặc \"Chuyển khoản\"",
+    "qr_step_3": "Quét mã bên trên và xác nhận",
+    "qr_waiting": "Đang chờ xác nhận thanh toán...",
+    "copy_btn": "Copy",
+    "copied_btn": "Đã copy",
+    "err_name": "Vui lòng nhập họ tên",
+    "err_phone": "Vui lòng nhập số điện thoại",
+    "err_province": "Vui lòng nhập tỉnh/thành phố",
+    "err_street": "Vui lòng nhập địa chỉ chi tiết",
+    "err_empty": "Giỏ hàng đang trống",
+    "err_qr_failed": "Không thể tạo QR thanh toán. Vui lòng thử lại.",
+    "err_order_failed": "Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.",
+    "section_address": "1. Địa Chỉ Giao Nhận Hàng",
+    "name_label": "Họ Tên Người Nhận *",
+    "phone_label": "Số Điện Thoại *",
+    "province_label": "Tỉnh / Thành Phố *",
+    "district_label": "Quận / Huyện *",
+    "ward_label": "Phường / Xã *",
+    "street_label": "Địa Chỉ Chi Tiết (Số nhà, Đường) *",
+    "note_label": "Ghi chú đơn hàng",
+    "note_placeholder": "Ghi chú cho đơn vị vận chuyển...",
+    "section_payment": "2. Phương Thức Thanh Toán",
+    "cod_title": "Thanh toán khi nhận hàng (COD)",
+    "cod_desc": "Trả tiền mặt khi shipper giao hàng đến tay bạn",
+    "qr_pay_title": "Internet Banking / VietQR",
+    "qr_pay_desc": "Quét mã QR bằng app ngân hàng — hỗ trợ tất cả ngân hàng Việt Nam",
+    "qr_pay_hint": "Mã QR sẽ hiển thị ngay trên trang sau khi đặt hàng — không cần rời khỏi trang web.",
+    "summary_title": "TÓM TẮT ĐƠN HÀNG",
+    "empty_cart": "Giỏ hàng trống",
+    "creating_order": "ĐANG TẠO ĐƠN HÀNG...",
+    "creating_qr": "ĐANG TẠO MÃ QR...",
+    "btn_cod": "ĐẶT HÀNG — THANH TOÁN KHI NHẬN",
+    "btn_qr": "ĐẶT HÀNG & THANH TOÁN QR",
+    "total_summary": "Tổng cộng:"
+  },
+  "checkout_success": {
+    "not_found": "❌ Không tìm thấy đơn hàng",
+    "back_to_shop": "← Quay lại cửa hàng",
+    "loading": "Đang tải thông tin đơn hàng...",
+    "error_occurred": "Có lỗi xảy ra",
+    "not_exist": "Đơn hàng không tồn tại",
+    "view_history": "← Xem lịch sử đơn hàng",
+    "success_title": "ĐẶT HÀNG THÀNH CÔNG",
+    "success_heading": "Đơn Hàng Ghi Nhận",
+    "success_desc": "Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ sớm liên hệ qua số điện thoại để xác nhận.",
+    "order_code": "MÃ ĐƠN HÀNG: {{code}}",
+    "shipping_address": "Địa chỉ giao nhận",
+    "payment_info": "Thông tin thanh toán",
+    "method": "Phương thức:",
+    "method_cod": "Thanh toán khi nhận hàng (COD)",
+    "method_bank": "Chuyển khoản ngân hàng",
+    "method_qr": "PayOS QR Code",
+    "status": "Trạng thái:",
+    "status_pending": "Chờ thanh toán",
+    "status_paid": "Đã thanh toán",
+    "status_failed": "Thanh toán thất bại",
+    "order_items": "Sản phẩm đặt hàng",
+    "subtotal": "Tạm tính:",
+    "shipping_fee": "Phí vận chuyển:",
+    "total": "TỔNG CỘNG:",
+    "track_order": "Theo dõi Đơn hàng",
+    "continue_shopping": "Tiếp tục mua sắm",
+    "need_help": "Cần giúp đỡ?"
+  },
+  "auth": {
+    "login_system": "ĐĂNG NHẬP HỆ THỐNG",
+    "login_title": "Đăng Nhập",
+    "email_label": "THƯ ĐIỆN TỬ (EMAIL)",
+    "password_label": "MẬT KHẨU",
+    "forgot_pwd": "Quên mật khẩu?",
+    "login_btn": "ĐĂNG NHẬP NGAY",
+    "logging_in": "ĐANG ĐĂNG NHẬP...",
+    "no_account": "Chưa có tài khoản?",
+    "register_link": "Đăng ký tài khoản mới",
+    "login_success": "Đăng nhập thành công!",
+    "login_failed": "Email hoặc mật khẩu không đúng. Vui lòng thử lại.",
+    "register_system": "ĐĂNG KÝ THÀNH VIÊN",
+    "register_title": "Đăng Ký Tài Khoản",
+    "name_label": "HỌ VÀ TÊN",
+    "pwd_min_label": "MẬT KHẨU (TỐI THIỂU 8 KÝ TỰ)",
+    "pwd_confirm_label": "XÁC NHẬN MẬT KHẨU",
+    "register_btn": "ĐĂNG KÝ NGAY",
+    "registering": "ĐANG XỬ LÝ...",
+    "has_account": "Đã có tài khoản?",
+    "login_link": "Đăng nhập ngay",
+    "pwd_mismatch": "Mật khẩu nhập lại chưa trùng khớp.",
+    "register_success": "Đăng ký thành công! Vui lòng đăng nhập.",
+    "register_failed": "Đăng ký thất bại. Vui lòng thử lại."
+  },
+  "profile": {
+    "tab_info": "Thông Tin Tài Khoản",
+    "tab_address": "Địa Chỉ Nhận Hàng",
+    "tab_orders": "Lịch Sử Đơn Hàng",
+    "tab_wishlist": "Wishlist Sản Phẩm",
+    "default_name": "Khách Hàng",
+    "not_logged_in": "Chưa đăng nhập",
+    "update_success": "Đã cập nhật thông tin tài khoản thành công.",
+    "title_info": "THÔNG TIN TÀI KHOẢN CHI TIẾT",
+    "name_label": "Họ Tên Khách Hàng",
+    "phone_label": "Điện Thoại Liên Kết",
+    "email_label": "Địa chỉ email (Không đổi)",
+    "save_changes": "LƯU THAY ĐỔI",
+    "change_pwd_title": "Đổi mật khẩu tài khoản",
+    "current_pwd": "Mật khẩu hiện tại",
+    "new_pwd": "Mật khẩu mới",
+    "change_pwd_btn": "ĐỔI MẬT KHẨU MỚI",
+    "pwd_success": "Mật khẩu đã thay đổi thành công.",
+    "pwd_empty": "Vui lòng điền đủ mật khẩu hiện tại và mật khẩu mới.",
+    "orders": {
+      "status_pending": "Chờ Xử Lý",
+      "status_packing": "Đóng Gói",
+      "status_shipping": "Đang Giao Hàng",
+      "status_delivered": "Đã Nhận Hàng",
+      "status_cancelled": "Đã Huỷ",
+      "title": "LỊCH SỬ ĐƠN ĐẶT HÀNG",
+      "tab_all": "TẤT CẢ",
+      "tab_pending": "ĐANG XỬ LÝ",
+      "tab_shipping": "ĐANG GIAO",
+      "tab_delivered": "ĐÃ NHẬN",
+      "loading": "Đang tải...",
+      "empty": "Chưa có đơn đặt hàng nào trong danh mục này.",
+      "total": "Tổng tiền:",
+      "pay_cod": "Thanh toán khi nhận",
+      "pay_paid": "Đã thanh toán",
+      "pay_waiting": "Chờ thanh toán",
+      "banking": "Internet Banking / VietQR",
+      "cod": "COD"
+    },
+    "addresses": {
+      "title": "DANH SÁCH ĐỊA CHỈ GIAO NHẬN",
+      "add_btn": "Thêm địa chỉ",
+      "confirm_delete": "Xác nhận xóa địa chỉ giao nhận này?",
+      "lbl_name": "Họ Tên Nhận Hàng",
+      "lbl_phone": "Số Điện Thoại",
+      "lbl_province": "Tỉnh / Thành Phố",
+      "lbl_district": "Quận / Huyện",
+      "lbl_ward": "Phường / Xã",
+      "lbl_street": "Số Nhà, Tên Đường",
+      "saving": "Đang lưu...",
+      "save_btn": "Lưu Địa Chỉ",
+      "cancel_btn": "Hủy Bỏ",
+      "loading": "Đang tải...",
+      "empty": "Chưa khai báo địa chỉ nhận hàng nào.",
+      "default_badge": "Mặc Định",
+      "set_default": "Đặt làm mặc định"
+    },
+    "wishlist": {
+      "title": "DANH SÁCH SẢN PHẨM YÊU THÍCH",
+      "loading": "Đang tải...",
+      "empty": "Chưa lưu sản phẩm nào",
+      "add_cart": "Thêm vào giỏ"
+    }
+  },
+  "contact": {
+    "system": "LIÊN HỆ",
+    "brand": "NGHỀ XƯA NÉT MỚI",
+    "title": "Liên Hệ & Phản Hồi",
+    "desc": "Mọi thắc mắc, ý kiến đóng góp hay đơn đặt hàng riêng — chúng tôi luôn lắng nghe.",
+    "info_title": "Thông tin liên hệ",
+    "address_lbl": "Địa chỉ",
+    "address_val": "Phân xưởng Nghề Xưa Nét Mới\n36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
+    "phone_lbl": "Điện thoại",
+    "phone_val": "+84 1900 8888",
+    "email_lbl": "Email",
+    "email_val": "hello@nghexxuanetmoi.vn",
+    "hours_lbl": "Giờ làm việc",
+    "hours_val": "Thứ 2 – Thứ 7: 8:00 – 18:00\nChủ nhật: 9:00 – 15:00",
+    "rating_title": "Đánh giá trải nghiệm",
+    "rating_desc": "Bạn cảm thấy thế nào về sản phẩm và dịch vụ của chúng tôi? Hãy chọn mức độ trong form bên cạnh.",
+    "success_title": "Cảm ơn bạn đã liên hệ!",
+    "success_desc": "Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc. Trân trọng mọi ý kiến đóng góp từ bạn.",
+    "form_name": "Họ và tên",
+    "form_email": "Email",
+    "form_phone": "Số điện thoại",
+    "form_subject": "Chủ đề",
+    "form_message": "Nội dung",
+    "form_message_ph": "Nhập nội dung bạn muốn gửi đến chúng tôi...",
+    "form_rating": "Mức độ hài lòng:",
+    "btn_submit": "Gửi Phản Hồi",
+    "err_name": "Vui lòng nhập họ tên",
+    "err_email": "Email không hợp lệ",
+    "err_msg": "Vui lòng nhập nội dung",
+    "rating_1": "Rất tệ",
+    "rating_2": "Chưa tốt",
+    "rating_3": "Bình thường",
+    "rating_4": "Hài lòng",
+    "rating_5": "Rất hài lòng",
+    "subjects": [
+      "Hỏi về sản phẩm",
+      "Đặt làm theo yêu cầu",
+      "Vận chuyển & giao hàng",
+      "Bảo hành & đổi trả",
+      "Hợp tác kinh doanh",
+      "Góp ý chung"
+    ]
+  },
+  "news": {
+    "not_found": "Không tìm thấy bài viết.",
+    "back": "Quay lại",
+    "related_title": "Khám phá sản phẩm liên quan",
+    "related_desc": "Xem bộ sưu tập hộp tiểu cảnh diorama làng nghề của chúng tôi.",
+    "related_btn": "Xem bộ sưu tập",
+    "related_articles": "Bài viết liên quan"
+  },
+  "static": {
+    "return_title": "Chính Sách Đổi Trả",
+    "return_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Thời hạn Đổi trả Mô hình</h3><p>Mô hình tiểu cảnh diorama được đổi trả trong vòng 7 ngày kể từ khi quý khách nhận hàng thành công. Sản phẩm đổi trả phải còn nguyên vẹn, không nứt vỡ lớp mica bảo vệ và không trầy xước khung gỗ ghép.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Phí vận chuyển hoàn trả</h3><p>Trường hợp đổi trả do mong muốn chủ quan của khách hàng, chi phí vận chuyển sẽ do khách hàng chi trả. Nếu mô hình bị lỗi chế tác hoặc hư hỏng trong quá trình vận chuyển, chúng tôi chịu hoàn toàn phí vận chuyển.</p></div>",
+    "shipping_title": "Chính Sách Vận Chuyển",
+    "shipping_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Phạm vi Giao Hàng</h3><p>Chúng tôi giao nhận mô hình trên toàn quốc từ Bắc vào Nam. Thời gian giao hàng nội thành Hà Nội trong vòng 24 giờ, các tỉnh thành khác từ 3 đến 5 ngày làm việc.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Đóng gói bảo vệ</h3><p>Các hộp diorama tiểu cảnh được bọc xốp bọt cẩn thận chống sốc, niêm phong đóng hộp các lớp xốp dày chuyên dụng để tránh rung lắc, nứt vỡ trong quá trình di chuyển.</p></div>",
+    "faq_title": "Hỏi Đáp & Trợ Giúp (FAQ)",
+    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Hộp mô hình tiểu cảnh có sử dụng đèn LED không?</h4><p class=\"mt-1 text-sm\">Có. Các mô hình diorama làng nghề đều được tích hợp hệ thống đèn LED ấm cúng sử dụng cổng USB hoặc pin tiện lợi để làm sáng không gian trưng bày ban đêm.</p></div><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Làm thế nào để bảo quản mica và khung gỗ?</h4><p class=\"mt-1 text-sm\">Tránh ánh nắng rọi trực tiếp hoặc nguồn nhiệt cao, dùng khăn mềm ẩm lau nhẹ lớp mica bảo vệ ngoài. Tránh ẩm ướt để bảo quản chất lượng gỗ MDF mộc mạc lâu bền.</p></div></div>",
+    "back_home": "Quay lại trang chủ"
+  },
+  "regulations": {
+    "brand": "Nghề Xưa Nét Mới",
+    "title": "Chính Sách",
+    "desc": "Tổng hợp chính sách, điều khoản và hướng dẫn mua hàng",
+    "sections": {
+      "shipping": {
+        "title": "Vận Chuyển & Giao Hàng",
+        "items": [
+          { "heading": "Phạm vi giao hàng", "body": "Chúng tôi giao nhận mô hình trên toàn quốc từ Bắc vào Nam. Thời gian giao hàng nội thành Hà Nội trong vòng 24 giờ, các tỉnh thành khác từ 3–5 ngày làm việc." },
+          { "heading": "Phí vận chuyển", "body": "Phí vận chuyển cố định 30.000₫/đơn hàng toàn quốc. Miễn phí vận chuyển cho đơn hàng từ 1.500.000₫ trở lên." },
+          { "heading": "Đóng gói bảo vệ", "body": "Mỗi hộp diorama được bọc xốp bọt cẩn thận chống sốc, niêm phong đóng hộp nhiều lớp để tránh rung lắc, nứt vỡ trong quá trình di chuyển. Mica bảo vệ bên ngoài được dán thêm màng mỏng chống trầy xước." },
+          { "heading": "Theo dõi đơn hàng", "body": "Sau khi đơn được xác nhận giao vận, quý khách sẽ nhận email có mã vận đơn để theo dõi hành trình kiện hàng theo thời gian thực." }
+        ]
+      },
+      "return": {
+        "title": "Đổi Trả & Hoàn Tiền",
+        "items": [
+          { "heading": "Thời hạn đổi trả", "body": "Mô hình tiểu cảnh được đổi trả trong vòng 7 ngày kể từ khi quý khách nhận hàng thành công. Sản phẩm đổi trả phải còn nguyên vẹn, không nứt vỡ lớp mica bảo vệ và không trầy xước khung gỗ." },
+          { "heading": "Điều kiện đổi trả", "body": "Sản phẩm phải còn nguyên tem nhãn, chưa qua sử dụng và có đầy đủ phụ kiện đi kèm. Ảnh chụp tình trạng sản phẩm ngay khi nhận hàng được khuyến khích để làm bằng chứng khi cần." },
+          { "heading": "Phí vận chuyển hoàn trả", "body": "Trường hợp đổi trả do mong muốn chủ quan của khách hàng, chi phí vận chuyển sẽ do khách hàng chi trả. Nếu mô hình bị lỗi chế tác hoặc hư hỏng trong quá trình vận chuyển, chúng tôi chịu hoàn toàn phí vận chuyển." },
+          { "heading": "Thời gian hoàn tiền", "body": "Sau khi nhận và kiểm tra sản phẩm hoàn trả, chúng tôi sẽ xử lý hoàn tiền trong vòng 5–7 ngày làm việc qua phương thức thanh toán ban đầu của quý khách." }
+        ]
+      },
+      "product": {
+        "title": "Chất Lượng Sản Phẩm",
+        "items": [
+          { "heading": "Vật liệu và chế tác", "body": "Tất cả mô hình diorama sử dụng mica acrylic cao cấp, gỗ MDF phủ veneer, chi tiết resin in 3D và sơn acrylic thủ công. Mỗi sản phẩm đều qua kiểm tra chất lượng trước khi đóng gói." },
+          { "heading": "Sai số kích thước", "body": "Do đặc tính thủ công của sản phẩm, có thể xảy ra sai số kích thước nhỏ (±2mm) và sự khác biệt nhẹ về màu sắc so với hình ảnh hiển thị trên website do điều kiện ánh sáng chụp ảnh." },
+          { "heading": "Bảo hành", "body": "Sản phẩm được bảo hành 3 tháng với các lỗi về kết cấu khung, hỏng đèn LED tích hợp hoặc lỗi kết nối QR. Bảo hành không áp dụng cho hư hỏng do va đập, ẩm ướt hoặc sử dụng không đúng cách." }
+        ]
+      },
+      "payment": {
+        "title": "Thanh Toán",
+        "items": [
+          { "heading": "Phương thức thanh toán", "body": "Chúng tôi hỗ trợ thanh toán qua VNPAY (thẻ ATM nội địa, thẻ quốc tế Visa/Mastercard), chuyển khoản ngân hàng và thanh toán khi nhận hàng (COD) với đơn hàng dưới 3.000.000₫." },
+          { "heading": "Bảo mật thông tin", "body": "Toàn bộ giao dịch thanh toán được mã hóa theo chuẩn SSL. Chúng tôi không lưu trữ thông tin thẻ thanh toán của khách hàng trên hệ thống." },
+          { "heading": "Xác nhận đơn hàng", "body": "Email xác nhận đơn hàng sẽ được gửi ngay sau khi thanh toán thành công. Nếu không nhận được email trong 15 phút, vui lòng kiểm tra thư mục spam hoặc liên hệ chúng tôi." }
+        ]
+      },
+      "privacy": {
+        "title": "Chính Sách Bảo Mật",
+        "items": [
+          { "heading": "Thu thập thông tin", "body": "Chúng tôi chỉ thu thập thông tin cần thiết cho việc xử lý đơn hàng và cải thiện trải nghiệm người dùng: họ tên, địa chỉ giao hàng, email và số điện thoại liên lạc." },
+          { "heading": "Sử dụng thông tin", "body": "Thông tin cá nhân của quý khách được sử dụng để xử lý đơn hàng, gửi thông báo giao hàng và hỗ trợ khách hàng. Chúng tôi không bán hoặc chia sẻ thông tin với bên thứ ba vì mục đích thương mại." },
+          { "heading": "Quyền của khách hàng", "body": "Quý khách có quyền yêu cầu truy cập, chỉnh sửa hoặc xóa thông tin cá nhân của mình bất kỳ lúc nào bằng cách liên hệ qua email hỗ trợ của chúng tôi." }
+        ]
+      },
+      "faq": {
+        "title": "Câu Hỏi Thường Gặp",
+        "items": [
+          { "heading": "Hộp mô hình có đèn LED không?", "body": "Có. Các mô hình diorama đều được tích hợp hệ thống đèn LED ấm sử dụng cổng USB hoặc pin để làm sáng không gian trưng bày ban đêm." },
+          { "heading": "Làm thế nào để kích hoạt AR?", "body": "Quét mã QR ở đế sản phẩm bằng camera điện thoại, trình duyệt sẽ mở trang AR ngay không cần cài ứng dụng. Yêu cầu iOS 12+ hoặc Android 8+ với camera hỗ trợ AR." },
+          { "heading": "Có thể đặt hàng số lượng lớn (B2B) không?", "body": "Có. Chúng tôi hỗ trợ đặt hàng số lượng lớn cho doanh nghiệp, tổ chức với chính sách giá ưu đãi và khả năng in logo/branding theo yêu cầu. Liên hệ email để được tư vấn." },
+          { "heading": "Bảo quản sản phẩm như thế nào?", "body": "Tránh ánh nắng trực tiếp và nguồn nhiệt cao. Dùng khăn mềm ẩm lau nhẹ lớp mica ngoài. Tránh môi trường ẩm ướt để bảo vệ khung gỗ MDF. Không tháo rời các chi tiết miniature bên trong." }
+        ]
+      }
+    }
+  },
+  "order_detail": {
+    "loading": "Đang tải đơn hàng...",
+    "not_found": "Không tìm thấy đơn hàng.",
+    "back_history": "Quay lại lịch sử",
+    "title": "CHI TIẾT ĐƠN HÀNG",
+    "created_at": "Khởi tạo ngày",
+    "timeline_title": "Tiến Độ Vận Chuyển Đơn Hàng",
+    "addr_title": "Thông Tin Địa Chỉ Giao Hàng",
+    "addr_name": "Người nhận hàng:",
+    "addr_phone": "Số điện thoại:",
+    "addr_address": "Địa chỉ giao nhận:",
+    "addr_note": "Ghi chú giao nhận:",
+    "items_title": "Danh Sách Sản Phẩm",
+    "qty": "Số lượng:",
+    "receipt_title": "HÓA ĐƠN THANH TOÁN",
+    "subtotal": "Giá tạm tính:",
+    "shipping": "Phí vận chuyển:",
+    "free_ship": "Miễn phí",
+    "total": "Tổng thanh toán:",
+    "contact_support": "LIÊN HỆ TRỢ GIÚP",
+    "status_label": {
+      "pending": "Đang Xử Lý",
+      "packing": "Đang Đóng Gói",
+      "shipping": "Đang Giao Hàng",
+      "delivered": "Đã Nhận Hàng",
+      "cancelled": "Đã Hủy"
+    },
+    "status_steps": {
+      "pending": { "label": "Đang Xử Lý", "desc": "Đã nhận đơn hàng" },
+      "packing": { "label": "Đóng Gói", "desc": "Đóng gói sản phẩm" },
+      "shipping": { "label": "Đang Giao", "desc": "Đang vận chuyển giao hàng" },
+      "delivered": { "label": "Đã Nhận", "desc": "Đã nhận hàng thành công" }
+    }
+  },
+  "ar": {
+    "title": "AR Trải Nghiệm Di Động",
+    "desc": "Để đặt thử mô hình 3D vào căn phòng của bạn, hãy quét mã QR bên dưới bằng điện thoại di động.",
+    "back_product": "Quay Lại Chi Tiết Sản Phẩm",
+    "ar_model": "AR · Mô Hình 3D",
+    "view_ar": "Xem AR trong phòng",
+    "tap_points": "Chạm vào các điểm vàng để xem thông tin",
+    "back": "Quay Lại",
+    "not_available": "AR chưa khả dụng",
+    "place_room": "AR · Đặt Trong Phòng",
+    "starting": "Đang khởi động AR...",
+    "error_load": "Không tải được mô hình 3D. Vui lòng kiểm tra kết nối mạng và thử lại.",
+    "loading": "Đang tải mô hình 3D...",
+    "tap_place": "Chạm vào màn hình để đặt mô hình"
+  },
+  "forgot_password": {
+    "subtitle": "KHÔI PHỤC MẬT KHẨU",
+    "title": "Quên Mật Khẩu",
+    "success_msg": "Yêu cầu khôi phục mật khẩu đã được gửi.",
+    "success_desc": "Nếu tài khoản với email",
+    "success_desc_2": "tồn tại trên hệ thống, bạn sẽ nhận được liên kết thiết lập lại mật khẩu.",
+    "back_login": "Quay lại đăng nhập",
+    "desc": "Nhập địa chỉ email đăng ký tài khoản của bạn để nhận liên kết khôi phục mật khẩu.",
+    "email_label": "ĐỊA CHỈ THƯ ĐIỆN TỬ",
+    "email_placeholder": "email@example.com",
+    "submit_btn": "GỬI THƯ KHÔI PHỤC",
+    "back_link": "Quay lại Đăng nhập"
+  }
+}

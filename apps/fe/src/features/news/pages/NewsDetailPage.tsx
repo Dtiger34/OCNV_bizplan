@@ -1,10 +1,12 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Tag, ArrowRight } from 'lucide-react';
 import { articles } from '../data/articles';
+import { useTranslation } from 'react-i18next';
 
 export default function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const article = articles.find((a) => a.slug === slug);
   const related = articles.filter((a) => a.slug !== slug).slice(0, 2);
@@ -12,12 +14,12 @@ export default function NewsDetailPage() {
   if (!article) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 text-[#ab2124]">
-        <p className="text-lg font-semibold">Không tìm thấy bài viết.</p>
+        <p className="text-lg font-semibold">{t('news.not_found')}</p>
         <button
           onClick={() => navigate(-1)}
           className="text-sm underline underline-offset-4 text-[#C9973A]"
         >
-          Quay lại
+          {t('news.back')}
         </button>
       </div>
     );
@@ -40,7 +42,7 @@ export default function NewsDetailPage() {
           className="absolute top-6 left-6 flex items-center gap-2 text-white/80 hover:text-white text-sm font-semibold transition-colors bg-black/20 hover:bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm"
         >
           <ArrowLeft size={14} />
-          Quay lại
+          {t('news.back')}
         </button>
 
         {/* Title overlay */}
@@ -79,17 +81,17 @@ export default function NewsDetailPage() {
         <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-[13px] font-bold tracking-[0.15em] text-[#ab2124] uppercase mb-1">
-              Khám phá sản phẩm liên quan
+              {t('news.related_title')}
             </p>
             <p className="text-sm text-[#ab2124]">
-              Xem bộ sưu tập hộp tiểu cảnh diorama làng nghề của chúng tôi.
+              {t('news.related_desc')}
             </p>
           </div>
           <Link
             to="/shop"
             className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#ab2124] text-[#fff8e7] text-[13px] font-bold tracking-wider uppercase rounded-full hover:bg-[#ab2124] transition-colors"
           >
-            Xem bộ sưu tập <ArrowRight size={12} />
+            {t('news.related_btn')} <ArrowRight size={12} />
           </Link>
         </div>
 
@@ -97,7 +99,7 @@ export default function NewsDetailPage() {
         {related.length > 0 && (
           <div className="space-y-5 pt-4 border-t border-[#D4B896]/40">
             <h3 className="text-[13px] font-bold tracking-[0.18em] text-[#7B1C2E] uppercase">
-              Bài viết liên quan
+              {t('news.related_articles')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {related.map((r) => (

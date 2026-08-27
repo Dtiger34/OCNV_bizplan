@@ -4,6 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Sparkles, Star, ChevronRight, ChevronLeft, Minus, Plus, MessageSquare } from 'lucide-react';
 import { useProduct, useProductReviews, useRelatedProducts, useCreateReview } from '../hooks/useProducts';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const PLACEHOLDER = 'https://placehold.co/800x800?text=OCNV';
 
@@ -11,7 +12,8 @@ export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const lang = 'vi' as const;
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'en' | 'vi';
 
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
@@ -27,7 +29,7 @@ export default function ProductDetailPage() {
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-[#C9973A] border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-[#ab2124]">Đang tải sản phẩm...</p>
+          <p className="text-sm text-[#ab2124]">{t('product.loading')}</p>
         </div>
       </div>
     );
@@ -36,8 +38,8 @@ export default function ProductDetailPage() {
   if (isError || !product) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <p className="text-lg text-[#ab2124]">Không tìm thấy sản phẩm.</p>
-        <Link to="/shop" className="text-[#C9973A] underline text-sm">← Quay lại gian hàng</Link>
+        <p className="text-lg text-[#ab2124]">{t('product.not_found')}</p>
+        <Link to="/shop" className="text-[#C9973A] underline text-sm">{t('product.back_to_shop')}</Link>
       </div>
     );
   }
@@ -60,7 +62,7 @@ export default function ProductDetailPage() {
         origin: product.village?.name?.vi ?? '',
       });
     }
-    toast.success(`Đã thêm ${qty} sản phẩm vào giỏ hàng!`);
+    toast.success(t('product.added_success', { qty }));
   };
 
   const handleBuyNow = () => {
@@ -74,9 +76,9 @@ export default function ProductDetailPage() {
     createReview.mutate(newReview, {
       onSuccess: () => {
         setNewReview({ rating: 5, content: '', guestName: '' });
-        toast.success('Cảm ơn bạn đã đánh giá!');
+        toast.success(t('product.review_success'));
       },
-      onError: () => toast.error('Không thể gửi đánh giá. Vui lòng thử lại.'),
+      onError: () => toast.error(t('product.review_error')),
     });
   };
 
@@ -136,11 +138,11 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="container mx-auto px-4 md:px-8 py-2.5 flex items-center gap-1 text-xs text-gray-500">
-          <Link to="/" className="hover:text-[#C9973A]">Trang chủ</Link>
+          <Link to="/" className="hover:text-[#C9973A]">{t('product.home')}</Link>
           <ChevronRight size={12} />
-          <Link to="/shop" className="hover:text-[#C9973A]">Cửa hàng</Link>
+          <Link to="/shop" className="hover:text-[#C9973A]">{t('product.shop')}</Link>
           <ChevronRight size={12} />
-          <span className="text-[#ab2124] truncate max-w-[200px]">{product.name[lang]}</span>
+          <span className="text-[#ab2124] truncate max-w-[200px]">{product.name[lang] || product.name.vi}</span>
         </div>
       </div>
 
@@ -166,7 +168,7 @@ export default function ProductDetailPage() {
                       type="button"
                       onClick={() => setActiveImg(i => (i - 1 + images.length) % images.length)}
                       className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-[#ab2124] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                      aria-label="Ảnh trước"
+                      aria-label={t('product.prev_image')}
                     >
                       <ChevronLeft size={18} />
                     </button>
@@ -174,7 +176,7 @@ export default function ProductDetailPage() {
                       type="button"
                       onClick={() => setActiveImg(i => (i + 1) % images.length)}
                       className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-[#ab2124] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                      aria-label="Ảnh tiếp theo"
+                      aria-label={t('product.next_image')}
                     >
                       <ChevronRight size={18} />
                     </button>
@@ -188,7 +190,7 @@ export default function ProductDetailPage() {
                   className="absolute bottom-3 right-3 bg-[#C9973A] text-white px-3 py-1.5 rounded-sm text-[11px] font-bold tracking-wide flex items-center gap-1 shadow-md hover:bg-[#b8852e] transition-colors"
                 >
                   <Sparkles size={13} />
-                  XEM AR 3D
+                  {t('product.view_ar')}
                 </Link>
               </div>
 
@@ -232,9 +234,9 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
                 <span className="text-gray-400">|</span>
-                <span className="text-gray-500">{displayReviewCount} Đánh Giá</span>
+                <span className="text-gray-500">{t('product.reviews_count', { count: displayReviewCount })}</span>
                 <span className="text-gray-400">|</span>
-                <span className="text-gray-500">Đã Bán {product.soldCount && product.soldCount > 0 ? product.soldCount : 14}</span>
+                <span className="text-gray-500">{t('product.sold_count', { count: product.soldCount && product.soldCount > 0 ? product.soldCount : 14 })}</span>
               </div>
 
               {/* Price */}
@@ -249,34 +251,34 @@ export default function ProductDetailPage() {
               {/* Details */}
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-32 shrink-0">Loại sản phẩm</span>
-                  <span className="text-[#ab2124]">Mô hình tiểu cảnh làng nghề 3D</span>
+                  <span className="text-gray-400 w-32 shrink-0">{t('product.product_type')}</span>
+                  <span className="text-[#ab2124]">{t('product.product_type_val')}</span>
                 </div>
                 {product.village?.name?.[lang] && (
                   <div className="flex gap-2">
-                    <span className="text-gray-400 w-32 shrink-0">Chủ đề làng nghề</span>
-                    <span className="text-[#ab2124]">{product.village.name[lang]}</span>
+                    <span className="text-gray-400 w-32 shrink-0">{t('product.village_theme')}</span>
+                    <span className="text-[#ab2124]">{product.village.name[lang] || product.village.name.vi}</span>
                   </div>
                 )}
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-32 shrink-0">Công nghệ</span>
-                  <span className="text-[#ab2124]">Tích hợp AR — quét mã để xem 3D</span>
+                  <span className="text-gray-400 w-32 shrink-0">{t('product.technology')}</span>
+                  <span className="text-[#ab2124]">{t('product.technology_val')}</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-32 shrink-0">Xuất xứ</span>
-                  <span className="text-[#ab2124]">Việt Nam — Nghề Xưa Nét Mới</span>
+                  <span className="text-gray-400 w-32 shrink-0">{t('product.origin')}</span>
+                  <span className="text-[#ab2124]">{t('product.origin_val')}</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="text-gray-400 w-32 shrink-0">Tình trạng</span>
+                  <span className="text-gray-400 w-32 shrink-0">{t('product.status_label')}</span>
                   <span className={inStock ? 'text-[#3A6B4A] font-medium' : 'text-[#7B1C2E] font-medium'}>
-                    {inStock ? `Còn ${product.stock} sản phẩm` : 'Hết hàng'}
+                    {inStock ? t('product.in_stock', { count: product.stock }) : t('product.out_of_stock')}
                   </span>
                 </div>
               </div>
 
               {/* Quantity */}
               <div className="flex items-center gap-4 text-sm">
-                <span className="text-gray-400">Số lượng</span>
+                <span className="text-gray-400">{t('product.quantity')}</span>
                 <div className="flex items-center border border-gray-300 rounded-sm">
                   <button
                     onClick={() => setQty(q => Math.max(1, q - 1))}
@@ -293,7 +295,7 @@ export default function ProductDetailPage() {
                     <Plus size={13} />
                   </button>
                 </div>
-                <span className="text-gray-400 text-xs">{product.stock} sản phẩm có sẵn</span>
+                <span className="text-gray-400 text-xs">{t('product.available', { count: product.stock })}</span>
               </div>
 
               {/* Actions */}
@@ -304,14 +306,14 @@ export default function ProductDetailPage() {
                   className="flex-1 h-12 border-2 border-[#C9973A] text-[#C9973A] bg-[#FFF8EC] hover:bg-[#FFF0D0] font-semibold text-sm rounded-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <ShoppingCart size={18} />
-                  Thêm Vào Giỏ Hàng
+                  {t('product.add_to_cart')}
                 </button>
                 <button
                   onClick={handleBuyNow}
                   disabled={!inStock}
                   className="flex-1 h-12 bg-[#C9973A] hover:bg-[#b8852e] text-white font-semibold text-sm rounded-sm flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  Mua Ngay
+                  {t('product.buy_now')}
                 </button>
               </div>
 
@@ -322,21 +324,17 @@ export default function ProductDetailPage() {
         {/* ── Description ─────────────────────────────────────────── */}
         <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
           <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 text-title-gradient">
-            Mô Tả Sản Phẩm
+            {t('product.description')}
           </h2>
           <div className="text-sm text-gray-700 leading-relaxed space-y-3">
             {introParagraphs.map((para, i) => (
               <p key={i}>{para}</p>
             ))}
-            <p>
-              Đây là mô hình tiểu cảnh 3D tái hiện không gian và quy trình sản xuất của{' '}
-              <strong>{product.village?.name?.[lang] ?? 'làng nghề truyền thống Việt Nam'}</strong>.
-              Mỗi sản phẩm được chế tác thủ công tỉ mỉ, kết hợp công nghệ AR để bạn có thể quét mã và khám phá toàn bộ câu chuyện làng nghề ngay trên điện thoại.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t('product.desc_intro', { village: product.village?.name?.[lang] || product.village?.name?.vi || t('product.default_village') }) }} />
 
             {specRows.length > 0 && (
               <div className="pt-3">
-                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Thông số sản phẩm</h3>
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">{t('product.specs')}</h3>
                 <div className="overflow-x-auto border border-gray-200 rounded-sm">
                   <table className="w-full text-sm">
                     <tbody>
@@ -358,7 +356,7 @@ export default function ProductDetailPage() {
 
             {includesItems.length > 0 && (
               <div className="pt-3">
-                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Bộ sản phẩm bao gồm</h3>
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">{t('product.includes')}</h3>
                 <ul className="space-y-1.5">
                   {includesItems.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -372,7 +370,7 @@ export default function ProductDetailPage() {
 
             {careItems.length > 0 && (
               <div className="pt-3">
-                <h3 className="text-sm font-bold text-[#ab2124] mb-2">Hướng dẫn bảo quản</h3>
+                <h3 className="text-sm font-bold text-[#ab2124] mb-2">{t('product.care')}</h3>
                 <ul className="space-y-1.5">
                   {careItems.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -386,9 +384,9 @@ export default function ProductDetailPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               {[
-                { label: 'Thủ công mỹ nghệ', desc: 'Từng chi tiết được làm thủ công bởi nghệ nhân lành nghề' },
-                { label: 'Tích hợp AR 3D', desc: 'Quét mã để khám phá quy trình sản xuất làng nghề qua AR' },
-                { label: 'Câu chuyện văn hóa', desc: 'Mỗi mô hình mang theo lịch sử và tinh thần của làng nghề' },
+                { label: t('product.features.craft.title'), desc: t('product.features.craft.desc') },
+                { label: t('product.features.ar.title'), desc: t('product.features.ar.desc') },
+                { label: t('product.features.culture.title'), desc: t('product.features.culture.desc') },
               ].map((item, i) => (
                 <div key={i} className="bg-[#FAFAF5] border border-gray-100 rounded-sm p-3">
                   <p className="text-xs font-bold text-[#ab2124] mb-1">{item.label}</p>
@@ -408,7 +406,7 @@ export default function ProductDetailPage() {
         <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
           <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 flex items-center gap-2 text-title-gradient">
             <MessageSquare size={15} className="text-[#C9973A]" />
-            Đánh Giá Sản Phẩm
+            {t('product.reviews_title')}
           </h2>
 
           {/* Rating summary */}
@@ -420,17 +418,17 @@ export default function ProductDetailPage() {
                   <Star key={s} size={12} fill={s <= Math.round(avgRating) ? 'currentColor' : 'none'} />
                 ))}
               </div>
-              <div className="text-xs text-gray-400 mt-0.5">trên 5</div>
+              <div className="text-xs text-gray-400 mt-0.5">{t('product.out_of_5')}</div>
             </div>
             <div className="text-sm text-gray-500">
-              {displayReviewCount} đánh giá từ khách hàng
+              {t('product.reviews_from_customers', { count: displayReviewCount })}
             </div>
           </div>
 
           {/* Review list */}
           <div className="space-y-4 mb-8">
             {displayReviews.length === 0 ? (
-              <p className="text-sm text-gray-400 text-center py-6">Chưa có đánh giá nào. Hãy là người đầu tiên!</p>
+              <p className="text-sm text-gray-400 text-center py-6">{t('product.no_reviews')}</p>
             ) : (
               displayReviews.map((r: any) => (
                 <div key={r._id} className="flex gap-3 py-4 border-b border-gray-50 last:border-0">
@@ -439,7 +437,7 @@ export default function ProductDetailPage() {
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#ab2124]">{r.user?.fullName ?? r.guestName ?? 'Khách hàng'}</span>
+                      <span className="text-sm font-medium text-[#ab2124]">{r.user?.fullName ?? r.guestName ?? t('product.guest')}</span>
                       <span className="text-xs text-gray-400">{new Date(r.createdAt).toLocaleDateString('vi-VN')}</span>
                     </div>
                     <div className="flex text-[#C9973A]">
@@ -456,10 +454,10 @@ export default function ProductDetailPage() {
 
           {/* Write review */}
           <div className="border-t border-gray-100 pt-6">
-            <h3 className="text-sm font-semibold text-[#ab2124] mb-4">Viết đánh giá của bạn</h3>
+            <h3 className="text-sm font-semibold text-[#ab2124] mb-4">{t('product.write_review')}</h3>
             <form onSubmit={handleSubmitReview} className="space-y-4">
               <div>
-                <label className="text-sm text-gray-500 block mb-1">Tên của bạn *</label>
+                <label className="text-sm text-gray-500 block mb-1">{t('product.your_name')}</label>
                 <input
                   type="text"
                   required
@@ -470,7 +468,7 @@ export default function ProductDetailPage() {
                 />
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-500">Đánh giá:</span>
+                <span className="text-sm text-gray-500">{t('product.rating')}</span>
                 <div className="flex gap-1">
                   {[1,2,3,4,5].map(s => (
                     <button
@@ -486,7 +484,7 @@ export default function ProductDetailPage() {
               </div>
               <textarea
                 rows={4}
-                placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."
+                placeholder={t('product.review_placeholder')}
                 value={newReview.content}
                 onChange={e => setNewReview(r => ({ ...r, content: e.target.value }))}
                 className="w-full p-3 border border-gray-200 rounded-sm text-sm text-[#ab2124] focus:outline-none focus:border-[#C9973A] resize-none"
@@ -497,7 +495,7 @@ export default function ProductDetailPage() {
                 disabled={createReview.isPending}
                 className="px-6 py-2.5 bg-[#C9973A] hover:bg-[#b8852e] text-white text-sm font-semibold rounded-sm transition-colors disabled:opacity-60 cursor-pointer"
               >
-                {createReview.isPending ? 'Đang gửi...' : 'Gửi Đánh Giá'}
+                {createReview.isPending ? t('product.submitting') : t('product.submit_review')}
               </button>
             </form>
           </div>
@@ -507,7 +505,7 @@ export default function ProductDetailPage() {
         {related.length > 0 && (
           <div className="bg-white rounded-sm shadow-sm p-4 md:p-6">
             <h2 className="text-sm font-bold text-[#ab2124] uppercase tracking-wider pb-3 border-b border-gray-100 mb-4 text-title-gradient">
-              Sản Phẩm Liên Quan
+              {t('product.related')}
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {related.map((p: any) => (
@@ -524,7 +522,7 @@ export default function ProductDetailPage() {
                     />
                   </div>
                   <div className="p-2 space-y-1">
-                    <p className="text-xs text-[#ab2124] line-clamp-2 leading-tight">{p.name?.vi}</p>
+                    <p className="text-xs text-[#ab2124] line-clamp-2 leading-tight">{p.name?.[lang] || p.name?.vi}</p>
                     <p className="text-sm font-bold text-[#C9973A]">{p.price?.toLocaleString('vi-VN')}₫</p>
                   </div>
                 </Link>

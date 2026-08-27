@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X, Smartphone, ChevronRight } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useTranslation } from 'react-i18next';
 import { useProductHotspots, type Hotspot } from '../hooks/useProductHotspots';
 // Swap với file .glb thật của từng sản phẩm khi có
 const PLACEHOLDER_MODEL_URL =
@@ -37,7 +38,8 @@ function toDataNormal(n: Hotspot['normal']) {
 export default function ArPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const lang = 'vi' as const;
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'en' | 'vi';
 
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
   const isMobile = window.innerWidth < 1024;
@@ -56,9 +58,9 @@ export default function ArPage() {
     return (
       <div className="min-h-screen bg-[#ab2124] text-[#fff8e7] flex flex-col items-center justify-center p-6 text-center space-y-8">
         <Smartphone className="w-16 h-16 text-[#C9973A] animate-bounce" />
-        <h1 className="text-3xl font-light tracking-widest uppercase">AR Trải Nghiệm Di Động</h1>
+        <h1 className="text-3xl font-light tracking-widest uppercase">{t('ar.title')}</h1>
         <p className="text-sm max-w-md text-[#C9B99A] leading-relaxed">
-          Để đặt thử mô hình 3D vào căn phòng của bạn, hãy quét mã QR bên dưới bằng điện thoại di động.
+          {t('ar.desc')}
         </p>
         <div className="p-4 bg-white rounded-lg border-2 border-[#C9973A]">
           <QRCodeSVG value={arUrl} size={192} />
@@ -68,7 +70,7 @@ export default function ArPage() {
           onClick={handleClose}
           className="px-6 py-2.5 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm cursor-pointer"
         >
-          Quay Lại Chi Tiết Sản Phẩm
+          {t('ar.back_product')}
         </button>
       </div>
     );
@@ -79,7 +81,7 @@ export default function ArPage() {
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-transparent pointer-events-none">
         <span className="text-[11px] font-bold tracking-widest text-[#C9973A] uppercase">
-          AR · Mô Hình 3D
+          {t('ar.ar_model')}
         </span>
         <button
           onClick={handleClose}
@@ -140,7 +142,7 @@ export default function ArPage() {
             whiteSpace: 'nowrap',
           }}
         >
-          Xem AR trong phòng
+          {t('ar.view_ar')}
         </button>
       </model-viewer>
 
@@ -197,14 +199,14 @@ export default function ArPage() {
       <div className="absolute bottom-0 left-0 right-0 z-20 pb-4 flex flex-col items-center gap-2 pointer-events-none">
         {hotspots.length > 0 && !activeHotspot && (
           <p className="text-[11px] text-[#C9B99A] tracking-wide flex items-center gap-1 drop-shadow">
-            <ChevronRight size={12} /> Chạm vào các điểm vàng để xem thông tin
+            <ChevronRight size={12} /> {t('ar.tap_points')}
           </p>
         )}
         <button
           onClick={handleClose}
           className="pointer-events-auto px-5 py-2 bg-black/50 text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm border border-white/20"
         >
-          Quay Lại
+          {t('ar.back')}
         </button>
       </div>
     </div>

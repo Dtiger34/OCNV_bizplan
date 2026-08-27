@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, Mail, Lock, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRegister } from '../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const register = useRegister();
+  const { t } = useTranslation();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,16 +17,16 @@ export default function RegisterPage() {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Mật khẩu nhập lại chưa trùng khớp.');
+      toast.error(t('auth.pwd_mismatch'));
       return;
     }
     register.mutate({ fullName, email, password }, {
       onSuccess: () => {
-        toast.success('Đăng ký thành công! Vui lòng đăng nhập.');
+        toast.success(t('auth.register_success'));
         navigate('/login');
       },
       onError: (err: any) => {
-        const msg = err?.response?.data?.message || err?.message || 'Đăng ký thất bại. Vui lòng thử lại.';
+        const msg = err?.response?.data?.message || err?.message || t('auth.register_failed');
         toast.error(msg);
       },
     });
@@ -36,10 +38,10 @@ export default function RegisterPage() {
 
         <div className="text-center space-y-1">
           <span className="text-[10px] font-bold tracking-[0.2em] text-[#ab2124] uppercase block">
-            ĐĂNG KÝ THÀNH VIÊN
+            {t('auth.register_system')}
           </span>
           <h2 className="text-3xl font-normal text-[#ab2124] text-title-gradient">
-            Đăng Ký Tài Khoản
+            {t('auth.register_title')}
           </h2>
           <div className="h-[1px] w-12 bg-[#C9973A]/60 mx-auto pt-1" />
         </div>
@@ -47,7 +49,7 @@ export default function RegisterPage() {
         <form onSubmit={handleRegister} className="space-y-4">
           <div className="space-y-1">
             <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase block">
-              HỌ VÀ TÊN
+              {t('auth.name_label')}
             </label>
             <div className="relative">
               <input
@@ -64,7 +66,7 @@ export default function RegisterPage() {
 
           <div className="space-y-1">
             <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase block">
-              EMAIL
+              {t('auth.email_label')}
             </label>
             <div className="relative">
               <input
@@ -81,7 +83,7 @@ export default function RegisterPage() {
 
           <div className="space-y-1">
             <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase block">
-              MẬT KHẨU (TỐI THIỂU 8 KÝ TỰ)
+              {t('auth.pwd_min_label')}
             </label>
             <div className="relative">
               <input
@@ -99,7 +101,7 @@ export default function RegisterPage() {
 
           <div className="space-y-1">
             <label className="text-[10px] font-bold tracking-wider text-[#ab2124] uppercase block">
-              XÁC NHẬN MẬT KHẨU
+              {t('auth.pwd_confirm_label')}
             </label>
             <div className="relative">
               <input
@@ -120,14 +122,14 @@ export default function RegisterPage() {
             className="w-full h-12 bg-[#ab2124] hover:bg-[#ab2124] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-subtle disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <UserPlus size={16} />
-            {register.isPending ? 'ĐANG XỬ LÝ...' : 'ĐĂNG KÝ NGAY'}
+            {register.isPending ? t('auth.registering') : t('auth.register_btn')}
           </button>
         </form>
 
         <div className="text-center text-xs text-[#ab2124] pt-2 border-t border-[#D4B896]/20">
-          Đã có tài khoản?{' '}
+          {t('auth.has_account')}{' '}
           <Link to="/login" className="text-[#7B1C2E] hover:underline font-bold">
-            Đăng nhập ngay
+            {t('auth.login_link')}
           </Link>
         </div>
       </div>

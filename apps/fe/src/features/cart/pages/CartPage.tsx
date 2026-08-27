@@ -1,10 +1,12 @@
 import { useCart } from '@/context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -17,10 +19,10 @@ export default function CartPage() {
       {/* Title */}
       <div className="border-b border-[#D4B896] pb-4 reveal">
         <h1 className="text-3xl md:text-4xl font-normal text-[#ab2124] text-title-gradient">
-          GIỎ HÀNG CỦA BẠN
+          {t('cart.title')}
         </h1>
         <p className="text-xs text-[#ab2124] mt-1">
-          Xem lại thông tin và số lượng mô hình diorama trong giỏ hàng
+          {t('cart.subtitle')}
         </p>
       </div>
 
@@ -28,16 +30,16 @@ export default function CartPage() {
         <div className="h-[350px] border border-[#D4B896] rounded-[6px] bg-[#fff8e7] flex flex-col items-center justify-center text-center p-8 space-y-4">
           <ShoppingBag size={48} className="text-[#ab2124] animate-pulse" />
           <span className="text-2xl text-[#ab2124] italic">
-            Giỏ hàng của bạn đang trống
+            {t('cart.empty')}
           </span>
           <p className="text-sm text-[#ab2124]">
-            Hãy khám phá các mô hình tiểu cảnh làng nghề độc đáo của chúng tôi để chọn sản phẩm ưng ý.
+            {t('cart.empty_desc')}
           </p>
           <Link
             to="/shop"
             className="px-6 py-3 bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-wider uppercase rounded-sm hover:bg-[#ab2124] transition-colors"
           >
-            ĐI TỚI CỬA HÀNG
+            {t('cart.go_to_shop')}
           </Link>
         </div>
       ) : (
@@ -113,14 +115,14 @@ export default function CartPage() {
                 onClick={clearCart}
                 className="text-[10px] font-bold tracking-wider text-[#7B1C2E] hover:underline uppercase transition-all"
               >
-                XÓA TẤT CẢ SẢN PHẨM
+                {t('cart.clear_all')}
               </button>
               
               <Link
                 to="/shop"
                 className="text-[10px] font-bold tracking-wider text-[#ab2124] hover:underline uppercase transition-all"
               >
-                TIẾP TỤC MUA SẮM
+                {t('cart.continue_shopping')}
               </Link>
             </div>
           </div>
@@ -128,21 +130,21 @@ export default function CartPage() {
           {/* Pricing Card */}
           <div className="lg:col-span-4 bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6 reveal-right">
             <h3 className="text-xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
-              THÔNG TIN THANH TOÁN
+              {t('cart.summary_title')}
             </h3>
 
             <div className="space-y-4 text-sm">
               <div className="flex justify-between text-[#ab2124]">
-                <span>Tạm tính:</span>
+                <span>{t('cart.subtotal')}</span>
                 <span>{formatPrice(total)} ₫</span>
               </div>
               <div className="flex justify-between text-[#ab2124]">
-                <span>Phí vận chuyển:</span>
-                <span className="text-[#3A6B4A]">Miễn phí</span>
+                <span>{t('cart.shipping')}</span>
+                <span className="text-[#3A6B4A]">{t('cart.free_shipping')}</span>
               </div>
               <div className="h-[1px] bg-[#D4B896]/30" />
               <div className="flex justify-between items-baseline">
-                <span className="text-xs font-bold text-[#ab2124] uppercase">Tổng thanh toán:</span>
+                <span className="text-xs font-bold text-[#ab2124] uppercase">{t('cart.total')}</span>
                 <span className="text-2xl font-bold text-[#7B1C2E]">
                   {formatPrice(total)}
                   <span className="text-xs font-semibold align-super ml-0.5">₫</span>
@@ -154,7 +156,7 @@ export default function CartPage() {
               onClick={() => navigate('/checkout')}
               className="w-full h-12 bg-[#7B1C2E] hover:bg-[#9B2438] text-[#fff8e7] text-xs font-bold tracking-wider uppercase rounded-sm flex items-center justify-center active:scale-[0.97] transition-all cursor-pointer"
             >
-              TIẾN HÀNH ĐẶT HÀNG
+              {t('cart.checkout_btn')}
             </button>
           </div>
         </div>

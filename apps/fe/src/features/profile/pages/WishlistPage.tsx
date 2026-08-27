@@ -2,6 +2,7 @@ import { ProfileLayout } from './ProfilePage';
 import { Trash2, ShoppingCart, Heart } from 'lucide-react';
 import { useWishlist, useRemoveFromWishlist } from '../hooks/useWishlist';
 import { useCart } from '@/context/CartContext';
+import { useTranslation } from 'react-i18next';
 
 const PLACEHOLDER = 'https://placehold.co/400x400?text=OCNV';
 
@@ -9,22 +10,23 @@ export default function WishlistPage() {
   const { addToCart } = useCart();
   const { data: items = [], isLoading } = useWishlist();
   const removeFromWishlist = useRemoveFromWishlist();
+  const { t } = useTranslation();
 
   return (
     <ProfileLayout>
       <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
         <h3 className="text-2xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
-          DANH SÁCH SẢN PHẨM YÊU THÍCH
+          {t('profile.wishlist.title')}
         </h3>
 
         {isLoading && (
-          <div className="h-[220px] flex items-center justify-center text-[#ab2124] text-sm">Đang tải...</div>
+          <div className="h-[220px] flex items-center justify-center text-[#ab2124] text-sm">{t('profile.wishlist.loading')}</div>
         )}
 
         {!isLoading && items.length === 0 && (
           <div className="h-[220px] flex flex-col items-center justify-center text-center p-8 space-y-4">
             <Heart size={32} className="text-[#ab2124] animate-pulse" />
-            <span className="text-xl text-[#ab2124] italic">Chưa lưu sản phẩm nào</span>
+            <span className="text-xl text-[#ab2124] italic">{t('profile.wishlist.empty')}</span>
           </div>
         )}
 
@@ -57,7 +59,7 @@ export default function WishlistPage() {
                       })}
                       className="flex items-center gap-1 text-[9px] font-bold text-[#ab2124] hover:text-[#7B1C2E] uppercase transition-colors">
                       <ShoppingCart size={12} />
-                      Thêm vào giỏ
+                      {t('profile.wishlist.add_cart')}
                     </button>
                     <button onClick={() => removeFromWishlist.mutate(item._id)}
                       className="text-[#ab2124] hover:text-[#7B1C2E] transition-colors p-1">

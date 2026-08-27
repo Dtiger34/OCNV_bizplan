@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,12 +25,12 @@ export default function Footer() {
         {/* Column 1: Brand Info */}
         <div className="space-y-4">
           <h4 className="text-2xl font-bold tracking-wider text-[#fff8e7] uppercase">
-            NGHỀ XƯA NÉT MỚI
+            {t('footer.brand')}
           </h4>
           <div className="space-y-2 pt-2 text-[#C9B99A] text-sm">
             <div className="flex items-center gap-2.5">
               <MapPin size={15} className="text-[#C9973A]" />
-              <span>36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam</span>
+              <span>{t('footer.address')}</span>
             </div>
             <div className="flex items-center gap-2.5">
               <Phone size={15} className="text-[#C9973A]" />
@@ -41,32 +43,32 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">
             <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase">
-              TIỂU CẢNH LÀNG NGHỀ
+              {t('footer.villages_title')}
             </h4>
             <ul className="text-xs text-[#C9B99A] space-y-3">
               <li>
                 <a href="/villages/bat-trang" className="hover:text-[#C9973A] transition-colors block">
-                  Làng gốm Bát Tràng
+                  {t('footer.villages.bat_trang')}
                 </a>
               </li>
               <li>
                 <a href="/villages/van-phuc" className="hover:text-[#C9973A] transition-colors block">
-                  Làng lụa Vạn Phúc
+                  {t('footer.villages.van_phuc')}
                 </a>
               </li>
               <li>
                 <a href="/villages/non-chuong" className="hover:text-[#C9973A] transition-colors block">
-                  Làng nón Chuông
+                  {t('footer.villages.chuong')}
                 </a>
               </li>
               <li>
                 <a href="/villages/quang-phu-cau" className="hover:text-[#C9973A] transition-colors block">
-                  Làng hương Quảng Phú Cầu
+                  {t('footer.villages.quang_phu_cau')}
                 </a>
               </li>
               <li>
                 <a href="/villages/chang-son" className="hover:text-[#C9973A] transition-colors block">
-                  Làng Quạt Chàng Sơn
+                  {t('footer.villages.chang_son')}
                 </a>
               </li>
             </ul>
@@ -74,27 +76,27 @@ export default function Footer() {
 
           <div className="space-y-4">
             <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase whitespace-nowrap">
-              QUY ĐỊNH & THƯỞNG LÃM
+              {t('footer.policies_title')}
             </h4>
             <ul className="text-xs text-[#C9B99A] space-y-3">
               <li>
                 <a href="/pages/shipping-policy" className="hover:text-[#C9973A] transition-colors block">
-                  Vận Chuyển Toàn Quốc
+                  {t('footer.policies.shipping')}
                 </a>
               </li>
               <li>
                 <a href="/pages/return-policy" className="hover:text-[#C9973A] transition-colors block">
-                  Bảo Hành Mô Hình (1 Năm)
+                  {t('footer.policies.warranty')}
                 </a>
               </li>
 <li>
                 <a href="/pages/faq" className="hover:text-[#C9973A] transition-colors block">
-                  Hỏi Đáp Điển Lệ
+                  {t('footer.policies.faq')}
                 </a>
               </li>
               <li>
                 <Link to="/lien-he" className="hover:text-[#C9973A] transition-colors block">
-                  Liên Hệ & Phản Hồi
+                  {t('footer.policies.contact')}
                 </Link>
               </li>
             </ul>
@@ -104,17 +106,17 @@ export default function Footer() {
         {/* Column 3: Newsletter */}
         <div className="space-y-4">
           <h4 className="text-[13px] font-bold tracking-[0.2em] text-[#fff8e7] uppercase">
-            TIN TỨC DI SẢN
+            {t('footer.newsletter_title')}
           </h4>
           <p className="text-sm text-[#C9B99A] leading-relaxed">
-            Đăng ký nhận thông tin về các hộp mô hình tiểu cảnh mới nhất và ưu đãi đặc quyền.
+            {t('footer.newsletter_desc')}
           </p>
 
           <form onSubmit={handleSubscribe} className="space-y-2 pt-2">
             <div className="flex gap-2 items-end border-b border-[#D4B896]/60 focus-within:border-[#C9973A] transition-colors pb-1">
               <input
                 type="email"
-                placeholder="Nghệ nhân @email.com"
+                placeholder={t('footer.newsletter_placeholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -130,7 +132,7 @@ export default function Footer() {
             {submitted && (
               <div className="flex items-center gap-1 text-[#7A9E8E] text-[11px] pt-1">
                 <CheckCircle2 size={12} />
-                <span>Đăng ký nhận thư điện tử thành công!</span>
+                <span>{t('footer.newsletter_success')}</span>
               </div>
             )}
           </form>
@@ -140,7 +142,7 @@ export default function Footer() {
       {/* Thin divider line above copyright strip */}
       <div className="container mx-auto px-6 md:px-8 border-t border-[#D4B896]/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-[11px] text-[#C9B99A]/50 text-center md:text-left">
-          © {new Date().getFullYear()} Nghề Xưa Nét Mới. Bản quyền được bảo hộ.
+          {t('footer.copyright', { year: new Date().getFullYear() })}
         </p>
 
         {/* Social Icons (Thin line symbols) */}

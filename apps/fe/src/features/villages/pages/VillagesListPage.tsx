@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { VILLAGES } from '../data/villages-static';
+import { useTranslation } from 'react-i18next';
 
 export default function VillagesListPage() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="min-h-screen bg-[#fff8e7]">
@@ -27,17 +29,15 @@ export default function VillagesListPage() {
             transition={{ duration: 0.6 }}
             className="text-[10px] sm:text-xs font-bold tracking-[0.3em] text-[#C9973A] uppercase mb-4"
           >
-            Nghề Xưa Nét Mới
+            {t('villages.list.subtitle')}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight mb-5"
-          >
-            <span className="gradient-line">Câu Chuyện</span> <br />
-            <span className="gradient-line italic">Làng Nghề</span>
-          </motion.h1>
+            dangerouslySetInnerHTML={{ __html: t('villages.list.title') }}
+          />
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
@@ -50,8 +50,7 @@ export default function VillagesListPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-sm text-[#D4B896]/80 leading-relaxed max-w-lg mx-auto"
           >
-            Hành trình khám phá 5 làng nghề truyền thống Hà Nội — nơi lịch sử, văn hóa
-            và tài hoa người thợ được gìn giữ qua hàng trăm năm.
+            {t('villages.list.desc')}
           </motion.p>
         </div>
       </section>
@@ -60,9 +59,9 @@ export default function VillagesListPage() {
       <section className="bg-[#EDE3CE] border-y border-[#D4B896]/50">
         <div className="max-w-4xl mx-auto px-4 py-8 grid grid-cols-3 gap-6 text-center">
           {[
-            { value: '5', label: 'Làng Nghề' },
-            { value: '700+', label: 'Năm Lịch Sử' },
-            { value: '∞', label: 'Câu Chuyện' },
+            { value: '5', label: t('villages.list.stats.villages') },
+            { value: '700+', label: t('villages.list.stats.history') },
+            { value: '∞', label: t('villages.list.stats.stories') },
           ].map(({ value, label }) => (
             <div key={label}>
               <p className="text-3xl sm:text-4xl font-light text-[#ab2124] mb-0.5">{value}</p>
@@ -76,10 +75,8 @@ export default function VillagesListPage() {
       <section className="py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-2">Khám Phá</p>
-            <h2 className="text-2xl sm:text-3xl font-light text-[#ab2124] text-title-gradient">
-              Các Làng Nghề <span className="italic text-[#ab2124]">Tiêu Biểu</span>
-            </h2>
+            <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-2">{t('villages.list.explore')}</p>
+            <h2 className="text-2xl sm:text-3xl font-light text-[#ab2124] text-title-gradient" dangerouslySetInnerHTML={{ __html: t('villages.list.featured_title') }} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -141,7 +138,7 @@ export default function VillagesListPage() {
                       className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider pt-1 transition-colors duration-300"
                       style={{ color: hoveredSlug === village.slug ? village.color : '#ab2124' }}
                     >
-                      Khám Phá
+                      {t('villages.list.explore_btn')}
                       <ArrowRight
                         size={13}
                         className={`transition-transform duration-300 ${hoveredSlug === village.slug ? 'translate-x-1' : ''}`}

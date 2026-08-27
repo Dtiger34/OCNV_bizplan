@@ -3,6 +3,7 @@ import { ProfileLayout } from './ProfilePage';
 import { Link } from 'react-router-dom';
 import { Eye, Truck, CheckCircle2, Clock } from 'lucide-react';
 import { useOrders } from '../../orders/hooks/useOrders';
+import { useTranslation } from 'react-i18next';
 
 type StatusTab = 'all' | 'pending' | 'shipping' | 'delivered';
 
@@ -14,10 +15,13 @@ const getStatusIcon = (status: string) => {
   }
 };
 
-const getStatusText = (status: string) => {
+const getStatusText = (status: string, t: any) => {
   const map: Record<string, string> = {
-    pending: 'Chờ Xử Lý', packing: 'Đóng Gói',
-    shipping: 'Đang Giao Hàng', delivered: 'Đã Nhận Hàng', cancelled: 'Đã Huỷ',
+    pending: t('profile.orders.status_pending'),
+    packing: t('profile.orders.status_packing'),
+    shipping: t('profile.orders.status_shipping'),
+    delivered: t('profile.orders.status_delivered'),
+    cancelled: t('profile.orders.status_cancelled'),
   };
   return map[status] ?? status;
 };
@@ -33,6 +37,7 @@ const getStatusBadgeClass = (status: string) => {
 
 export default function OrderHistoryPage() {
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
+  const { t } = useTranslation();
   const { data, isLoading } = useOrders({
     status: activeTab === 'all' ? undefined : activeTab,
   });
@@ -43,15 +48,15 @@ export default function OrderHistoryPage() {
     <ProfileLayout>
       <div className="bg-[#fff8e7] border border-[#D4B896] rounded-[6px] p-6 space-y-6">
         <h3 className="text-2xl font-bold text-[#ab2124] border-b border-[#D4B896]/30 pb-3">
-          LỊCH SỬ ĐƠN ĐẶT HÀNG
+          {t('profile.orders.title')}
         </h3>
 
         <div className="flex border-b border-[#D4B896]/20 gap-4 overflow-x-auto pb-1">
           {([
-            { id: 'all', name: 'TẤT CẢ' },
-            { id: 'pending', name: 'ĐANG XỬ LÝ' },
-            { id: 'shipping', name: 'ĐANG GIAO' },
-            { id: 'delivered', name: 'ĐÃ NHẬN' }
+            { id: 'all', name: t('profile.orders.tab_all') },
+            { id: 'pending', name: t('profile.orders.tab_pending') },
+            { id: 'shipping', name: t('profile.orders.tab_shipping') },
+            { id: 'delivered', name: t('profile.orders.tab_delivered') }
           ] as const).map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`text-[11px] font-bold tracking-wider uppercase pb-2 transition-all relative shrink-0 ${activeTab === tab.id ? 'text-[#7B1C2E]' : 'text-[#ab2124] hover:text-[#ab2124]'}`}>
@@ -62,9 +67,9 @@ export default function OrderHistoryPage() {
         </div>
 
         <div className="space-y-4">
-          {isLoading && <p className="text-sm text-[#ab2124] italic text-center py-8">Đang tải...</p>}
+          {isLoading && <p className="text-sm text-[#ab2124] italic text-center py-8">{t('profile.orders.loading')}</p>}
           {!isLoading && orders.length === 0 && (
-            <p className="text-sm text-[#ab2124] italic text-center py-8">Chưa có đơn đặt hàng nào trong danh mục này.</p>
+            <p className="text-sm text-[#ab2124] italic text-center py-8">{t('profile.orders.empty')}</p>
           )}
           {orders.map((order) => (
             <div key={order._id}
@@ -76,13 +81,13 @@ export default function OrderHistoryPage() {
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-[#ab2124]">
                   <span className="flex items-center gap-1.5 font-semibold text-[#7B1C2E]">
-                    Tổng tiền: {order.total.toLocaleString('vi-VN')} ₫
+                    {t('profile.orders.total')} {order.total.toLocaleString('vi-VN')} ₫
                   </span>
                   <span className="text-[#ab2124]">|</span>
                   <span>
-                    {order.paymentMethod === 'cod' ? 'COD' : 'Internet Banking / VietQR'}
+                    {order.paymentMethod === 'cod' ? t('profile.orders.cod') : t('profile.orders.banking')}
                     {' — '}
-                    {order.paymentStatus === 'paid' ? 'Đã thanh toán' : order.paymentMethod === 'cod' ? 'Thanh toán khi nhận' : 'Chờ thanh toán'}
+                    {order.paymentStatus === 'paid' ? t('profile.orders.pay_paid') : order.paymentMethod === 'cod' ? t('profile.orders.pay_cod') : t('profile.orders.pay_waiting')}
                   </span>
                 </div>
               </div>
@@ -90,7 +95,7 @@ export default function OrderHistoryPage() {
               <div className="flex items-center gap-3 self-end sm:self-center">
                 <span className={`flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase px-2.5 py-0.5 border rounded-sm ${getStatusBadgeClass(order.status)}`}>
                   {getStatusIcon(order.status)}
-                  {getStatusText(order.status)}
+                  {getStatusText(order.status, t)}
                 </span>
                 <Link to={`/orders/${order._id}`} className="p-2 border border-[#D4B896] text-[#ab2124] hover:bg-[#ab2124]/5 rounded-sm">
                   <Eye size={14} />

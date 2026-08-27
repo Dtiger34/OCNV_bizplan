@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'sonner';
 import './index.css';
+import './lib/i18n';
 import App from './App';
 
 const queryClient = new QueryClient({

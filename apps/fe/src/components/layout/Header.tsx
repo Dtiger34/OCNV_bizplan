@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { useCart } from '@/context/CartContext';
-import { ShoppingBag, Menu, X } from 'lucide-react';
+import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const { user, setUser } = useAuthStore();
@@ -11,14 +12,20 @@ export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'vi' ? 'en' : 'vi');
+  };
+
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const navLinks = [
-    { name: 'Trang chủ', path: '/' },
-    { name: 'Sản phẩm', path: '/shop' },
-    { name: 'Câu Chuyện', path: '/villages' },
-    { name: 'Về chúng tôi', path: '/gioi-thieu' },
-    { name: 'Chính sách', path: '/quy-dinh' },
+    { name: t('header.nav.home'), path: '/' },
+    { name: t('header.nav.products'), path: '/shop' },
+    { name: t('header.nav.stories'), path: '/villages' },
+    { name: t('header.nav.about'), path: '/gioi-thieu' },
+    { name: t('header.nav.policies'), path: '/quy-dinh' },
   ];
 
   return (
@@ -33,7 +40,7 @@ export default function Header() {
             className="h-9 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           />
           <span className="font-display hidden sm:block text-white text-sm tracking-widest uppercase whitespace-nowrap">
-            NGHỀ XƯA NÉT MỚI
+            {t('header.brand')}
           </span>
         </Link>
 
@@ -64,20 +71,20 @@ export default function Header() {
               </Link>
               {user.role === 'admin' && (
                 <Link to="/admin" className="text-white/60 hover:text-white text-[14px] transition-colors">
-                  Admin
+                  {t('header.actions.admin')}
                 </Link>
               )}
               <button onClick={() => setUser(null)} className="text-white/40 hover:text-white text-[14px] transition-colors cursor-pointer">
-                Đăng xuất
+                {t('header.actions.logout')}
               </button>
             </>
           ) : (
             <>
               <Link to="/login" className="text-white/60 hover:text-white text-[14px] transition-colors">
-                Đăng nhập
+                {t('header.actions.login')}
               </Link>
               <Link to="/register" className="px-4 py-1.5 bg-white text-black rounded-full text-sm font-semibold hover:bg-white/90 transition-colors">
-                Đăng ký
+                {t('header.actions.register')}
               </Link>
             </>
           )}
@@ -90,10 +97,20 @@ export default function Header() {
               </span>
             )}
           </button>
+          
+          {/* Language Switcher */}
+          <button onClick={toggleLanguage} className="text-white/70 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            <Globe size={18} strokeWidth={1.5} />
+            <span className="text-[12px] font-medium">{i18n.language.toUpperCase()}</span>
+          </button>
         </div>
 
         {/* Mobile: cart + hamburger */}
         <div className="md:hidden flex items-center gap-3 ml-auto">
+          {/* Language Switcher Mobile */}
+          <button onClick={toggleLanguage} className="text-white/70 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+            <Globe size={18} strokeWidth={1.5} />
+          </button>
           <button onClick={() => setIsCartOpen(true)} className="relative text-white/70 hover:text-white transition-colors cursor-pointer">
             <ShoppingBag size={18} strokeWidth={1.5} />
             {cartCount > 0 && (
@@ -127,11 +144,11 @@ export default function Header() {
               ))}
               <div className="border-t border-white/10 pt-3 flex gap-3 items-center">
                 {user ? (
-                  <button onClick={() => setUser(null)} className="text-white/50 text-sm cursor-pointer">Đăng xuất</button>
+                  <button onClick={() => setUser(null)} className="text-white/50 text-sm cursor-pointer">{t('header.actions.logout')}</button>
                 ) : (
                   <>
-                    <Link to="/login" onClick={() => setMobileOpen(false)} className="text-white/60 text-sm">Đăng nhập</Link>
-                    <Link to="/register" onClick={() => setMobileOpen(false)} className="px-3 py-1 bg-white text-black rounded-full text-sm font-semibold">Đăng ký</Link>
+                    <Link to="/login" onClick={() => setMobileOpen(false)} className="text-white/60 text-sm">{t('header.actions.login')}</Link>
+                    <Link to="/register" onClick={() => setMobileOpen(false)} className="px-3 py-1 bg-white text-black rounded-full text-sm font-semibold">{t('header.actions.register')}</Link>
                   </>
                 )}
               </div>

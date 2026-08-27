@@ -6,6 +6,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { getVillage } from '../data/villages-static';
 import { VILLAGE_AR_MODELS } from '@/features/ar/data/village-ar-models';
 import { VILLAGE_AR_POINTS } from '@/features/ar/data/village-ar-points';
+import { useTranslation } from 'react-i18next';
 
 const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
@@ -30,6 +31,7 @@ declare global {
 export default function VillagePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const village = getVillage(slug ?? '');
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [viewerReady, setViewerReady] = useState(false);
@@ -59,9 +61,9 @@ export default function VillagePage() {
   if (!village) {
     return (
       <div className="min-h-screen bg-parchment flex flex-col items-center justify-center gap-6 px-4">
-        <p className="text-wood text-lg">Không tìm thấy làng nghề này.</p>
+        <p className="text-wood text-lg">{t('village_detail.not_found')}</p>
         <Link to="/villages" className="text-sm text-gold underline underline-offset-4">
-          ← Quay lại danh sách
+          {t('village_detail.back_to_list')}
         </Link>
       </div>
     );
@@ -78,7 +80,7 @@ export default function VillagePage() {
         className="fixed top-20 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-wood hover:text-ink backdrop-blur-md bg-parchment/80 border border-[#D4B896] shadow-sm transition-all hover:border-gold/60"
       >
         <ChevronLeft size={13} />
-        Làng Nghề
+        {t('village_detail.village_label')}
       </Link>
 
       {/* Hero — nền be như phần dưới trang, khối video/model 3D bên phải dùng đỏ thương hiệu */}
@@ -95,7 +97,7 @@ export default function VillagePage() {
                 className="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3"
                 style={{ color: village.color }}
               >
-                Làng Nghề Truyền Thống
+                {t('village_detail.traditional_village')}
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-ink leading-tight mb-4">
                 {village.name}
@@ -132,7 +134,7 @@ export default function VillagePage() {
                   ) : (
                     <div className="w-full h-full flex items-center justify-center px-4 text-center">
                       <p className="text-[#D4B896] text-xs sm:text-sm">
-                        Video giới thiệu {village.name} sẽ sớm được cập nhật.
+                        {t('village_detail.video_soon', { name: village.name })}
                       </p>
                     </div>
                   )
@@ -143,7 +145,7 @@ export default function VillagePage() {
                   >
                     <img
                       src={village.coverImageUrl}
-                      alt={`Video giới thiệu ${village.name}`}
+                      alt={`${t('village_detail.video_intro')} ${village.name}`}
                       className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
                     />
                     <div className="absolute inset-0 bg-ink/30 flex flex-col items-center justify-center gap-2">
@@ -154,7 +156,7 @@ export default function VillagePage() {
                         <Play size={16} className="text-white ml-0.5" fill="white" />
                       </div>
                       <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white uppercase">
-                        Video Giới Thiệu
+                        {t('village_detail.video_intro')}
                       </span>
                     </div>
                   </button>
@@ -172,7 +174,7 @@ export default function VillagePage() {
               </div>
               {village.videoSource && (
                 <p className="text-[10px] text-[#D4B896]/70 col-start-1 -mt-2">
-                  Nguồn: {village.videoSource}
+                  {t('village_detail.source')}: {village.videoSource}
                 </p>
               )}
 
@@ -254,7 +256,7 @@ export default function VillagePage() {
                   <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm pointer-events-none">
                     <Box size={11} className="text-white" />
                     <span className="text-[9px] font-semibold tracking-wide text-white uppercase">
-                      Mô Hình 3D
+                      {t('village_detail.3d_model')}
                     </span>
                   </div>
                   <button
@@ -278,7 +280,7 @@ export default function VillagePage() {
               >
                 <div className="flex items-center gap-2 text-xs text-ink">
                   <Smartphone size={14} className="text-gold" />
-                  Quét mã QR bằng điện thoại để xem AR
+                  {t('village_detail.scan_ar')}
                 </div>
                 <QRCodeSVG value={`${window.location.origin}/villages/${slug}/ar`} size={140} />
               </motion.div>
@@ -300,7 +302,7 @@ export default function VillagePage() {
             {village.youtubeId ? (
               <iframe
                 src={`https://www.youtube.com/embed/${village.youtubeId}?autoplay=1`}
-                title={`Video giới thiệu ${village.name}`}
+                title={`${t('village_detail.video_intro')} ${village.name}`}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -314,7 +316,7 @@ export default function VillagePage() {
               />
             ) : (
               <p className="text-[#D4B896] text-base sm:text-lg px-6 text-center">
-                Video giới thiệu {village.name} sẽ sớm được cập nhật.
+                {t('village_detail.video_soon', { name: village.name })}
               </p>
             )}
           </div>
@@ -350,11 +352,12 @@ export default function VillagePage() {
             className="mb-8"
           >
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
-              1. Giới Thiệu Chung
+              {t('village_detail.intro_title_1')}
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
-              Đôi Nét Về <span className="italic text-[#ab2124]">Làng Nghề</span>
-            </h2>
+            <h2 
+              className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient"
+              dangerouslySetInnerHTML={{ __html: t('village_detail.intro_title_2') }}
+            />
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </motion.div>
 
@@ -398,11 +401,12 @@ export default function VillagePage() {
             className="mb-8"
           >
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
-              2. Lịch Sử Hình Thành Và Phát Triển
+              {t('village_detail.history_title_1')}
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
-              Hành Trình <span className="italic text-[#ab2124]">Hàng Thế Kỷ</span>
-            </h2>
+            <h2 
+              className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient"
+              dangerouslySetInnerHTML={{ __html: t('village_detail.history_title_2') }}
+            />
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </motion.div>
 
@@ -463,7 +467,7 @@ export default function VillagePage() {
         <section className="py-12 px-6 sm:px-10 bg-[#EDE3CE] border-t border-[#D4B896]/60">
           <div className="max-w-5xl mx-auto">
             <p className="text-[10px] tracking-[0.25em] uppercase text-[#ab2124] mb-5 text-center">
-              Hình Ảnh
+              {t('village_detail.gallery')}
             </p>
             <div className="grid grid-cols-3 gap-3">
               {village.galleryImages.map((img, i) => (
@@ -509,11 +513,12 @@ export default function VillagePage() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: village.color }}>
-              Quy Trình
+              {t('village_detail.process_title_1')}
             </p>
-            <h2 className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient">
-              Từ Nguyên Liệu <span className="italic text-[#ab2124]">Đến Tinh Hoa</span>
-            </h2>
+            <h2 
+              className="text-2xl sm:text-3xl font-light text-ink leading-snug text-title-gradient"
+              dangerouslySetInnerHTML={{ __html: t('village_detail.process_title_2') }}
+            />
             <div className="h-px w-12 bg-[#D4B896] mt-4" />
           </div>
 
@@ -553,7 +558,7 @@ export default function VillagePage() {
                       className="text-[13px] font-bold tracking-[0.2em] uppercase"
                       style={{ color: village.color }}
                     >
-                      Bước {stage.order}
+                      {t('village_detail.step', { order: stage.order })}
                     </p>
                     <h3 className="text-xl font-medium text-ink">{stage.title}</h3>
                     <div className="h-px w-8 bg-[#D4B896]" />
@@ -582,16 +587,17 @@ export default function VillagePage() {
 
       {/* CTA — dark footer band */}
       <section className="py-14 px-4 bg-ink text-center">
-        <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-3">Khám Phá Thêm</p>
-        <h2 className="text-2xl font-light text-white mb-6">
-          Tìm Hiểu Các Làng Nghề <span className="italic text-[#D4B896]">Khác</span>
-        </h2>
+        <p className="text-[10px] tracking-[0.25em] text-[#ab2124] uppercase mb-3">{t('village_detail.explore_more')}</p>
+        <h2 
+          className="text-2xl font-light text-white mb-6"
+          dangerouslySetInnerHTML={{ __html: t('village_detail.explore_other') }}
+        />
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             to="/villages"
             className="inline-flex items-center gap-2 px-6 py-3 border border-gold/50 text-sm text-[#D4B896] hover:text-white hover:bg-gold/10 rounded-sm transition-all duration-200"
           >
-            Xem Tất Cả Làng Nghề
+            {t('village_detail.view_all')}
             <ArrowRight size={14} />
           </Link>
         </div>

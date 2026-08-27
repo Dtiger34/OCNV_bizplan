@@ -7,6 +7,7 @@ import { VILLAGE_AR_MODELS } from '../data/village-ar-models';
 import { VILLAGE_AR_POINTS } from '../data/village-ar-points';
 import { createVillageScenePipelineModule } from '../xr8/village-scene';
 import { loadXr8Scripts } from '../xr8/load-xr8';
+import { useTranslation } from 'react-i18next';
 
 // Khai báo global cho các script 8th Wall load qua thẻ <script> trong index.html
 declare global {
@@ -54,6 +55,7 @@ export default function VillageXr8Page() {
   const [screenPoints, setScreenPoints] = useState<{ id: string; x: number; y: number }[]>([]);
   const modelRef = useRef<Object3D | null>(null);
   const rafRef = useRef<number>(0);
+  const { t } = useTranslation();
 
   const arAssets = VILLAGE_AR_MODELS[slug ?? ''];
   const arPoints = VILLAGE_AR_POINTS[slug ?? ''] ?? [];
@@ -181,12 +183,12 @@ export default function VillageXr8Page() {
     return (
       <div className="min-h-screen bg-ink flex flex-col items-center justify-center p-8 text-center gap-6">
         <ScanLine className="w-14 h-14 text-gold" />
-        <h1 className="text-2xl font-light text-white">AR chưa khả dụng</h1>
+        <h1 className="text-2xl font-light text-white">{t('ar.not_available')}</h1>
         <Link
           to={`/villages/${slug}`}
           className="px-6 py-2.5 bg-gold text-ink text-xs font-bold tracking-widest uppercase rounded"
         >
-          Quay Lại
+          {t('ar.back')}
         </Link>
       </div>
     );
@@ -198,7 +200,7 @@ export default function VillageXr8Page() {
 
       <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-linear-to-b from-black/80 to-transparent pointer-events-none">
         <div className="pointer-events-auto">
-          <p className="text-[9px] tracking-[0.25em] text-gold uppercase">AR · Đặt Trong Phòng</p>
+          <p className="text-[9px] tracking-[0.25em] text-gold uppercase">{t('ar.place_room')}</p>
           <p className="text-white text-sm font-medium">{arAssets.label}</p>
         </div>
         <button
@@ -212,18 +214,18 @@ export default function VillageXr8Page() {
       {loading && (
         <div className="absolute inset-0 z-40 bg-ink flex flex-col items-center justify-center gap-4">
           <Loader2 className="w-10 h-10 text-gold animate-spin" />
-          <p className="text-[#ab2124] text-sm">Đang khởi động AR...</p>
+          <p className="text-[#ab2124] text-sm">{t('ar.starting')}</p>
         </div>
       )}
 
       {loadError && (
         <div className="absolute inset-0 z-40 bg-ink flex flex-col items-center justify-center gap-4 p-8 text-center">
-          <p className="text-white text-sm">Không tải được mô hình 3D. Vui lòng kiểm tra kết nối mạng và thử lại.</p>
+          <p className="text-white text-sm">{t('ar.error_load')}</p>
           <button
             onClick={() => navigate(`/villages/${slug}`)}
             className="px-6 py-2.5 bg-gold text-ink text-xs font-bold tracking-widest uppercase rounded"
           >
-            Quay Lại
+            {t('ar.back')}
           </button>
         </div>
       )}
@@ -232,7 +234,7 @@ export default function VillageXr8Page() {
         <div className="absolute bottom-10 left-4 right-4 z-30 text-center pointer-events-none">
           <p className="text-white text-sm bg-black/60 inline-flex items-center gap-2 px-4 py-2 rounded-full">
             <Loader2 className="w-4 h-4 animate-spin" />
-            Đang tải mô hình 3D...
+            {t('ar.loading')}
           </p>
         </div>
       )}
@@ -240,7 +242,7 @@ export default function VillageXr8Page() {
       {!loading && !loadError && modelReady && !placed && (
         <div className="absolute bottom-10 left-4 right-4 z-30 text-center pointer-events-none">
           <p className="text-white text-sm bg-black/60 inline-block px-4 py-2 rounded-full">
-            Chạm vào màn hình để đặt mô hình
+            {t('ar.tap_place')}
           </p>
         </div>
       )}
