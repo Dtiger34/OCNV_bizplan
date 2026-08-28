@@ -125,7 +125,14 @@ function PayOSModal({
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
+
+  const getLocalizedValue = (val: string | { vi: string; en: string } | undefined, lang: 'vi' | 'en') => {
+    if (!val) return '';
+    if (typeof val === 'string') return val;
+    return val[lang] || val.vi || '';
+  };
 
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -377,7 +384,7 @@ export default function CheckoutPage() {
               {cartItems.map((item) => (
                 <div key={item.id} className="flex gap-3 justify-between items-start text-xs">
                   <div className="flex-1">
-                    <span className="font-semibold text-[#ab2124]">{item.name}</span>
+                    <span className="font-semibold text-[#ab2124]">{getLocalizedValue(item.name, lang)}</span>
                     <span className="text-[#ab2124] ml-1">x {item.quantity}</span>
                   </div>
                   <span className="text-[#7B1C2E] font-medium shrink-0">

@@ -80,7 +80,7 @@ export default function CartDrawer() {
                     {/* Rounded Product Thumbnail */}
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={getLocalizedValue(item.name, lang)}
                       className="w-16 h-16 object-cover border border-[#D4B896]/40 rounded-full flex-shrink-0"
                     />
                     

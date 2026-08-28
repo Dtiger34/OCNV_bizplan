@@ -60,7 +60,7 @@ export default function CartPage() {
               >
                 <img
                   src={item.image}
-                  alt={item.name}
+                  alt={getLocalizedValue(item.name, lang)}
                   className="w-24 h-24 object-cover border border-[#D4B896] rounded-sm self-center sm:self-auto"
                 />
 
