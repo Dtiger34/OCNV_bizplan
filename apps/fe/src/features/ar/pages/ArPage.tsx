@@ -4,6 +4,8 @@ import { X, Smartphone, ChevronRight } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { useProductHotspots, type Hotspot } from '../hooks/useProductHotspots';
+import { useProduct } from '../../products/hooks/useProducts';
+
 // Swap với file .glb thật của từng sản phẩm khi có
 const PLACEHOLDER_MODEL_URL =
   'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
@@ -14,6 +16,7 @@ declare global {
       'model-viewer': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           src?: string;
+          'ios-src'?: string;
           alt?: string;
           ar?: boolean;
           'ar-modes'?: string;
@@ -46,6 +49,7 @@ export default function ArPage() {
   const arUrl = `${window.location.origin}/ar/${id}`;
 
   const { data: hotspots = [] } = useProductHotspots(id ?? '');
+  const { data: product } = useProduct(id ?? '');
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -76,6 +80,9 @@ export default function ArPage() {
     );
   }
 
+  const modelSrc = product?.glbUrl || PLACEHOLDER_MODEL_URL;
+  const iosSrc = product?.usdzUrl || undefined;
+
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden">
       {/* Header */}
@@ -93,7 +100,8 @@ export default function ArPage() {
 
       {/* model-viewer — fills screen, camera-controls handles pinch/rotate */}
       <model-viewer
-        src={PLACEHOLDER_MODEL_URL}
+        src={modelSrc}
+        ios-src={iosSrc}
         alt="Mô hình sản phẩm 3D"
         ar
         ar-modes="scene-viewer webxr quick-look"
