@@ -17,7 +17,7 @@
   },
   "footer": {
     "brand": "NGHỀ XƯA NÉT MỚI",
-    "address": "36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
+    "address": "26 Hàng Da, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
     "villages_title": "TIỂU CẢNH LÀNG NGHỀ",
     "villages": {
       "bat_trang": "Làng gốm Bát Tràng",
@@ -78,7 +78,7 @@
       "status": "Tình trạng:",
       "in_stock": "Còn hàng trong kho",
       "made_to_order": "Đặt làm thủ công (3-5 tuần)",
-      "desc": "Mô hình tiểu cảnh diorama gỗ ghép nhiều lớp tinh xảo, tái hiện sống động quy trình làng nghề cổ truyền Việt Nam, đóng gói trong hộp mica bảo vệ 360 độ kèm hệ thống đèn LED ấm cúng.",
+      "desc": "Mô hình tiểu cảnh diorama tinh xảo, tái hiện sống động quy trình làng nghề cổ truyền Việt Nam, đóng gói trong hộp mica bảo vệ 360 độ.",
       "maker_province": "Nghệ nhân tỉnh",
       "out_of_stock": "HẾT HÀNG TRÊN HỆ THỐNG",
       "add_to_cart": "THÊM VÀO GIỎ HÀNG"
@@ -501,7 +501,7 @@
     "desc": "Mọi thắc mắc, ý kiến đóng góp hay đơn đặt hàng riêng — chúng tôi luôn lắng nghe.",
     "info_title": "Thông tin liên hệ",
     "address_lbl": "Địa chỉ",
-    "address_val": "Phân xưởng Nghề Xưa Nét Mới\n36 Phố Hàng Bè, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
+    "address_val": "Phân xưởng Nghề Xưa Nét Mới\n26 Hàng Da, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
     "phone_lbl": "Điện thoại",
     "phone_val": "+84 1900 8888",
     "email_lbl": "Email",
@@ -551,7 +551,7 @@
     "shipping_title": "Chính Sách Vận Chuyển",
     "shipping_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Phạm vi Giao Hàng</h3><p>Chúng tôi giao nhận mô hình trên toàn quốc từ Bắc vào Nam. Thời gian giao hàng nội thành Hà Nội trong vòng 24 giờ, các tỉnh thành khác từ 3 đến 5 ngày làm việc.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Đóng gói bảo vệ</h3><p>Các hộp diorama tiểu cảnh được bọc xốp bọt cẩn thận chống sốc, niêm phong đóng hộp các lớp xốp dày chuyên dụng để tránh rung lắc, nứt vỡ trong quá trình di chuyển.</p></div>",
     "faq_title": "Hỏi Đáp & Trợ Giúp (FAQ)",
-    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Hộp mô hình tiểu cảnh có sử dụng đèn LED không?</h4><p class=\"mt-1 text-sm\">Có. Các mô hình diorama làng nghề đều được tích hợp hệ thống đèn LED ấm cúng sử dụng cổng USB hoặc pin tiện lợi để làm sáng không gian trưng bày ban đêm.</p></div><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Làm thế nào để bảo quản mica và khung gỗ?</h4><p class=\"mt-1 text-sm\">Tránh ánh nắng rọi trực tiếp hoặc nguồn nhiệt cao, dùng khăn mềm ẩm lau nhẹ lớp mica bảo vệ ngoài. Tránh ẩm ướt để bảo quản chất lượng gỗ MDF mộc mạc lâu bền.</p></div></div>",
+    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Làm thế nào để bảo quản mica và khung?</h4><p class=\"mt-1 text-sm\">Tránh ánh nắng rọi trực tiếp hoặc nguồn nhiệt cao, dùng khăn mềm ẩm lau nhẹ lớp mica bảo vệ ngoài. Tránh ẩm ướt để bảo quản chất lượng mộc mạc lâu bền.</p></div></div>",
     "back_home": "Quay lại trang chủ"
   },
   "regulations": {
@@ -580,9 +580,9 @@
       "product": {
         "title": "Chất Lượng Sản Phẩm",
         "items": [
-          { "heading": "Vật liệu và chế tác", "body": "Tất cả mô hình diorama sử dụng mica acrylic cao cấp, gỗ MDF phủ veneer, chi tiết resin in 3D và sơn acrylic thủ công. Mỗi sản phẩm đều qua kiểm tra chất lượng trước khi đóng gói." },
+          { "heading": "Vật liệu và chế tác", "body": "Tất cả mô hình diorama sử dụng mica acrylic cao cấp, chi tiết resin in 3D và sơn acrylic thủ công. Mỗi sản phẩm đều qua kiểm tra chất lượng trước khi đóng gói." },
           { "heading": "Sai số kích thước", "body": "Do đặc tính thủ công của sản phẩm, có thể xảy ra sai số kích thước nhỏ (±2mm) và sự khác biệt nhẹ về màu sắc so với hình ảnh hiển thị trên website do điều kiện ánh sáng chụp ảnh." },
-          { "heading": "Bảo hành", "body": "Sản phẩm được bảo hành 3 tháng với các lỗi về kết cấu khung, hỏng đèn LED tích hợp hoặc lỗi kết nối QR. Bảo hành không áp dụng cho hư hỏng do va đập, ẩm ướt hoặc sử dụng không đúng cách." }
+          { "heading": "Bảo hành", "body": "Sản phẩm được bảo hành 3 tháng với các lỗi về kết cấu khung, hoặc lỗi kết nối QR. Bảo hành không áp dụng cho hư hỏng do va đập, ẩm ướt hoặc sử dụng không đúng cách." }
         ]
       },
       "payment": {
@@ -604,10 +604,9 @@
       "faq": {
         "title": "Câu Hỏi Thường Gặp",
         "items": [
-          { "heading": "Hộp mô hình có đèn LED không?", "body": "Có. Các mô hình diorama đều được tích hợp hệ thống đèn LED ấm sử dụng cổng USB hoặc pin để làm sáng không gian trưng bày ban đêm." },
           { "heading": "Làm thế nào để kích hoạt AR?", "body": "Quét mã QR ở đế sản phẩm bằng camera điện thoại, trình duyệt sẽ mở trang AR ngay không cần cài ứng dụng. Yêu cầu iOS 12+ hoặc Android 8+ với camera hỗ trợ AR." },
           { "heading": "Có thể đặt hàng số lượng lớn (B2B) không?", "body": "Có. Chúng tôi hỗ trợ đặt hàng số lượng lớn cho doanh nghiệp, tổ chức với chính sách giá ưu đãi và khả năng in logo/branding theo yêu cầu. Liên hệ email để được tư vấn." },
-          { "heading": "Bảo quản sản phẩm như thế nào?", "body": "Tránh ánh nắng trực tiếp và nguồn nhiệt cao. Dùng khăn mềm ẩm lau nhẹ lớp mica ngoài. Tránh môi trường ẩm ướt để bảo vệ khung gỗ MDF. Không tháo rời các chi tiết miniature bên trong." }
+          { "heading": "Bảo quản sản phẩm như thế nào?", "body": "Tránh ánh nắng trực tiếp và nguồn nhiệt cao. Dùng khăn mềm ẩm lau nhẹ lớp mica ngoài. Tránh môi trường ẩm ướt để bảo vệ khung. Không tháo rời các chi tiết miniature bên trong." }
         ]
       }
     }

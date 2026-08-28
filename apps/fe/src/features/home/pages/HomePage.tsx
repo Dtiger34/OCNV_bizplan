@@ -154,9 +154,9 @@ export default function HomePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
           {[
             { value: '5+', label: t('home.stats.villages'), icon: <MapPin size={20} className="text-[#C9973A]" /> },
-            { value: '1 năm', label: t('home.stats.warranty'), icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
+            { value: lang === 'en' ? '1 year' : '1 năm', label: t('home.stats.warranty'), icon: <ShieldCheck size={20} className="text-[#C9973A]" /> },
             { value: '98%', label: t('home.stats.satisfaction'), icon: <Star size={20} className="text-[#C9973A]" /> },
-            { value: '2-5 ngày', label: t('home.stats.shipping'), icon: <Truck size={20} className="text-[#C9973A]" /> },
+            { value: lang === 'en' ? '2-5 days' : '2-5 ngày', label: t('home.stats.shipping'), icon: <Truck size={20} className="text-[#C9973A]" /> },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col items-center text-center gap-2 p-6 border border-[#D4B896]/40 rounded-[4px] bg-[#fff8e7]/60 hover:border-[#C9973A]/60 transition-colors">
               {stat.icon}

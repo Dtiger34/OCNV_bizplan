@@ -1,9 +1,12 @@
 import { useCart } from '@/context/CartContext';
 import { X, Plus, Minus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function CartDrawer() {
   const { cartItems, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } = useCart();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -35,8 +38,8 @@ export default function CartDrawer() {
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[#D4B896]/30 px-6 py-5 bg-[#fff8e7]/60 backdrop-blur-sm">
-              <h2 className="text-[24px] font-bold tracking-wider text-[#ab2124] text-title-gradient">
-                GIỎ HÀNG THƯỞNG LÃM
+              <h2 className="text-[24px] font-bold tracking-wider text-[#ab2124] text-title-gradient uppercase">
+                {t('cart.title')}
               </h2>
               <button
                 onClick={() => setIsCartOpen(false)}
@@ -50,12 +53,12 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                  <span className="text-xl text-[#ab2124] italic">Trống không như lầu vắng</span>
+                  <span className="text-xl text-[#ab2124] italic">{t('cart.empty')}</span>
                   <button
                     onClick={() => setIsCartOpen(false)}
                     className="px-6 py-3 bg-[#ab2124] text-[#fff8e7] text-[11px] font-bold tracking-[0.1em] uppercase rounded-full hover:bg-[#ab2124] active:scale-[0.97] transition-all"
                   >
-                    Tiếp tục thưởng lãm
+                    {t('cart.continue_shopping')}
                   </button>
                 </div>
               ) : (
@@ -133,7 +136,7 @@ export default function CartDrawer() {
               <div className="border-t border-[#D4B896]/40 bg-[#fff8e7]/90 backdrop-blur-sm p-6 space-y-4 sticky bottom-0">
                 <div className="flex items-baseline justify-between">
                   <span className="text-[11px] font-bold tracking-wider text-[#ab2124] uppercase">
-                    TỔNG CỘNG
+                    {t('cart.total')}
                   </span>
                   <span className="text-2xl font-bold text-[#7B1C2E]">
                     {formatPrice(total)}
@@ -142,7 +145,7 @@ export default function CartDrawer() {
                 </div>
                 
                 <p className="text-[12px] text-[#ab2124] italic text-center">
-                  Đã bao gồm vận chuyển và bảo hiểm mô hình.
+                  {lang === 'en' ? 'Includes shipping and model insurance.' : 'Đã bao gồm vận chuyển và bảo hiểm mô hình.'}
                 </p>
 
                 <motion.button
@@ -154,7 +157,7 @@ export default function CartDrawer() {
                   }}
                   className="w-full h-12 bg-[#7B1C2E] text-[#fff8e7] text-[12px] font-bold tracking-[0.1em] uppercase rounded-full hover:bg-[#9B2438] active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer shadow-md"
                 >
-                  TIẾN HÀNH THANH TOÁN
+                  {t('cart.checkout_btn')}
                 </motion.button>
               </div>
             )}

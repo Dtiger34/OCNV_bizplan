@@ -17,7 +17,7 @@
   },
   "footer": {
     "brand": "ANCIENT CRAFT NEW ESSENCE",
-    "address": "36 Hang Be Street, Hoan Kiem District, Hanoi, Vietnam",
+    "address": "26 Hang Da, Hoan Kiem District, Hanoi, Vietnam",
     "villages_title": "CRAFT VILLAGE DIORAMAS",
     "villages": {
       "bat_trang": "Bat Trang Pottery Village",
@@ -78,7 +78,7 @@
       "status": "Status:",
       "in_stock": "In stock",
       "made_to_order": "Made to order (3-5 weeks)",
-      "desc": "Exquisite multi-layered wooden diorama, vividly recreating the traditional Vietnamese craft village process, packaged in a 360-degree protective mica box with a cozy LED system.",
+      "desc": "Exquisite diorama, vividly recreating the traditional Vietnamese craft village process, packaged in a 360-degree protective mica box.",
       "maker_province": "Artisan from",
       "out_of_stock": "OUT OF STOCK",
       "add_to_cart": "ADD TO CART"
@@ -501,7 +501,7 @@
     "desc": "For any inquiries, feedback, or custom orders — we are always listening.",
     "info_title": "Contact Information",
     "address_lbl": "Address",
-    "address_val": "Nghe Xua Net Moi Workshop\n36 Hang Be Street, Hoan Kiem District, Hanoi, Vietnam",
+    "address_val": "Nghe Xua Net Moi Workshop\n26 Hang Da, Hoan Kiem District, Hanoi, Vietnam",
     "phone_lbl": "Phone",
     "phone_val": "+84 1900 8888",
     "email_lbl": "Email",
@@ -551,7 +551,7 @@
     "shipping_title": "Shipping Policy",
     "shipping_html": "<div class=\"space-y-4\"><h3 class=\"text-xl font-bold text-[#ab2124]\">1. Delivery Coverage</h3><p>We deliver models nationwide from North to South. Delivery time in inner Hanoi is within 24 hours, other provinces from 3 to 5 working days.</p><h3 class=\"text-xl font-bold text-[#ab2124]\">2. Protective Packaging</h3><p>Diorama boxes are carefully wrapped in shock-absorbing foam and sealed in specialized thick foam layers to prevent shaking and cracking during transportation.</p></div>",
     "faq_title": "FAQ & Support",
-    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">Do the diorama boxes use LED lights?</h4><p class=\"mt-1 text-sm\">Yes. The traditional village diorama models are integrated with a cozy LED lighting system using a convenient USB port or batteries to illuminate the display space at night.</p></div><div><h4 class=\"text-lg font-bold text-[#ab2124]\">How to preserve the mica and wooden frame?</h4><p class=\"mt-1 text-sm\">Avoid direct sunlight or high heat sources; use a soft damp cloth to gently wipe the outer protective mica layer. Avoid moisture to preserve the rustic, long-lasting quality of the MDF wood.</p></div></div>",
+    "faq_html": "<div class=\"space-y-6\"><div><h4 class=\"text-lg font-bold text-[#ab2124]\">How to preserve the mica and frame?</h4><p class=\"mt-1 text-sm\">Avoid direct sunlight or high heat sources; use a soft damp cloth to gently wipe the outer protective mica layer. Avoid moisture to preserve the rustic, long-lasting quality.</p></div></div>",
     "back_home": "Back to homepage"
   },
   "regulations": {
@@ -580,9 +580,9 @@
       "product": {
         "title": "Product Quality",
         "items": [
-          { "heading": "Materials and Crafting", "body": "All diorama models use premium acrylic mica, veneer-coated MDF wood, 3D printed resin details, and hand-painted acrylics. Each product undergoes quality checking before packaging." },
+          { "heading": "Materials and Crafting", "body": "All diorama models use premium acrylic mica, 3D printed resin details, and hand-painted acrylics. Each product undergoes quality checking before packaging." },
           { "heading": "Dimensional Tolerance", "body": "Due to the handmade nature of the product, there may be slight dimensional tolerances (±2mm) and minor color variations compared to website images due to photography lighting conditions." },
-          { "heading": "Warranty", "body": "Products have a 3-month warranty for frame structure defects, integrated LED failures, or QR connection errors. The warranty does not cover damage caused by impact, moisture, or improper use." }
+          { "heading": "Warranty", "body": "Products have a 3-month warranty for frame structure defects, or QR connection errors. The warranty does not cover damage caused by impact, moisture, or improper use." }
         ]
       },
       "payment": {
@@ -604,10 +604,9 @@
       "faq": {
         "title": "Frequently Asked Questions",
         "items": [
-          { "heading": "Do the model boxes have LED lights?", "body": "Yes. The diorama models are integrated with a warm LED system using a USB port or batteries to illuminate the display space at night." },
           { "heading": "How to activate AR?", "body": "Scan the QR code on the product base with your phone camera, the browser will open the AR page immediately without needing an app. Requires iOS 12+ or Android 8+ with AR-supported cameras." },
           { "heading": "Can I place bulk orders (B2B)?", "body": "Yes. We support bulk orders for businesses and organizations with preferential pricing policies and the ability to print logos/branding upon request. Contact our email for a consultation." },
-          { "heading": "How to preserve the product?", "body": "Avoid direct sunlight and high heat sources. Use a soft damp cloth to gently wipe the outer mica layer. Avoid humid environments to protect the MDF wood frame. Do not disassemble the miniature details inside." }
+          { "heading": "How to preserve the product?", "body": "Avoid direct sunlight and high heat sources. Use a soft damp cloth to gently wipe the outer mica layer. Avoid humid environments to protect the frame. Do not disassemble the miniature details inside." }
         ]
       }
     }
