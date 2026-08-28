@@ -3,6 +3,12 @@ import { X, Plus, Minus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
+const getLocalizedValue = (val: string | { vi: string; en: string } | undefined, lang: 'vi' | 'en') => {
+  if (!val) return '';
+  if (typeof val === 'string') return val;
+  return val[lang] || val.vi || '';
+};
+
 export default function CartDrawer() {
   const { cartItems, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } = useCart();
   const { t, i18n } = useTranslation();
@@ -81,13 +87,13 @@ export default function CartDrawer() {
                     <div className="flex-1 flex flex-col justify-between">
                       <div className="pr-6">
                         <span className="text-[8px] font-bold tracking-widest text-[#ab2124] uppercase block">
-                          {item.origin}
+                          {getLocalizedValue(item.origin, lang)}
                         </span>
                         <h4 className="text-base font-bold text-[#ab2124] leading-tight mt-0.5">
-                          {item.name}
+                          {getLocalizedValue(item.name, lang)}
                         </h4>
                         <p className="text-[11px] text-[#ab2124]">
-                          {item.material}
+                          {getLocalizedValue(item.material, lang)}
                         </p>
                       </div>
                       

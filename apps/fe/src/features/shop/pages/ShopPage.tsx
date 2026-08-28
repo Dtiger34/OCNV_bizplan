@@ -211,7 +211,14 @@ export default function ShopPage() {
   };
 
   const handleAddToCart = useCallback((p: ApiProduct) => {
-    addToCart({ id: p._id, name: p.name.vi, price: p.price, image: p.mainImageUrl ?? PLACEHOLDER, material: '', origin: p.village?.name?.vi ?? 'OCNV' });
+    addToCart({ 
+      id: p._id, 
+      name: { vi: p.name.vi, en: (p.name.en || p.name.vi) }, 
+      price: p.price, 
+      image: p.mainImageUrl ?? PLACEHOLDER, 
+      material: '', 
+      origin: { vi: p.village?.name?.vi ?? 'OCNV', en: (p.village?.name?.en || p.village?.name?.vi) ?? 'OCNV' } 
+    });
     toast.success(t('shop.added_success'));
   }, [addToCart, t]);
 

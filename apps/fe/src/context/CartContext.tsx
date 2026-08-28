@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+export interface LocalizedString {
+  vi: string;
+  en: string;
+}
+
 export interface CartItem {
   id: string;
-  name: string;
+  name: string | LocalizedString;
   price: number;
   image: string;
-  material: string;
-  origin: string;
+  material: string | LocalizedString;
+  origin: string | LocalizedString;
   quantity: number;
 }
 

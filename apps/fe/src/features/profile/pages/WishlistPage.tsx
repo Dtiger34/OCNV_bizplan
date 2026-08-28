@@ -51,11 +51,11 @@ export default function WishlistPage() {
                     <button
                       onClick={() => addToCart({
                         id: item._id,
-                        name: item.name.vi,
+                        name: { vi: item.name.vi, en: (item.name.en || item.name.vi) },
                         price: item.price,
-                        image: item.mainImageUrl ?? PLACEHOLDER,
+                        image: item.mainImageUrl || '',
                         material: '',
-                        origin: item.village?.name?.vi ?? 'OCNV',
+                        origin: { vi: item.village?.name?.vi ?? 'OCNV', en: (item.village?.name?.en || item.village?.name?.vi) ?? 'OCNV' }
                       })}
                       className="flex items-center gap-1 text-[9px] font-bold text-[#ab2124] hover:text-[#7B1C2E] uppercase transition-colors">
                       <ShoppingCart size={12} />

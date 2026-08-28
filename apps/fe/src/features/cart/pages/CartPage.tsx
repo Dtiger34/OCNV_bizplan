@@ -6,7 +6,14 @@ import { useTranslation } from 'react-i18next';
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
+
+  const getLocalizedValue = (val: string | { vi: string; en: string } | undefined, lang: 'vi' | 'en') => {
+    if (!val) return '';
+    if (typeof val === 'string') return val;
+    return val[lang] || val.vi || '';
+  };
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -61,7 +68,7 @@ export default function CartPage() {
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[9px] font-semibold tracking-wider text-[#ab2124] uppercase">
-                        {item.origin}
+                        {getLocalizedValue(item.origin, lang)}
                       </span>
                       <button
                         onClick={() => removeFromCart(item.id)}
@@ -72,11 +79,11 @@ export default function CartPage() {
                     </div>
                     
                     <h3 className="text-xl font-bold text-[#ab2124]">
-                      {item.name}
+                      {getLocalizedValue(item.name, lang)}
                     </h3>
                     
                     <p className="text-xs text-[#ab2124]">
-                      {item.material}
+                      {getLocalizedValue(item.material, lang)}
                     </p>
                   </div>
 

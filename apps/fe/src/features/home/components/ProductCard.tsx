@@ -1,16 +1,17 @@
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export interface Product {
   id: string;
-  name: string;
+  name: string | { vi: string, en: string };
   price: number;
   originalPrice?: number;
   image: string;
   category: string;
   material: string;
-  origin: string;
+  origin: string | { vi: string, en: string };
   stockStatus: 'in_stock' | 'low_stock' | 'out_of_stock' | 'featured';
   badgeText: string;
   makerName?: string;
@@ -24,8 +25,16 @@ interface ProductCardProps {
   onViewDetails?: (product: Product) => void;
 }
 
+const getLocalizedValue = (val: string | { vi: string; en: string } | undefined, lang: 'vi' | 'en') => {
+  if (!val) return '';
+  if (typeof val === 'string') return val;
+  return val[lang] || val.vi || '';
+};
+
 export default function ProductCard({ product, onViewDetails }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { i18n } = useTranslation();
+  const lang = (i18n.language === 'en' ? 'en' : 'vi') as 'vi' | 'en';
 
   const getStockBadgeStyle = (status: string) => {
     switch (status) {
@@ -55,7 +64,7 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
       <div className="relative w-full h-[60%] overflow-hidden bg-[#EDE3CE] rounded-t-[4px]">
         <motion.img
           src={product.image}
-          alt={product.name}
+          alt={getLocalizedValue(product.name, lang)}
           className="w-full h-full object-cover transition-transform duration-500"
           whileHover={{ scale: 1.05 }}
         />
@@ -114,12 +123,12 @@ export default function ProductCard({ product, onViewDetails }: ProductCardProps
             onClick={() => onViewDetails?.(product)}
             className="text-[18px] md:text-[20px] font-bold text-[#ab2124] hover:text-[#7B1C2E] cursor-pointer transition-colors leading-snug line-clamp-2"
           >
-            {product.name}
+            {getLocalizedValue(product.name, lang)}
           </h3>
 
           {/* Material & Provenance */}
           <p className="text-[11px] text-[#ab2124] italic pointer-events-none select-none">
-            {product.material} — {product.origin}
+            {product.material} — {getLocalizedValue(product.origin, lang)}
           </p>
         </div>
 

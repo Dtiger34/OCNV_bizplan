@@ -55,11 +55,11 @@ export default function ProductDetailPage() {
     for (let i = 0; i < qty; i++) {
       addToCart({
         id: product._id,
-        name: product.name.vi,
+        name: { vi: product.name.vi, en: (product.name.en || product.name.vi) },
         price: product.price,
-        image: product.mainImageUrl ?? PLACEHOLDER,
+        image: product.mainImageUrl || '',
         material: '',
-        origin: product.village?.name?.vi ?? '',
+        origin: { vi: product.village?.name?.vi ?? 'OCNV', en: (product.village?.name?.en || product.village?.name?.vi) ?? 'OCNV' }
       });
     }
     toast.success(t('product.added_success', { qty }));

@@ -16,12 +16,12 @@ function apiToProduct(p: any): Product {
   const stockStatus = stock === 0 ? 'out_of_stock' : stock <= 3 ? 'low_stock' : 'in_stock';
   return {
     id: p._id,
-    name: p.name?.vi ?? '',
+    name: { vi: p.name?.vi ?? '', en: (p.name?.en || p.name?.vi) ?? '' },
     price: p.price,
     image: p.mainImageUrl ?? PLACEHOLDER,
     category: p.village?.name?.vi ?? '',
     material: '',
-    origin: p.village?.name?.vi ?? 'OCNV',
+    origin: { vi: p.village?.name?.vi ?? 'OCNV', en: (p.village?.name?.en || p.village?.name?.vi) ?? 'OCNV' },
     stockStatus,
     badgeText: stockStatus === 'out_of_stock' ? 'Hết Hàng' : stockStatus === 'low_stock' ? 'Sắp Hết' : 'Còn Hàng',
     makerName: '',
@@ -40,6 +40,12 @@ export default function HomePage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const { data: featuredRaw = [] } = useFeaturedProducts();
   const featuredProducts = featuredRaw.map(apiToProduct);
+
+  const getLocalizedValue = (val: string | { vi: string; en: string } | undefined, lang: 'vi' | 'en') => {
+    if (!val) return '';
+    if (typeof val === 'string') return val;
+    return val[lang] || val.vi || '';
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -265,7 +271,7 @@ export default function HomePage() {
             <div className="w-full md:w-1/2 space-y-4">
               <img
                 src={selectedProduct.image}
-                alt={selectedProduct.name}
+                alt={getLocalizedValue(selectedProduct.name, lang)}
                 className="w-full aspect-[4/3] object-cover border border-[#D4B896] rounded-[6px]"
               />
 
@@ -275,8 +281,8 @@ export default function HomePage() {
                   {t('home.product_modal.details_title')}
                 </span>
                 <ul className="text-[13px] text-[#ab2124] space-y-1">
-                  <li><strong>{t('home.product_modal.origin')}</strong> {selectedProduct.origin}</li>
-                  <li><strong>{t('home.product_modal.material')}</strong> {selectedProduct.material}</li>
+                  <li><strong>{t('home.product_modal.origin')}</strong> {getLocalizedValue(selectedProduct.origin, lang)}</li>
+                  <li><strong>{t('home.product_modal.material')}</strong> {getLocalizedValue(selectedProduct.material, lang)}</li>
                   <li><strong>{t('home.product_modal.status')}</strong> {selectedProduct.stockStatus === 'in_stock' ? t('home.product_modal.in_stock') : t('home.product_modal.made_to_order')}</li>
                 </ul>
               </div>
@@ -290,7 +296,7 @@ export default function HomePage() {
                 </span>
 
                 <h3 className="text-[28px] font-bold text-[#ab2124] leading-tight">
-                  {selectedProduct.name}
+                  {getLocalizedValue(selectedProduct.name, lang)}
                 </h3>
 
                 <div className="text-2xl font-bold text-[#7B1C2E]">
