@@ -202,7 +202,7 @@ export default function VillageXr8Page() {
       <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-linear-to-b from-black/80 to-transparent pointer-events-none">
         <div className="pointer-events-auto">
           <p className="text-[9px] tracking-[0.25em] text-gold uppercase">{t('ar.place_room')}</p>
-          <p className="text-white text-sm font-medium">{arAssets.label}</p>
+          <p className="text-white text-sm font-medium">{arAssets.label[lang]}</p>
         </div>
         <button
           onClick={() => navigate(`/villages/${slug}`)}

@@ -102,7 +102,7 @@ export default function ArPage() {
       <model-viewer
         src={modelSrc}
         ios-src={iosSrc}
-        alt="Mô hình sản phẩm 3D"
+        alt={product?.name?.[lang] || t('ar.ar_model')}
         ar
         ar-modes="scene-viewer webxr quick-look"
         ar-placement="floor"
