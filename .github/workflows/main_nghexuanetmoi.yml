@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - nghexuanetmoi
+name: Build and deploy frontend to Azure Web App - nghexuanetmoi
 
 on:
   push:
@@ -30,28 +30,18 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          pnpm install --frozen-lockfile
-          pnpm run build
+          pnpm --filter @ocnv/fe... install --frozen-lockfile
+          pnpm --filter @ocnv/fe build
 
-      - name: Prepare deployment package
+      - name: Prepare frontend deployment package
         run: |
           mkdir -p deploy
-
-          # Copy BE dist và package.json
-          cp -r apps/be/dist deploy/dist
-          cp apps/be/package.json deploy/package.json
-
-          # Copy FE dist vào đúng path BE expect
-          mkdir -p deploy/fe/dist
-          cp -r apps/fe/dist/. deploy/fe/dist/
-
-          # npm install tạo flat node_modules Azure đọc được
-          cd deploy && npm install --omit=dev --no-package-lock
+          cp -r apps/fe/dist/. deploy/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
+          name: frontend-app
           path: deploy
 
   deploy:
@@ -65,7 +55,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: frontend-app
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -81,3 +71,4 @@ jobs:
           app-name: 'nghexuanetmoi'
           slot-name: 'Production'
           package: .
+          startup-command: 'pm2 serve /home/site/wwwroot --no-daemon --spa'
